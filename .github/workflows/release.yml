@@ -1,0 +1,138 @@
+name: Create Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-linux:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            cmake \
+            libboost-date-time-dev \
+            libboost-filesystem-dev \
+            libboost-iostreams-dev \
+            libboost-system-dev \
+            libcrypto++-dev \
+            libfmt-dev \
+            libgmp-dev \
+            libluajit-5.1-dev \
+            libmariadb-dev \
+            libpugixml-dev
+
+      - name: Build
+        run: |
+          mkdir -p build
+          cd build
+          cmake .. -DCMAKE_BUILD_TYPE=Release
+          make -j$(nproc)
+
+      - name: Package
+        run: |
+          mkdir -p wolf-project-linux
+          cp build/tfs wolf-project-linux/
+          cp -r data wolf-project-linux/
+          cp config.lua.dist wolf-project-linux/
+          cp schema.sql wolf-project-linux/
+          cp LICENSE README.md wolf-project-linux/
+          tar -czvf wolf-project-linux-amd64.tar.gz wolf-project-linux
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-build
+          path: wolf-project-linux-amd64.tar.gz
+
+  build-windows:
+    runs-on: windows-2022
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup vcpkg
+        uses: lukka/run-vcpkg@v11
+        with:
+          vcpkgGitCommitId: 'a34c873a9717a888f58dc05571dde15571da8571'
+
+      - name: Install dependencies via vcpkg
+        run: |
+          vcpkg install boost-iostreams:x64-windows
+          vcpkg install boost-system:x64-windows
+          vcpkg install boost-filesystem:x64-windows
+          vcpkg install boost-date-time:x64-windows
+          vcpkg install cryptopp:x64-windows
+          vcpkg install fmt:x64-windows
+          vcpkg install libmariadb:x64-windows
+          vcpkg install luajit:x64-windows
+          vcpkg install pugixml:x64-windows
+
+      - name: Configure CMake
+        run: |
+          mkdir build
+          cd build
+          cmake .. -DCMAKE_TOOLCHAIN_FILE=$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: |
+          cd build
+          cmake --build . --config Release
+
+      - name: Package
+        shell: powershell
+        run: |
+          New-Item -ItemType Directory -Force -Path wolf-project-windows
+          Copy-Item build/Release/tfs.exe wolf-project-windows/
+          Copy-Item -Recurse data wolf-project-windows/
+          Copy-Item config.lua.dist wolf-project-windows/
+          Copy-Item schema.sql wolf-project-windows/
+          Copy-Item LICENSE, README.md wolf-project-windows/
+          # Copy vcpkg DLLs
+          Get-ChildItem -Path $env:VCPKG_ROOT/installed/x64-windows/bin -Filter *.dll | Copy-Item -Destination wolf-project-windows/
+          Compress-Archive -Path wolf-project-windows -DestinationPath wolf-project-windows-x64.zip
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-build
+          path: wolf-project-windows-x64.zip
+
+  create-release:
+    needs: [build-linux, build-windows]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download Linux artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: linux-build
+
+      - name: Download Windows artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: windows-build
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            wolf-project-linux-amd64.tar.gz
+            wolf-project-windows-x64.zip
+          generate_release_notes: true
+          draft: false
+          prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'rc') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

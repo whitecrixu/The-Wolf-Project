@@ -1,0 +1,54 @@
+name: Build on Windows
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build:
+    runs-on: windows-2022
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup vcpkg
+        uses: lukka/run-vcpkg@v11
+        with:
+          vcpkgGitCommitId: 'a34c873a9717a888f58dc05571dde15571da8571'
+
+      - name: Install dependencies via vcpkg
+        run: |
+          vcpkg install boost-iostreams:x64-windows
+          vcpkg install boost-system:x64-windows
+          vcpkg install boost-filesystem:x64-windows
+          vcpkg install boost-date-time:x64-windows
+          vcpkg install cryptopp:x64-windows
+          vcpkg install fmt:x64-windows
+          vcpkg install libmariadb:x64-windows
+          vcpkg install luajit:x64-windows
+          vcpkg install pugixml:x64-windows
+
+      - name: Configure CMake
+        run: |
+          mkdir build
+          cd build
+          cmake .. -DCMAKE_TOOLCHAIN_FILE=$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: |
+          cd build
+          cmake --build . --config Release
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: wolf-project-windows
+          path: build/Release/tfs.exe
+          retention-days: 30

@@ -1,0 +1,86 @@
+name: Build with vcpkg
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+env:
+  VCPKG_BINARY_SOURCES: "clear;x-gha,readwrite"
+
+jobs:
+  build:
+    name: ${{ matrix.os }}-${{ matrix.buildtype }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-22.04, windows-2022, macos-13]
+        buildtype: [Debug, Release]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Export GitHub Actions cache variables
+        uses: actions/github-script@v7
+        with:
+          script: |
+            core.exportVariable('ACTIONS_CACHE_URL', process.env.ACTIONS_CACHE_URL || '');
+            core.exportVariable('ACTIONS_RUNTIME_TOKEN', process.env.ACTIONS_RUNTIME_TOKEN || '');
+
+      - name: Setup vcpkg
+        uses: lukka/run-vcpkg@v11
+        with:
+          vcpkgGitCommitId: 'a34c873a9717a888f58dc05571dde15571da8571'
+
+      - name: Get vcpkg triplet
+        id: triplet
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            echo "triplet=x64-windows" >> $GITHUB_OUTPUT
+          elif [ "$RUNNER_OS" == "macOS" ]; then
+            echo "triplet=x64-osx" >> $GITHUB_OUTPUT
+          else
+            echo "triplet=x64-linux" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install dependencies via vcpkg
+        run: |
+          vcpkg install boost-iostreams:${{ steps.triplet.outputs.triplet }}
+          vcpkg install boost-system:${{ steps.triplet.outputs.triplet }}
+          vcpkg install boost-filesystem:${{ steps.triplet.outputs.triplet }}
+          vcpkg install boost-date-time:${{ steps.triplet.outputs.triplet }}
+          vcpkg install cryptopp:${{ steps.triplet.outputs.triplet }}
+          vcpkg install fmt:${{ steps.triplet.outputs.triplet }}
+          vcpkg install libmariadb:${{ steps.triplet.outputs.triplet }}
+          vcpkg install luajit:${{ steps.triplet.outputs.triplet }}
+          vcpkg install pugixml:${{ steps.triplet.outputs.triplet }}
+
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_TOOLCHAIN_FILE=${{ env.VCPKG_ROOT }}/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=${{ matrix.buildtype }}
+
+      - name: Build
+        run: cmake --build build --config ${{ matrix.buildtype }}
+
+      - name: Upload artifact (Linux/macOS)
+        if: matrix.buildtype == 'Release' && runner.os != 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: wolf-project-${{ runner.os }}
+          path: build/tfs
+          retention-days: 30
+
+      - name: Upload artifact (Windows)
+        if: matrix.buildtype == 'Release' && runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: wolf-project-${{ runner.os }}
+          path: build/Release/tfs.exe
+          retention-days: 30

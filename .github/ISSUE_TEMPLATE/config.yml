@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: OTLand Support Forum
+    url: https://otland.net/forums/support.16/
+    about: Get help from the community on OTLand
+  - name: GitHub Discussions
+    url: https://github.com/whitecrixu/The-Wolf-Project/discussions
+    about: Ask questions and discuss features

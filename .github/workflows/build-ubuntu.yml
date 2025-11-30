@@ -1,0 +1,72 @@
+name: Build on Ubuntu
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        compiler: [gcc, clang]
+        buildtype: [Debug, Release]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            build-essential \
+            cmake \
+            libboost-date-time-dev \
+            libboost-filesystem-dev \
+            libboost-iostreams-dev \
+            libboost-system-dev \
+            libcrypto++-dev \
+            libfmt-dev \
+            libgmp-dev \
+            libluajit-5.1-dev \
+            libmariadb-dev \
+            libpugixml-dev
+
+      - name: Setup compiler (GCC)
+        if: matrix.compiler == 'gcc'
+        run: |
+          echo "CC=gcc" >> $GITHUB_ENV
+          echo "CXX=g++" >> $GITHUB_ENV
+
+      - name: Setup compiler (Clang)
+        if: matrix.compiler == 'clang'
+        run: |
+          sudo apt-get install -y clang
+          echo "CC=clang" >> $GITHUB_ENV
+          echo "CXX=clang++" >> $GITHUB_ENV
+
+      - name: Configure CMake
+        run: |
+          mkdir -p build
+          cd build
+          cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.buildtype }}
+
+      - name: Build
+        run: |
+          cd build
+          make -j$(nproc)
+
+      - name: Upload artifact
+        if: matrix.buildtype == 'Release' && matrix.compiler == 'gcc'
+        uses: actions/upload-artifact@v4
+        with:
+          name: wolf-project-ubuntu-${{ matrix.compiler }}
+          path: build/tfs
+          retention-days: 30
