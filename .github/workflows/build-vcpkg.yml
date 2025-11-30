@@ -11,22 +11,17 @@ on:
       - develop
 
 jobs:
-  build:
-    name: ${{ matrix.os }}-${{ matrix.buildtype }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-22.04, windows-2022]
-        buildtype: [Release]
+  build-linux:
+    name: Linux
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install dependencies (Ubuntu)
-        if: runner.os == 'Linux'
+      - name: Install dependencies
         run: |
+          sudo add-apt-repository -y universe
           sudo apt-get update
           sudo apt-get install -y \
             build-essential \
@@ -42,42 +37,46 @@ jobs:
             libmariadb-dev \
             libpugixml-dev
 
-      - name: Setup vcpkg (Windows)
-        if: runner.os == 'Windows'
-        uses: lukka/run-vcpkg@v11
-        with:
-          vcpkgGitCommitId: 'a34c873a9717a888f58dc05571dde15571da8571'
-
-      - name: Install dependencies via vcpkg (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          vcpkg install boost-iostreams:x64-windows boost-system:x64-windows boost-filesystem:x64-windows boost-date-time:x64-windows cryptopp:x64-windows fmt:x64-windows libmariadb:x64-windows luajit:x64-windows pugixml:x64-windows
-
-      - name: Configure CMake (Linux)
-        if: runner.os == 'Linux'
-        run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.buildtype }}
-
-      - name: Configure CMake (Windows)
-        if: runner.os == 'Windows'
-        run: cmake -B build -DCMAKE_TOOLCHAIN_FILE=${{ env.VCPKG_ROOT }}/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE=${{ matrix.buildtype }}
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release
 
       - name: Build
-        run: cmake --build build --config ${{ matrix.buildtype }}
+        run: cmake --build build --config Release -j $(nproc)
 
-      - name: Upload artifact (Linux)
-        if: runner.os == 'Linux'
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: wolf-project-${{ runner.os }}
+          name: wolf-project-Linux
           path: build/tfs
           retention-days: 30
           if-no-files-found: ignore
 
-      - name: Upload artifact (Windows)
-        if: runner.os == 'Windows'
+  build-windows:
+    name: Windows
+    runs-on: windows-2022
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup vcpkg
+        uses: lukka/run-vcpkg@v11
+        with:
+          vcpkgGitCommitId: 'a34c873a9717a888f58dc05571dde15571da8571'
+
+      - name: Install dependencies via vcpkg
+        run: vcpkg install boost-iostreams:x64-windows boost-system:x64-windows boost-filesystem:x64-windows boost-date-time:x64-windows cryptopp:x64-windows fmt:x64-windows libmariadb:x64-windows luajit:x64-windows pugixml:x64-windows
+
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: wolf-project-${{ runner.os }}
+          name: wolf-project-Windows
           path: build/Release/tfs.exe
           retention-days: 30
           if-no-files-found: ignore
