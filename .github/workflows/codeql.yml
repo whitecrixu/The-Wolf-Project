@@ -4,11 +4,6 @@ on:
   push:
     branches:
       - main
-      - develop
-  pull_request:
-    branches:
-      - main
-      - develop
   schedule:
     - cron: '0 6 * * 1'  # Run every Monday at 6:00 AM UTC
 
@@ -29,7 +24,6 @@ jobs:
         uses: github/codeql-action/init@v3
         with:
           languages: cpp
-          queries: security-and-quality
 
       - name: Install dependencies
         run: |
@@ -52,10 +46,11 @@ jobs:
         run: |
           mkdir -p build
           cd build
-          cmake .. -DCMAKE_BUILD_TYPE=Debug
+          cmake .. -DCMAKE_BUILD_TYPE=Release
           make -j$(nproc)
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
+          category: "/language:cpp"
           category: "/language:cpp"

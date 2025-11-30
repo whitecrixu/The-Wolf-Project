@@ -45,7 +45,8 @@ RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/te
   luajit \
   mariadb-connector-c \
   pugixml \
-  tzdata
+  tzdata \
+  netcat-openbsd
 
 # Create non-root user for security
 RUN addgroup -g 1000 wolf && \

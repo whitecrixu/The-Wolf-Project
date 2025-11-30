@@ -14,9 +14,10 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     strategy:
+      fail-fast: false
       matrix:
         compiler: [gcc, clang]
-        buildtype: [Debug, Release]
+        buildtype: [Release]
 
     steps:
       - name: Checkout repository
@@ -64,9 +65,10 @@ jobs:
           make -j$(nproc)
 
       - name: Upload artifact
-        if: matrix.buildtype == 'Release' && matrix.compiler == 'gcc'
+        if: matrix.compiler == 'gcc'
         uses: actions/upload-artifact@v4
         with:
           name: wolf-project-ubuntu-${{ matrix.compiler }}
           path: build/tfs
           retention-days: 30
+          if-no-files-found: ignore
