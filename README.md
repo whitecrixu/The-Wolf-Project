@@ -60,7 +60,7 @@ The wolf symbolizes strength, perseverance, and loyalty to the pack. Just as wol
 
 ### Compilation
 
-Detailed compilation instructions can be found in our [Wiki - Compiling](https://github.com/whitecrixu/The-Wolf-Project/wiki/Compiling).
+Detailed compilation instructions can be found in our [Compiling Guide](docs/Compiling.md).
 
 #### Quick Start (Linux)
 ```bash
@@ -98,10 +98,11 @@ docker-compose --profile admin up -d
 
 ## 📚 Documentation
 
-- [Compiling](https://github.com/whitecrixu/The-Wolf-Project/wiki/Compiling)
-- [Script Reference](https://github.com/whitecrixu/The-Wolf-Project/wiki/Script-Interface)
-- [Server Configuration](https://github.com/whitecrixu/The-Wolf-Project/wiki/Configuration)
-- [Contributing](https://github.com/whitecrixu/The-Wolf-Project/wiki/Contributing)
+- [Compiling](docs/Compiling.md)
+- [Script Reference](docs/Script-Interface.md)
+- [Server Configuration](docs/Configuration.md)
+- [Database Setup](docs/Database-Setup.md)
+- [Contributing](CONTRIBUTING.md)
 
 ## 💬 Support
 
