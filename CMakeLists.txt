@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.16)
 
 set(CMAKE_DISABLE_SOURCE_CHANGES ON)
 set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
@@ -9,10 +9,15 @@ list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include(cotire)
 
-add_compile_options(-Wall -Werror -pipe -fvisibility=hidden)
-
-if (CMAKE_COMPILER_IS_GNUCXX)
-    add_compile_options(-fno-strict-aliasing)
+# Compiler-specific options
+if(MSVC)
+    add_compile_options(/W4)
+    add_definitions(-D_CRT_SECURE_NO_WARNINGS -DNOMINMAX)
+else()
+    add_compile_options(-Wall -Werror -pipe -fvisibility=hidden)
+    if (CMAKE_COMPILER_IS_GNUCXX)
+        add_compile_options(-fno-strict-aliasing)
+    endif()
 endif()
 
 include(FindCXX11)
@@ -21,7 +26,7 @@ include(FindCXX11)
 find_package(GMP REQUIRED)
 find_package(PugiXML REQUIRED)
 find_package(LuaJIT)
-find_package(MySQL)
+find_package(MySQL REQUIRED)
 find_package(Threads)
 
 option(USE_LUAJIT "Use LuaJIT" ${LUAJIT_FOUND})

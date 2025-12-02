@@ -31,6 +31,16 @@
 # standard syntax, e.g. FIND_PACKAGE(Lua 5.1)
 # Otherwise the module will search for any available Lua implementation
 
+# Try vcpkg lua package first
+find_package(lua CONFIG QUIET)
+if(lua_FOUND)
+  message(STATUS "Found Lua via vcpkg config")
+  get_target_property(LUA_INCLUDE_DIR lua INTERFACE_INCLUDE_DIRECTORIES)
+  set(LUA_LIBRARIES lua)
+  set(LUA_FOUND TRUE)
+  return()
+endif()
+
 # Always search for non-versioned lua first (recommended)
 SET(_POSSIBLE_LUA_INCLUDE include include/lua)
 SET(_POSSIBLE_LUA_EXECUTABLE lua)
