@@ -50,6 +50,9 @@ jobs:
     name: Windows
     runs-on: windows-2022
 
+    env:
+      VCPKG_DEFAULT_TRIPLET: x64-windows
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -57,14 +60,14 @@ jobs:
       - name: Setup vcpkg
         uses: lukka/run-vcpkg@v11
         with:
-          vcpkgGitCommitId: 'a34c873a9717a888f58dc05571dde15571da8571'
+          vcpkgGitCommitId: '01f602195983451bc83e72f4214af2cbc495aa94'
 
       - name: Install dependencies via vcpkg
         run: |
-          vcpkg install boost-iostreams:x64-windows boost-system:x64-windows gmp:x64-windows libmariadb:x64-windows luajit:x64-windows pugixml:x64-windows
+          vcpkg install boost-iostreams boost-system gmp libmysql luajit pugixml
 
       - name: Configure CMake
-        run: cmake -B build -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
+        run: cmake -B build -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" -DCMAKE_BUILD_TYPE=Release
 
       - name: Build
         run: cmake --build build --config Release
