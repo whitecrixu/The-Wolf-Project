@@ -209,41 +209,43 @@ bool MonsterType::createLootContainer(Container* parent, const LootBlock& lootbl
 
 bool Monsters::loadFromXml(bool reloading /*= false*/)
 {
+	// Monsters are now loaded from Lua files in data/monster/lua/
+	// This function is kept for compatibility but no longer requires monsters.xml
+	loaded = true;
+	
+	// Check if monsters.xml exists for backwards compatibility
 	pugi::xml_document doc;
 	pugi::xml_parse_result result = doc.load_file("data/monster/monsters.xml");
-	if (!result) {
-		printXMLError("Error - Monsters::loadFromXml", "data/monster/monsters.xml", result);
-		return false;
-	}
-
-	loaded = true;
-
-	std::list<std::pair<MonsterType*, std::string>> monsterScriptList;
-	for (auto monsterNode : doc.child("monsters").children()) {
-		loadMonster("data/monster/" + std::string(monsterNode.attribute("file").as_string()), monsterNode.attribute("name").as_string(), monsterScriptList, reloading);
-	}
-
-	if (!monsterScriptList.empty()) {
-		if (!scriptInterface) {
-			scriptInterface.reset(new LuaScriptInterface("Monster Interface"));
-			scriptInterface->initState();
+	if (result) {
+		// Load any remaining XML monsters for backwards compatibility
+		std::list<std::pair<MonsterType*, std::string>> monsterScriptList;
+		for (auto monsterNode : doc.child("monsters").children()) {
+			loadMonster("data/monster/" + std::string(monsterNode.attribute("file").as_string()), monsterNode.attribute("name").as_string(), monsterScriptList, reloading);
 		}
 
-		for (const auto& scriptEntry : monsterScriptList) {
-			MonsterType* mType = scriptEntry.first;
-			if (scriptInterface->loadFile("data/monster/scripts/" + scriptEntry.second) == 0) {
-				mType->info.scriptInterface = scriptInterface.get();
-				mType->info.creatureAppearEvent = scriptInterface->getEvent("onCreatureAppear");
-				mType->info.creatureDisappearEvent = scriptInterface->getEvent("onCreatureDisappear");
-				mType->info.creatureMoveEvent = scriptInterface->getEvent("onCreatureMove");
-				mType->info.creatureSayEvent = scriptInterface->getEvent("onCreatureSay");
-				mType->info.thinkEvent = scriptInterface->getEvent("onThink");
-			} else {
-				std::cout << "[Warning - Monsters::loadMonster] Can not load script: " << scriptEntry.second << std::endl;
-				std::cout << scriptInterface->getLastLuaError() << std::endl;
+		if (!monsterScriptList.empty()) {
+			if (!scriptInterface) {
+				scriptInterface.reset(new LuaScriptInterface("Monster Interface"));
+				scriptInterface->initState();
+			}
+
+			for (const auto& scriptEntry : monsterScriptList) {
+				MonsterType* mType = scriptEntry.first;
+				if (scriptInterface->loadFile("data/monster/scripts/" + scriptEntry.second) == 0) {
+					mType->info.scriptInterface = scriptInterface.get();
+					mType->info.creatureAppearEvent = scriptInterface->getEvent("onCreatureAppear");
+					mType->info.creatureDisappearEvent = scriptInterface->getEvent("onCreatureDisappear");
+					mType->info.creatureMoveEvent = scriptInterface->getEvent("onCreatureMove");
+					mType->info.creatureSayEvent = scriptInterface->getEvent("onCreatureSay");
+					mType->info.thinkEvent = scriptInterface->getEvent("onThink");
+				} else {
+					std::cout << "[Warning - Monsters::loadMonster] Can not load script: " << scriptEntry.second << std::endl;
+					std::cout << scriptInterface->getLastLuaError() << std::endl;
+				}
 			}
 		}
 	}
+	// If monsters.xml doesn't exist, that's fine - monsters are loaded from Lua
 	return true;
 }
 
@@ -1273,4 +1275,36 @@ MonsterType* Monsters::getMonsterType(const std::string& name)
 		return nullptr;
 	}
 	return &it->second;
+}
+
+MonsterType* Monsters::addMonsterType(const std::string& name)
+{
+	std::string lowerName = asLowerCaseString(name);
+	auto it = monsters.find(lowerName);
+	if (it != monsters.end()) {
+		return &it->second;
+	}
+
+	monsters[lowerName] = MonsterType();
+	MonsterType& mType = monsters[lowerName];
+	mType.name = name;
+	mType.nameDescription = "a " + name;
+	return &mType;
+}
+
+bool Monsters::hasMonsterType(const std::string& name) const
+{
+	return monsters.find(asLowerCaseString(name)) != monsters.end();
+}
+
+bool Monsters::loadFromLua(bool reloading)
+{
+	// Lua monsters are loaded via scripts in data/monster/*.lua
+	// They use Game.createMonsterType() and MonsterType:register()
+	// This function is called for compatibility but actual loading 
+	// happens through the script system
+	if (!reloading) {
+		loaded = true;
+	}
+	return true;
 }

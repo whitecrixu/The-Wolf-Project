@@ -22,10 +22,8 @@
 
 static constexpr auto STATUS_SERVER_NAME = "The Wolf Project";
 static constexpr auto STATUS_SERVER_VERSION = "1.0.0";
-static constexpr auto MINOR_VERSION = "0";
-static constexpr auto REVISION_VERSION = "1";
 static constexpr auto SOFTWARE_CODENAME = "Howling Moon";
-static constexpr auto STATUS_SERVER_DEVELOPERS = "The Wolf Project Server Team and The Forgotten Server Developers";
+static constexpr auto STATUS_SERVER_DEVELOPERS = "The Wolf Project Server Team";
 static constexpr auto GIT_REPO = "https://github.com/whitecrixu/The-Wolf-Project";
 
 static constexpr auto CLIENT_VERSION_MIN = 1100;

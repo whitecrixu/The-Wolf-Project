@@ -3,3 +3,4 @@ build/
 wolfserver
 wolfserver.exe
 tools/convert_to_revscriptsys.py
+tools/convert_monsters_to_lua.py

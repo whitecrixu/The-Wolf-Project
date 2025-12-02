@@ -172,7 +172,7 @@ void Game::saveGameState()
 		setGameState(GAME_STATE_MAINTAIN);
 	}
 
-	std::cout << "Saving server..." << std::endl;
+	std::cout << "\033[36m  ▸ Saving server...\033[0m" << std::flush;
 
 	for (const auto& it : players) {
 		it.second->loginPosition = it.second->getPosition();
@@ -180,6 +180,8 @@ void Game::saveGameState()
 	}
 
 	Map::save();
+
+	std::cout << "\033[32m ✓\033[0m" << std::endl;
 
 	if (gameState == GAME_STATE_MAINTAIN) {
 		setGameState(GAME_STATE_NORMAL);
@@ -4453,7 +4455,7 @@ void Game::resetCommandTag()
 
 void Game::shutdown()
 {
-	std::cout << "Shutting down..." << std::flush;
+	std::cout << "\033[36m  ▸ Shutting down services...\033[0m" << std::flush;
 
 	g_scheduler.shutdown();
 	g_databaseTasks.shutdown();
@@ -4469,7 +4471,10 @@ void Game::shutdown()
 
 	ConnectionManager::getInstance().closeAll();
 
-	std::cout << " done!" << std::endl;
+	std::cout << "\033[32m ✓\033[0m" << std::endl;
+	std::cout << std::endl;
+	std::cout << "\033[32m  🐺 Goodbye! Server has been shut down safely.\033[0m" << std::endl;
+	std::cout << std::endl;
 }
 
 void Game::cleanup()

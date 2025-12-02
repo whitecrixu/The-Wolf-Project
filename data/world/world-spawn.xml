@@ -8216,7 +8216,7 @@
 	<spawn centerx="250" centery="532" centerz="9" radius="1" />
 	<spawn centerx="298" centery="532" centerz="9" radius="1" />
 	<spawn centerx="247" centery="533" centerz="9" radius="1">
-		<monster name="Beholder" x="0" y="0" z="9" spawntime="60" />
+		<monster name="Bonelord" x="0" y="0" z="9" spawntime="60" />
 	</spawn>
 	<spawn centerx="254" centery="533" centerz="9" radius="1" />
 	<spawn centerx="290" centery="533" centerz="9" radius="1">
@@ -8319,7 +8319,7 @@
 		<monster name="Adept of the Cult" x="1" y="0" z="9" spawntime="60" />
 	</spawn>
 	<spawn centerx="315" centery="551" centerz="9" radius="1">
-		<monster name="Elder Beholder" x="1" y="0" z="9" spawntime="60" />
+		<monster name="Elder Bonelord" x="1" y="0" z="9" spawntime="60" />
 	</spawn>
 	<spawn centerx="319" centery="551" centerz="9" radius="1">
 		<monster name="Acolyte of the Cult" x="1" y="0" z="9" spawntime="60" />
@@ -8329,7 +8329,7 @@
 	</spawn>
 	<spawn centerx="315" centery="553" centerz="9" radius="1">
 		<monster name="Novice of the Cult" x="1" y="0" z="9" spawntime="60" />
-		<monster name="Beholder" x="1" y="1" z="9" spawntime="60" />
+		<monster name="Bonelord" x="1" y="1" z="9" spawntime="60" />
 	</spawn>
 	<spawn centerx="250" centery="555" centerz="9" radius="1">
 		<monster name="Acolyte of the Cult" x="1" y="0" z="9" spawntime="60" />

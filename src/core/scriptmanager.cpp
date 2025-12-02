@@ -175,12 +175,16 @@ void ScriptingManager::loadRevScriptSysScripts()
 	
 	struct stat st;
 	if (stat(scriptsPath.c_str(), &st) != 0 || !S_ISDIR(st.st_mode)) {
-		std::cout << ">> RevScriptSys: No scripts directory found at " << scriptsPath << std::endl;
 		return;
 	}
 
 	uint32_t scriptsLoaded = 0;
 	loadRevScriptSysScriptsFromDir(scriptsPath, scriptsLoaded);
 
-	std::cout << ">> Loaded " << scriptsLoaded << " RevScriptSys scripts." << std::endl;
+	// Load Lua monster definitions
+	std::string monsterLuaPath = "data/monster/lua";
+	if (stat(monsterLuaPath.c_str(), &st) == 0 && S_ISDIR(st.st_mode)) {
+		uint32_t monstersLoaded = 0;
+		loadRevScriptSysScriptsFromDir(monsterLuaPath, monstersLoaded);
+	}
 }

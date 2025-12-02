@@ -105,27 +105,28 @@ void Signals::dispatchSignalHandler(int signal)
 void Signals::sigtermHandler()
 {
 	//Dispatcher thread
-	std::cout << "SIGTERM received, shutting game server down..." << std::endl;
+	std::cout << std::endl;
+	std::cout << "\033[33m  ⚠ SIGTERM received, shutting down...\033[0m" << std::endl;
 	g_game.setGameState(GAME_STATE_SHUTDOWN);
 }
 
 void Signals::sigusr1Handler()
 {
 	//Dispatcher thread
-	std::cout << "SIGUSR1 received, saving the game state..." << std::endl;
+	std::cout << "\033[36m  ▸ SIGUSR1 received, saving game state...\033[0m" << std::endl;
 	g_game.saveGameState();
 }
 
 void Signals::sighupHandler()
 {
 	//Dispatcher thread
-	std::cout << "SIGHUP received, reloading config files..." << std::endl;
+	std::cout << "\033[36m  ▸ SIGHUP received, reloading config files...\033[0m" << std::endl;
 
 	g_actions->reload();
-	std::cout << "Reloaded actions." << std::endl;
+	std::cout << "\033[2m    └─ Actions reloaded\033[0m" << std::endl;
 
 	g_config.reload();
-	std::cout << "Reloaded config." << std::endl;
+	std::cout << "\033[2m    └─ Config reloaded\033[0m" << std::endl;
 
 	g_game.reloadCommands();
 	std::cout << "Reloaded commands." << std::endl;

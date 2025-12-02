@@ -38,15 +38,15 @@ bool DatabaseManager::optimizeTables()
 
 	do {
 		std::string tableName = result->getString("TABLE_NAME");
-		std::cout << "> Optimizing table " << tableName << "..." << std::flush;
+		std::cout << "\033[2m    └─ Optimizing " << tableName << "...\033[0m" << std::flush;
 
 		query.str(std::string());
 		query << "OPTIMIZE TABLE `" << tableName << '`';
 
 		if (db->executeQuery(query.str())) {
-			std::cout << " [success]" << std::endl;
+			std::cout << "\033[32m ✓\033[0m" << std::endl;
 		} else {
-			std::cout << " [failed]" << std::endl;
+			std::cout << "\033[31m ✗\033[0m" << std::endl;
 		}
 	} while (result->next());
 	return true;

@@ -168,9 +168,11 @@ class MonsterType
 	public:
 		MonsterType() = default;
 
-		// non-copyable
+		// non-copyable but movable
 		MonsterType(const MonsterType&) = delete;
 		MonsterType& operator=(const MonsterType&) = delete;
+		MonsterType(MonsterType&&) = default;
+		MonsterType& operator=(MonsterType&&) = default;
 
 		std::string name;
 		std::string nameDescription;
@@ -191,12 +193,16 @@ class Monsters
 		Monsters& operator=(const Monsters&) = delete;
 
 		bool loadFromXml(bool reloading = false);
+		bool loadFromLua(bool reloading = false);
 		bool isLoaded() const {
 			return loaded;
 		}
 		bool reload();
 
 		MonsterType* getMonsterType(const std::string& name);
+		MonsterType* addMonsterType(const std::string& name);
+		bool hasMonsterType(const std::string& name) const;
+		size_t getMonsterCount() const { return monsters.size(); }
 
 		static uint32_t getLootRandom();
 

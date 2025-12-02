@@ -346,7 +346,17 @@ class LuaScriptInterface
 			return getNumber<T>(L, -1);
 		}
 
+		template<typename T>
+		static T getFieldAndPop(lua_State* L, int32_t arg, const std::string& key)
+		{
+			lua_getfield(L, arg, key.c_str());
+			T value = getNumber<T>(L, -1);
+			lua_pop(L, 1);
+			return value;
+		}
+
 		static std::string getFieldString(lua_State* L, int32_t arg, const std::string& key);
+		static bool getFieldBoolean(lua_State* L, int32_t arg, const std::string& key, bool defaultValue = false);
 
 		static LuaDataType getUserdataType(lua_State* L, int32_t arg);
 
@@ -557,6 +567,7 @@ class LuaScriptInterface
 		static int luaGameCreateItem(lua_State* L);
 		static int luaGameCreateContainer(lua_State* L);
 		static int luaGameCreateMonster(lua_State* L);
+		static int luaGameCreateMonsterType(lua_State* L);
 		static int luaGameCreateNpc(lua_State* L);
 		static int luaGameCreateTile(lua_State* L);
 
@@ -1259,6 +1270,52 @@ class LuaScriptInterface
 		static int luaMonsterTypeGetYellSpeedTicks(lua_State* L);
 		static int luaMonsterTypeGetChangeTargetChance(lua_State* L);
 		static int luaMonsterTypeGetChangeTargetSpeed(lua_State* L);
+
+		// MonsterType setters (for Lua monster registration)
+		static int luaMonsterTypeName(lua_State* L);
+		static int luaMonsterTypeNameDescription(lua_State* L);
+		static int luaMonsterTypeHealth(lua_State* L);
+		static int luaMonsterTypeMaxHealth(lua_State* L);
+		static int luaMonsterTypeRunHealth(lua_State* L);
+		static int luaMonsterTypeExperience(lua_State* L);
+		static int luaMonsterTypeSpeed(lua_State* L);
+		static int luaMonsterTypeOutfit(lua_State* L);
+		static int luaMonsterTypeRace(lua_State* L);
+		static int luaMonsterTypeCorpseId(lua_State* L);
+		static int luaMonsterTypeManaCost(lua_State* L);
+		static int luaMonsterTypeLight(lua_State* L);
+		static int luaMonsterTypeArmor(lua_State* L);
+		static int luaMonsterTypeDefense(lua_State* L);
+		static int luaMonsterTypeTargetDistance(lua_State* L);
+		static int luaMonsterTypeStaticAttackChance(lua_State* L);
+		static int luaMonsterTypeMaxSummons(lua_State* L);
+		static int luaMonsterTypeChangeTargetChance(lua_State* L);
+		static int luaMonsterTypeChangeTargetSpeed(lua_State* L);
+		static int luaMonsterTypeYellChance(lua_State* L);
+		static int luaMonsterTypeYellSpeedTicks(lua_State* L);
+		static int luaMonsterTypeAttackable(lua_State* L);
+		static int luaMonsterTypeConvinceable(lua_State* L);
+		static int luaMonsterTypeSummonable(lua_State* L);
+		static int luaMonsterTypeIllusionable(lua_State* L);
+		static int luaMonsterTypeHostile(lua_State* L);
+		static int luaMonsterTypePassive(lua_State* L);
+		static int luaMonsterTypePushable(lua_State* L);
+		static int luaMonsterTypeCanPushItemsSetter(lua_State* L);
+		static int luaMonsterTypeCanPushCreaturesSetter(lua_State* L);
+		static int luaMonsterTypeHiddenHealth(lua_State* L);
+		static int luaMonsterTypeRewardBoss(lua_State* L);
+
+		static int luaMonsterTypeCombatImmunities(lua_State* L);
+		static int luaMonsterTypeConditionImmunities(lua_State* L);
+		static int luaMonsterTypeImmunities(lua_State* L);
+		static int luaMonsterTypeElementList(lua_State* L);
+		static int luaMonsterTypeVoices(lua_State* L);
+		static int luaMonsterTypeLoot(lua_State* L);
+		static int luaMonsterTypeSummons(lua_State* L);
+		static int luaMonsterTypeAttacks(lua_State* L);
+		static int luaMonsterTypeDefenses(lua_State* L);
+		static int luaMonsterTypeCreatureEvents(lua_State* L);
+		static int luaMonsterTypeRegister(lua_State* L);
 
 		// Party
 		static int luaPartyDisband(lua_State* L);
