@@ -25,37 +25,27 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo add-apt-repository -y universe
           sudo apt-get update
           sudo apt-get install -y \
             build-essential \
             cmake \
-            libboost-date-time-dev \
-            libboost-filesystem-dev \
             libboost-iostreams-dev \
             libboost-system-dev \
-            libcrypto++-dev \
-            libfmt-dev \
             libgmp-dev \
             libluajit-5.1-dev \
             libmariadb-dev \
             libpugixml-dev
 
       - name: Configure CMake
-        run: |
-          mkdir -p build
-          cd build
-          cmake .. -DCMAKE_BUILD_TYPE=${{ matrix.buildtype }}
+        run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.buildtype }}
 
       - name: Build
-        run: |
-          cd build
-          make -j$(nproc)
+        run: cmake --build build -j $(nproc)
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: wolf-project-ubuntu
-          path: build/tfs
+          name: wolfserver-ubuntu-${{ matrix.buildtype }}
+          path: build/wolfserver
           retention-days: 30
-          if-no-files-found: ignore
+          if-no-files-found: warn

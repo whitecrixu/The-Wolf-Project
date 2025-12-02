@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: '0 6 * * 1'  # Run every Monday at 6:00 AM UTC
+    - cron: '0 6 * * 1'
 
 jobs:
   analyze:
@@ -27,17 +27,12 @@ jobs:
 
       - name: Install dependencies
         run: |
-          sudo add-apt-repository -y universe
           sudo apt-get update
           sudo apt-get install -y \
             build-essential \
             cmake \
-            libboost-date-time-dev \
-            libboost-filesystem-dev \
             libboost-iostreams-dev \
             libboost-system-dev \
-            libcrypto++-dev \
-            libfmt-dev \
             libgmp-dev \
             libluajit-5.1-dev \
             libmariadb-dev \
@@ -45,13 +40,10 @@ jobs:
 
       - name: Build
         run: |
-          mkdir -p build
-          cd build
-          cmake .. -DCMAKE_BUILD_TYPE=Release
-          make -j$(nproc)
+          cmake -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build -j $(nproc)
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
-          category: "/language:cpp"
           category: "/language:cpp"

@@ -25,7 +25,7 @@ jobs:
 
       - name: Install dependencies via vcpkg
         run: |
-          vcpkg install boost-iostreams:x64-windows boost-system:x64-windows boost-filesystem:x64-windows boost-date-time:x64-windows cryptopp:x64-windows fmt:x64-windows libmariadb:x64-windows luajit:x64-windows pugixml:x64-windows
+          vcpkg install boost-iostreams:x64-windows boost-system:x64-windows gmp:x64-windows libmariadb:x64-windows luajit:x64-windows pugixml:x64-windows
 
       - name: Configure CMake
         run: cmake -B build -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake"
@@ -36,7 +36,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: wolf-project-windows
-          path: build/Release/tfs.exe
+          name: wolfserver-windows-Release
+          path: build/Release/wolfserver.exe
           retention-days: 30
-          if-no-files-found: ignore
+          if-no-files-found: warn
