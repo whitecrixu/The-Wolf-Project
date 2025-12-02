@@ -27,13 +27,20 @@
 
 ##########################################################################
 
-# Try to use vcpkg's unofficial-libmysql first (for vcpkg builds)
-find_package(unofficial-libmysql QUIET)
-if(unofficial-libmysql_FOUND)
-	message(STATUS "Found MySQL via vcpkg unofficial-libmysql")
+# Try to use vcpkg's libmysql first (for vcpkg builds)
+find_package(libmysql CONFIG QUIET)
+if(libmysql_FOUND)
+	message(STATUS "Found MySQL via vcpkg libmysql")
 	set(MYSQL_FOUND TRUE)
-	get_target_property(MYSQL_INCLUDE_DIR unofficial::libmysql::libmysql INTERFACE_INCLUDE_DIRECTORIES)
-	set(MYSQL_CLIENT_LIBS unofficial::libmysql::libmysql)
+	# libmysql from vcpkg provides mysql target
+	if(TARGET mysql)
+		get_target_property(MYSQL_INCLUDE_DIR mysql INTERFACE_INCLUDE_DIRECTORIES)
+		set(MYSQL_CLIENT_LIBS mysql)
+	else()
+		# Fallback - use the library directly
+		set(MYSQL_INCLUDE_DIR "${_VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}/include/mysql")
+		set(MYSQL_CLIENT_LIBS libmysql)
+	endif()
 	return()
 endif()
 
