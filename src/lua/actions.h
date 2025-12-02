@@ -69,6 +69,26 @@ class Action : public Event
 
 		ActionFunction* function;
 
+		// RevScriptSys
+		void setItemIdsVector(uint16_t id) {
+			itemIds.push_back(id);
+		}
+		void setActionIdsVector(uint16_t id) {
+			actionIds.push_back(id);
+		}
+		void setUniqueIdsVector(uint16_t id) {
+			uniqueIds.push_back(id);
+		}
+		const std::vector<uint16_t>& getItemIds() const {
+			return itemIds;
+		}
+		const std::vector<uint16_t>& getActionIds() const {
+			return actionIds;
+		}
+		const std::vector<uint16_t>& getUniqueIds() const {
+			return uniqueIds;
+		}
+
 	protected:
 		std::string getScriptEventName() const override;
 
@@ -79,6 +99,11 @@ class Action : public Event
 		bool allowFarUse;
 		bool checkFloor;
 		bool checkLineOfSight;
+
+		// RevScriptSys
+		std::vector<uint16_t> itemIds;
+		std::vector<uint16_t> actionIds;
+		std::vector<uint16_t> uniqueIds;
 };
 
 class Actions final : public BaseEvents
@@ -97,6 +122,9 @@ class Actions final : public BaseEvents
 		ReturnValue canUse(const Player* player, const Position& pos);
 		ReturnValue canUse(const Player* player, const Position& pos, const Item* item);
 		ReturnValue canUseFar(const Creature* creature, const Position& toPos, bool checkLineOfSight, bool checkFloor);
+
+		// RevScriptSys
+		bool registerLuaEvent(Action* action);
 
 	protected:
 		ReturnValue internalUseItem(Player* player, const Position& pos, uint8_t index, Item* item, bool isHotkey);

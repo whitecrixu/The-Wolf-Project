@@ -196,6 +196,44 @@ bool Actions::registerEvent(Event* event, const pugi::xml_node& node)
 	return false;
 }
 
+// RevScriptSys
+bool Actions::registerLuaEvent(Action* action)
+{
+	bool success = false;
+
+	// Register by item ids
+	for (uint16_t id : action->getItemIds()) {
+		auto result = useItemMap.emplace(id, action);
+		if (!result.second) {
+			std::cout << "[Warning - Actions::registerLuaEvent] Duplicate registered item with id: " << id << std::endl;
+		} else {
+			success = true;
+		}
+	}
+
+	// Register by action ids
+	for (uint16_t aid : action->getActionIds()) {
+		auto result = actionItemMap.emplace(aid, action);
+		if (!result.second) {
+			std::cout << "[Warning - Actions::registerLuaEvent] Duplicate registered item with actionid: " << aid << std::endl;
+		} else {
+			success = true;
+		}
+	}
+
+	// Register by unique ids
+	for (uint16_t uid : action->getUniqueIds()) {
+		auto result = uniqueItemMap.emplace(uid, action);
+		if (!result.second) {
+			std::cout << "[Warning - Actions::registerLuaEvent] Duplicate registered item with uniqueid: " << uid << std::endl;
+		} else {
+			success = true;
+		}
+	}
+
+	return success;
+}
+
 ReturnValue Actions::canUse(const Player* player, const Position& pos)
 {
 	if (pos.x != 0xFFFF) {

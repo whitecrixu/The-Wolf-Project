@@ -36,6 +36,10 @@ class ScriptingManager
 		}
 
 		bool loadScriptSystems();
+
+	private:
+		void loadRevScriptSysScripts();
+		void loadRevScriptSysScriptsFromDir(const std::string& path, uint32_t& scriptsLoaded);
 };
 
 #endif

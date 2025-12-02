@@ -44,6 +44,9 @@ class TalkActions : public BaseEvents
 
 		TalkActionResult_t playerSaySpell(Player* player, SpeakClasses type, const std::string& words) const;
 
+		// RevScriptSys
+		bool registerLuaEvent(TalkAction* talkAction);
+
 	protected:
 		LuaScriptInterface& getScriptInterface() final;
 		std::string getScriptBaseName() const final;
@@ -67,8 +70,14 @@ class TalkAction : public Event
 		const std::string& getWords() const {
 			return words;
 		}
+		void setWords(const std::string& w) {
+			words = w;
+		}
 		char getSeparator() const {
 			return separator;
+		}
+		void setSeparator(char s) {
+			separator = s;
 		}
 
 		//scripting

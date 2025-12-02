@@ -41,10 +41,27 @@ class Event
 			return scripted;
 		}
 
+		// RevScriptSys
+		bool loadCallback();
+		void setScripted(bool value) {
+			scripted = value;
+		}
+		LuaScriptInterface* getScriptInterface() const {
+			return scriptInterface;
+		}
+		int32_t getScriptId() const {
+			return scriptId;
+		}
+		void setScriptId(int32_t id) {
+			scriptId = id;
+		}
+
+		bool fromLua = false;
+		bool scripted = false;
+
 	protected:
 		virtual std::string getScriptEventName() const = 0;
 
-		bool scripted = false;
 		int32_t scriptId = 0;
 		LuaScriptInterface* scriptInterface = nullptr;
 };

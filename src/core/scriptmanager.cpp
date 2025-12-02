@@ -31,6 +31,9 @@
 #include "events.h"
 #include "modules.h"
 
+#include <dirent.h>
+#include <sys/stat.h>
+
 Actions* g_actions = nullptr;
 CreatureEvents* g_creatureEvents = nullptr;
 Chat* g_chat = nullptr;
@@ -121,5 +124,63 @@ bool ScriptingManager::loadScriptSystems()
 		return false;
 	}
 
+	// Load RevScriptSys scripts from data/scripts/
+	loadRevScriptSysScripts();
+
 	return true;
+}
+
+void ScriptingManager::loadRevScriptSysScriptsFromDir(const std::string& path, uint32_t& scriptsLoaded)
+{
+	DIR* dir = opendir(path.c_str());
+	if (!dir) {
+		return;
+	}
+
+	struct dirent* entry;
+	while ((entry = readdir(dir)) != nullptr) {
+		std::string name = entry->d_name;
+		if (name == "." || name == "..") {
+			continue;
+		}
+
+		std::string fullPath = path + "/" + name;
+		
+		struct stat st;
+		if (stat(fullPath.c_str(), &st) == 0) {
+			if (S_ISDIR(st.st_mode)) {
+				// Recurse into subdirectory
+				loadRevScriptSysScriptsFromDir(fullPath, scriptsLoaded);
+			} else if (S_ISREG(st.st_mode)) {
+				// Check if it's a .lua file
+				size_t len = name.length();
+				if (len > 4 && name.substr(len - 4) == ".lua") {
+					if (g_luaEnvironment.loadFile(fullPath) == -1) {
+						std::cout << "[Warning - RevScriptSys] Can not load script: " << fullPath << std::endl;
+						std::cout << g_luaEnvironment.getLastLuaError() << std::endl;
+					} else {
+						scriptsLoaded++;
+					}
+				}
+			}
+		}
+	}
+
+	closedir(dir);
+}
+
+void ScriptingManager::loadRevScriptSysScripts()
+{
+	std::string scriptsPath = "data/scripts";
+	
+	struct stat st;
+	if (stat(scriptsPath.c_str(), &st) != 0 || !S_ISDIR(st.st_mode)) {
+		std::cout << ">> RevScriptSys: No scripts directory found at " << scriptsPath << std::endl;
+		return;
+	}
+
+	uint32_t scriptsLoaded = 0;
+	loadRevScriptSysScriptsFromDir(scriptsPath, scriptsLoaded);
+
+	std::cout << ">> Loaded " << scriptsLoaded << " RevScriptSys scripts." << std::endl;
 }

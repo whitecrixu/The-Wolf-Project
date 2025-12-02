@@ -89,6 +89,26 @@ bool CreatureEvents::registerEvent(Event* event, const pugi::xml_node&)
 	}
 }
 
+// RevScriptSys
+bool CreatureEvents::registerLuaEvent(CreatureEvent* creatureEvent)
+{
+	if (creatureEvent->getEventType() == CREATURE_EVENT_NONE) {
+		std::cout << "Error: [CreatureEvents::registerLuaEvent] Trying to register event without type!" << std::endl;
+		return false;
+	}
+
+	CreatureEvent* oldEvent = getEventByName(creatureEvent->getName(), false);
+	if (oldEvent) {
+		if (!oldEvent->isLoaded() && oldEvent->getEventType() == creatureEvent->getEventType()) {
+			oldEvent->copyEvent(creatureEvent);
+		}
+		return false;
+	}
+
+	creatureEvents[creatureEvent->getName()] = creatureEvent;
+	return true;
+}
+
 CreatureEvent* CreatureEvents::getEventByName(const std::string& name, bool forceLoaded /*= true*/)
 {
 	auto it = creatureEvents.find(name);

@@ -23,6 +23,9 @@
 #include "baseevents.h"
 #include "item.h"
 #include "luascript.h"
+#include "vocation.h"
+
+extern Vocations g_vocations;
 
 enum MoveEvent_t {
 	MOVE_EVENT_STEP_IN,
@@ -62,6 +65,9 @@ class MoveEvents final : public BaseEvents
 		uint32_t onItemMove(Item* item, Tile* tile, bool isAdd);
 
 		MoveEvent* getEvent(Item* item, MoveEvent_t eventType);
+
+		// RevScriptSys
+		bool registerLuaEvent(MoveEvent* moveEvent);
 
 	protected:
 		typedef std::map<int32_t, MoveEventList> MoveListMap;
@@ -123,28 +129,74 @@ class MoveEvent final : public Event
 		uint32_t getReqLevel() const {
 			return reqLevel;
 		}
+		void setRequiredLevel(uint32_t level) {
+			reqLevel = level;
+		}
 		uint32_t getReqMagLv() const {
 			return reqMagLevel;
+		}
+		void setRequiredMagLevel(uint32_t level) {
+			reqMagLevel = level;
 		}
 		bool isPremium() const {
 			return premium;
 		}
+		void setRequiresPremium(bool b) {
+			premium = b;
+		}
 		const std::string& getVocationString() const {
 			return vocationString;
+		}
+		void setVocationString(const std::string& str) {
+			vocationString = str;
 		}
 		uint32_t getWieldInfo() const {
 			return wieldInfo;
 		}
+		void setWieldInfo(uint32_t info) {
+			wieldInfo |= info;
+		}
 		const VocEquipMap& getVocEquipMap() const {
 			return vocEquipMap;
 		}
+		void addVocEquipMap(const std::string& vocName) {
+			int32_t index = g_vocations.getVocationId(vocName);
+			if (index != -1) {
+				vocEquipMap[index] = true;
+			}
+		}
+		void setSlot(uint32_t s) {
+			slot = s;
+		}
 
-	protected:
-		std::string getScriptEventName() const final;
+		// RevScriptSys
+		void setItemIdsVector(uint16_t id) {
+			itemIds.push_back(id);
+		}
+		void setActionIdsVector(uint16_t id) {
+			actionIds.push_back(id);
+		}
+		void setUniqueIdsVector(uint16_t id) {
+			uniqueIds.push_back(id);
+		}
+		void setPositionsVector(const Position& pos) {
+			positions.push_back(pos);
+		}
+		const std::vector<uint16_t>& getItemIds() const {
+			return itemIds;
+		}
+		const std::vector<uint16_t>& getActionIds() const {
+			return actionIds;
+		}
+		const std::vector<uint16_t>& getUniqueIds() const {
+			return uniqueIds;
+		}
+		const std::vector<Position>& getPositions() const {
+			return positions;
+		}
 
 		static StepFunction StepInField;
 		static StepFunction StepOutField;
-
 		static MoveFunction AddItemField;
 		static MoveFunction RemoveItemField;
 		static EquipFunction EquipItem;
@@ -154,6 +206,10 @@ class MoveEvent final : public Event
 		StepFunction* stepFunction = nullptr;
 		MoveFunction* moveFunction = nullptr;
 		EquipFunction* equipFunction = nullptr;
+
+	protected:
+		std::string getScriptEventName() const final;
+
 		uint32_t slot = SLOTP_WHEREEVER;
 
 		//onEquip information
@@ -163,6 +219,12 @@ class MoveEvent final : public Event
 		std::string vocationString;
 		uint32_t wieldInfo = 0;
 		VocEquipMap vocEquipMap;
+
+		// RevScriptSys
+		std::vector<uint16_t> itemIds;
+		std::vector<uint16_t> actionIds;
+		std::vector<uint16_t> uniqueIds;
+		std::vector<Position> positions;
 };
 
 #endif

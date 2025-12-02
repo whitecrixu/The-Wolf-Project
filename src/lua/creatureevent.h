@@ -59,6 +59,9 @@ class CreatureEvents final : public BaseEvents
 
 		CreatureEvent* getEventByName(const std::string& name, bool forceLoaded = true);
 
+		// RevScriptSys
+		bool registerLuaEvent(CreatureEvent* creatureEvent);
+
 	protected:
 		LuaScriptInterface& getScriptInterface() final;
 		std::string getScriptBaseName() const final;
@@ -83,8 +86,14 @@ class CreatureEvent final : public Event
 		CreatureEventType_t getEventType() const {
 			return type;
 		}
+		void setEventType(CreatureEventType_t t) {
+			type = t;
+		}
 		const std::string& getName() const {
 			return eventName;
+		}
+		void setName(const std::string& name) {
+			eventName = name;
 		}
 		bool isLoaded() const {
 			return loaded;

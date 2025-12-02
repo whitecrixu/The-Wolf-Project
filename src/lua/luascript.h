@@ -1272,6 +1272,53 @@ class LuaScriptInterface
 		static int luaPartyShareExperience(lua_State* L);
 		static int luaPartySetSharedExperience(lua_State* L);
 
+		// Action (RevScriptSys)
+		static int luaCreateAction(lua_State* L);
+		static int luaActionOnUse(lua_State* L);
+		static int luaActionRegister(lua_State* L);
+		static int luaActionItemId(lua_State* L);
+		static int luaActionActionId(lua_State* L);
+		static int luaActionUniqueId(lua_State* L);
+		static int luaActionAllowFarUse(lua_State* L);
+		static int luaActionBlockWalls(lua_State* L);
+		static int luaActionCheckFloor(lua_State* L);
+
+		// TalkAction (RevScriptSys)
+		static int luaCreateTalkAction(lua_State* L);
+		static int luaTalkActionOnSay(lua_State* L);
+		static int luaTalkActionRegister(lua_State* L);
+		static int luaTalkActionWords(lua_State* L);
+		static int luaTalkActionSeparator(lua_State* L);
+
+		// CreatureEvent (RevScriptSys)
+		static int luaCreateCreatureEvent(lua_State* L);
+		static int luaCreatureEventType(lua_State* L);
+		static int luaCreatureEventRegister(lua_State* L);
+		static int luaCreatureEventOnCallback(lua_State* L);
+
+		// MoveEvent (RevScriptSys)
+		static int luaCreateMoveEvent(lua_State* L);
+		static int luaMoveEventType(lua_State* L);
+		static int luaMoveEventRegister(lua_State* L);
+		static int luaMoveEventOnCallback(lua_State* L);
+		static int luaMoveEventLevel(lua_State* L);
+		static int luaMoveEventSlot(lua_State* L);
+		static int luaMoveEventMagLevel(lua_State* L);
+		static int luaMoveEventPremium(lua_State* L);
+		static int luaMoveEventVocation(lua_State* L);
+		static int luaMoveEventItemId(lua_State* L);
+		static int luaMoveEventActionId(lua_State* L);
+		static int luaMoveEventUniqueId(lua_State* L);
+		static int luaMoveEventPosition(lua_State* L);
+
+		// GlobalEvent (RevScriptSys)
+		static int luaCreateGlobalEvent(lua_State* L);
+		static int luaGlobalEventType(lua_State* L);
+		static int luaGlobalEventRegister(lua_State* L);
+		static int luaGlobalEventOnCallback(lua_State* L);
+		static int luaGlobalEventTime(lua_State* L);
+		static int luaGlobalEventInterval(lua_State* L);
+
 		//
 		lua_State* luaState = nullptr;
 		std::string lastLuaError;

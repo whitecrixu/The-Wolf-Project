@@ -35,6 +35,11 @@
 #include "monster.h"
 #include "scheduler.h"
 #include "databasetasks.h"
+#include "actions.h"
+#include "movement.h"
+#include "talkaction.h"
+#include "creatureevent.h"
+#include "globalevent.h"
 
 extern Chat* g_chat;
 extern Game g_game;
@@ -42,6 +47,11 @@ extern Monsters g_monsters;
 extern ConfigManager g_config;
 extern Vocations g_vocations;
 extern Spells* g_spells;
+extern Actions* g_actions;
+extern MoveEvents* g_moveEvents;
+extern TalkActions* g_talkActions;
+extern CreatureEvents* g_creatureEvents;
+extern GlobalEvents* g_globalEvents;
 
 ScriptEnvironment::DBResultMap ScriptEnvironment::tempResults;
 uint32_t ScriptEnvironment::lastResultId = 0;
@@ -2616,6 +2626,67 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Party", "isSharedExperienceEnabled", LuaScriptInterface::luaPartyIsSharedExperienceEnabled);
 	registerMethod("Party", "shareExperience", LuaScriptInterface::luaPartyShareExperience);
 	registerMethod("Party", "setSharedExperience", LuaScriptInterface::luaPartySetSharedExperience);
+
+	// Action (RevScriptSys)
+	registerClass("Action", "", LuaScriptInterface::luaCreateAction);
+	registerMethod("Action", "onUse", LuaScriptInterface::luaActionOnUse);
+	registerMethod("Action", "register", LuaScriptInterface::luaActionRegister);
+	registerMethod("Action", "id", LuaScriptInterface::luaActionItemId);
+	registerMethod("Action", "aid", LuaScriptInterface::luaActionActionId);
+	registerMethod("Action", "uid", LuaScriptInterface::luaActionUniqueId);
+	registerMethod("Action", "allowFarUse", LuaScriptInterface::luaActionAllowFarUse);
+	registerMethod("Action", "blockWalls", LuaScriptInterface::luaActionBlockWalls);
+	registerMethod("Action", "checkFloor", LuaScriptInterface::luaActionCheckFloor);
+
+	// TalkAction (RevScriptSys)
+	registerClass("TalkAction", "", LuaScriptInterface::luaCreateTalkAction);
+	registerMethod("TalkAction", "onSay", LuaScriptInterface::luaTalkActionOnSay);
+	registerMethod("TalkAction", "register", LuaScriptInterface::luaTalkActionRegister);
+	registerMethod("TalkAction", "words", LuaScriptInterface::luaTalkActionWords);
+	registerMethod("TalkAction", "separator", LuaScriptInterface::luaTalkActionSeparator);
+
+	// CreatureEvent (RevScriptSys)
+	registerClass("CreatureEvent", "", LuaScriptInterface::luaCreateCreatureEvent);
+	registerMethod("CreatureEvent", "type", LuaScriptInterface::luaCreatureEventType);
+	registerMethod("CreatureEvent", "register", LuaScriptInterface::luaCreatureEventRegister);
+	registerMethod("CreatureEvent", "onLogin", LuaScriptInterface::luaCreatureEventOnCallback);
+	registerMethod("CreatureEvent", "onLogout", LuaScriptInterface::luaCreatureEventOnCallback);
+	registerMethod("CreatureEvent", "onThink", LuaScriptInterface::luaCreatureEventOnCallback);
+	registerMethod("CreatureEvent", "onPrepareDeath", LuaScriptInterface::luaCreatureEventOnCallback);
+	registerMethod("CreatureEvent", "onDeath", LuaScriptInterface::luaCreatureEventOnCallback);
+	registerMethod("CreatureEvent", "onKill", LuaScriptInterface::luaCreatureEventOnCallback);
+	registerMethod("CreatureEvent", "onAdvance", LuaScriptInterface::luaCreatureEventOnCallback);
+	registerMethod("CreatureEvent", "onModalWindow", LuaScriptInterface::luaCreatureEventOnCallback);
+	registerMethod("CreatureEvent", "onTextEdit", LuaScriptInterface::luaCreatureEventOnCallback);
+	registerMethod("CreatureEvent", "onHealthChange", LuaScriptInterface::luaCreatureEventOnCallback);
+	registerMethod("CreatureEvent", "onManaChange", LuaScriptInterface::luaCreatureEventOnCallback);
+	registerMethod("CreatureEvent", "onExtendedOpcode", LuaScriptInterface::luaCreatureEventOnCallback);
+
+	// MoveEvent (RevScriptSys)
+	registerClass("MoveEvent", "", LuaScriptInterface::luaCreateMoveEvent);
+	registerMethod("MoveEvent", "type", LuaScriptInterface::luaMoveEventType);
+	registerMethod("MoveEvent", "register", LuaScriptInterface::luaMoveEventRegister);
+	registerMethod("MoveEvent", "level", LuaScriptInterface::luaMoveEventLevel);
+	registerMethod("MoveEvent", "magicLevel", LuaScriptInterface::luaMoveEventMagLevel);
+	registerMethod("MoveEvent", "slot", LuaScriptInterface::luaMoveEventSlot);
+	registerMethod("MoveEvent", "id", LuaScriptInterface::luaMoveEventItemId);
+	registerMethod("MoveEvent", "aid", LuaScriptInterface::luaMoveEventActionId);
+	registerMethod("MoveEvent", "uid", LuaScriptInterface::luaMoveEventUniqueId);
+	registerMethod("MoveEvent", "position", LuaScriptInterface::luaMoveEventPosition);
+	registerMethod("MoveEvent", "premium", LuaScriptInterface::luaMoveEventPremium);
+	registerMethod("MoveEvent", "vocation", LuaScriptInterface::luaMoveEventVocation);
+
+	// GlobalEvent (RevScriptSys)
+	registerClass("GlobalEvent", "", LuaScriptInterface::luaCreateGlobalEvent);
+	registerMethod("GlobalEvent", "type", LuaScriptInterface::luaGlobalEventType);
+	registerMethod("GlobalEvent", "register", LuaScriptInterface::luaGlobalEventRegister);
+	registerMethod("GlobalEvent", "time", LuaScriptInterface::luaGlobalEventTime);
+	registerMethod("GlobalEvent", "interval", LuaScriptInterface::luaGlobalEventInterval);
+	registerMethod("GlobalEvent", "onThink", LuaScriptInterface::luaGlobalEventOnCallback);
+	registerMethod("GlobalEvent", "onTime", LuaScriptInterface::luaGlobalEventOnCallback);
+	registerMethod("GlobalEvent", "onStartup", LuaScriptInterface::luaGlobalEventOnCallback);
+	registerMethod("GlobalEvent", "onShutdown", LuaScriptInterface::luaGlobalEventOnCallback);
+	registerMethod("GlobalEvent", "onRecord", LuaScriptInterface::luaGlobalEventOnCallback);
 }
 
 #undef registerEnum
@@ -12817,4 +12888,730 @@ void LuaEnvironment::executeTimerEvent(uint32_t eventIndex)
 	for (auto parameter : timerEventDesc.parameters) {
 		luaL_unref(luaState, LUA_REGISTRYINDEX, parameter);
 	}
+}
+
+// RevScriptSys - Action
+int LuaScriptInterface::luaCreateAction(lua_State* L)
+{
+	// Action()
+	Action* action = new Action(getScriptEnv()->getScriptInterface());
+	if (action) {
+		action->fromLua = true;
+		pushUserdata<Action>(L, action);
+		setMetatable(L, -1, "Action");
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaActionOnUse(lua_State* L)
+{
+	// action:onUse(callback)
+	Action* action = getUserdata<Action>(L, 1);
+	if (action) {
+		if (!action->loadCallback()) {
+			pushBoolean(L, false);
+			return 1;
+		}
+		action->scripted = true;
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaActionRegister(lua_State* L)
+{
+	// action:register()
+	Action* action = getUserdata<Action>(L, 1);
+	if (action) {
+		if (!action->isScripted()) {
+			pushBoolean(L, false);
+			return 1;
+		}
+		pushBoolean(L, g_actions->registerLuaEvent(action));
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaActionItemId(lua_State* L)
+{
+	// action:id(ids)
+	Action* action = getUserdata<Action>(L, 1);
+	if (action) {
+		int parameters = lua_gettop(L) - 1; // - 1 because self is a parameter aswell, which we want to skip
+		if (parameters > 1) {
+			for (int i = 0; i < parameters; ++i) {
+				action->setItemIdsVector(getNumber<uint16_t>(L, 2 + i));
+			}
+		} else {
+			action->setItemIdsVector(getNumber<uint16_t>(L, 2));
+		}
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaActionActionId(lua_State* L)
+{
+	// action:aid(aids)
+	Action* action = getUserdata<Action>(L, 1);
+	if (action) {
+		int parameters = lua_gettop(L) - 1;
+		if (parameters > 1) {
+			for (int i = 0; i < parameters; ++i) {
+				action->setActionIdsVector(getNumber<uint16_t>(L, 2 + i));
+			}
+		} else {
+			action->setActionIdsVector(getNumber<uint16_t>(L, 2));
+		}
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaActionUniqueId(lua_State* L)
+{
+	// action:uid(uids)
+	Action* action = getUserdata<Action>(L, 1);
+	if (action) {
+		int parameters = lua_gettop(L) - 1;
+		if (parameters > 1) {
+			for (int i = 0; i < parameters; ++i) {
+				action->setUniqueIdsVector(getNumber<uint16_t>(L, 2 + i));
+			}
+		} else {
+			action->setUniqueIdsVector(getNumber<uint16_t>(L, 2));
+		}
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaActionAllowFarUse(lua_State* L)
+{
+	// action:allowFarUse(bool)
+	Action* action = getUserdata<Action>(L, 1);
+	if (action) {
+		action->setAllowFarUse(getBoolean(L, 2));
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaActionBlockWalls(lua_State* L)
+{
+	// action:blockWalls(bool)
+	Action* action = getUserdata<Action>(L, 1);
+	if (action) {
+		action->setCheckLineOfSight(getBoolean(L, 2));
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaActionCheckFloor(lua_State* L)
+{
+	// action:checkFloor(bool)
+	Action* action = getUserdata<Action>(L, 1);
+	if (action) {
+		action->setCheckFloor(getBoolean(L, 2));
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+// RevScriptSys - MoveEvent
+int LuaScriptInterface::luaCreateMoveEvent(lua_State* L)
+{
+	// MoveEvent()
+	MoveEvent* moveevent = new MoveEvent(getScriptEnv()->getScriptInterface());
+	if (moveevent) {
+		moveevent->fromLua = true;
+		pushUserdata<MoveEvent>(L, moveevent);
+		setMetatable(L, -1, "MoveEvent");
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaMoveEventType(lua_State* L)
+{
+	// moveevent:type(callback)
+	MoveEvent* moveevent = getUserdata<MoveEvent>(L, 1);
+	if (moveevent) {
+		std::string typeName = getString(L, 2);
+		std::string tmpStr = asLowerCaseString(typeName);
+		if (tmpStr == "stepin") {
+			moveevent->setEventType(MOVE_EVENT_STEP_IN);
+			moveevent->stepFunction = moveevent->StepInField;
+		} else if (tmpStr == "stepout") {
+			moveevent->setEventType(MOVE_EVENT_STEP_OUT);
+			moveevent->stepFunction = moveevent->StepOutField;
+		} else if (tmpStr == "equip") {
+			moveevent->setEventType(MOVE_EVENT_EQUIP);
+			moveevent->equipFunction = moveevent->EquipItem;
+		} else if (tmpStr == "deequip") {
+			moveevent->setEventType(MOVE_EVENT_DEEQUIP);
+			moveevent->equipFunction = moveevent->DeEquipItem;
+		} else if (tmpStr == "additem") {
+			moveevent->setEventType(MOVE_EVENT_ADD_ITEM);
+			moveevent->moveFunction = moveevent->AddItemField;
+		} else if (tmpStr == "removeitem") {
+			moveevent->setEventType(MOVE_EVENT_REMOVE_ITEM);
+			moveevent->moveFunction = moveevent->RemoveItemField;
+		} else {
+			std::cout << "[Warning - MoveEvent::configureMoveEvent] Unknown event type: " << typeName << std::endl;
+			pushBoolean(L, false);
+			return 1;
+		}
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaMoveEventRegister(lua_State* L)
+{
+	// moveevent:register()
+	MoveEvent* moveevent = getUserdata<MoveEvent>(L, 1);
+	if (moveevent) {
+		if (!moveevent->isScripted()) {
+			pushBoolean(L, false);
+			return 1;
+		}
+		pushBoolean(L, g_moveEvents->registerLuaEvent(moveevent));
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaMoveEventOnCallback(lua_State* L)
+{
+	// moveevent:onEquip / :onDeEquip / :onAddItem / etc.
+	MoveEvent* moveevent = getUserdata<MoveEvent>(L, 1);
+	if (moveevent) {
+		if (!moveevent->loadCallback()) {
+			pushBoolean(L, false);
+			return 1;
+		}
+		moveevent->scripted = true;
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaMoveEventItemId(lua_State* L)
+{
+	// moveevent:id(ids)
+	MoveEvent* moveevent = getUserdata<MoveEvent>(L, 1);
+	if (moveevent) {
+		int parameters = lua_gettop(L) - 1;
+		if (parameters > 1) {
+			for (int i = 0; i < parameters; ++i) {
+				moveevent->setItemIdsVector(getNumber<uint16_t>(L, 2 + i));
+			}
+		} else {
+			moveevent->setItemIdsVector(getNumber<uint16_t>(L, 2));
+		}
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaMoveEventActionId(lua_State* L)
+{
+	// moveevent:aid(aids)
+	MoveEvent* moveevent = getUserdata<MoveEvent>(L, 1);
+	if (moveevent) {
+		int parameters = lua_gettop(L) - 1;
+		if (parameters > 1) {
+			for (int i = 0; i < parameters; ++i) {
+				moveevent->setActionIdsVector(getNumber<uint16_t>(L, 2 + i));
+			}
+		} else {
+			moveevent->setActionIdsVector(getNumber<uint16_t>(L, 2));
+		}
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaMoveEventUniqueId(lua_State* L)
+{
+	// moveevent:uid(uids)
+	MoveEvent* moveevent = getUserdata<MoveEvent>(L, 1);
+	if (moveevent) {
+		int parameters = lua_gettop(L) - 1;
+		if (parameters > 1) {
+			for (int i = 0; i < parameters; ++i) {
+				moveevent->setUniqueIdsVector(getNumber<uint16_t>(L, 2 + i));
+			}
+		} else {
+			moveevent->setUniqueIdsVector(getNumber<uint16_t>(L, 2));
+		}
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaMoveEventPosition(lua_State* L)
+{
+	// moveevent:position(positions)
+	MoveEvent* moveevent = getUserdata<MoveEvent>(L, 1);
+	if (moveevent) {
+		int parameters = lua_gettop(L) - 1;
+		if (parameters > 1) {
+			for (int i = 0; i < parameters; ++i) {
+				moveevent->setPositionsVector(getPosition(L, 2 + i));
+			}
+		} else {
+			moveevent->setPositionsVector(getPosition(L, 2));
+		}
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+// RevScriptSys - TalkAction
+int LuaScriptInterface::luaCreateTalkAction(lua_State* L)
+{
+	// TalkAction(words)
+	TalkAction* talkAction = new TalkAction(getScriptEnv()->getScriptInterface());
+	if (talkAction) {
+		talkAction->fromLua = true;
+		if (lua_gettop(L) >= 1) {
+			talkAction->setWords(getString(L, 1));
+		}
+		pushUserdata<TalkAction>(L, talkAction);
+		setMetatable(L, -1, "TalkAction");
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaTalkActionOnSay(lua_State* L)
+{
+	// talkaction:onSay(callback)
+	TalkAction* talkAction = getUserdata<TalkAction>(L, 1);
+	if (talkAction) {
+		if (!talkAction->loadCallback()) {
+			pushBoolean(L, false);
+			return 1;
+		}
+		talkAction->scripted = true;
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaTalkActionRegister(lua_State* L)
+{
+	// talkaction:register()
+	TalkAction* talkAction = getUserdata<TalkAction>(L, 1);
+	if (talkAction) {
+		if (!talkAction->isScripted()) {
+			pushBoolean(L, false);
+			return 1;
+		}
+		pushBoolean(L, g_talkActions->registerLuaEvent(talkAction));
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaTalkActionWords(lua_State* L)
+{
+	// talkaction:words(words[, separator = "\""])
+	TalkAction* talkAction = getUserdata<TalkAction>(L, 1);
+	if (talkAction) {
+		talkAction->setWords(getString(L, 2));
+		if (lua_gettop(L) >= 3) {
+			std::string separator = getString(L, 3);
+			if (!separator.empty()) {
+				talkAction->setSeparator(separator[0]);
+			}
+		}
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaTalkActionSeparator(lua_State* L)
+{
+	// talkaction:separator(sep)
+	TalkAction* talkAction = getUserdata<TalkAction>(L, 1);
+	if (talkAction) {
+		std::string separator = getString(L, 2);
+		if (!separator.empty()) {
+			talkAction->setSeparator(separator[0]);
+		}
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+// RevScriptSys - CreatureEvent
+int LuaScriptInterface::luaCreateCreatureEvent(lua_State* L)
+{
+	// CreatureEvent(name)
+	CreatureEvent* creatureEvent = new CreatureEvent(getScriptEnv()->getScriptInterface());
+	if (creatureEvent) {
+		creatureEvent->fromLua = true;
+		if (lua_gettop(L) >= 1) {
+			creatureEvent->setName(getString(L, 1));
+		}
+		pushUserdata<CreatureEvent>(L, creatureEvent);
+		setMetatable(L, -1, "CreatureEvent");
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaCreatureEventType(lua_State* L)
+{
+	// creatureevent:type(type)
+	CreatureEvent* creatureEvent = getUserdata<CreatureEvent>(L, 1);
+	if (creatureEvent) {
+		std::string typeName = getString(L, 2);
+		std::string tmpStr = asLowerCaseString(typeName);
+		if (tmpStr == "login") {
+			creatureEvent->setEventType(CREATURE_EVENT_LOGIN);
+		} else if (tmpStr == "logout") {
+			creatureEvent->setEventType(CREATURE_EVENT_LOGOUT);
+		} else if (tmpStr == "think") {
+			creatureEvent->setEventType(CREATURE_EVENT_THINK);
+		} else if (tmpStr == "preparedeath") {
+			creatureEvent->setEventType(CREATURE_EVENT_PREPAREDEATH);
+		} else if (tmpStr == "death") {
+			creatureEvent->setEventType(CREATURE_EVENT_DEATH);
+		} else if (tmpStr == "kill") {
+			creatureEvent->setEventType(CREATURE_EVENT_KILL);
+		} else if (tmpStr == "advance") {
+			creatureEvent->setEventType(CREATURE_EVENT_ADVANCE);
+		} else if (tmpStr == "modalwindow") {
+			creatureEvent->setEventType(CREATURE_EVENT_MODALWINDOW);
+		} else if (tmpStr == "textedit") {
+			creatureEvent->setEventType(CREATURE_EVENT_TEXTEDIT);
+		} else if (tmpStr == "healthchange") {
+			creatureEvent->setEventType(CREATURE_EVENT_HEALTHCHANGE);
+		} else if (tmpStr == "manachange") {
+			creatureEvent->setEventType(CREATURE_EVENT_MANACHANGE);
+		} else if (tmpStr == "extendedopcode") {
+			creatureEvent->setEventType(CREATURE_EVENT_EXTENDED_OPCODE);
+		} else {
+			std::cout << "[Warning - CreatureEvent::configureLuaEvent] Unknown event type: " << typeName << std::endl;
+			pushBoolean(L, false);
+			return 1;
+		}
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaCreatureEventRegister(lua_State* L)
+{
+	// creatureevent:register()
+	CreatureEvent* creatureEvent = getUserdata<CreatureEvent>(L, 1);
+	if (creatureEvent) {
+		if (!creatureEvent->isScripted()) {
+			pushBoolean(L, false);
+			return 1;
+		}
+		pushBoolean(L, g_creatureEvents->registerLuaEvent(creatureEvent));
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaCreatureEventOnCallback(lua_State* L)
+{
+	// creatureevent:onLogin / :onLogout / etc.
+	CreatureEvent* creatureEvent = getUserdata<CreatureEvent>(L, 1);
+	if (creatureEvent) {
+		if (!creatureEvent->loadCallback()) {
+			pushBoolean(L, false);
+			return 1;
+		}
+		creatureEvent->scripted = true;
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+// RevScriptSys - GlobalEvent
+int LuaScriptInterface::luaCreateGlobalEvent(lua_State* L)
+{
+	// GlobalEvent(name)
+	GlobalEvent* globalEvent = new GlobalEvent(getScriptEnv()->getScriptInterface());
+	if (globalEvent) {
+		globalEvent->fromLua = true;
+		if (lua_gettop(L) >= 1) {
+			globalEvent->setName(getString(L, 1));
+		}
+		pushUserdata<GlobalEvent>(L, globalEvent);
+		setMetatable(L, -1, "GlobalEvent");
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaGlobalEventType(lua_State* L)
+{
+	// globalevent:type(type)
+	GlobalEvent* globalEvent = getUserdata<GlobalEvent>(L, 1);
+	if (globalEvent) {
+		std::string typeName = getString(L, 2);
+		std::string tmpStr = asLowerCaseString(typeName);
+		if (tmpStr == "timer") {
+			globalEvent->setEventType(GLOBALEVENT_TIMER);
+		} else if (tmpStr == "startup") {
+			globalEvent->setEventType(GLOBALEVENT_STARTUP);
+		} else if (tmpStr == "shutdown") {
+			globalEvent->setEventType(GLOBALEVENT_SHUTDOWN);
+		} else if (tmpStr == "record") {
+			globalEvent->setEventType(GLOBALEVENT_RECORD);
+		} else {
+			std::cout << "[Warning - GlobalEvent::configureLuaEvent] Unknown event type: " << typeName << std::endl;
+			pushBoolean(L, false);
+			return 1;
+		}
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaGlobalEventRegister(lua_State* L)
+{
+	// globalevent:register()
+	GlobalEvent* globalEvent = getUserdata<GlobalEvent>(L, 1);
+	if (globalEvent) {
+		if (!globalEvent->isScripted()) {
+			pushBoolean(L, false);
+			return 1;
+		}
+		pushBoolean(L, g_globalEvents->registerLuaEvent(globalEvent));
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaGlobalEventOnCallback(lua_State* L)
+{
+	// globalevent:onThink / :onStartup / etc.
+	GlobalEvent* globalEvent = getUserdata<GlobalEvent>(L, 1);
+	if (globalEvent) {
+		if (!globalEvent->loadCallback()) {
+			pushBoolean(L, false);
+			return 1;
+		}
+		globalEvent->scripted = true;
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaGlobalEventTime(lua_State* L)
+{
+	// globalevent:time(time)
+	GlobalEvent* globalEvent = getUserdata<GlobalEvent>(L, 1);
+	if (globalEvent) {
+		std::string timer = getString(L, 2);
+		std::vector<int32_t> params = vectorAtoi(explodeString(timer, ":"));
+
+		int32_t hour = params.front();
+		int32_t min = 0;
+		int32_t sec = 0;
+		if (params.size() > 1) {
+			min = params[1];
+			if (params.size() > 2) {
+				sec = params[2];
+			}
+		}
+
+		time_t current_time = time(nullptr);
+		tm* timeinfo = localtime(&current_time);
+		timeinfo->tm_hour = hour;
+		timeinfo->tm_min = min;
+		timeinfo->tm_sec = sec;
+		time_t difference = static_cast<time_t>(difftime(mktime(timeinfo), current_time));
+		if (difference < 0) {
+			difference += 86400;
+		}
+
+		globalEvent->setNextExecution(current_time + difference);
+		globalEvent->setEventType(GLOBALEVENT_TIMER);
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaGlobalEventInterval(lua_State* L)
+{
+	// globalevent:interval(interval)
+	GlobalEvent* globalEvent = getUserdata<GlobalEvent>(L, 1);
+	if (globalEvent) {
+		globalEvent->setInterval(getNumber<uint32_t>(L, 2));
+		globalEvent->setNextExecution(OTSYS_TIME() + getNumber<uint32_t>(L, 2));
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+// RevScriptSys - MoveEvent additional functions
+int LuaScriptInterface::luaMoveEventLevel(lua_State* L)
+{
+	// moveevent:level(level)
+	MoveEvent* moveevent = getUserdata<MoveEvent>(L, 1);
+	if (moveevent) {
+		moveevent->setRequiredLevel(getNumber<uint32_t>(L, 2));
+		moveevent->setWieldInfo(WIELDINFO_LEVEL);
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaMoveEventMagLevel(lua_State* L)
+{
+	// moveevent:magicLevel(magLevel)
+	MoveEvent* moveevent = getUserdata<MoveEvent>(L, 1);
+	if (moveevent) {
+		moveevent->setRequiredMagLevel(getNumber<uint32_t>(L, 2));
+		moveevent->setWieldInfo(WIELDINFO_MAGLV);
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaMoveEventSlot(lua_State* L)
+{
+	// moveevent:slot(slot)
+	MoveEvent* moveevent = getUserdata<MoveEvent>(L, 1);
+	if (moveevent) {
+		std::string slotName = getString(L, 2);
+		std::string tmpStr = asLowerCaseString(slotName);
+		if (tmpStr == "head") {
+			moveevent->setSlot(SLOTP_HEAD);
+		} else if (tmpStr == "necklace") {
+			moveevent->setSlot(SLOTP_NECKLACE);
+		} else if (tmpStr == "backpack") {
+			moveevent->setSlot(SLOTP_BACKPACK);
+		} else if (tmpStr == "armor" || tmpStr == "body") {
+			moveevent->setSlot(SLOTP_ARMOR);
+		} else if (tmpStr == "right-hand") {
+			moveevent->setSlot(SLOTP_RIGHT);
+		} else if (tmpStr == "left-hand") {
+			moveevent->setSlot(SLOTP_LEFT);
+		} else if (tmpStr == "hand" || tmpStr == "shield") {
+			moveevent->setSlot(SLOTP_RIGHT | SLOTP_LEFT);
+		} else if (tmpStr == "legs") {
+			moveevent->setSlot(SLOTP_LEGS);
+		} else if (tmpStr == "feet") {
+			moveevent->setSlot(SLOTP_FEET);
+		} else if (tmpStr == "ring") {
+			moveevent->setSlot(SLOTP_RING);
+		} else if (tmpStr == "ammo") {
+			moveevent->setSlot(SLOTP_AMMO);
+		} else {
+			std::cout << "[Warning - MoveEvent::setSlot] Unknown slot: " << slotName << std::endl;
+		}
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaMoveEventPremium(lua_State* L)
+{
+	// moveevent:premium(bool)
+	MoveEvent* moveevent = getUserdata<MoveEvent>(L, 1);
+	if (moveevent) {
+		moveevent->setRequiresPremium(getBoolean(L, 2));
+		moveevent->setWieldInfo(WIELDINFO_PREMIUM);
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaMoveEventVocation(lua_State* L)
+{
+	// moveevent:vocation(vocName[, showInDescription = false, lastVoc = false])
+	MoveEvent* moveevent = getUserdata<MoveEvent>(L, 1);
+	if (moveevent) {
+		moveevent->addVocEquipMap(getString(L, 2));
+		moveevent->setWieldInfo(WIELDINFO_VOCREQ);
+		std::string vocationString = moveevent->getVocationString();
+		if (!vocationString.empty()) {
+			vocationString += ", ";
+		}
+		vocationString += getString(L, 2);
+		if (lua_gettop(L) >= 3 && getBoolean(L, 3)) {
+			vocationString += " (promoted)";
+		}
+		moveevent->setVocationString(vocationString);
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
 }

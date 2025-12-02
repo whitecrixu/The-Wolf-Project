@@ -185,6 +185,38 @@ bool MoveEvents::registerEvent(Event* event, const pugi::xml_node& node)
 	return true;
 }
 
+// RevScriptSys
+bool MoveEvents::registerLuaEvent(MoveEvent* moveEvent)
+{
+	bool success = false;
+
+	// Register by item ids
+	for (uint16_t id : moveEvent->getItemIds()) {
+		addEvent(moveEvent, id, itemIdMap);
+		success = true;
+	}
+
+	// Register by action ids
+	for (uint16_t aid : moveEvent->getActionIds()) {
+		addEvent(moveEvent, aid, actionIdMap);
+		success = true;
+	}
+
+	// Register by unique ids
+	for (uint16_t uid : moveEvent->getUniqueIds()) {
+		addEvent(moveEvent, uid, uniqueIdMap);
+		success = true;
+	}
+
+	// Register by positions
+	for (const Position& pos : moveEvent->getPositions()) {
+		addEvent(moveEvent, pos, positionMap);
+		success = true;
+	}
+
+	return success;
+}
+
 void MoveEvents::addEvent(MoveEvent* moveEvent, int32_t id, MoveListMap& map)
 {
 	auto it = map.find(id);

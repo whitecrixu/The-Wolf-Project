@@ -54,6 +54,9 @@ class GlobalEvents final : public BaseEvents
 		GlobalEventMap getEventMap(GlobalEvent_t type);
 		static void clearMap(GlobalEventMap& map);
 
+		// RevScriptSys
+		bool registerLuaEvent(GlobalEvent* globalEvent);
+
 	protected:
 		std::string getScriptBaseName() const final {
 			return "globalevents";
@@ -85,13 +88,22 @@ class GlobalEvent final : public Event
 		GlobalEvent_t getEventType() const {
 			return eventType;
 		}
+		void setEventType(GlobalEvent_t type) {
+			eventType = type;
+		}
 
 		const std::string& getName() const {
 			return name;
 		}
+		void setName(const std::string& n) {
+			name = n;
+		}
 
 		uint32_t getInterval() const {
 			return interval;
+		}
+		void setInterval(uint32_t i) {
+			interval = i;
 		}
 
 		int64_t getNextExecution() const {

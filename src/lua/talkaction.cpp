@@ -68,6 +68,13 @@ bool TalkActions::registerEvent(Event* event, const pugi::xml_node&)
 	return true;
 }
 
+// RevScriptSys
+bool TalkActions::registerLuaEvent(TalkAction* talkAction)
+{
+	talkActions.push_front(talkAction);
+	return true;
+}
+
 TalkActionResult_t TalkActions::playerSaySpell(Player* player, SpeakClasses type, const std::string& words) const
 {
 	size_t wordsLength = words.length();

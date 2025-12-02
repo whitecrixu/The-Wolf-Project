@@ -163,3 +163,22 @@ bool CallBack::loadCallBack(LuaScriptInterface* interface, const std::string& na
 	loaded = true;
 	return true;
 }
+
+// RevScriptSys
+bool Event::loadCallback()
+{
+	if (!scriptInterface) {
+		std::cout << "Failure: [Event::loadCallback] scriptInterface == nullptr" << std::endl;
+		return false;
+	}
+
+	int32_t id = scriptInterface->getEvent(getScriptEventName());
+	if (id == -1) {
+		std::cout << "[Warning - Event::loadCallback] Event " << getScriptEventName() << " not found." << std::endl;
+		return false;
+	}
+
+	scripted = true;
+	scriptId = id;
+	return true;
+}
