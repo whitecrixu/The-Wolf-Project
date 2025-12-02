@@ -83,22 +83,13 @@ bool ScriptingManager::loadScriptSystems()
 	}
 
 	g_actions = new Actions();
-	if (!g_actions->loadFromXml()) {
-		std::cout << "> ERROR: Unable to load actions!" << std::endl;
-		return false;
-	}
+	// XML loading disabled - using RevScriptSys only
 
 	g_talkActions = new TalkActions();
-	if (!g_talkActions->loadFromXml()) {
-		std::cout << "> ERROR: Unable to load talk actions!" << std::endl;
-		return false;
-	}
+	// XML loading disabled - using RevScriptSys only
 
 	g_moveEvents = new MoveEvents();
-	if (!g_moveEvents->loadFromXml()) {
-		std::cout << "> ERROR: Unable to load move events!" << std::endl;
-		return false;
-	}
+	// XML loading disabled - using RevScriptSys only
 
 	g_creatureEvents = new CreatureEvents();
 	if (!g_creatureEvents->loadFromXml()) {
@@ -107,10 +98,7 @@ bool ScriptingManager::loadScriptSystems()
 	}
 
 	g_globalEvents = new GlobalEvents();
-	if (!g_globalEvents->loadFromXml()) {
-		std::cout << "> ERROR: Unable to load global events!" << std::endl;
-		return false;
-	}
+	// XML loading disabled - using RevScriptSys only
 
 	g_events = new Events();
 	if (!g_events->load()) {
@@ -186,5 +174,13 @@ void ScriptingManager::loadRevScriptSysScripts()
 	if (stat(monsterLuaPath.c_str(), &st) == 0 && S_ISDIR(st.st_mode)) {
 		uint32_t monstersLoaded = 0;
 		loadRevScriptSysScriptsFromDir(monsterLuaPath, monstersLoaded);
+	}
+
+	// Load Lua NPC definitions
+	std::string npcLuaPath = "data/npc/lua";
+	if (stat(npcLuaPath.c_str(), &st) == 0 && S_ISDIR(st.st_mode)) {
+		uint32_t npcsLoaded = 0;
+		loadRevScriptSysScriptsFromDir(npcLuaPath, npcsLoaded);
+		std::cout << "[Info] Loaded " << npcsLoaded << " NPC Lua scripts from " << npcLuaPath << std::endl;
 	}
 }

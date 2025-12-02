@@ -208,6 +208,7 @@ class LuaScriptInterface
 
 		const std::string& getFileById(int32_t scriptId);
 		int32_t getEvent(const std::string& eventName);
+		int32_t getEvent();  // For callback functions already on the Lua stack
 		int32_t getMetaEvent(const std::string& globalName, const std::string& eventName);
 
 		static ScriptEnvironment* getScriptEnv() {
@@ -569,6 +570,7 @@ class LuaScriptInterface
 		static int luaGameCreateMonster(lua_State* L);
 		static int luaGameCreateMonsterType(lua_State* L);
 		static int luaGameCreateNpc(lua_State* L);
+		static int luaGameCreateNpcType(lua_State* L);
 		static int luaGameCreateTile(lua_State* L);
 
 		static int luaGameStartRaid(lua_State* L);
@@ -1316,6 +1318,31 @@ class LuaScriptInterface
 		static int luaMonsterTypeDefenses(lua_State* L);
 		static int luaMonsterTypeCreatureEvents(lua_State* L);
 		static int luaMonsterTypeRegister(lua_State* L);
+
+		// NpcType (for Lua NPC registration)
+		static int luaNpcTypeCreate(lua_State* L);
+		static int luaNpcTypeName(lua_State* L);
+		static int luaNpcTypeNameDescription(lua_State* L);
+		static int luaNpcTypeHealth(lua_State* L);
+		static int luaNpcTypeMaxHealth(lua_State* L);
+		static int luaNpcTypeSpeed(lua_State* L);
+		static int luaNpcTypeOutfit(lua_State* L);
+		static int luaNpcTypeWalkInterval(lua_State* L);
+		static int luaNpcTypeWalkRadius(lua_State* L);
+		static int luaNpcTypeFloorChange(lua_State* L);
+		static int luaNpcTypeAttackable(lua_State* L);
+		static int luaNpcTypeIgnoreHeight(lua_State* L);
+		static int luaNpcTypePushable(lua_State* L);
+		static int luaNpcTypeSpeechBubble(lua_State* L);
+		static int luaNpcTypeScript(lua_State* L);
+		static int luaNpcTypeParameter(lua_State* L);
+		static int luaNpcTypeRegister(lua_State* L);
+		static int luaNpcTypeOnThink(lua_State* L);
+		static int luaNpcTypeOnAppear(lua_State* L);
+		static int luaNpcTypeOnDisappear(lua_State* L);
+		static int luaNpcTypeOnMove(lua_State* L);
+		static int luaNpcTypeOnSay(lua_State* L);
+		static int luaNpcTypeOnCloseChannel(lua_State* L);
 
 		// Party
 		static int luaPartyDisband(lua_State* L);

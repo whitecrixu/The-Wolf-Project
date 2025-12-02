@@ -24,9 +24,79 @@
 #include "luascript.h"
 
 #include <set>
+#include <map>
+#include <functional>
 
 class Npc;
 class Player;
+class NpcType;
+class LuaScriptInterface;
+
+// NpcType - stores NPC definition data (similar to MonsterType for monsters)
+class NpcType
+{
+	public:
+		NpcType() = default;
+		NpcType(const std::string& n) : name(n), nameDescription(n) {}
+
+		// Move constructor
+		NpcType(NpcType&& other) noexcept = default;
+		NpcType& operator=(NpcType&& other) noexcept = default;
+
+		// Non-copyable
+		NpcType(const NpcType&) = delete;
+		NpcType& operator=(const NpcType&) = delete;
+
+		std::string name;
+		std::string nameDescription;
+		std::string scriptFile;  // Optional legacy script support
+
+		Outfit_t defaultOutfit;
+
+		int32_t health = 100;
+		int32_t healthMax = 100;
+		uint32_t baseSpeed = 100;
+		uint32_t walkInterval = 2000;
+		int32_t walkRadius = -1;
+		uint8_t speechBubble = SPEECHBUBBLE_NONE;
+
+		bool floorChange = false;
+		bool attackable = false;
+		bool ignoreHeight = true;
+		bool pushable = false;
+
+		std::map<std::string, std::string> parameters;
+
+		// Lua callback references (stored in LUA_REGISTRYINDEX)
+		int32_t thinkCallback = -1;
+		int32_t appearCallback = -1;
+		int32_t disappearCallback = -1;
+		int32_t moveCallback = -1;
+		int32_t sayCallback = -1;
+		int32_t closeChannelCallback = -1;
+		LuaScriptInterface* luaState = nullptr;
+
+		bool isRegistered = false;
+};
+
+// Global NPC types storage
+class NpcTypes
+{
+	public:
+		NpcTypes() = default;
+
+		NpcType* getNpcType(const std::string& name);
+		NpcType* addNpcType(const std::string& name);
+		bool hasNpcType(const std::string& name) const;
+		size_t getNpcTypeCount() const { return npcTypes.size(); }
+
+		void clear() { npcTypes.clear(); }
+
+	private:
+		std::map<std::string, NpcType> npcTypes;
+};
+
+extern NpcTypes g_npcTypes;
 
 class Npcs
 {
@@ -188,6 +258,9 @@ class Npc final : public Creature
 	protected:
 		explicit Npc(const std::string& name);
 
+		// Helper function to call NpcType Lua callbacks
+		void callNpcTypeCallback(int32_t eventId, const std::function<void(lua_State*)>& pushParams, int numParams);
+
 		void onCreatureAppear(Creature* creature, bool isLogin) final;
 		void onRemoveCreature(Creature* creature, bool isLogout) final;
 		void onCreatureMove(Creature* creature, const Tile* newTile, const Position& newPos,
@@ -213,6 +286,7 @@ class Npc final : public Creature
 
 		void reset();
 		bool loadFromXml();
+		bool loadFromNpcType(NpcType* npcType);
 
 		void addShopPlayer(Player* player);
 		void removeShopPlayer(Player* player);
@@ -226,6 +300,7 @@ class Npc final : public Creature
 		std::string filename;
 
 		NpcEventsHandler* npcEventHandler;
+		NpcType* npcType;  // For Lua-defined NPCs with callbacks
 
 		Position masterPos;
 

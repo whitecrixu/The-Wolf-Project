@@ -7470,7 +7470,6 @@
 		<monster name="Lizard Chosen" x="1" y="-1" z="8" spawntime="60" />
 	</spawn>
 	<spawn centerx="656" centery="895" centerz="8" radius="1">
-		<monster name="Living Plant" x="-1" y="-1" z="8" spawntime="60" />
 	</spawn>
 	<spawn centerx="647" centery="896" centerz="8" radius="5">
 		<monster name="Lizard Chosen" x="-2" y="-2" z="8" spawntime="60" />
@@ -7479,13 +7478,10 @@
 		<monster name="Lizard Abomination" x="1" y="-1" z="8" spawntime="60" />
 	</spawn>
 	<spawn centerx="662" centery="905" centerz="8" radius="1">
-		<monster name="Living Plant" x="0" y="1" z="8" spawntime="60" />
 	</spawn>
 	<spawn centerx="677" centery="907" centerz="8" radius="1">
-		<monster name="Living Plant" x="1" y="-1" z="8" spawntime="60" />
 	</spawn>
 	<spawn centerx="654" centery="912" centerz="8" radius="1">
-		<monster name="Living Plant" x="-1" y="0" z="8" spawntime="60" />
 	</spawn>
 	<spawn centerx="570" centery="934" centerz="8" radius="5">
 		<monster name="Nightmare Scion" x="-1" y="-1" z="8" spawntime="60" />
