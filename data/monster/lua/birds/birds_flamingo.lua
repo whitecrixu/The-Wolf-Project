@@ -1,5 +1,5 @@
 -- Flamingo
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Flamingo")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(6054)
 monster:outfit({lookType = 212})
 monster:defense(5)
 monster:armor(5)
-monster:runHealth(25)
+monster:runHealth(2)
 
 -- Flags
 monster:attackable(true)
@@ -29,7 +29,12 @@ monster:staticAttackChance(90)
 
 -- Loot
 monster:loot({
-    {id = 12640, chance = 700},
+    {id = 12640, chance = 700}
+})
+
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -5}
 })
 
 monster:register()

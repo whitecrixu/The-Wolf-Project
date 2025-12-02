@@ -1,5 +1,5 @@
 -- Efreet
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Efreet")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(20)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
@@ -30,24 +29,19 @@ monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = 10},
     {type = COMBAT_DEATHDAMAGE, percent = 20},
     {type = COMBAT_ICEDAMAGE, percent = -5},
-    {type = COMBAT_HOLYDAMAGE, percent = -8},
+    {type = COMBAT_HOLYDAMAGE, percent = -8}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "I grant you a deathwish!", yell = false},
-    {text = "Good wishes are for fairytales", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "green djinn", chance = 10, interval = 2000, max = 2},
+    {text = "Good wishes are for fairytales", yell = false}
 })
 
 -- Loot
@@ -68,24 +62,19 @@ monster:loot({
     {id = 12426, chance = 8540},
     {id = 12442, chance = 1130},
     {id = 7589, chance = 3500},
-    {id = 2155, chance = 200},
+    {id = 2155, chance = 200}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=45, attack=40
--- name=fire, interval=2000, chance=15, range=7, min=-40, max=-110, shootEffect=fire
--- name=energy, interval=2000, chance=10, min=-30, max=-90, radius=3, areaEffect=energy
--- name=energy, interval=2000, chance=15, range=7, min=-65, max=-120, shootEffect=energy, areaEffect=energy
--- name=speed, interval=2000, chance=15, range=7, duration=15000, speedchange=-650, areaEffect=redshimmer
--- name=drunk, interval=2000, chance=10, range=7, duration=6000, shootEffect=energy
--- name=outfit, interval=2000, chance=1, range=7, duration=4000, areaEffect=blueshimmer
--- name=djinn electrify, interval=2000, chance=15, range=5
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=50, max=80, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -85},
+    {name = "fire", interval = 2000, chance = 15, minDamage = -40, maxDamage = -110, range = 7},
+    {name = "energy", interval = 2000, chance = 10, minDamage = -30, maxDamage = -90, radius = 3},
+    {name = "energy", interval = 2000, chance = 15, minDamage = -65, maxDamage = -120, range = 7},
+    {name = "speed", interval = 2000, chance = 15, range = 7},
+    {name = "drunk", interval = 2000, chance = 10, range = 7},
+    {name = "outfit", interval = 2000, chance = 1, range = 7},
+    {name = "djinn electrify", interval = 2000, chance = 15, range = 5}
+})
 
 monster:register()

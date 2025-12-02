@@ -1,5 +1,5 @@
 -- Barbarian Brutetamer
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Barbarian Brutetamer")
 if not monster then return end
@@ -15,13 +15,11 @@ monster:corpseId(20339)
 monster:outfit({lookType = 264, lookHead = 78, lookBody = 116, lookLegs = 95, lookFeet = 121})
 monster:defense(10)
 monster:armor(10)
-monster:targetDistance(4)
-monster:runHealth(10)
+monster:runHealth(14)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
@@ -31,27 +29,22 @@ monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = 10},
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_PHYSICALDAMAGE, percent = -20},
-    {type = COMBAT_DEATHDAMAGE, percent = -1},
+    {type = COMBAT_DEATHDAMAGE, percent = -1}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_OUTFIT, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_DRUNK, immunity = true},
+    {condition = CONDITION_DRUNK, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "To me, creatures of the wild!", yell = false},
-    {text = "My instincts tell me about your cowardice.", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "War Wolf", chance = 10, interval = 2000, max = 1},
+    {text = "My instincts tell me about your cowardice.", yell = false}
 })
 
 -- Loot
@@ -67,19 +60,14 @@ monster:loot({
     {id = 7379, chance = 380},
     {id = 7457, chance = 160},
     {id = 7464, chance = 90},
-    {id = 7463, chance = 160},
+    {id = 7463, chance = 160}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=10, attack=20
--- name=physical, interval=2000, chance=20, range=7, max=-34, radius=1, target=1, shootEffect=snowball
--- name=barbarian brutetamer skill reducer, interval=2000, chance=15, range=5
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=40, min=50, max=80, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -30},
+    {name = "physical", interval = 2000, chance = 20, maxDamage = -34, range = 7, radius = 1},
+    {name = "barbarian brutetamer skill reducer", interval = 2000, chance = 15, range = 5}
+})
 
 monster:register()

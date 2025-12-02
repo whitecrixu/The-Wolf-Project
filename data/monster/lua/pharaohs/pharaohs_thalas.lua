@@ -1,5 +1,5 @@
 -- Thalas
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Thalas")
 if not monster then return end
@@ -19,30 +19,24 @@ monster:armor(20)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_FIREDAMAGE, percent = -23},
+    {type = COMBAT_FIREDAMAGE, percent = -23}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "You will become a feast for my maggots.", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "Slime2", chance = 30000000, interval = 2000, max = 8},
+    {text = "You will become a feast for my maggots.", yell = false}
 })
 
 -- Loot
@@ -57,22 +51,17 @@ monster:loot({
     {id = 2409, chance = 500},
     {id = 2155, chance = 500},
     {id = 2451, chance = 200},
-    {id = 2351, chance = 100000},
+    {id = 2351, chance = 100000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, min=-10, skill=140, attack=120
--- name=poison, interval=2000, chance=25, range=7, min=-150, max=-650, shootEffect=poison, areaEffect=poison
--- name=melee, interval=3000, chance=20, range=7, min=-150, max=-650, radius=1, target=1, shootEffect=poison, areaEffect=poison
--- name=speed, interval=1000, chance=6, range=7, duration=20000, speedchange=-800, areaEffect=redshimmer
--- name=poisoncondition, interval=1000, chance=15, min=-34, max=-35, radius=5, areaEffect=poison
--- name=poison, interval=3000, chance=17, min=-55, max=-550, length=8, spread=3, areaEffect=poison
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=1000, chance=20, min=150, max=450, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -260},
+    {name = "poison", interval = 2000, chance = 25, minDamage = -150, maxDamage = -650, range = 7},
+    {name = "melee", interval = 3000, chance = 20, minDamage = -150, maxDamage = -650},
+    {name = "speed", interval = 1000, chance = 6, range = 7},
+    {name = "poisoncondition", interval = 1000, chance = 15, minDamage = -34, maxDamage = -35, radius = 5},
+    {name = "poison", interval = 3000, chance = 17, minDamage = -55, maxDamage = -550, length = 8, spread = 3}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Mechanical Fighter
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Mechanical Fighter")
 if not monster then return end
@@ -26,19 +26,19 @@ monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_ENERGYDAMAGE, percent = 50},
+    {type = COMBAT_ENERGYDAMAGE, percent = 50}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_DAZZLED, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_HOLYDAMAGE, combat = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=190, attack=50
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -240}
+})
 
 monster:register()

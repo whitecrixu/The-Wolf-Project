@@ -1,5 +1,5 @@
 -- Ribstride
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Ribstride")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(35)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -27,17 +26,17 @@ monster:staticAttackChance(90)
 -- Resistances
 monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = -10},
-    {type = COMBAT_HOLYDAMAGE, percent = -20},
+    {type = COMBAT_HOLYDAMAGE, percent = -20}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_DROWN, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
@@ -50,22 +49,17 @@ monster:loot({
     {id = 2796, chance = 60000, maxCount = 4},
     {id = 11161, chance = 29000},
     {id = 5741, chance = 8700},
-    {id = 13291, chance = 2000},
+    {id = 13291, chance = 2000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-200
--- name=lifedrain, interval=2000, chance=10, min=-25, max=-47, radius=3, areaEffect=redshimmer
--- name=earth, interval=2000, chance=15, range=7, min=-50, max=-90, shootEffect=poison, areaEffect=poison
--- name=poisoncondition, interval=2000, chance=10, min=-50, max=-60, radius=3, areaEffect=poison
--- name=poisoncondition, interval=2000, chance=10, min=-70, max=-80, length=6, areaEffect=poison
--- name=speed, interval=2000, chance=15, target=1, duration=13000, speedchange=-300
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=30, max=50, areaEffect=greenspark
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -200},
+    {name = "lifedrain", interval = 2000, chance = 10, minDamage = -25, maxDamage = -47, radius = 3},
+    {name = "earth", interval = 2000, chance = 15, minDamage = -50, maxDamage = -90, range = 7},
+    {name = "poisoncondition", interval = 2000, chance = 10, minDamage = -50, maxDamage = -60, radius = 3},
+    {name = "poisoncondition", interval = 2000, chance = 10, minDamage = -70, maxDamage = -80, length = 6},
+    {name = "speed", interval = 2000, chance = 15}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Demon Outcast
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Demon Outcast")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(40)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,14 +30,14 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = -5},
     {type = COMBAT_ICEDAMAGE, percent = 5},
     {type = COMBAT_EARTHDAMAGE, percent = 40},
-    {type = COMBAT_HOLYDAMAGE, percent = -5},
+    {type = COMBAT_HOLYDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -46,12 +45,7 @@ monster:voices({
     {text = "Back in the evil business!", yell = false},
     {text = "This prison break will have casualties!", yell = false},
     {text = "At last someone to hurt", yell = false},
-    {text = "No one will imprison me again!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "energy elemental", chance = 10, interval = 2000, max = 1},
+    {text = "No one will imprison me again!", yell = false}
 })
 
 -- Loot
@@ -79,22 +73,17 @@ monster:loot({
     {id = 7590, chance = 18000, maxCount = 2},
     {id = 8473, chance = 20500, maxCount = 3},
     {id = 9970, chance = 9300, maxCount = 5},
-    {id = 22396, chance = 410},
+    {id = 22396, chance = 410}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=90, attack=80
--- name=energy, interval=2000, chance=10, min=-250, max=-450, length=6, target=1, areaEffect=purpleenergy
--- name=energy, interval=2000, chance=10, min=-350, max=-550, length=8, target=1, areaEffect=yellowenergy
--- name=energy, interval=2000, chance=20, min=-100, max=-250, radius=3, target=1, areaEffect=energy
--- name=demon outcast skill reducer, interval=2000, chance=10, range=5
--- name=manadrain, interval=2000, chance=10, min=-80, max=-150, radius=4, areaEffect=greenshimmer
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=250, max=425, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -170},
+    {name = "energy", interval = 2000, chance = 10, minDamage = -250, maxDamage = -450, length = 6},
+    {name = "energy", interval = 2000, chance = 10, minDamage = -350, maxDamage = -550, length = 8},
+    {name = "energy", interval = 2000, chance = 20, minDamage = -100, maxDamage = -250, radius = 3},
+    {name = "demon outcast skill reducer", interval = 2000, chance = 10, range = 5},
+    {name = "manadrain", interval = 2000, chance = 10, minDamage = -80, maxDamage = -150, radius = 4}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Diamond Servant
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Diamond Servant")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:runHealth(100)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -30,20 +29,20 @@ monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = 80},
     {type = COMBAT_FIREDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = -5},
-    {type = COMBAT_DEATHDAMAGE, percent = -5},
+    {type = COMBAT_DEATHDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_ENERGY, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_PARALYZE, immunity = true},
+    {condition = CONDITION_PARALYZE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Error. LOAD 'PROGRAM',8,1", yell = false},
-    {text = "Remain. Obedient.", yell = false},
+    {text = "Remain. Obedient.", yell = false}
 })
 
 -- Loot
@@ -65,15 +64,15 @@ monster:loot({
     {id = 7440, chance = 400},
     {id = 10221, chance = 110},
     {id = 8878, chance = 20},
-    {id = 7428, chance = 10},
+    {id = 7428, chance = 10}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=50
--- name=energy, interval=2000, chance=20, min=-80, max=-120, radius=3, areaEffect=yellowenergy
--- name=energy, interval=2000, chance=15, min=-125, max=-170, length=5, spread=2, shootEffect=energy, areaEffect=energy
--- name=drunk, interval=2000, chance=10, range=7, target=1, duration=3000, shootEffect=death, areaEffect=stun
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -80},
+    {name = "energy", interval = 2000, chance = 20, minDamage = -80, maxDamage = -120, radius = 3},
+    {name = "energy", interval = 2000, chance = 15, minDamage = -125, maxDamage = -170, length = 5, spread = 2},
+    {name = "drunk", interval = 2000, chance = 10, range = 7}
+})
 
 monster:register()

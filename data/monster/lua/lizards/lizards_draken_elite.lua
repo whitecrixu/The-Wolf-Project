@@ -1,5 +1,5 @@
 -- Draken Elite
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Draken Elite")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:armor(45)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
@@ -28,20 +27,20 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = 30},
     {type = COMBAT_DEATHDAMAGE, percent = 30},
-    {type = COMBAT_ENERGYDAMAGE, percent = 40},
+    {type = COMBAT_ENERGYDAMAGE, percent = 40}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "For ze emperor!", yell = false},
-    {text = "You will die zhouzandz deazhz!", yell = false},
+    {text = "You will die zhouzandz deazhz!", yell = false}
 })
 
 -- Loot
@@ -68,22 +67,17 @@ monster:loot({
     {id = 11304, chance = 770},
     {id = 11301, chance = 490},
     {id = 12647, chance = 80},
-    {id = 12607, chance = 110},
+    {id = 12607, chance = 110}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=110, attack=59
--- name=fire, interval=2000, chance=10, min=-240, max=-550, length=4, spread=3, areaEffect=explosion
--- name=fire, interval=2000, chance=15, range=7, min=-200, max=-300, target=1, shootEffect=fire, areaEffect=firearea
--- name=earth, interval=2000, chance=15, min=-280, max=-410, radius=4, target=1, areaEffect=poff
--- name=soulfire, interval=2000, chance=10
--- name=poisoncondition, interval=2000, chance=10, range=7, min=-250, max=-320, target=1, shootEffect=poison
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=510, max=600, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -169},
+    {name = "fire", interval = 2000, chance = 10, minDamage = -240, maxDamage = -550, length = 4, spread = 3},
+    {name = "fire", interval = 2000, chance = 15, minDamage = -200, maxDamage = -300, range = 7},
+    {name = "earth", interval = 2000, chance = 15, minDamage = -280, maxDamage = -410, radius = 4},
+    {name = "soulfire", interval = 2000, chance = 10},
+    {name = "poisoncondition", interval = 2000, chance = 10, minDamage = -250, maxDamage = -320, range = 7}
+})
 
 monster:register()

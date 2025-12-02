@@ -1,5 +1,5 @@
 -- Quara Predator Scout
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Quara Predator Scout")
 if not monster then return end
@@ -20,22 +20,21 @@ monster:armor(30)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_ENERGYDAMAGE, percent = -10},
+    {type = COMBAT_ENERGYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -43,7 +42,7 @@ monster:voices({
     {text = "Gnarrr!", yell = false},
     {text = "Tcharrr!", yell = false},
     {text = "Rrrah!", yell = false},
-    {text = "Rraaar!", yell = false},
+    {text = "Rraaar!", yell = false}
 })
 
 -- Loot
@@ -57,12 +56,12 @@ monster:loot({
     {id = 5895, chance = 980},
     {id = 2377, chance = 2320},
     {id = 8911, chance = 800},
-    {id = 2670, chance = 4700, maxCount = 5},
+    {id = 2670, chance = 4700, maxCount = 5}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=60, attack=55
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -115}
+})
 
 monster:register()

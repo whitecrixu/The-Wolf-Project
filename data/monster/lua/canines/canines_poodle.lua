@@ -1,5 +1,5 @@
 -- Poodle
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Poodle")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(5971)
 monster:outfit({lookType = 473})
 monster:defense(2)
 monster:armor(1)
-monster:runHealth(8)
+monster:runHealth(2)
 
 -- Flags
 monster:attackable(true)
@@ -29,7 +29,12 @@ monster:staticAttackChance(90)
 
 -- Voices
 monster:voices({
-    {text = "Wuff wuff", yell = false},
+    {text = "Wuff wuff", yell = false}
+})
+
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -5}
 })
 
 monster:register()

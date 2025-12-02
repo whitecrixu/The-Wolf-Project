@@ -1,5 +1,5 @@
 -- Grorlam
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Grorlam")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(15)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -30,14 +29,14 @@ monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = 20},
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_DEATHDAMAGE, percent = -5},
-    {type = COMBAT_FIREDAMAGE, percent = -10},
+    {type = COMBAT_FIREDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
@@ -49,19 +48,13 @@ monster:loot({
     {id = 1294, chance = 20000, maxCount = 5},
     {id = 2395, chance = 2500},
     {id = 2050, chance = 20000},
-    {id = 2580, chance = 5000},
+    {id = 2580, chance = 5000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=75, attack=60
--- name=physical, interval=1000, chance=15, range=7, min=-150, max=-200, shootEffect=largerock
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=1000, chance=25, min=100, max=150, areaEffect=blueshimmer
--- name=speed, interval=1000, chance=6, duration=6000, speedchange=270, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -135},
+    {name = "physical", interval = 1000, chance = 15, minDamage = -150, maxDamage = -200, range = 7}
+})
 
 monster:register()

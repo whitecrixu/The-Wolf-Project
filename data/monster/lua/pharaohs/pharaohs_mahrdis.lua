@@ -1,5 +1,5 @@
 -- Mahrdis
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Mahrdis")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(20)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -28,14 +27,14 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 45},
     {type = COMBAT_HOLYDAMAGE, percent = -22},
-    {type = COMBAT_ICEDAMAGE, percent = -25},
+    {type = COMBAT_ICEDAMAGE, percent = -25}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -44,12 +43,7 @@ monster:voices({
     {text = "Fire, Fire!", yell = false},
     {text = "The eternal flame demands its due!", yell = false},
     {text = "This is why I'm hot.", yell = false},
-    {text = "May my flames engulf you!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "Fire Elemental", chance = 3000, interval = 2000, max = 1},
+    {text = "May my flames engulf you!", yell = false}
 })
 
 -- Loot
@@ -64,23 +58,18 @@ monster:loot({
     {id = 2432, chance = 750},
     {id = 2141, chance = 500},
     {id = 2539, chance = 300},
-    {id = 2353, chance = 100000},
+    {id = 2353, chance = 100000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=70, attack=100
--- name=physical, interval=1600, chance=7, range=1, min=-60, max=-600, areaEffect=redshimmer
--- name=fire, interval=1000, chance=7, range=7, min=-60, max=-600, shootEffect=fire, areaEffect=firearea
--- name=speed, interval=2000, chance=13, range=7, duration=50000, speedchange=-850, areaEffect=redshimmer
--- name=fire, interval=2000, chance=34, min=-80, max=-800, radius=3, areaEffect=explosionarea
--- name=firefield, interval=1000, chance=12, radius=4, areaEffect=yellowspark
--- name=firecondition, interval=2000, chance=13, min=-50, max=-500, length=8, spread=3, areaEffect=explosion
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=1000, chance=20, min=20, max=800, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -170},
+    {name = "physical", interval = 1600, chance = 7, minDamage = -60, maxDamage = -600},
+    {name = "fire", interval = 1000, chance = 7, minDamage = -60, maxDamage = -600, range = 7},
+    {name = "speed", interval = 2000, chance = 13, range = 7},
+    {name = "fire", interval = 2000, chance = 34, minDamage = -80, maxDamage = -800, radius = 3},
+    {name = "firefield", interval = 1000, chance = 12, radius = 4},
+    {name = "firecondition", interval = 2000, chance = 13, minDamage = -50, maxDamage = -500, length = 8, spread = 3}
+})
 
 monster:register()

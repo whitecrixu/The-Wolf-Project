@@ -1,5 +1,5 @@
 -- Travelling Merchant
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Travelling Merchant")
 if not monster then return end
@@ -15,8 +15,7 @@ monster:corpseId(13176)
 monster:outfit({lookType = 132, lookHead = 110, lookBody = 90, lookLegs = 128, lookFeet = 95, lookAddons = 1})
 monster:defense(0)
 monster:armor(0)
-monster:targetDistance(4)
-monster:runHealth(100)
+monster:runHealth(10)
 
 -- Flags
 monster:attackable(true)
@@ -26,7 +25,12 @@ monster:staticAttackChance(90)
 
 -- Voices
 monster:voices({
-    {text = "It's quite dark in the forest, isn't it?", yell = false},
+    {text = "It's quite dark in the forest, isn't it?", yell = false}
+})
+
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -20}
 })
 
 monster:register()

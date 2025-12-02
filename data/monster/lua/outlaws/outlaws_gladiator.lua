@@ -1,5 +1,5 @@
 -- Gladiator
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Gladiator")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(20407)
 monster:outfit({lookType = 131, lookHead = 78, lookBody = 3, lookLegs = 79, lookFeet = 114})
 monster:defense(25)
 monster:armor(25)
-monster:runHealth(10)
+monster:runHealth(18)
 
 -- Flags
 monster:attackable(true)
@@ -29,7 +29,7 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = 10},
     {type = COMBAT_PHYSICALDAMAGE, percent = 15},
-    {type = COMBAT_DEATHDAMAGE, percent = -5},
+    {type = COMBAT_DEATHDAMAGE, percent = -5}
 })
 
 -- Voices
@@ -37,7 +37,7 @@ monster:voices({
     {text = "You are no match for me!", yell = false},
     {text = "Feel my prowess", yell = false},
     {text = "Fight!", yell = false},
-    {text = "Take this!", yell = false},
+    {text = "Take this!", yell = false}
 })
 
 -- Loot
@@ -51,17 +51,12 @@ monster:loot({
     {id = 2458, chance = 5200},
     {id = 2509, chance = 840},
     {id = 8872, chance = 340},
-    {id = 2459, chance = 590},
+    {id = 2459, chance = 590}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=50, attack=30
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=215, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -80}
+})
 
 monster:register()

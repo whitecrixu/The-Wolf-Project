@@ -1,5 +1,5 @@
 -- Yielothax
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Yielothax")
 if not monster then return end
@@ -19,10 +19,9 @@ monster:armor(30)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(75)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -30,19 +29,19 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 25},
     {type = COMBAT_PHYSICALDAMAGE, percent = -10},
     {type = COMBAT_ENERGYDAMAGE, percent = -5},
-    {type = COMBAT_ICEDAMAGE, percent = -5},
+    {type = COMBAT_ICEDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "IIEEH!! Iiih iih ih iiih!!!", yell = true},
-    {text = "Bsssssssm Bssssssm Bsssssssssssm!", yell = true},
+    {text = "Bsssssssm Bssssssm Bsssssssssssm!", yell = true}
 })
 
 -- Loot
@@ -64,21 +63,16 @@ monster:loot({
     {id = 7895, chance = 480},
     {id = 13942, chance = 320},
     {id = 13881, chance = 300},
-    {id = 13877, chance = 261},
+    {id = 13877, chance = 261}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=1000, chance=100, skill=65, attack=54
--- name=lifedrain, interval=2000, chance=10, min=-100, max=-130, length=4, areaEffect=energyarea
--- name=earth, interval=2000, chance=15, min=-150, max=-250, radius=3, areaEffect=greenspark
--- name=earth, interval=2000, chance=15, min=-70, max=-120, radius=3, target=1, areaEffect=greenspark
--- name=manadrain, interval=2000, chance=10, min=-50, max=-150, length=4, spread=3, areaEffect=redshimmer
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=100, max=150, areaEffect=greenspark
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 1000, chance = 100, minDamage = 0, maxDamage = -119},
+    {name = "lifedrain", interval = 2000, chance = 10, minDamage = -100, maxDamage = -130, length = 4},
+    {name = "earth", interval = 2000, chance = 15, minDamage = -150, maxDamage = -250, radius = 3},
+    {name = "earth", interval = 2000, chance = 15, minDamage = -70, maxDamage = -120, radius = 3},
+    {name = "manadrain", interval = 2000, chance = 10, minDamage = -50, maxDamage = -150, length = 4, spread = 3}
+})
 
 monster:register()

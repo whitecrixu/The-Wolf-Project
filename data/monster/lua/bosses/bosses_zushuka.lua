@@ -1,5 +1,5 @@
 -- Zushuka
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Zushuka")
 if not monster then return end
@@ -19,10 +19,9 @@ monster:armor(20)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -30,14 +29,14 @@ monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = 40},
     {type = COMBAT_HOLYDAMAGE, percent = 30},
     {type = COMBAT_ENERGYDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -10},
+    {type = COMBAT_DEATHDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -47,7 +46,7 @@ monster:voices({
     {text = "Is this all you've got?", yell = false},
     {text = "Rise, my servants. Destroy the trespassers!", yell = false},
     {text = "And stay cool.", yell = false},
-    {text = "Your cold dead body will be a marvelous ice statue.", yell = false},
+    {text = "Your cold dead body will be a marvelous ice statue.", yell = false}
 })
 
 -- Loot
@@ -82,23 +81,17 @@ monster:loot({
     {id = 7902, chance = 7000},
     {id = 5911, chance = 7000},
     {id = 21699, chance = 7000},
-    {id = 21700, chance = 3000},
+    {id = 21700, chance = 3000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-560
--- name=ice, interval=2000, chance=10, max=-100, length=8, spread=3, areaEffect=iceattack
--- name=ice, interval=2000, chance=20, range=7, max=-110, shootEffect=snowball
--- name=ice, interval=2000, chance=10, min=-300, max=-750, length=8, spread=3, areaEffect=icearea
--- name=outfit, interval=2000, chance=10, range=7, duration=4000, areaEffect=blueshimmer
--- name=speed, interval=2000, chance=15, range=7, duration=20000, speedchange=-330, areaEffect=icetornado
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=10000, chance=1, min=7500, max=7515, areaEffect=blueshimmer
--- name=healing, interval=3000, chance=15, min=200, max=500, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -560},
+    {name = "ice", interval = 2000, chance = 10, maxDamage = -100, length = 8, spread = 3},
+    {name = "ice", interval = 2000, chance = 20, maxDamage = -110, range = 7},
+    {name = "ice", interval = 2000, chance = 10, minDamage = -300, maxDamage = -750, length = 8, spread = 3},
+    {name = "outfit", interval = 2000, chance = 10, range = 7},
+    {name = "speed", interval = 2000, chance = 15, range = 7}
+})
 
 monster:register()

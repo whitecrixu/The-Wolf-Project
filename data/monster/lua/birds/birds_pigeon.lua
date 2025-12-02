@@ -1,5 +1,5 @@
 -- Pigeon
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Pigeon")
 if not monster then return end
@@ -15,13 +15,12 @@ monster:corpseId(19709)
 monster:outfit({lookType = 531})
 monster:defense(5)
 monster:armor(5)
-monster:runHealth(30)
+monster:runHealth(3)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(false)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -30,7 +29,12 @@ monster:staticAttackChance(90)
 monster:voices({
     {text = "Coooo! Cooo!", yell = false},
     {text = "Coo! Coooo! Coo! Cooo!", yell = false},
-    {text = "Coo! Coo! Coooo!", yell = false},
+    {text = "Coo! Coo! Coooo!", yell = false}
+})
+
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -6}
 })
 
 monster:register()

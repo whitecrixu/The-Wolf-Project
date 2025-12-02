@@ -1,5 +1,5 @@
 -- Midnight Spawn
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Midnight Spawn")
 if not monster then return end
@@ -19,9 +19,8 @@ monster:armor(10)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(85)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -31,23 +30,23 @@ monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = 99},
     {type = COMBAT_LIFEDRAIN, percent = 99},
     {type = COMBAT_HOLYDAMAGE, percent = 10},
-    {type = COMBAT_ICEDAMAGE, percent = 10},
+    {type = COMBAT_ICEDAMAGE, percent = 10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
 monster:loot({
-    {id = 10531, chance = 8333},
+    {id = 10531, chance = 8333}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=50
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -80}
+})
 
 monster:register()

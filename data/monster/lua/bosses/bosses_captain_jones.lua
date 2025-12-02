@@ -1,5 +1,5 @@
 -- Captain Jones
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Captain Jones")
 if not monster then return end
@@ -19,23 +19,22 @@ monster:armor(0)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_HOLYDAMAGE, percent = -15},
+    {type = COMBAT_HOLYDAMAGE, percent = -15}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_BLEEDING, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {type = COMBAT_PHYSICALDAMAGE, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
 -- Loot
@@ -46,20 +45,15 @@ monster:loot({
     {id = 2488, chance = 5070},
     {id = 8871, chance = 3070},
     {id = 2655, chance = 1110},
-    {id = 2383, chance = 1110},
+    {id = 2383, chance = 1110}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-95
--- name=lifedrain, interval=2000, chance=15, min=-30, max=-80, radius=1, areaEffect=redshimmer
--- name=death, interval=2000, chance=10, range=1, min=-130, max=-150, radius=1, target=1, shootEffect=death, areaEffect=smallclouds
--- name=outfit, interval=2000, chance=5, range=3, target=1, duration=4000, shootEffect=explosion
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=5, min=40, max=70, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -95},
+    {name = "lifedrain", interval = 2000, chance = 15, minDamage = -30, maxDamage = -80, radius = 1},
+    {name = "death", interval = 2000, chance = 10, minDamage = -130, maxDamage = -150, radius = 1},
+    {name = "outfit", interval = 2000, chance = 5, range = 3}
+})
 
 monster:register()

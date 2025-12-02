@@ -1,5 +1,5 @@
 -- Barbarian Bloodwalker
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Barbarian Bloodwalker")
 if not monster then return end
@@ -22,9 +22,8 @@ monster:attackable(true)
 monster:hostile(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -33,7 +32,7 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = 50},
     {type = COMBAT_DEATHDAMAGE, percent = -5},
-    {type = COMBAT_EARTHDAMAGE, percent = -5},
+    {type = COMBAT_EARTHDAMAGE, percent = -5}
 })
 
 -- Voices
@@ -41,7 +40,7 @@ monster:voices({
     {text = "YAAAHEEE!", yell = false},
     {text = "SLAUGHTER!", yell = false},
     {text = "CARNAGE!", yell = false},
-    {text = "You can run but you can't hide", yell = false},
+    {text = "You can run but you can't hide", yell = false}
 })
 
 -- Loot
@@ -57,17 +56,12 @@ monster:loot({
     {id = 7618, chance = 950},
     {id = 3962, chance = 390},
     {id = 7457, chance = 100},
-    {id = 7290, chance = 290},
+    {id = 7290, chance = 290}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=50, attack=80
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=240, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -130}
+})
 
 monster:register()

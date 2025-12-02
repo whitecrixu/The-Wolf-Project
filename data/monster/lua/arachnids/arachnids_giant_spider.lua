@@ -1,5 +1,5 @@
 -- Giant Spider
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Giant Spider")
 if not monster then return end
@@ -19,16 +19,15 @@ monster:armor(25)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_ICEDAMAGE, percent = 20},
-    {type = COMBAT_FIREDAMAGE, percent = -10},
+    {type = COMBAT_FIREDAMAGE, percent = -10}
 })
 
 -- Immunities
@@ -36,12 +35,7 @@ monster:immunities({
     {condition = CONDITION_OUTFIT, immunity = true},
     {condition = CONDITION_DRUNK, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-})
-
--- Summons
-monster:summons({
-    {name = "Poison Spider", chance = 10, interval = 2000, max = 2},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
 -- Loot
@@ -59,19 +53,14 @@ monster:loot({
     {id = 2169, chance = 710},
     {id = 2171, chance = 280},
     {id = 2476, chance = 530},
-    {id = 7901, chance = 220},
+    {id = 7901, chance = 220}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-300
--- name=poisonfield, interval=2000, chance=10, range=7, radius=1, target=1, shootEffect=poison
--- name=earth, interval=2000, chance=10, range=7, min=-40, max=-70, radius=1, target=1, shootEffect=poison
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=390, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -300},
+    {name = "poisonfield", interval = 2000, chance = 10, range = 7, radius = 1},
+    {name = "earth", interval = 2000, chance = 10, minDamage = -40, maxDamage = -70, range = 7, radius = 1}
+})
 
 monster:register()

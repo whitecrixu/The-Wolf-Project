@@ -1,5 +1,5 @@
 -- Kitty
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Kitty")
 if not monster then return end
@@ -23,28 +23,27 @@ monster:hostile(true)
 monster:isSummonable(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_BLEEDING, immunity = true},
+    {type = COMBAT_PHYSICALDAMAGE, combat = true},
     {condition = CONDITION_ENERGY, immunity = true},
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
-    {condition = CONDITION_DAZZLED, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
+    {type = COMBAT_HOLYDAMAGE, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_DROWN, immunity = true},
+    {condition = CONDITION_DROWN, immunity = true}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=20
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -50}
+})
 
 monster:register()

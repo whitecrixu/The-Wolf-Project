@@ -1,5 +1,5 @@
 -- Bandit
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Bandit")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(20331)
 monster:outfit({lookType = 129, lookHead = 58, lookBody = 59, lookLegs = 45, lookFeet = 114})
 monster:defense(15)
 monster:armor(15)
-monster:runHealth(25)
+monster:runHealth(24)
 
 -- Flags
 monster:attackable(true)
@@ -31,13 +31,13 @@ monster:staticAttackChance(90)
 -- Resistances
 monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -5},
+    {type = COMBAT_DEATHDAMAGE, percent = -5}
 })
 
 -- Voices
 monster:voices({
     {text = "Your money or your life!", yell = false},
-    {text = "Hand me your purse!", yell = false},
+    {text = "Hand me your purse!", yell = false}
 })
 
 -- Loot
@@ -50,12 +50,12 @@ monster:loot({
     {id = 2458, chance = 5000},
     {id = 2465, chance = 2500},
     {id = 2459, chance = 520},
-    {id = 2685, chance = 7630, maxCount = 2},
+    {id = 2685, chance = 7630, maxCount = 2}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=20, attack=30
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -50}
+})
 
 monster:register()

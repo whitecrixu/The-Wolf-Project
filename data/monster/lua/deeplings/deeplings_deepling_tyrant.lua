@@ -1,5 +1,5 @@
 -- Deepling Tyrant
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Deepling Tyrant")
 if not monster then return end
@@ -15,8 +15,7 @@ monster:corpseId(15188)
 monster:outfit({lookType = 442})
 monster:defense(45)
 monster:armor(45)
-monster:targetDistance(0)
-monster:runHealth(20)
+monster:runHealth(490)
 
 -- Flags
 monster:attackable(true)
@@ -24,20 +23,20 @@ monster:hostile(true)
 monster:pushable(true)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_DROWN, immunity = true},
-    {condition = CONDITION_FIRE, immunity = true},
+    {condition = CONDITION_FIRE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "QJELL NETA NA!!", yell = false},
+    {text = "QJELL NETA NA!!", yell = false}
 })
 
 -- Loot
@@ -54,19 +53,14 @@ monster:loot({
     {id = 15454, chance = 1420},
     {id = 15647, chance = 1540},
     {id = 15645, chance = 510},
-    {id = 15545, chance = 80},
+    {id = 15545, chance = 80}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=100, attack=91
--- name=physical, interval=2000, chance=20, range=7, max=-375, target=1, shootEffect=whirlwindsword
--- name=drown, interval=2000, chance=15, range=7, min=-180, max=-215, target=1, shootEffect=spear, areaEffect=bluebubble
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=200, max=400, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -191},
+    {name = "physical", interval = 2000, chance = 20, maxDamage = -375, range = 7},
+    {name = "drown", interval = 2000, chance = 15, minDamage = -180, maxDamage = -215, range = 7}
+})
 
 monster:register()

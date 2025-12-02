@@ -1,5 +1,5 @@
 -- Little Corym Charlatan
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Little Corym Charlatan")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:armor(10)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -29,12 +28,12 @@ monster:staticAttackChance(90)
 monster:voices({
     {text = "Squeeeeeeak!", yell = false},
     {text = "Must have it! Must have it!", yell = false},
-    {text = "Gimme! Gimme!", yell = false},
+    {text = "Gimme! Gimme!", yell = false}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=10, attack=10
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -20}
+})
 
 monster:register()

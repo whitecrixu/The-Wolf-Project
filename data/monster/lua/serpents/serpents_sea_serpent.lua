@@ -1,5 +1,5 @@
 -- Sea Serpent
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Sea Serpent")
 if not monster then return end
@@ -16,36 +16,34 @@ monster:corpseId(8307)
 monster:outfit({lookType = 275})
 monster:defense(45)
 monster:armor(45)
-monster:targetDistance(0)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 30},
     {type = COMBAT_ENERGYDAMAGE, percent = -5},
     {type = COMBAT_PHYSICALDAMAGE, percent = -15},
-    {type = COMBAT_DEATHDAMAGE, percent = 10},
+    {type = COMBAT_DEATHDAMAGE, percent = 10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_DROWN, immunity = true},
+    {condition = CONDITION_DROWN, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "CHHHRRRR", yell = false},
-    {text = "HISSSS", yell = false},
+    {text = "HISSSS", yell = false}
 })
 
 -- Loot
@@ -70,21 +68,15 @@ monster:loot({
     {id = 7896, chance = 430},
     {id = 8871, chance = 370},
     {id = 8884, chance = 110},
-    {id = 8878, chance = 90},
+    {id = 8878, chance = 90}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=40, attack=100
--- name=earth, interval=2000, chance=15, min=-60, max=-300, length=7, spread=2, areaEffect=smallplants
--- name=ice, interval=2000, chance=15, min=-101, max=-300, length=7, spread=2, areaEffect=iceattack
--- name=sea serpent drown, interval=2000, chance=15, range=5
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=30, min=70, max=273, areaEffect=blueshimmer
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=400, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -140},
+    {name = "earth", interval = 2000, chance = 15, minDamage = -60, maxDamage = -300, length = 7, spread = 2},
+    {name = "ice", interval = 2000, chance = 15, minDamage = -101, maxDamage = -300, length = 7, spread = 2},
+    {name = "sea serpent drown", interval = 2000, chance = 15, range = 5}
+})
 
 monster:register()

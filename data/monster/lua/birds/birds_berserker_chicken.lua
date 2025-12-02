@@ -1,5 +1,5 @@
 -- Berserker Chicken
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Berserker Chicken")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:armor(30)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -33,37 +32,32 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = 10},
     {type = COMBAT_EARTHDAMAGE, percent = 10},
-    {type = COMBAT_PHYSICALDAMAGE, percent = -20},
+    {type = COMBAT_PHYSICALDAMAGE, percent = -20}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_DROWN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {condition = CONDITION_DROWN, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Gokgoooook", yell = false},
     {text = "Cluck Cluck", yell = false},
-    {text = "I will fill MY cushion with YOUR hair! CLUCK!", yell = false},
+    {text = "I will fill MY cushion with YOUR hair! CLUCK!", yell = false}
 })
 
 -- Loot
 monster:loot({
-    {id = 2148, chance = 50000, maxCount = 100},
+    {id = 2148, chance = 50000, maxCount = 100}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=1200, chance=100, max=-200
--- name=drown, interval=2000, chance=15, min=-41, max=-70, areaEffect=explosionarea
--- name=Blood Rage, interval=2000, chance=30, target=1
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=1000, chance=40, duration=8000, speedchange=400, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 1200, chance = 100, minDamage = 0, maxDamage = -200},
+    {name = "drown", interval = 2000, chance = 15, minDamage = -41, maxDamage = -70},
+    {name = "Blood Rage", interval = 2000, chance = 30}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Eternal Guardian
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Eternal Guardian")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(40)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,21 +30,21 @@ monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = 20},
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = 10},
-    {type = COMBAT_PHYSICALDAMAGE, percent = 25},
+    {type = COMBAT_PHYSICALDAMAGE, percent = 25}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_DROWN, immunity = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Zzrkrrch!", yell = false},
-    {text = "<crackle>", yell = false},
+    {text = "<crackle>", yell = false}
 })
 
 -- Loot
@@ -63,12 +62,12 @@ monster:loot({
     {id = 11343, chance = 430},
     {id = 2528, chance = 820},
     {id = 2427, chance = 560},
-    {id = 11307, chance = 100},
+    {id = 11307, chance = 100}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=50, attack=100
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -150}
+})
 
 monster:register()

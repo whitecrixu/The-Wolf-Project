@@ -1,5 +1,5 @@
 -- Spectral Scum
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Spectral Scum")
 if not monster then return end
@@ -15,7 +15,6 @@ monster:corpseId(6070)
 monster:outfit({lookType = 195})
 monster:defense(19)
 monster:armor(18)
-monster:targetDistance(4)
 
 -- Flags
 monster:attackable(true)
@@ -26,17 +25,17 @@ monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_BLEEDING, immunity = true},
+    {type = COMBAT_PHYSICALDAMAGE, combat = true},
     {condition = CONDITION_ENERGY, immunity = true},
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
-    {condition = CONDITION_DAZZLED, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
+    {type = COMBAT_HOLYDAMAGE, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_DROWN, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -47,12 +46,12 @@ monster:voices({
     {text = "<Fart>", yell = false},
     {text = "Nothing better than plundering and getting palstered!", yell = false},
     {text = "Yarrr!", yell = false},
-    {text = "A pirate's unlife for me!", yell = false},
+    {text = "A pirate's unlife for me!", yell = false}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=drunk, interval=5000, chance=10, range=4, areaEffect=poff
---]]
+-- Attacks
+monster:attacks({
+    {name = "drunk", interval = 5000, chance = 10, range = 4}
+})
 
 monster:register()

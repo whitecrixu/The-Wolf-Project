@@ -1,5 +1,5 @@
 -- Massive Earth Elemental
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Massive Earth Elemental")
 if not monster then return end
@@ -19,9 +19,8 @@ monster:armor(35)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -29,15 +28,15 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 90},
     {type = COMBAT_PHYSICALDAMAGE, percent = 30},
     {type = COMBAT_HOLYDAMAGE, percent = 50},
-    {type = COMBAT_FIREDAMAGE, percent = -15},
+    {type = COMBAT_FIREDAMAGE, percent = -15}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_ENERGY, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_ENERGY, immunity = true}
 })
 
 -- Loot
@@ -55,22 +54,17 @@ monster:loot({
     {id = 7387, chance = 150},
     {id = 11222, chance = 40680},
     {id = 11339, chance = 480},
-    {id = 13757, chance = 430},
+    {id = 13757, chance = 430}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=45, attack=40
--- name=earth, interval=2000, chance=10, range=7, min=-99, max=-145, target=1, shootEffect=smallearth, areaEffect=greenbubble
--- name=physical, interval=2000, chance=10, range=7, min=-95, max=-169, radius=2, target=1, shootEffect=largerock, areaEffect=poff
--- name=poisoncondition, interval=2000, chance=15, min=-300, max=-320, length=6, areaEffect=bigplants
--- name=poisoncondition, interval=2000, chance=10, min=-200, max=-220, radius=5, shootEffect=poison, areaEffect=poison
--- name=speed, interval=2000, chance=20, range=5, target=1, duration=5000, speedchange=-330, areaEffect=smallplants
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=5, min=150, max=180, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -85},
+    {name = "earth", interval = 2000, chance = 10, minDamage = -99, maxDamage = -145, range = 7},
+    {name = "physical", interval = 2000, chance = 10, minDamage = -95, maxDamage = -169, range = 7, radius = 2},
+    {name = "poisoncondition", interval = 2000, chance = 15, minDamage = -300, maxDamage = -320, length = 6},
+    {name = "poisoncondition", interval = 2000, chance = 10, minDamage = -200, maxDamage = -220, radius = 5},
+    {name = "speed", interval = 2000, chance = 20, range = 5}
+})
 
 monster:register()

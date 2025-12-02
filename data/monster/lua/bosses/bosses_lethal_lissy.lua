@@ -1,5 +1,5 @@
 -- Lethal Lissy
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Lethal Lissy")
 if not monster then return end
@@ -19,18 +19,12 @@ monster:armor(35)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(50)
+monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
-})
-
--- Summons
-monster:summons({
-    {name = "Pirate Cutthroat", chance = 50, interval = 2000, max = 1},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
@@ -41,17 +35,12 @@ monster:loot({
     {id = 2387, chance = 1500},
     {id = 2463, chance = 4000},
     {id = 2145, chance = 100000},
-    {id = 2320, chance = 100000},
+    {id = 2320, chance = 100000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, min=-150, max=-250
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=6000, chance=65, min=200, max=250, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = -150, maxDamage = -250}
+})
 
 monster:register()

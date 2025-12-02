@@ -1,5 +1,5 @@
 -- Wild Warrior
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Wild Warrior")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(20531)
 monster:outfit({lookType = 131, lookHead = 57, lookBody = 57, lookLegs = 57, lookFeet = 57})
 monster:defense(20)
 monster:armor(20)
-monster:runHealth(10)
+monster:runHealth(13)
 
 -- Flags
 monster:attackable(true)
@@ -31,13 +31,13 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = 10},
     {type = COMBAT_PHYSICALDAMAGE, percent = -5},
-    {type = COMBAT_DEATHDAMAGE, percent = -5},
+    {type = COMBAT_DEATHDAMAGE, percent = -5}
 })
 
 -- Voices
 monster:voices({
     {text = "An enemy!", yell = false},
-    {text = "Gimme your money!", yell = false},
+    {text = "Gimme your money!", yell = false}
 })
 
 -- Loot
@@ -53,17 +53,12 @@ monster:loot({
     {id = 2458, chance = 5250},
     {id = 2511, chance = 17000},
     {id = 2459, chance = 580},
-    {id = 2391, chance = 100},
+    {id = 2391, chance = 100}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=60, attack=20
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=200, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -80}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Dark Apprentice
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Dark Apprentice")
 if not monster then return end
@@ -15,24 +15,22 @@ monster:corpseId(20363)
 monster:outfit({lookType = 133, lookHead = 78, lookBody = 57, lookLegs = 95, lookFeet = 115, lookAddons = 1})
 monster:defense(15)
 monster:armor(15)
-monster:targetDistance(4)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_DEATHDAMAGE, percent = -5},
+    {type = COMBAT_DEATHDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -40,7 +38,7 @@ monster:voices({
     {text = "Outch!", yell = false},
     {text = "Oops, I did it again.", yell = false},
     {text = "From the spirits that I called Sir, deliver me!", yell = false},
-    {text = "I must dispose of my masters enemies!", yell = false},
+    {text = "I must dispose of my masters enemies!", yell = false}
 })
 
 -- Loot
@@ -52,23 +50,17 @@ monster:loot({
     {id = 2191, chance = 1980},
     {id = 7618, chance = 2900},
     {id = 2188, chance = 110},
-    {id = 13295, chance = 10},
+    {id = 13295, chance = 10}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=30
--- name=fire, interval=2000, chance=10, range=7, min=-2, max=-26, shootEffect=fire
--- name=energy, interval=2000, chance=10, range=7, min=-10, max=-20, shootEffect=energy
--- name=physical, interval=2000, chance=10, range=7, max=-24, shootEffect=smallstone
--- name=outfit, interval=2000, chance=1, range=3, target=1, duration=2000, shootEffect=explosion
--- name=outfit, interval=2000, chance=1, radius=4, duration=2000, areaEffect=blueshimmer
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=30, max=40, areaEffect=greenshimmer
--- name=outfit, interval=2000, chance=5, target=1, duration=3000
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -60},
+    {name = "fire", interval = 2000, chance = 10, minDamage = -2, maxDamage = -26, range = 7},
+    {name = "energy", interval = 2000, chance = 10, minDamage = -10, maxDamage = -20, range = 7},
+    {name = "physical", interval = 2000, chance = 10, maxDamage = -24, range = 7},
+    {name = "outfit", interval = 2000, chance = 1, range = 3},
+    {name = "outfit", interval = 2000, chance = 1, radius = 4}
+})
 
 monster:register()

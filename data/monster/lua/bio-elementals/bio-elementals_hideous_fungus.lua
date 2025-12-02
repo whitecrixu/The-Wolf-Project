@@ -1,5 +1,5 @@
 -- Hideous Fungus
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Hideous Fungus")
 if not monster then return end
@@ -15,13 +15,11 @@ monster:corpseId(17428)
 monster:outfit({lookType = 499})
 monster:defense(35)
 monster:armor(35)
-monster:targetDistance(4)
-monster:runHealth(275)
+monster:runHealth(460)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -32,24 +30,19 @@ monster:elements({
     {type = COMBAT_DEATHDAMAGE, percent = 1},
     {type = COMBAT_FIREDAMAGE, percent = 5},
     {type = COMBAT_ENERGYDAMAGE, percent = 15},
-    {type = COMBAT_ICEDAMAGE, percent = 15},
+    {type = COMBAT_ICEDAMAGE, percent = 15}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Munch munch munch!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "humorless fungus", chance = 10, interval = 2000, max = 2},
+    {text = "Munch munch munch!", yell = false}
 })
 
 -- Loot
@@ -74,23 +67,17 @@ monster:loot({
     {id = 7884, chance = 800},
     {id = 18411, chance = 590},
     {id = 18454, chance = 60},
-    {id = 18393, chance = 20},
+    {id = 18393, chance = 20}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=90, attack=90
--- name=earth, interval=2000, chance=15, range=7, min=-250, max=-430, shootEffect=smallearth, areaEffect=smallplants
--- name=ice, interval=2000, chance=15, min=-250, max=-550, length=8, spread=3, shootEffect=snowball
--- name=speed, interval=2000, chance=10, radius=1, target=1, duration=60000, speedchange=-600, areaEffect=redshimmer
--- name=drunk, interval=2000, chance=10, range=7, radius=5, target=1, duration=4000, shootEffect=smallstone, areaEffect=stun
--- name=poisoncondition, interval=2000, chance=10, range=7, min=-400, max=-640, radius=3, areaEffect=greenspark
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=275, max=350, areaEffect=blueshimmer
--- name=invisible, interval=2000, chance=10, duration=6000, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -180},
+    {name = "earth", interval = 2000, chance = 15, minDamage = -250, maxDamage = -430, range = 7},
+    {name = "ice", interval = 2000, chance = 15, minDamage = -250, maxDamage = -550, length = 8, spread = 3},
+    {name = "speed", interval = 2000, chance = 10, radius = 1},
+    {name = "drunk", interval = 2000, chance = 10, range = 7, radius = 5},
+    {name = "poisoncondition", interval = 2000, chance = 10, minDamage = -400, maxDamage = -640, range = 7, radius = 3}
+})
 
 monster:register()

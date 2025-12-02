@@ -1,5 +1,5 @@
 -- Dark Torturer
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Dark Torturer")
 if not monster then return end
@@ -19,10 +19,9 @@ monster:armor(40)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -30,13 +29,13 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 30},
     {type = COMBAT_DEATHDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = -10},
-    {type = COMBAT_HOLYDAMAGE, percent = -10},
+    {type = COMBAT_HOLYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -45,7 +44,7 @@ monster:voices({
     {text = "IahaEhheAie!", yell = false},
     {text = "It's party time!", yell = false},
     {text = "Harrr, Harrr!", yell = false},
-    {text = "The torturer is in!", yell = false},
+    {text = "The torturer is in!", yell = false}
 })
 
 -- Loot
@@ -69,19 +68,14 @@ monster:loot({
     {id = 7412, chance = 850},
     {id = 5801, chance = 1192},
     {id = 7388, chance = 480},
-    {id = 2470, chance = 30},
+    {id = 2470, chance = 30}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=90, attack=100
--- name=physical, interval=2000, chance=10, range=7, max=-781, shootEffect=throwingknife
--- name=dark torturer skill reducer, interval=2000, chance=5
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=200, max=250, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -190},
+    {name = "physical", interval = 2000, chance = 10, maxDamage = -781, range = 7},
+    {name = "dark torturer skill reducer", interval = 2000, chance = 5}
+})
 
 monster:register()

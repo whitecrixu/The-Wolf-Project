@@ -1,5 +1,5 @@
 -- Humongous Fungus
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Humongous Fungus")
 if not monster then return end
@@ -19,10 +19,9 @@ monster:armor(45)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -30,19 +29,19 @@ monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = 15},
     {type = COMBAT_FIREDAMAGE, percent = 5},
     {type = COMBAT_HOLYDAMAGE, percent = 5},
-    {type = COMBAT_DEATHDAMAGE, percent = 15},
+    {type = COMBAT_DEATHDAMAGE, percent = 15}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Munch munch munch!", yell = false},
+    {text = "Munch munch munch!", yell = false}
 })
 
 -- Loot
@@ -69,23 +68,17 @@ monster:loot({
     {id = 7884, chance = 869},
     {id = 18411, chance = 680},
     {id = 18454, chance = 150},
-    {id = 18393, chance = 20},
+    {id = 18393, chance = 20}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, min=-90, max=-330
--- name=earth, interval=2000, chance=15, range=7, min=-180, max=-350, shootEffect=smallearth, areaEffect=smallplants
--- name=poisonfield, interval=2000, chance=20, radius=4
--- name=poisoncondition, interval=2000, chance=10, min=-500, max=-1000, length=8, areaEffect=greenbubble
--- name=lifedrain, interval=2000, chance=10, min=-130, max=-260, length=5, areaEffect=redshimmer
--- name=poisoncondition, interval=2000, chance=10, range=7, min=-400, max=-640, radius=3, areaEffect=greenspark
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=225, max=380, areaEffect=blueshimmer
--- name=invisible, interval=2000, chance=15, duration=4000, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = -90, maxDamage = -330},
+    {name = "earth", interval = 2000, chance = 15, minDamage = -180, maxDamage = -350, range = 7},
+    {name = "poisonfield", interval = 2000, chance = 20, radius = 4},
+    {name = "poisoncondition", interval = 2000, chance = 10, minDamage = -500, maxDamage = -1000, length = 8},
+    {name = "lifedrain", interval = 2000, chance = 10, minDamage = -130, maxDamage = -260, length = 5},
+    {name = "poisoncondition", interval = 2000, chance = 10, minDamage = -400, maxDamage = -640, range = 7, radius = 3}
+})
 
 monster:register()

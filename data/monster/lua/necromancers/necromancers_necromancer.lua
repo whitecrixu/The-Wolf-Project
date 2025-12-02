@@ -1,5 +1,5 @@
 -- Necromancer
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Necromancer")
 if not monster then return end
@@ -15,12 +15,10 @@ monster:corpseId(20455)
 monster:outfit({lookType = 9})
 monster:defense(25)
 monster:armor(25)
-monster:targetDistance(4)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,27 +29,20 @@ monster:elements({
     {type = COMBAT_DEATHDAMAGE, percent = 50},
     {type = COMBAT_PHYSICALDAMAGE, percent = -5},
     {type = COMBAT_FIREDAMAGE, percent = -5},
-    {type = COMBAT_HOLYDAMAGE, percent = -5},
+    {type = COMBAT_HOLYDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_DROWN, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_DROWN, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Your corpse will be mine!", yell = false},
-    {text = "Taste the sweetness of death!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "Ghoul", chance = 15, interval = 2000, max = 1},
-    {name = "Ghost", chance = 5, interval = 2000, max = 1},
-    {name = "Mummy", chance = 5, interval = 2000, max = 1},
+    {text = "Taste the sweetness of death!", yell = false}
 })
 
 -- Loot
@@ -67,19 +58,14 @@ monster:loot({
     {id = 8901, chance = 130},
     {id = 2195, chance = 210},
     {id = 11237, chance = 10130},
-    {id = 12431, chance = 1001},
+    {id = 12431, chance = 1001}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=40
--- name=death, interval=2000, chance=20, range=1, min=-60, max=-120, target=1, shootEffect=death, areaEffect=smallclouds
--- name=poison, interval=2000, chance=20, range=7, min=-65, max=-120, shootEffect=poison, areaEffect=poison
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=25, min=50, max=80, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -70},
+    {name = "death", interval = 2000, chance = 20, minDamage = -60, maxDamage = -120},
+    {name = "poison", interval = 2000, chance = 20, minDamage = -65, maxDamage = -120, range = 7}
+})
 
 monster:register()

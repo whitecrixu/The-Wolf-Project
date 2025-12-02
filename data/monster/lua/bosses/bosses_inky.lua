@@ -1,5 +1,5 @@
 -- Inky
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Inky")
 if not monster then return end
@@ -20,20 +20,19 @@ monster:armor(15)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_ENERGYDAMAGE, percent = -15},
+    {type = COMBAT_ENERGYDAMAGE, percent = -15}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
 -- Voices
@@ -41,16 +40,16 @@ monster:voices({
     {text = "Tssss!", yell = false},
     {text = "Gaaahhh!", yell = false},
     {text = "Gluh! Gluh!", yell = false},
-    {text = "Boohaa!", yell = false},
+    {text = "Boohaa!", yell = false}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=85, attack=156
--- name=lifedrain, interval=2000, chance=15, max=-87, radius=3, areaEffect=blackspark
--- name=poisonfield, interval=2000, chance=19, range=7, radius=3, shootEffect=poison
--- name=physical, interval=2000, chance=7, range=7, min=-56, max=-87, target=1, shootEffect=snowball
--- name=energycondition, interval=2000, chance=10, range=1, min=-75, max=-75, target=1, shootEffect=energy
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -241},
+    {name = "lifedrain", interval = 2000, chance = 15, maxDamage = -87, radius = 3},
+    {name = "poisonfield", interval = 2000, chance = 19, range = 7, radius = 3},
+    {name = "physical", interval = 2000, chance = 7, minDamage = -56, maxDamage = -87, range = 7},
+    {name = "energycondition", interval = 2000, chance = 10, minDamage = -75, maxDamage = -75}
+})
 
 monster:register()

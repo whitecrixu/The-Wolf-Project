@@ -1,5 +1,5 @@
 -- Scorpion
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Scorpion")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(5988)
 monster:outfit({lookType = 43})
 monster:defense(5)
 monster:armor(5)
-monster:runHealth(5)
+monster:runHealth(4)
 
 -- Flags
 monster:attackable(true)
@@ -31,22 +31,22 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_FIREDAMAGE, percent = -10},
-    {type = COMBAT_ICEDAMAGE, percent = -10},
+    {type = COMBAT_ICEDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
 -- Loot
 monster:loot({
-    {id = 10568, chance = 4930},
+    {id = 10568, chance = 4930}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=25
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -55}
+})
 
 monster:register()

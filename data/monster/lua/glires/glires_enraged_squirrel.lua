@@ -1,5 +1,5 @@
 -- Enraged Squirrel
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Enraged Squirrel")
 if not monster then return end
@@ -29,22 +29,22 @@ monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_FIREDAMAGE, percent = -10},
+    {type = COMBAT_FIREDAMAGE, percent = -10}
 })
 
 -- Voices
 monster:voices({
-    {text = "Chchch", yell = false},
+    {text = "Chchch", yell = false}
 })
 
 -- Loot
 monster:loot({
-    {id = 7909, chance = 1140},
+    {id = 7909, chance = 1140}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=10, attack=10
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -20}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Dwarf Guard
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Dwarf Guard")
 if not monster then return end
@@ -23,7 +23,6 @@ monster:hostile(true)
 monster:isSummonable(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -33,17 +32,17 @@ monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = 20},
     {type = COMBAT_PHYSICALDAMAGE, percent = 10},
     {type = COMBAT_FIREDAMAGE, percent = -5},
-    {type = COMBAT_DEATHDAMAGE, percent = -5},
+    {type = COMBAT_DEATHDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Hail Durin!", yell = false},
+    {text = "Hail Durin!", yell = false}
 })
 
 -- Loot
@@ -61,12 +60,12 @@ monster:loot({
     {id = 2387, chance = 600},
     {id = 2459, chance = 250},
     {id = 2208, chance = 190},
-    {id = 13757, chance = 280},
+    {id = 13757, chance = 280}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=70
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -100}
+})
 
 monster:register()

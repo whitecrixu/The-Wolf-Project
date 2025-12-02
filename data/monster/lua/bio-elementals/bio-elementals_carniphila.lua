@@ -1,5 +1,5 @@
 -- Carniphila
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Carniphila")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(15)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -28,13 +27,13 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = 35},
-    {type = COMBAT_FIREDAMAGE, percent = -20},
+    {type = COMBAT_FIREDAMAGE, percent = -20}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
@@ -46,15 +45,15 @@ monster:loot({
     {id = 2686, chance = 890},
     {id = 7732, chance = 490},
     {id = 2802, chance = 446, maxCount = 2},
-    {id = 13298, chance = 170},
+    {id = 13298, chance = 170}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=50
--- name=earth, interval=2000, chance=15, range=7, min=-60, max=-95, shootEffect=poison, areaEffect=greenbubble
--- name=speed, interval=2000, chance=15, range=7, duration=30000, speedchange=-800, shootEffect=poison, areaEffect=greenbubble
--- name=earth, interval=2000, chance=10, min=-40, max=-130, radius=3, areaEffect=poison
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -80},
+    {name = "earth", interval = 2000, chance = 15, minDamage = -60, maxDamage = -95, range = 7},
+    {name = "speed", interval = 2000, chance = 15, range = 7},
+    {name = "earth", interval = 2000, chance = 10, minDamage = -40, maxDamage = -130, radius = 3}
+})
 
 monster:register()

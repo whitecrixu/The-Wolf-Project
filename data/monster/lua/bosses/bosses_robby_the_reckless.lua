@@ -1,5 +1,5 @@
 -- Robby The Reckless
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Robby The Reckless")
 if not monster then return end
@@ -19,19 +19,18 @@ monster:armor(25)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Loot
 monster:loot({
     {id = 2152, chance = 100000, maxCount = 85},
-    {id = 14903, chance = 100000},
+    {id = 14903, chance = 100000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-80
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -80}
+})
 
 monster:register()

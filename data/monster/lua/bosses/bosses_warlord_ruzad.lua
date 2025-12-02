@@ -1,5 +1,5 @@
 -- Warlord Ruzad
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Warlord Ruzad")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(32)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -30,18 +29,13 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 30},
     {type = COMBAT_HOLYDAMAGE, percent = 10},
     {type = COMBAT_EARTHDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -10},
+    {type = COMBAT_DEATHDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_PARALYZE, immunity = true},
-})
-
--- Summons
-monster:summons({
-    {name = "Orc Berserker", chance = 30, interval = 2000, max = 3},
+    {condition = CONDITION_PARALYZE, immunity = true}
 })
 
 -- Loot
@@ -51,18 +45,18 @@ monster:loot({
     {id = 2667, chance = 6667},
     {id = 2392, chance = 8970},
     {id = 2463, chance = 7333},
-    {id = 2399, chance = 100000, maxCount = 18},
+    {id = 2399, chance = 10000, maxCount = 18},
     {id = 2428, chance = 13000},
     {id = 2478, chance = 3333},
     {id = 2200, chance = 9000},
     {id = 2377, chance = 18180},
     {id = 2497, chance = 6670},
-    {id = 2179, chance = 5506},
+    {id = 2179, chance = 5506}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=65, attack=80
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -145}
+})
 
 monster:register()

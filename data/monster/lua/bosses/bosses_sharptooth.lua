@@ -1,5 +1,5 @@
 -- Sharptooth
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Sharptooth")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:armor(20)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -28,15 +27,15 @@ monster:staticAttackChance(90)
 -- Resistances
 monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = -5},
-    {type = COMBAT_EARTHDAMAGE, percent = 80},
+    {type = COMBAT_EARTHDAMAGE, percent = 80}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -44,23 +43,17 @@ monster:voices({
     {text = "Gnarrr!", yell = false},
     {text = "Tcharrr!", yell = false},
     {text = "Rrrah!", yell = false},
-    {text = "Rraaar!", yell = false},
+    {text = "Rraaar!", yell = false}
 })
 
 -- Loot
 monster:loot({
-    {id = 2226, chance = 50000},
+    {id = 2226, chance = 50000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=500
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, speedchange=210, areaEffect=greenshimmer
--- name=healing, interval=2000, chance=12, min=200, max=240, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -530}
+})
 
 monster:register()

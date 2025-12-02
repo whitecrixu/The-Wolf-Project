@@ -1,5 +1,5 @@
 -- Drillworm
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Drillworm")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(35)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -30,19 +29,19 @@ monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = 16},
     {type = COMBAT_HOLYDAMAGE, percent = 25},
     {type = COMBAT_DEATHDAMAGE, percent = 15},
-    {type = COMBAT_FIREDAMAGE, percent = -5},
+    {type = COMBAT_FIREDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Knarrrk!", yell = false},
+    {text = "Knarrrk!", yell = false}
 })
 
 -- Loot
@@ -63,15 +62,15 @@ monster:loot({
     {id = 18427, chance = 5400},
     {id = 18416, chance = 9780},
     {id = 18417, chance = 9260},
-    {id = 18418, chance = 9610},
+    {id = 18418, chance = 9610}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-300
--- name=speed, interval=2000, chance=15, length=8, duration=15000, speedchange=-600, areaEffect=redshimmer
--- name=earth, interval=2000, chance=10, min=-150, max=-300, length=8, areaEffect=greenspark
--- name=earth, interval=2000, chance=15, min=-100, max=-150, radius=3, target=1, areaEffect=poison
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -300},
+    {name = "speed", interval = 2000, chance = 15, length = 8},
+    {name = "earth", interval = 2000, chance = 10, minDamage = -150, maxDamage = -300, length = 8},
+    {name = "earth", interval = 2000, chance = 15, minDamage = -100, maxDamage = -150, radius = 3}
+})
 
 monster:register()

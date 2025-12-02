@@ -1,5 +1,5 @@
 -- Glooth Fairy
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Glooth Fairy")
 if not monster then return end
@@ -23,7 +23,6 @@ monster:hostile(true)
 monster:isSummonable(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -33,7 +32,7 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 25},
     {type = COMBAT_HOLYDAMAGE, percent = 20},
     {type = COMBAT_EARTHDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -10},
+    {type = COMBAT_DEATHDAMAGE, percent = -10}
 })
 
 -- Voices
@@ -42,7 +41,7 @@ monster:voices({
     {text = "Toks utat.", yell = false},
     {text = "Human, uh whil dyh!", yell = false},
     {text = "Youh ah trak!", yell = false},
-    {text = "Let da mashing begin!", yell = false},
+    {text = "Let da mashing begin!", yell = false}
 })
 
 -- Loot
@@ -58,12 +57,12 @@ monster:loot({
     {id = 2490, chance = 220},
     {id = 2209, chance = 90},
     {id = 7398, chance = 80},
-    {id = 10574, chance = 4930},
+    {id = 10574, chance = 4930}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=60, attack=30
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -90}
+})
 
 monster:register()

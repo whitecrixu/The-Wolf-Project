@@ -1,5 +1,5 @@
 -- Lost Berserker
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Lost Berserker")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(40)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -29,19 +28,19 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 10},
     {type = COMBAT_PHYSICALDAMAGE, percent = 40},
     {type = COMBAT_DEATHDAMAGE, percent = 10},
-    {type = COMBAT_ICEDAMAGE, percent = 40},
+    {type = COMBAT_ICEDAMAGE, percent = 40}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Kill! Kill! Kill!", yell = false},
-    {text = "Death! Death! Death!", yell = false},
+    {text = "Death! Death! Death!", yell = false}
 })
 
 -- Loot
@@ -72,22 +71,17 @@ monster:loot({
     {id = 2528, chance = 1002},
     {id = 7886, chance = 640},
     {id = 2432, chance = 380},
-    {id = 2498, chance = 150},
+    {id = 2498, chance = 150}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=100, attack=91
--- name=physical, interval=2000, chance=15, range=7, max=-300, shootEffect=whirlwindaxe
--- name=physical, interval=2000, chance=15, range=7, max=-250, radius=3, target=1, shootEffect=explosion, areaEffect=explosionarea
--- name=manadrain, interval=2000, chance=10, min=-150, max=-250, radius=5, areaEffect=redshimmer
--- name=speed, interval=2000, chance=10, radius=2, duration=20000, speedchange=-800, areaEffect=redshimmer
--- name=drunk, interval=2000, chance=10, radius=4, target=1, duration=6000, areaEffect=stun
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=invisible, interval=2000, chance=5, duration=3000, areaEffect=teleport
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -191},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -300, range = 7},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -250, range = 7, radius = 3},
+    {name = "manadrain", interval = 2000, chance = 10, minDamage = -150, maxDamage = -250, radius = 5},
+    {name = "speed", interval = 2000, chance = 10, radius = 2},
+    {name = "drunk", interval = 2000, chance = 10, radius = 4}
+})
 
 monster:register()

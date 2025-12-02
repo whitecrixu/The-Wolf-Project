@@ -1,5 +1,5 @@
 -- Infernatil
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Infernatil")
 if not monster then return end
@@ -15,25 +15,25 @@ monster:corpseId(2916)
 monster:outfit({lookType = 35})
 monster:defense(150)
 monster:armor(165)
-monster:runHealth(3000)
+monster:runHealth(27000)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
+monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_ENERGY, immunity = true},
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_OUTFIT, immunity = true},
     {condition = CONDITION_DRUNK, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -43,12 +43,7 @@ monster:voices({
     {text = "ASHES TO ASHES!", yell = true},
     {text = "YOU WILL ALL BURN!", yell = true},
     {text = "THE DAY OF RECKONING IS AT HAND!", yell = true},
-    {text = "BOW TO THE POWER OF THE RUTHLESS SEVEN!", yell = true},
-})
-
--- Summons
-monster:summons({
-    {name = "hellfire fighter", chance = 8, interval = 1000, max = 4},
+    {text = "BOW TO THE POWER OF THE RUTHLESS SEVEN!", yell = true}
 })
 
 -- Loot
@@ -109,26 +104,19 @@ monster:loot({
     {id = 2185, chance = 3500},
     {id = 3955, chance = 100},
     {id = 2188, chance = 2500},
-    {id = 2143, chance = 12500, maxCount = 15},
+    {id = 2143, chance = 12500, maxCount = 15}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=210, attack=260
--- name=firecondition, interval=1000, chance=7, range=2, min=-800, max=-1200, shootEffect=fire, areaEffect=yellowspark
--- name=physical, interval=1000, chance=7, min=-250, max=-750, radius=6, areaEffect=explosion
--- name=fire, interval=1000, chance=50, min=-200, max=-500, radius=5, areaEffect=yellowspark
--- name=firefield, interval=1000, chance=4, radius=8, areaEffect=explosion
--- name=fire, interval=1000, chance=34, range=7, min=-350, max=-850, radius=7, target=1, shootEffect=fire, areaEffect=firearea
--- name=fire, interval=1000, chance=13, min=-500, max=-1000, length=8, areaEffect=explosion
--- name=fire, interval=1000, chance=10, min=-300, max=-1500, length=8, spread=3, areaEffect=firearea
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=1000, chance=15, min=5000, max=10000, areaEffect=blueshimmer
--- name=healing, interval=1000, chance=25, min=2000, max=3000, areaEffect=blueshimmer
--- name=speed, interval=1000, chance=10, duration=4000, speedchange=1800, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -470},
+    {name = "firecondition", interval = 1000, chance = 7, minDamage = -800, maxDamage = -1200, range = 2},
+    {name = "physical", interval = 1000, chance = 7, minDamage = -250, maxDamage = -750, radius = 6},
+    {name = "fire", interval = 1000, chance = 50, minDamage = -200, maxDamage = -500, radius = 5},
+    {name = "firefield", interval = 1000, chance = 4, radius = 8},
+    {name = "fire", interval = 1000, chance = 34, minDamage = -350, maxDamage = -850, range = 7, radius = 7},
+    {name = "fire", interval = 1000, chance = 13, minDamage = -500, maxDamage = -1000, length = 8},
+    {name = "fire", interval = 1000, chance = 10, minDamage = -300, maxDamage = -1500, length = 8, spread = 3}
+})
 
 monster:register()

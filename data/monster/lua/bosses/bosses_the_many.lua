@@ -1,5 +1,5 @@
 -- The Many
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("The Many")
 if not monster then return end
@@ -15,13 +15,12 @@ monster:corpseId(6048)
 monster:outfit({lookType = 121})
 monster:defense(35)
 monster:armor(25)
-monster:runHealth(300)
+monster:runHealth(460)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,21 +30,21 @@ monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = 50},
     {type = COMBAT_HOLYDAMAGE, percent = 30},
     {type = COMBAT_PHYSICALDAMAGE, percent = -5},
-    {type = COMBAT_ENERGYDAMAGE, percent = -10},
+    {type = COMBAT_ENERGYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
 -- Voices
 monster:voices({
     {text = "FCHHHHH", yell = false},
-    {text = "HISSSS", yell = false},
+    {text = "HISSSS", yell = false}
 })
 
 -- Loot
@@ -58,21 +57,16 @@ monster:loot({
     {id = 10219, chance = 75500},
     {id = 2536, chance = 75500},
     {id = 2498, chance = 25500},
-    {id = 2475, chance = 75500},
+    {id = 2475, chance = 75500}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=80, attack=60
--- name=earth, interval=2000, chance=7, min=-65, max=-320, length=8, spread=3, areaEffect=smallplants
--- name=speed, interval=2000, chance=8, range=7, radius=4, target=1, duration=15000, speedchange=-360, shootEffect=poison, areaEffect=greenbubble
--- name=ice, interval=2000, chance=9, min=-100, max=-250, length=8, spread=3, areaEffect=bluebubble
--- name=ice, interval=2000, chance=10, range=7, min=-70, max=-155, target=1, shootEffect=ice, areaEffect=iceattack
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=30, min=420, max=500, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -140},
+    {name = "earth", interval = 2000, chance = 7, minDamage = -65, maxDamage = -320, length = 8, spread = 3},
+    {name = "speed", interval = 2000, chance = 8, range = 7, radius = 4},
+    {name = "ice", interval = 2000, chance = 9, minDamage = -100, maxDamage = -250, length = 8, spread = 3},
+    {name = "ice", interval = 2000, chance = 10, minDamage = -70, maxDamage = -155, range = 7}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Moohtant
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Moohtant")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(40)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -29,20 +28,20 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 1},
     {type = COMBAT_ICEDAMAGE, percent = 15},
     {type = COMBAT_FIREDAMAGE, percent = 1},
-    {type = COMBAT_DEATHDAMAGE, percent = 1},
+    {type = COMBAT_DEATHDAMAGE, percent = 1}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "MOOOOH!", yell = true},
     {text = "Grrrr.", yell = false},
-    {text = "Raaaargh!", yell = false},
+    {text = "Raaaargh!", yell = false}
 })
 
 -- Loot
@@ -65,21 +64,16 @@ monster:loot({
     {id = 7452, chance = 430},
     {id = 7427, chance = 280},
     {id = 9971, chance = 280},
-    {id = 7401, chance = 280},
+    {id = 7401, chance = 280}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=110, attack=50
--- name=physical, interval=2000, chance=13, min=-100, max=-230, length=3, areaEffect=groundshaker
--- name=physical, interval=2000, chance=12, min=-100, max=-200, radius=3, areaEffect=groundshaker
--- name=lifedrain, interval=2000, chance=19, min=-50, max=-225, radius=5, areaEffect=redshimmer
--- name=lifedrain, interval=2000, chance=10, range=7, min=-150, max=-235, radius=4, target=1, shootEffect=largerock, areaEffect=explosionarea
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=9, min=50, max=150, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -160},
+    {name = "physical", interval = 2000, chance = 13, minDamage = -100, maxDamage = -230, length = 3},
+    {name = "physical", interval = 2000, chance = 12, minDamage = -100, maxDamage = -200, radius = 3},
+    {name = "lifedrain", interval = 2000, chance = 19, minDamage = -50, maxDamage = -225, radius = 5},
+    {name = "lifedrain", interval = 2000, chance = 10, minDamage = -150, maxDamage = -235, range = 7, radius = 4}
+})
 
 monster:register()

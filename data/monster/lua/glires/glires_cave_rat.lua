@@ -1,5 +1,5 @@
 -- Cave Rat
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Cave Rat")
 if not monster then return end
@@ -29,13 +29,13 @@ monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_FIREDAMAGE, percent = -10},
+    {type = COMBAT_FIREDAMAGE, percent = -10}
 })
 
 -- Voices
 monster:voices({
     {text = "Meeeeep!", yell = false},
-    {text = "Meep!", yell = false},
+    {text = "Meep!", yell = false}
 })
 
 -- Loot
@@ -43,12 +43,12 @@ monster:loot({
     {id = 2148, chance = 85000, maxCount = 2},
     {id = 3976, chance = 9700, maxCount = 2},
     {id = 2696, chance = 30000},
-    {id = 2687, chance = 750},
+    {id = 2687, chance = 750}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=10, attack=10
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -20}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- War Wolf
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("War Wolf")
 if not monster then return end
@@ -21,27 +21,26 @@ monster:attackable(true)
 monster:hostile(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = 20},
     {type = COMBAT_HOLYDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -5},
+    {type = COMBAT_DEATHDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_OUTFIT, immunity = true},
+    {condition = CONDITION_OUTFIT, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Grrrrrrr", yell = false},
-    {text = "Yoooohhuuuu!", yell = true},
+    {text = "Yoooohhuuuu!", yell = true}
 })
 
 -- Loot
@@ -49,12 +48,12 @@ monster:loot({
     {id = 2671, chance = 35000, maxCount = 2},
     {id = 5897, chance = 710},
     {id = 3976, chance = 40},
-    {id = 11235, chance = 5230},
+    {id = 11235, chance = 5230}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=40, attack=20
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -60}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Lizard Zaogun
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Lizard Zaogun")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:armor(40)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
@@ -30,13 +29,13 @@ monster:elements({
     {type = COMBAT_DEATHDAMAGE, percent = 10},
     {type = COMBAT_FIREDAMAGE, percent = 45},
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
-    {type = COMBAT_ICEDAMAGE, percent = 15},
+    {type = COMBAT_ICEDAMAGE, percent = 15}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
@@ -56,18 +55,13 @@ monster:loot({
     {id = 2528, chance = 1000},
     {id = 11304, chance = 1001},
     {id = 11301, chance = 530},
-    {id = 11331, chance = 14980},
+    {id = 11331, chance = 14980}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=75, attack=82
--- name=earth, interval=2000, chance=15, range=7, min=-220, max=-375, radius=1, target=1, shootEffect=poison, areaEffect=poison
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=175, max=275, areaEffect=greenshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -157},
+    {name = "earth", interval = 2000, chance = 15, minDamage = -220, maxDamage = -375, range = 7, radius = 1}
+})
 
 monster:register()

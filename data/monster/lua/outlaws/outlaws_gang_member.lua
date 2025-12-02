@@ -1,5 +1,5 @@
 -- Gang Member
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Gang Member")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(20403)
 monster:outfit({lookType = 151, lookHead = 114, lookBody = 19, lookLegs = 42, lookFeet = 20})
 monster:defense(15)
 monster:armor(15)
-monster:runHealth(35)
+monster:runHealth(29)
 
 -- Flags
 monster:attackable(true)
@@ -28,7 +28,7 @@ monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_DEATHDAMAGE, percent = -5},
+    {type = COMBAT_DEATHDAMAGE, percent = -5}
 })
 
 -- Voices
@@ -37,7 +37,7 @@ monster:voices({
     {text = "Help me guys!", yell = false},
     {text = "I don't like the way you look!", yell = false},
     {text = "You're wearing the wrong colours!", yell = false},
-    {text = "Don't mess with us!", yell = false},
+    {text = "Don't mess with us!", yell = false}
 })
 
 -- Loot
@@ -47,12 +47,12 @@ monster:loot({
     {id = 2649, chance = 15330},
     {id = 2468, chance = 5220},
     {id = 2689, chance = 4760},
-    {id = 2209, chance = 740},
+    {id = 2209, chance = 740}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=60, attack=20
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -80}
+})
 
 monster:register()

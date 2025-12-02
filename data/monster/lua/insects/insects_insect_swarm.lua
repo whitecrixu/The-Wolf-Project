@@ -1,5 +1,5 @@
 -- Insect Swarm
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Insect Swarm")
 if not monster then return end
@@ -18,25 +18,25 @@ monster:armor(5)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
+monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_FIREDAMAGE, percent = -10},
+    {type = COMBAT_FIREDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=10, attack=10
--- name=lifedrain, interval=2000, chance=15, range=1, max=-15, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -20},
+    {name = "lifedrain", interval = 2000, chance = 15, maxDamage = -15}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Clay Guardian
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Clay Guardian")
 if not monster then return end
@@ -20,23 +20,22 @@ monster:armor(25)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(60)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = 40},
     {type = COMBAT_DEATHDAMAGE, percent = 50},
     {type = COMBAT_ICEDAMAGE, percent = 50},
-    {type = COMBAT_FIREDAMAGE, percent = -5},
+    {type = COMBAT_FIREDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
@@ -48,19 +47,14 @@ monster:loot({
     {id = 1294, chance = 10000, maxCount = 10},
     {id = 7850, chance = 5555, maxCount = 8},
     {id = 11339, chance = 1100},
-    {id = 9970, chance = 320},
+    {id = 9970, chance = 320}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=40, attack=50
--- name=earth, interval=2000, chance=20, range=7, min=-30, max=-150, shootEffect=smallearth, areaEffect=greenbubble
--- name=earth, interval=2000, chance=50, min=-20, max=-30, radius=3, areaEffect=poff
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=40, max=130, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -90},
+    {name = "earth", interval = 2000, chance = 20, minDamage = -30, maxDamage = -150, range = 7},
+    {name = "earth", interval = 2000, chance = 50, minDamage = -20, maxDamage = -30, radius = 3}
+})
 
 monster:register()

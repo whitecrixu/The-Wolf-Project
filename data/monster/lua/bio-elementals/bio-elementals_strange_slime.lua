@@ -1,5 +1,5 @@
 -- Strange Slime
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Strange Slime")
 if not monster then return end
@@ -19,8 +19,12 @@ monster:armor(3)
 -- Flags
 monster:attackable(true)
 monster:hostile(false)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
+
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -5}
+})
 
 monster:register()

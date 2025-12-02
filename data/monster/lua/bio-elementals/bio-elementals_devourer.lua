@@ -1,5 +1,5 @@
 -- Devourer
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Devourer")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(15)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -28,22 +27,22 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = -5},
     {type = COMBAT_ICEDAMAGE, percent = 15},
-    {type = COMBAT_DEATHDAMAGE, percent = 10},
+    {type = COMBAT_DEATHDAMAGE, percent = 10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {condition = CONDITION_POISON, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "*gulp*", yell = false},
     {text = "*Bruaarrr!*", yell = false},
-    {text = "*omnnommm nomm*", yell = false},
+    {text = "*omnnommm nomm*", yell = false}
 })
 
 -- Loot
@@ -67,23 +66,18 @@ monster:loot({
     {id = 23551, chance = 2690},
     {id = 23529, chance = 1670},
     {id = 8912, chance = 1150},
-    {id = 2181, chance = 260},
+    {id = 2181, chance = 260}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=62, attack=50
--- name=lifedrain, interval=2000, chance=10, range=7, min=-40, max=-125, target=1, shootEffect=poison, areaEffect=redshimmer
--- name=earth, interval=2000, chance=8, range=7, min=-50, max=-160, target=1, shootEffect=poison, areaEffect=greenbubble
--- name=devourer wave, interval=2000, chance=5, min=-50, max=-150
--- name=devourer paralyze, interval=2000, chance=9
--- name=earth, interval=2000, chance=11, min=-50, max=-150, length=1, areaEffect=smoke
--- name=earth, interval=2000, chance=7, min=-120, max=-135, radius=4, areaEffect=greenbubble
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=6, min=100, max=150, areaEffect=greenshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -112},
+    {name = "lifedrain", interval = 2000, chance = 10, minDamage = -40, maxDamage = -125, range = 7},
+    {name = "earth", interval = 2000, chance = 8, minDamage = -50, maxDamage = -160, range = 7},
+    {name = "devourer wave", interval = 2000, chance = 5, minDamage = -50, maxDamage = -150},
+    {name = "devourer paralyze", interval = 2000, chance = 9},
+    {name = "earth", interval = 2000, chance = 11, minDamage = -50, maxDamage = -150, length = 1},
+    {name = "earth", interval = 2000, chance = 7, minDamage = -120, maxDamage = -135, radius = 4}
+})
 
 monster:register()

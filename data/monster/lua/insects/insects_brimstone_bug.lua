@@ -1,5 +1,5 @@
 -- Brimstone Bug
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Brimstone Bug")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(25)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
@@ -29,20 +28,20 @@ monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = -10},
     {type = COMBAT_HOLYDAMAGE, percent = -10},
     {type = COMBAT_ENERGYDAMAGE, percent = -10},
-    {type = COMBAT_PHYSICALDAMAGE, percent = -5},
+    {type = COMBAT_PHYSICALDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Chrrr!", yell = false},
+    {text = "Chrrr!", yell = false}
 })
 
 -- Loot
@@ -59,16 +58,16 @@ monster:loot({
     {id = 2149, chance = 2702, maxCount = 4},
     {id = 5904, chance = 1639},
     {id = 2165, chance = 892},
-    {id = 2171, chance = 110},
+    {id = 2171, chance = 110}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=75, attack=50
--- name=speed, interval=2000, chance=20, range=7, duration=10000, speedchange=-600, shootEffect=death, areaEffect=mortarea
--- name=earth, interval=2000, chance=5, min=-140, max=-310, radius=6, areaEffect=smallplants
--- name=manadrain, interval=2000, chance=10, min=-130, max=-200, length=6, areaEffect=greenspark
--- name=poison, interval=2000, chance=15, min=-80, max=-120, length=8, spread=3, areaEffect=yellowbubble
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -125},
+    {name = "speed", interval = 2000, chance = 20, range = 7},
+    {name = "earth", interval = 2000, chance = 5, minDamage = -140, maxDamage = -310, radius = 6},
+    {name = "manadrain", interval = 2000, chance = 10, minDamage = -130, maxDamage = -200, length = 6},
+    {name = "poison", interval = 2000, chance = 15, minDamage = -80, maxDamage = -120, length = 8, spread = 3}
+})
 
 monster:register()

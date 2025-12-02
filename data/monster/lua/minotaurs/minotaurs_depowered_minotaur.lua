@@ -1,5 +1,5 @@
 -- Depowered Minotaur
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Depowered Minotaur")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:armor(15)
 monster:attackable(true)
 monster:hostile(true)
 monster:isSummonable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -28,12 +27,12 @@ monster:staticAttackChance(90)
 -- Resistances
 monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 20},
-    {type = COMBAT_HOLYDAMAGE, percent = 10},
+    {type = COMBAT_HOLYDAMAGE, percent = 10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
@@ -43,12 +42,12 @@ monster:loot({
     {id = 2147, chance = 67000},
     {id = 7588, chance = 67000, maxCount = 2},
     {id = 2666, chance = 34000, maxCount = 3},
-    {id = 2145, chance = 34000},
+    {id = 2145, chance = 34000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-245
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -245}
+})
 
 monster:register()

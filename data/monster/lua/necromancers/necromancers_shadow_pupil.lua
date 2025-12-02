@@ -1,5 +1,5 @@
 -- Shadow Pupil
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Shadow Pupil")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(25)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,25 +30,19 @@ monster:elements({
     {type = COMBAT_DEATHDAMAGE, percent = 5},
     {type = COMBAT_PHYSICALDAMAGE, percent = -5},
     {type = COMBAT_FIREDAMAGE, percent = -5},
-    {type = COMBAT_HOLYDAMAGE, percent = -5},
+    {type = COMBAT_HOLYDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_DROWN, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_DROWN, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "When I'm finished with you, you'll be a shadow of your former self.", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "Skeleton", chance = 10, interval = 2000, max = 1},
-    {name = "Ghost", chance = 5, interval = 2000, max = 1},
+    {text = "When I'm finished with you, you'll be a shadow of your former self.", yell = false}
 })
 
 -- Loot
@@ -64,14 +57,14 @@ monster:loot({
     {id = 2663, chance = 580},
     {id = 2195, chance = 60},
     {id = 2423, chance = 290},
-    {id = 8900, chance = 290},
+    {id = 8900, chance = 290}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=35
--- name=death, interval=2000, chance=20, range=7, min=-60, max=-80, target=1, shootEffect=suddendeath, areaEffect=mortarea
--- name=death, interval=2000, chance=15, min=-30, max=-60, radius=3, areaEffect=mortarea
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -65},
+    {name = "death", interval = 2000, chance = 20, minDamage = -60, maxDamage = -80, range = 7},
+    {name = "death", interval = 2000, chance = 15, minDamage = -30, maxDamage = -60, radius = 3}
+})
 
 monster:register()

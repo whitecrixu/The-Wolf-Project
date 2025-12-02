@@ -1,5 +1,5 @@
 -- Esmeralda
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Esmeralda")
 if not monster then return end
@@ -19,30 +19,29 @@ monster:armor(30)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_FIREDAMAGE, percent = -10},
+    {type = COMBAT_FIREDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_DRUNK, immunity = true},
     {condition = CONDITION_DROWN, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Fcccccchhhhhh", yell = false},
+    {text = "Fcccccchhhhhh", yell = false}
 })
 
 -- Loot
@@ -57,16 +56,16 @@ monster:loot({
     {id = 2438, chance = 14150},
     {id = 2476, chance = 45950},
     {id = 2799, chance = 9600},
-    {id = 7884, chance = 2775},
+    {id = 7884, chance = 2775}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=60, attack=50
--- name=earth, interval=2000, chance=30, range=7, max=-110, shootEffect=poison
--- name=poisoncondition, interval=2000, chance=22, min=-100, max=-100, length=8, areaEffect=smallplants
--- name=poisoncondition, interval=2000, chance=15, min=-80, max=-80, radius=3, areaEffect=greenspark
--- name=lifedrain, interval=2000, chance=25, range=7, max=-110, radius=3, areaEffect=redspark
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -110},
+    {name = "earth", interval = 2000, chance = 30, maxDamage = -110, range = 7},
+    {name = "poisoncondition", interval = 2000, chance = 22, minDamage = -100, maxDamage = -100, length = 8},
+    {name = "poisoncondition", interval = 2000, chance = 15, minDamage = -80, maxDamage = -80, radius = 3},
+    {name = "lifedrain", interval = 2000, chance = 25, maxDamage = -110, range = 7, radius = 3}
+})
 
 monster:register()

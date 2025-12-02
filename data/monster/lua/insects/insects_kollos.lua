@@ -1,5 +1,5 @@
 -- Kollos
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Kollos")
 if not monster then return end
@@ -15,7 +15,6 @@ monster:corpseId(15354)
 monster:outfit({lookType = 458})
 monster:defense(35)
 monster:armor(35)
-monster:targetDistance(0)
 
 -- Flags
 monster:attackable(true)
@@ -23,25 +22,26 @@ monster:hostile(true)
 monster:pushable(true)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 30},
     {type = COMBAT_ENERGYDAMAGE, percent = 5},
     {type = COMBAT_DEATHDAMAGE, percent = -5},
-    {type = COMBAT_ICEDAMAGE, percent = -5},
+    {type = COMBAT_ICEDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Zopp!", yell = false},
-    {text = "Flzlzlzlzlzlz!", yell = false},
+    {text = "Flzlzlzlzlzlz!", yell = false}
 })
 
 -- Loot
@@ -62,13 +62,13 @@ monster:loot({
     {id = 15489, chance = 360},
     {id = 15492, chance = 700},
     {id = 2645, chance = 130},
-    {id = 15491, chance = 310},
+    {id = 15491, chance = 310}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=80, attack=70
--- name=physical, interval=2000, chance=15, range=7, max=-500, radius=3, target=1, shootEffect=explosion, areaEffect=explosion
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -150},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -500, range = 7, radius = 3}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Elder Bonelord
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Elder Bonelord")
 if not monster then return end
@@ -15,13 +15,11 @@ monster:corpseId(6037)
 monster:outfit({lookType = 108})
 monster:defense(15)
 monster:armor(15)
-monster:targetDistance(4)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
@@ -30,26 +28,20 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_ICEDAMAGE, percent = 30},
     {type = COMBAT_DEATHDAMAGE, percent = 30},
-    {type = COMBAT_FIREDAMAGE, percent = -10},
+    {type = COMBAT_FIREDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Let me take a look at you!", yell = false},
-    {text = "Inferior creatures, bow before my power!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "Gazer", chance = 10, interval = 2000, max = 1},
-    {name = "Crypt Shambler", chance = 15, interval = 2000, max = 1},
+    {text = "Inferior creatures, bow before my power!", yell = false}
 })
 
 -- Loot
@@ -64,19 +56,19 @@ monster:loot({
     {id = 3972, chance = 150},
     {id = 12468, chance = 10025},
     {id = 11193, chance = 21725},
-    {id = 11197, chance = 850},
+    {id = 11197, chance = 850}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=10, attack=55
--- name=energy, interval=2000, chance=5, range=7, min=-45, max=-60, shootEffect=energy
--- name=fire, interval=2000, chance=5, range=7, min=-40, max=-80, shootEffect=fire
--- name=death, interval=2000, chance=10, range=7, min=-45, max=-90, shootEffect=suddendeath, areaEffect=smallclouds
--- name=poison, interval=2000, chance=10, range=7, min=-20, max=-40, shootEffect=poison
--- name=lifedrain, interval=2000, chance=5, range=7, min=-45, max=-85, areaEffect=redshimmer
--- name=manadrain, interval=2000, chance=5, range=7, max=-40
--- name=speed, interval=2000, chance=10, range=7, duration=20000, speedchange=-600, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -65},
+    {name = "energy", interval = 2000, chance = 5, minDamage = -45, maxDamage = -60, range = 7},
+    {name = "fire", interval = 2000, chance = 5, minDamage = -40, maxDamage = -80, range = 7},
+    {name = "death", interval = 2000, chance = 10, minDamage = -45, maxDamage = -90, range = 7},
+    {name = "poison", interval = 2000, chance = 10, minDamage = -20, maxDamage = -40, range = 7},
+    {name = "lifedrain", interval = 2000, chance = 5, minDamage = -45, maxDamage = -85, range = 7},
+    {name = "manadrain", interval = 2000, chance = 5, maxDamage = -40, range = 7},
+    {name = "speed", interval = 2000, chance = 10, range = 7}
+})
 
 monster:register()

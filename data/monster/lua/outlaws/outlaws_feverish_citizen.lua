@@ -1,5 +1,5 @@
 -- Feverish Citizen
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Feverish Citizen")
 if not monster then return end
@@ -26,7 +26,7 @@ monster:staticAttackChance(90)
 -- Resistances
 monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = 80},
-    {type = COMBAT_FIREDAMAGE, percent = 20},
+    {type = COMBAT_FIREDAMAGE, percent = 20}
 })
 
 -- Voices
@@ -40,7 +40,7 @@ monster:voices({
     {text = "<giggle>", yell = false},
     {text = "Burn heretic! Burn!", yell = false},
     {text = "Harrr!", yell = false},
-    {text = "This is Venore!", yell = false},
+    {text = "This is Venore!", yell = false}
 })
 
 -- Loot
@@ -55,18 +55,13 @@ monster:loot({
     {id = 13540, chance = 1660},
     {id = 13544, chance = 2060},
     {id = 13926, chance = 100},
-    {id = 13925, chance = 100},
+    {id = 13925, chance = 100}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=25, attack=10
--- name=drunk, interval=2000, chance=15, length=3, spread=2, duration=3000, areaEffect=poison
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=outfit, interval=2000, chance=1, radius=3, duration=5000, areaeffect=greenbubble
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -35},
+    {name = "drunk", interval = 2000, chance = 15, length = 3, spread = 2}
+})
 
 monster:register()

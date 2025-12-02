@@ -1,5 +1,5 @@
 -- Badger
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Badger")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(6034)
 monster:outfit({lookType = 105})
 monster:defense(5)
 monster:armor(5)
-monster:runHealth(10)
+monster:runHealth(2)
 
 -- Flags
 monster:attackable(true)
@@ -31,12 +31,12 @@ monster:staticAttackChance(90)
 monster:loot({
     {id = 8845, chance = 40710},
     {id = 7965, chance = 10230},
-    {id = 11213, chance = 5130},
+    {id = 11213, chance = 5130}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-12
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -12}
+})
 
 monster:register()

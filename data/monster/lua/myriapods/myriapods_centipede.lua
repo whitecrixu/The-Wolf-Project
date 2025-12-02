@@ -1,5 +1,5 @@
 -- Centipede
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Centipede")
 if not monster then return end
@@ -30,23 +30,23 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = 20},
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
-    {type = COMBAT_FIREDAMAGE, percent = -15},
+    {type = COMBAT_FIREDAMAGE, percent = -15}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
 -- Loot
 monster:loot({
     {id = 2148, chance = 80000, maxCount = 15},
-    {id = 11218, chance = 10300},
+    {id = 11218, chance = 10300}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=20, attack=30
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -50}
+})
 
 monster:register()

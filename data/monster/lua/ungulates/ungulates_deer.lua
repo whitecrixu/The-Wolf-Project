@@ -1,5 +1,5 @@
 -- Deer
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Deer")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(5970)
 monster:outfit({lookType = 31})
 monster:defense(5)
 monster:armor(5)
-monster:runHealth(25)
+monster:runHealth(2)
 
 -- Flags
 monster:attackable(true)
@@ -31,12 +31,12 @@ monster:staticAttackChance(90)
 monster:loot({
     {id = 2666, chance = 80000, maxCount = 4},
     {id = 2671, chance = 50000, maxCount = 2},
-    {id = 11214, chance = 870},
+    {id = 11214, chance = 870}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-1
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -1}
+})
 
 monster:register()

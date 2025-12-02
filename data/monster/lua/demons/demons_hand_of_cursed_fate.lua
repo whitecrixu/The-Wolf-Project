@@ -1,5 +1,5 @@
 -- Hand of Cursed Fate
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Hand of Cursed Fate")
 if not monster then return end
@@ -15,31 +15,30 @@ monster:corpseId(6312)
 monster:outfit({lookType = 230})
 monster:defense(25)
 monster:armor(25)
-monster:runHealth(3500)
+monster:runHealth(750)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(20)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = -10},
-    {type = COMBAT_HOLYDAMAGE, percent = -25},
+    {type = COMBAT_HOLYDAMAGE, percent = -25}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_ENERGY, immunity = true},
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
@@ -73,22 +72,15 @@ monster:loot({
     {id = 2195, chance = 540},
     {id = 5799, chance = 195},
     {id = 5669, chance = 247},
-    {id = 2268, chance = 4200, maxCount = 8},
+    {id = 2268, chance = 4200, maxCount = 8}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=70, attack=130
--- name=manadrain, interval=2000, chance=15, range=1, max=-920
--- name=drunk, interval=2000, chance=10, radius=4, duration=3000, areaEffect=smallclouds
--- name=lifedrain, interval=2000, chance=15, range=1, min=-220, max=-880, areaEffect=smallclouds
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=1000, areaEffect=redshimmer
--- name=invisible, interval=2000, chance=10, duration=8000, areaEffect=blueshimmer
--- name=healing, interval=2000, chance=20, min=100, max=250, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -200},
+    {name = "manadrain", interval = 2000, chance = 15, maxDamage = -920},
+    {name = "drunk", interval = 2000, chance = 10, radius = 4},
+    {name = "lifedrain", interval = 2000, chance = 15, minDamage = -220, maxDamage = -880}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Monstor
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Monstor")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(15)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,36 +30,26 @@ monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = 10},
     {type = COMBAT_EARTHDAMAGE, percent = 30},
     {type = COMBAT_ENERGYDAMAGE, percent = -7},
-    {type = COMBAT_HOLYDAMAGE, percent = -3},
+    {type = COMBAT_HOLYDAMAGE, percent = -3}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "NO ARMY ME STOPPING! GRARR!", yell = false},
     {text = "ME DESTROY CITY! GROAR!", yell = false},
-    {text = "WHARR! MUST ... KIDNAP WOMEN!", yell = false},
+    {text = "WHARR! MUST ... KIDNAP WOMEN!", yell = false}
 })
 
--- Summons
-monster:summons({
-    {name = "Acid Blob", chance = 40, interval = 4000, max = 3},
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 1200, chance = 100, minDamage = 0, maxDamage = -167},
+    {name = "lifedrain", interval = 2000, chance = 30, minDamage = -66, maxDamage = -85, length = 6}
 })
-
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=1200, chance=100, max=-167
--- name=lifedrain, interval=2000, chance=30, min=-66, max=-85, length=6, areaEffect=greenshimmer
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=30, min=90, max=200, areaEffect=fire
---]]
 
 monster:register()

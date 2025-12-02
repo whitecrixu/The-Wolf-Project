@@ -1,5 +1,5 @@
 -- Tremorak
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Tremorak")
 if not monster then return end
@@ -15,14 +15,13 @@ monster:corpseId(8933)
 monster:outfit({lookType = 285})
 monster:defense(30)
 monster:armor(30)
-monster:runHealth(1)
+monster:runHealth(1000)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -31,31 +30,26 @@ monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = 50},
     {type = COMBAT_HOLYDAMAGE, percent = 50},
     {type = COMBAT_FIREDAMAGE, percent = -15},
-    {type = COMBAT_ENERGYDAMAGE, percent = 85},
+    {type = COMBAT_ENERGYDAMAGE, percent = 85}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "STOMP STOMP!", yell = true},
+    {text = "STOMP STOMP!", yell = true}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=36, attack=50
--- name=earth, interval=2000, chance=16, max=-255, radius=7, areaEffect=groundshaker
--- name=earth, interval=2000, chance=16, max=-405, length=8, areaEffect=groundshaker
--- name=poisoncondition, interval=2000, chance=16, range=7, target=1, shootEffect=poison
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=16, min=75, max=200, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -86},
+    {name = "earth", interval = 2000, chance = 16, maxDamage = -255, radius = 7},
+    {name = "earth", interval = 2000, chance = 16, maxDamage = -405, length = 8},
+    {name = "poisoncondition", interval = 2000, chance = 16, range = 7}
+})
 
 monster:register()

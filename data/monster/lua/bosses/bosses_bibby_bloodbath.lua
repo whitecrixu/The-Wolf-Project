@@ -1,5 +1,5 @@
 -- Bibby Bloodbath
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Bibby Bloodbath")
 if not monster then return end
@@ -19,27 +19,26 @@ monster:armor(35)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_EARTHDAMAGE, percent = -2},
+    {type = COMBAT_EARTHDAMAGE, percent = -2}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Don't run, you'll just lose precious fat.", yell = false},
-    {text = "Hex hex!", yell = false},
+    {text = "Hex hex!", yell = false}
 })
 
 -- Loot
@@ -60,19 +59,14 @@ monster:loot({
     {id = 7412, chance = 1600},
     {id = 2393, chance = 1600},
     {id = 7395, chance = 1600},
-    {id = 2497, chance = 830},
+    {id = 2497, chance = 830}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-200
--- name=physical, interval=2000, chance=20, max=-200, length=5, spread=3, areaEffect=yellowspark
--- name=speed, interval=2000, chance=15, radius=3, duration=30000, speedchange=-300, areaEffect=yellowspark
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=invisible, interval=2000, chance=15, duration=3000, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -200},
+    {name = "physical", interval = 2000, chance = 20, maxDamage = -200, length = 5, spread = 3},
+    {name = "speed", interval = 2000, chance = 15, radius = 3}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Hellhound
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Hellhound")
 if not monster then return end
@@ -20,17 +20,16 @@ monster:armor(40)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = 20},
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = -5},
-    {type = COMBAT_HOLYDAMAGE, percent = -25},
+    {type = COMBAT_HOLYDAMAGE, percent = -25}
 })
 
 -- Immunities
@@ -39,13 +38,13 @@ monster:immunities({
     {condition = CONDITION_OUTFIT, immunity = true},
     {condition = CONDITION_DRUNK, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_FIRE, immunity = true},
+    {condition = CONDITION_FIRE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "GROOOWL!", yell = false},
-    {text = "GRRRRR!", yell = false},
+    {text = "GRRRRR!", yell = false}
 })
 
 -- Loot
@@ -71,24 +70,18 @@ monster:loot({
     {id = 4873, chance = 130},
     {id = 2187, chance = 9000},
     {id = 7591, chance = 15150, maxCount = 2},
-    {id = 7590, chance = 15150, maxCount = 3},
+    {id = 7590, chance = 15150, maxCount = 3}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=70, attack=130
--- name=earth, interval=2000, chance=5, min=-300, max=-700, length=8, spread=3, areaEffect=carniphila
--- name=death, interval=2000, chance=10, range=7, min=-395, max=-498, shootEffect=suddendeath, areaEffect=smallclouds
--- name=fire, interval=2000, chance=10, min=-350, max=-660, length=8, spread=3, areaEffect=firearea
--- name=lifedrain, interval=2000, chance=10, min=-350, max=-976, length=8, spread=3, areaEffect=redshimmer
--- name=fire, interval=2000, chance=10, min=-200, max=-403, radius=1, target=1, areaEffect=fire
--- name=earth, interval=2000, chance=5, range=7, min=-300, max=-549, shootEffect=poison, areaEffect=poison
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=320, areaEffect=redshimmer
--- name=healing, interval=2000, chance=20, min=220, max=425, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -200},
+    {name = "earth", interval = 2000, chance = 5, minDamage = -300, maxDamage = -700, length = 8, spread = 3},
+    {name = "death", interval = 2000, chance = 10, minDamage = -395, maxDamage = -498, range = 7},
+    {name = "fire", interval = 2000, chance = 10, minDamage = -350, maxDamage = -660, length = 8, spread = 3},
+    {name = "lifedrain", interval = 2000, chance = 10, minDamage = -350, maxDamage = -976, length = 8, spread = 3},
+    {name = "fire", interval = 2000, chance = 10, minDamage = -200, maxDamage = -403, radius = 1},
+    {name = "earth", interval = 2000, chance = 5, minDamage = -300, maxDamage = -549, range = 7}
+})
 
 monster:register()

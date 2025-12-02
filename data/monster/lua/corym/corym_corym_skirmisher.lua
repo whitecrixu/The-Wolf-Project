@@ -1,5 +1,5 @@
 -- Corym Skirmisher
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Corym Skirmisher")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:armor(15)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -30,19 +29,19 @@ monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = 20},
     {type = COMBAT_DEATHDAMAGE, percent = 20},
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
-    {type = COMBAT_HOLYDAMAGE, percent = -20},
+    {type = COMBAT_HOLYDAMAGE, percent = -20}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Squeak! Squeak!", yell = false},
-    {text = "<sniff><sniff><sniff>", yell = false},
+    {text = "<sniff><sniff><sniff>", yell = false}
 })
 
 -- Loot
@@ -59,13 +58,13 @@ monster:loot({
     {id = 20098, chance = 854},
     {id = 20090, chance = 645},
     {id = 20126, chance = 561},
-    {id = 20105, chance = 12},
+    {id = 20105, chance = 12}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=45, attack=40
--- name=physical, interval=2000, chance=20, range=7, max=-90, shootEffect=whirlwindclub
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -85},
+    {name = "physical", interval = 2000, chance = 20, maxDamage = -90, range = 7}
+})
 
 monster:register()

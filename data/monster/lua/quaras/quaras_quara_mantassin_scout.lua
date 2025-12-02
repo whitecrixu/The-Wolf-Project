@@ -1,5 +1,5 @@
 -- Quara Mantassin Scout
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Quara Mantassin Scout")
 if not monster then return end
@@ -21,27 +21,26 @@ monster:armor(15)
 monster:attackable(true)
 monster:hostile(true)
 monster:isConvinceable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_ENERGYDAMAGE, percent = -10},
+    {type = COMBAT_ENERGYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Zuerk Pachak!", yell = false},
-    {text = "Shrrrr", yell = false},
+    {text = "Shrrrr", yell = false}
 })
 
 -- Loot
@@ -53,12 +52,12 @@ monster:loot({
     {id = 2377, chance = 580},
     {id = 5895, chance = 520},
     {id = 2165, chance = 520},
-    {id = 2146, chance = 920},
+    {id = 2146, chance = 920}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=45, attack=40
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -85}
+})
 
 monster:register()

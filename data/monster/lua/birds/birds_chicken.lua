@@ -1,5 +1,5 @@
 -- Chicken
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Chicken")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(6042)
 monster:outfit({lookType = 111})
 monster:defense(5)
 monster:armor(5)
-monster:runHealth(15)
+monster:runHealth(1)
 
 -- Flags
 monster:attackable(true)
@@ -30,7 +30,7 @@ monster:staticAttackChance(90)
 -- Voices
 monster:voices({
     {text = "Gokgoooook", yell = false},
-    {text = "Cluck Cluck", yell = false},
+    {text = "Cluck Cluck", yell = false}
 })
 
 -- Loot
@@ -38,7 +38,12 @@ monster:loot({
     {id = 3976, chance = 10000, maxCount = 3},
     {id = 5890, chance = 20000},
     {id = 2695, chance = 950},
-    {id = 2666, chance = 2120, maxCount = 2},
+    {id = 2666, chance = 2120, maxCount = 2}
+})
+
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -5}
 })
 
 monster:register()

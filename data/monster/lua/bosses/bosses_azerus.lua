@@ -1,5 +1,5 @@
 -- Azerus
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Azerus")
 if not monster then return end
@@ -18,10 +18,9 @@ monster:armor(40)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(85)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -31,15 +30,15 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 85},
     {type = COMBAT_ENERGYDAMAGE, percent = 85},
     {type = COMBAT_ICEDAMAGE, percent = 85},
-    {type = COMBAT_PHYSICALDAMAGE, percent = 85},
+    {type = COMBAT_PHYSICALDAMAGE, percent = 85}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_DROWN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {condition = CONDITION_DROWN, immunity = true}
 })
 
 -- Voices
@@ -49,28 +48,15 @@ monster:voices({
     {text = "The power of the Yalahari will all be mine!", yell = false},
     {text = "He who has returned from beyond has taught me secrets you can't even grasp!", yell = false},
     {text = "You can't hope to penetrate my shields!", yell = false},
-    {text = "Do you really think you could beat me?", yell = false},
+    {text = "Do you really think you could beat me?", yell = false}
 })
 
--- Summons
-monster:summons({
-    {name = "Rift Worm", chance = 30, interval = 3000, max = 8},
-    {name = "Rift Brood", chance = 30, interval = 3000, max = 8},
-    {name = "Rift Scythe", chance = 30, interval = 3000, max = 8},
-    {name = "War Golem", chance = 30, interval = 3000, max = 5},
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -900},
+    {name = "manadrain", interval = 2000, chance = 15, maxDamage = -3800, range = 7, radius = 4},
+    {name = "death", interval = 2000, chance = 20, maxDamage = -524, range = 7},
+    {name = "fire", interval = 2000, chance = 10, minDamage = -300, maxDamage = -1050, length = 8}
 })
-
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-900
--- name=manadrain, interval=2000, chance=15, range=7, max=-3800, radius=4, shootEffect=fire, areaEffect=bigclouds
--- name=death, interval=2000, chance=20, range=7, max=-524, shootEffect=suddendeath, areaEffect=mortarea
--- name=fire, interval=2000, chance=10, min=-300, max=-1050, length=8, areaEffect=fireattack
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=11, min=400, max=900, areaEffect=greenshimmer
---]]
 
 monster:register()

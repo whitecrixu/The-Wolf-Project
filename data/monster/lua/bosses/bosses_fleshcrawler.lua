@@ -1,5 +1,5 @@
 -- Fleshcrawler
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Fleshcrawler")
 if not monster then return end
@@ -19,27 +19,21 @@ monster:armor(30)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = -15},
-    {type = COMBAT_DEATHDAMAGE, percent = -10},
+    {type = COMBAT_DEATHDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
-})
-
--- Summons
-monster:summons({
-    {name = "Larva", chance = 10, interval = 2000, max = 3},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
@@ -56,15 +50,15 @@ monster:loot({
     {id = 8912, chance = 75560},
     {id = 2540, chance = 43890},
     {id = 7426, chance = 30560},
-    {id = 12424, chance = 14440},
+    {id = 12424, chance = 14440}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-330
--- name=poison, interval=2000, chance=20, range=7, max=-150, shootEffect=poison, areaEffect=poison
--- name=speed, interval=2000, chance=15, range=7, duration=25000, speedchange=-700, shootEffect=poison, areaEffect=poison
--- name=poisoncondition, interval=2000, chance=30, max=-520, radius=5, areaEffect=poison
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -330},
+    {name = "poison", interval = 2000, chance = 20, maxDamage = -150, range = 7},
+    {name = "speed", interval = 2000, chance = 15, range = 7},
+    {name = "poisoncondition", interval = 2000, chance = 30, maxDamage = -520, radius = 5}
+})
 
 monster:register()

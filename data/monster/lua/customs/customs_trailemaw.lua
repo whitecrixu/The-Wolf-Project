@@ -1,5 +1,5 @@
 -- Trailemaw
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Trailemaw")
 if not monster then return end
@@ -19,22 +19,16 @@ monster:armor(0)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
-monster:staticAttackChance(50)
+monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, attack=-1
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=80, min=10000, max=20000, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = 0}
+})
 
 monster:register()

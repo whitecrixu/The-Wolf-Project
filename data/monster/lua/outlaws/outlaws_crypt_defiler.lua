@@ -1,5 +1,5 @@
 -- Crypt Defiler
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Crypt Defiler")
 if not monster then return end
@@ -15,7 +15,7 @@ monster:corpseId(20359)
 monster:outfit({lookType = 146, lookHead = 115, lookBody = 115, lookLegs = 61, lookFeet = 96, lookAddons = 3})
 monster:defense(15)
 monster:armor(15)
-monster:runHealth(15)
+monster:runHealth(18)
 
 -- Flags
 monster:attackable(true)
@@ -29,13 +29,13 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_FIREDAMAGE, percent = -10},
-    {type = COMBAT_ICEDAMAGE, percent = -5},
+    {type = COMBAT_ICEDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_PARALYZE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_PARALYZE, immunity = true}
 })
 
 -- Voices
@@ -43,7 +43,7 @@ monster:voices({
     {text = "I smell gold!", yell = false},
     {text = "You'll make a fine fake-mummy to be sold!", yell = false},
     {text = "Untold riches are awaiting me!", yell = false},
-    {text = "I don't like competition", yell = false},
+    {text = "I don't like competition", yell = false}
 })
 
 -- Loot
@@ -57,13 +57,13 @@ monster:loot({
     {id = 12448, chance = 4040},
     {id = 8838, chance = 4840, maxCount = 3},
     {id = 8267, chance = 220},
-    {id = 12412, chance = 1570},
+    {id = 12412, chance = 1570}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=35, attack=40
--- name=physical, interval=2000, chance=15, range=7, max=-40, radius=1, target=1, shooteffect=throwingstar
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -75},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -40, range = 7, radius = 1}
+})
 
 monster:register()

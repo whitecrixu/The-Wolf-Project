@@ -1,5 +1,5 @@
 -- Bane Bringer
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Bane Bringer")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(50)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -32,29 +31,29 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = -80},
     {type = COMBAT_ICEDAMAGE, percent = -80},
     {type = COMBAT_EARTHDAMAGE, percent = -80},
-    {type = COMBAT_PHYSICALDAMAGE, percent = 10},
+    {type = COMBAT_PHYSICALDAMAGE, percent = 10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "You shall not succeed!", yell = false},
-    {text = "This time we will prevail!", yell = false},
+    {text = "This time we will prevail!", yell = false}
 })
 
 -- Loot
 monster:loot({
     {id = 12969, chance = 100000},
-    {id = 2250, chance = 14285, maxCount = 96},
+    {id = 2250, chance = 14285, maxCount = 96}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, range=1, skill=40, attack=60
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -100}
+})
 
 monster:register()

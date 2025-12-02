@@ -1,5 +1,5 @@
 -- Deepling Master Librarian
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Deepling Master Librarian")
 if not monster then return end
@@ -15,8 +15,7 @@ monster:corpseId(15211)
 monster:outfit({lookType = 443})
 monster:defense(20)
 monster:armor(20)
-monster:targetDistance(0)
-monster:runHealth(250)
+monster:runHealth(170)
 
 -- Flags
 monster:attackable(true)
@@ -24,18 +23,18 @@ monster:hostile(true)
 monster:pushable(true)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(60)
+monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
-    {condition = CONDITION_FIRE, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
+    {condition = CONDITION_FIRE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Mmmmmoooaaaaaahaaa!!!", yell = false},
+    {text = "Mmmmmoooaaaaaahaaa!!!", yell = false}
 })
 
 -- Loot
@@ -52,22 +51,17 @@ monster:loot({
     {id = 15400, chance = 3130},
     {id = 5895, chance = 1950},
     {id = 15403, chance = 1330},
-    {id = 15644, chance = 39},
+    {id = 15644, chance = 39}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=60, attack=60
--- name=ice, interval=2000, chance=10, min=-260, max=-450, length=10, spread=3, areaEffect=icetornado
--- name=drown, interval=2000, chance=20, min=-150, max=-280, radius=4, target=1, areaEffect=bubbles
--- name=lifedrain, interval=2000, chance=15, range=7, min=-80, max=-140, areaEffect=smallplants
--- name=manadrain, interval=2000, chance=10, range=7, min=-60, max=-140, areaEffect=smallplants
--- name=deepling spellsinger skill reducer, interval=2000, chance=10, range=5
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=40, max=80, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -120},
+    {name = "ice", interval = 2000, chance = 10, minDamage = -260, maxDamage = -450, length = 10, spread = 3},
+    {name = "drown", interval = 2000, chance = 20, minDamage = -150, maxDamage = -280, radius = 4},
+    {name = "lifedrain", interval = 2000, chance = 15, minDamage = -80, maxDamage = -140, range = 7},
+    {name = "manadrain", interval = 2000, chance = 10, minDamage = -60, maxDamage = -140, range = 7},
+    {name = "deepling spellsinger skill reducer", interval = 2000, chance = 10, range = 5}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Wailing Widow
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Wailing Widow")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:armor(20)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -28,17 +27,17 @@ monster:staticAttackChance(90)
 -- Resistances
 monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = -5},
-    {type = COMBAT_HOLYDAMAGE, percent = 5},
+    {type = COMBAT_HOLYDAMAGE, percent = 5}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_DRUNK, immunity = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {condition = CONDITION_DRUNK, immunity = true}
 })
 
 -- Loot
@@ -52,21 +51,15 @@ monster:loot({
     {id = 2796, chance = 3208},
     {id = 11329, chance = 900},
     {id = 11323, chance = 2210},
-    {id = 2381, chance = 4460},
+    {id = 2381, chance = 4460}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=50, attack=40
--- name=drunk, interval=2000, chance=20, range=7, radius=4, duration=4000, areaEffect=rednote
--- name=lifedrain, interval=2000, chance=10, min=-40, max=-70, radius=3, areaEffect=redshimmer
--- name=earth, interval=2000, chance=15, range=7, min=-60, max=-110, shootEffect=poison
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=5, min=70, max=100, areaEffect=whitenote
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=820, areaEffect=yellownote
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -90},
+    {name = "drunk", interval = 2000, chance = 20, range = 7, radius = 4},
+    {name = "lifedrain", interval = 2000, chance = 10, minDamage = -40, maxDamage = -70, radius = 3},
+    {name = "earth", interval = 2000, chance = 15, minDamage = -60, maxDamage = -110, range = 7}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Elf Arcanist
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Elf Arcanist")
 if not monster then return end
@@ -15,12 +15,10 @@ monster:corpseId(6011)
 monster:outfit({lookType = 63})
 monster:defense(15)
 monster:armor(15)
-monster:targetDistance(4)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
@@ -29,12 +27,12 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 50},
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_DEATHDAMAGE, percent = 20},
-    {type = COMBAT_HOLYDAMAGE, percent = -10},
+    {type = COMBAT_HOLYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -43,7 +41,7 @@ monster:voices({
     {text = "For the Daughter of the Stars!", yell = false},
     {text = "I'll bring balance upon you!", yell = false},
     {text = "Tha'shi Cenath!", yell = false},
-    {text = "Vihil Ealuel!", yell = false},
+    {text = "Vihil Ealuel!", yell = false}
 })
 
 -- Loot
@@ -68,20 +66,15 @@ monster:loot({
     {id = 2747, chance = 880},
     {id = 2177, chance = 970},
     {id = 2154, chance = 50},
-    {id = 10552, chance = 10000},
+    {id = 10552, chance = 10000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=25, attack=20
--- name=physical, interval=2000, chance=10, range=7, max=-70, shootEffect=arrow
--- name=energy, interval=2000, chance=10, range=7, min=-30, max=-50, shootEffect=energy, areaEffect=energy
--- name=death, interval=2000, chance=10, range=7, min=-70, max=-85, shootEffect=suddendeath, areaEffect=mortarea
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=40, max=60, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -45},
+    {name = "physical", interval = 2000, chance = 10, maxDamage = -70, range = 7},
+    {name = "energy", interval = 2000, chance = 10, minDamage = -30, maxDamage = -50, range = 7},
+    {name = "death", interval = 2000, chance = 10, minDamage = -70, maxDamage = -85, range = 7}
+})
 
 monster:register()

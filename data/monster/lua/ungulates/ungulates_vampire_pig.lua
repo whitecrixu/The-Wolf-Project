@@ -1,5 +1,5 @@
 -- Vampire Pig
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Vampire Pig")
 if not monster then return end
@@ -26,37 +26,32 @@ monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_PHYSICALDAMAGE, percent = 10},
+    {type = COMBAT_PHYSICALDAMAGE, percent = 10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_DROWN, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Oink", yell = false},
-    {text = "Oink oink", yell = false},
+    {text = "Oink oink", yell = false}
 })
 
 -- Loot
 monster:loot({
-    {id = 2148, chance = 90000, maxCount = 40},
+    {id = 2148, chance = 90000, maxCount = 40}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-100
--- name=lifedrain, interval=2000, chance=30, min=-15, max=-25, radius=4, target=1, areaEffect=bats
--- name=lifedrain, interval=2000, chance=10, range=3, min=-35, max=-55, target=1
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=outfit, interval=2000, chance=20, duration=1500, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -100},
+    {name = "lifedrain", interval = 2000, chance = 30, minDamage = -15, maxDamage = -25, radius = 4},
+    {name = "lifedrain", interval = 2000, chance = 10, minDamage = -35, maxDamage = -55, range = 3}
+})
 
 monster:register()

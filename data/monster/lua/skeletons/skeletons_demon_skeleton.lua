@@ -1,5 +1,5 @@
 -- Demon Skeleton
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Demon Skeleton")
 if not monster then return end
@@ -23,25 +23,24 @@ monster:hostile(true)
 monster:isSummonable(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_HOLYDAMAGE, percent = -25},
+    {type = COMBAT_HOLYDAMAGE, percent = -25}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_DROWN, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_DRUNK, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {condition = CONDITION_DRUNK, immunity = true}
 })
 
 -- Loot
@@ -60,13 +59,13 @@ monster:loot({
     {id = 7618, chance = 10000, maxCount = 2},
     {id = 10564, chance = 12600},
     {id = 2144, chance = 2900},
-    {id = 2147, chance = 1400},
+    {id = 2147, chance = 1400}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=64, attack=50
--- name=death, interval=2000, chance=10, range=1, min=-30, max=-50, radius=1, target=1, areaEffect=smallclouds
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -114},
+    {name = "death", interval = 2000, chance = 10, minDamage = -30, maxDamage = -50, radius = 1}
+})
 
 monster:register()

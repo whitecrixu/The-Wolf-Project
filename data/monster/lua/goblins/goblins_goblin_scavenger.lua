@@ -1,5 +1,5 @@
 -- Goblin Scavenger
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Goblin Scavenger")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(6002)
 monster:outfit({lookType = 297})
 monster:defense(15)
 monster:armor(15)
-monster:runHealth(10)
+monster:runHealth(6)
 
 -- Flags
 monster:attackable(true)
@@ -32,7 +32,7 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_HOLYDAMAGE, percent = 1},
     {type = COMBAT_EARTHDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -10},
+    {type = COMBAT_DEATHDAMAGE, percent = -10}
 })
 
 -- Voices
@@ -40,7 +40,7 @@ monster:voices({
     {text = "Shiny, Shiny!", yell = false},
     {text = "You mean!", yell = false},
     {text = "All mine!", yell = false},
-    {text = "Uhh!", yell = false},
+    {text = "Uhh!", yell = false}
 })
 
 -- Loot
@@ -55,20 +55,15 @@ monster:loot({
     {id = 2235, chance = 7000},
     {id = 2406, chance = 8900},
     {id = 2467, chance = 7700},
-    {id = 2449, chance = 5000},
+    {id = 2449, chance = 5000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=10, attack=15
--- name=physical, interval=2000, chance=10, range=7, max=-30, shootEffect=spear
--- name=lifedrain, interval=2000, chance=5, range=7, min=-22, max=-30, areaEffect=redshimmer
--- name=death, interval=2000, chance=5, range=7, min=-1, max=-30, shootEffect=suddendeath, areaEffect=smallclouds
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=10, max=16, areaEffect=energy
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -25},
+    {name = "physical", interval = 2000, chance = 10, maxDamage = -30, range = 7},
+    {name = "lifedrain", interval = 2000, chance = 5, minDamage = -22, maxDamage = -30, range = 7},
+    {name = "death", interval = 2000, chance = 5, minDamage = -1, maxDamage = -30, range = 7}
+})
 
 monster:register()

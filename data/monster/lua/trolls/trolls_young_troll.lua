@@ -1,5 +1,5 @@
 -- Young Troll
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Young Troll")
 if not monster then return end
@@ -15,7 +15,7 @@ monster:corpseId(5960)
 monster:outfit({lookType = 15})
 monster:defense(2)
 monster:armor(1)
-monster:runHealth(15)
+monster:runHealth(3)
 
 -- Flags
 monster:attackable(true)
@@ -28,12 +28,12 @@ monster:loot({
     {id = 2148, chance = 58000, maxCount = 12},
     {id = 2666, chance = 14000},
     {id = 2120, chance = 10000},
-    {id = 2448, chance = 3000},
+    {id = 2448, chance = 3000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-10
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -10}
+})
 
 monster:register()

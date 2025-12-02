@@ -1,5 +1,5 @@
 -- Lizard Templar
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Lizard Templar")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:armor(20)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
@@ -28,17 +27,17 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_ICEDAMAGE, percent = 10},
-    {type = COMBAT_FIREDAMAGE, percent = -10},
+    {type = COMBAT_FIREDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Hissss!", yell = false},
+    {text = "Hissss!", yell = false}
 })
 
 -- Loot
@@ -54,12 +53,12 @@ monster:loot({
     {id = 2149, chance = 250},
     {id = 7618, chance = 890},
     {id = 5881, chance = 990},
-    {id = 3975, chance = 110},
+    {id = 3975, chance = 110}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=35
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -65}
+})
 
 monster:register()

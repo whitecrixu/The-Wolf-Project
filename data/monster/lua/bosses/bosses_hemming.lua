@@ -1,5 +1,5 @@
 -- Hemming
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Hemming")
 if not monster then return end
@@ -20,10 +20,9 @@ monster:runHealth(300)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -33,24 +32,19 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = -5},
     {type = COMBAT_DEATHDAMAGE, percent = 50},
     {type = COMBAT_ICEDAMAGE, percent = -5},
-    {type = COMBAT_HOLYDAMAGE, percent = -5},
+    {type = COMBAT_HOLYDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "GRRR", yell = false},
-    {text = "GRROARR", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "War Wolf", chance = 100, interval = 2000, max = 1},
+    {text = "GRROARR", yell = false}
 })
 
 -- Loot
@@ -69,22 +63,16 @@ monster:loot({
     {id = 11306, chance = 15000},
     {id = 7419, chance = 9800},
     {id = 2169, chance = 6000},
-    {id = 7428, chance = 2000},
+    {id = 7428, chance = 2000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-450
--- name=lifedrain, interval=2000, chance=10, min=-180, max=-265, radius=3, areaEffect=rednote
--- name=outfit, interval=2000, chance=5, duration=2000, areaeffect=bluenote
--- name=physical, interval=2000, chance=40, radius=3, areaEffect=whitenote
--- name=werewolf skill reducer, interval=2000, chance=15, range=1
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=50, max=200, areaEffect=greenshimmer
--- name=speed, interval=2000, chance=15, range=7, duration=5000, speedchange=300, areaEffect=purplenote
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -450},
+    {name = "lifedrain", interval = 2000, chance = 10, minDamage = -180, maxDamage = -265, radius = 3},
+    {name = "outfit", interval = 2000, chance = 5},
+    {name = "physical", interval = 2000, chance = 40, radius = 3},
+    {name = "werewolf skill reducer", interval = 2000, chance = 15}
+})
 
 monster:register()

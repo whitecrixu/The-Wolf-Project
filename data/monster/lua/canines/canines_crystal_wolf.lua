@@ -1,5 +1,5 @@
 -- Crystal Wolf
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Crystal Wolf")
 if not monster then return end
@@ -15,28 +15,27 @@ monster:corpseId(13584)
 monster:outfit({lookType = 391})
 monster:defense(20)
 monster:armor(20)
-monster:runHealth(20)
+monster:runHealth(75)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Raaarrr!", yell = false},
-    {text = "Aaaauuuuuooooooo!", yell = false},
+    {text = "Aaaauuuuuooooooo!", yell = false}
 })
 
 -- Loot
@@ -46,20 +45,15 @@ monster:loot({
     {id = 7839, chance = 11000, maxCount = 10},
     {id = 8878, chance = 3700},
     {id = 2183, chance = 7400},
-    {id = 5897, chance = 3700},
+    {id = 5897, chance = 3700}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=40
--- name=earth, interval=2000, chance=15, min=-60, max=-130, length=3, spread=2, areaEffect=stones
--- name=ice, interval=2000, chance=15, range=6, min=-80, max=-150, radius=3, target=1, shootEffect=smallice, areaEffect=giantice
--- name=manadrain, interval=2000, chance=10, range=7, min=-25, max=-80
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=5, min=15, max=55, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -70},
+    {name = "earth", interval = 2000, chance = 15, minDamage = -60, maxDamage = -130, length = 3, spread = 2},
+    {name = "ice", interval = 2000, chance = 15, minDamage = -80, maxDamage = -150, range = 6, radius = 3},
+    {name = "manadrain", interval = 2000, chance = 10, minDamage = -25, maxDamage = -80, range = 7}
+})
 
 monster:register()

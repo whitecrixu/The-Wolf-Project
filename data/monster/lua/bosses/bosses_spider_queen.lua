@@ -1,5 +1,5 @@
 -- Spider Queen
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Spider Queen")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:armor(0)
 monster:attackable(false)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
@@ -28,20 +27,20 @@ monster:staticAttackChance(90)
 monster:immunities({
     {condition = CONDITION_ENERGY, immunity = true},
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
-    {condition = CONDITION_BLEEDING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
+    {type = COMBAT_PHYSICALDAMAGE, combat = true},
     {condition = CONDITION_DROWN, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_DAZZLED, immunity = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_HOLYDAMAGE, combat = true},
     {condition = CONDITION_OUTFIT, immunity = true},
     {condition = CONDITION_DRUNK, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=60, attack=40
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -100}
+})
 
 monster:register()

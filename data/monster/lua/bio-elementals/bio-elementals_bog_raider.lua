@@ -1,5 +1,5 @@
 -- Bog Raider
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Bog Raider")
 if not monster then return end
@@ -19,9 +19,8 @@ monster:armor(15)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(60)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -31,19 +30,19 @@ monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = -20},
     {type = COMBAT_HOLYDAMAGE, percent = -5},
     {type = COMBAT_DEATHDAMAGE, percent = 5},
-    {type = COMBAT_FIREDAMAGE, percent = 85},
+    {type = COMBAT_FIREDAMAGE, percent = 85}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Tchhh!", yell = false},
-    {text = "Slurp!", yell = false},
+    {text = "Slurp!", yell = false}
 })
 
 -- Loot
@@ -57,21 +56,16 @@ monster:loot({
     {id = 2647, chance = 2040},
     {id = 8473, chance = 740},
     {id = 8872, chance = 590},
-    {id = 8891, chance = 110},
+    {id = 8891, chance = 110}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=59, attack=53
--- name=lifedrain, interval=2000, chance=10, range=7, min=-90, max=-140, target=1, areaEffect=redshimmer
--- name=earth, interval=2000, chance=10, min=-100, max=-175, radius=3, areaEffect=bubbles
--- name=earth, interval=2000, chance=15, range=7, min=-96, max=-110, target=1, shootEffect=smallearth
--- name=speed, interval=2000, chance=15, range=7, target=1, duration=15000, speedchange=-600, areaEffect=smallplants
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=65, max=95, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -112},
+    {name = "lifedrain", interval = 2000, chance = 10, minDamage = -90, maxDamage = -140, range = 7},
+    {name = "earth", interval = 2000, chance = 10, minDamage = -100, maxDamage = -175, radius = 3},
+    {name = "earth", interval = 2000, chance = 15, minDamage = -96, maxDamage = -110, range = 7},
+    {name = "speed", interval = 2000, chance = 15, range = 7}
+})
 
 monster:register()

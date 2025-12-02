@@ -1,5 +1,5 @@
 -- Stonecracker
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Stonecracker")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(40)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,18 +30,18 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 40},
     {type = COMBAT_ENERGYDAMAGE, percent = 15},
     {type = COMBAT_PHYSICALDAMAGE, percent = 15},
-    {type = COMBAT_ICEDAMAGE, percent = -5},
+    {type = COMBAT_ICEDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "HUAHAHA!", yell = false},
+    {text = "HUAHAHA!", yell = false}
 })
 
 -- Loot
@@ -57,19 +56,13 @@ monster:loot({
     {id = 2416, chance = 14800},
     {id = 2150, chance = 7650, maxCount = 2},
     {id = 2387, chance = 7650},
-    {id = 2463, chance = 7650},
+    {id = 2463, chance = 7650}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=90, attack=100
--- name=physical, interval=2000, chance=20, range=7, min=-200, max=-280, shootEffect=largerock
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=10, duration=4000, speedchange=360, areaEffect=redshimmer
--- name=healing, interval=2000, chance=10, min=500, max=600, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -190},
+    {name = "physical", interval = 2000, chance = 20, minDamage = -200, maxDamage = -280, range = 7}
+})
 
 monster:register()

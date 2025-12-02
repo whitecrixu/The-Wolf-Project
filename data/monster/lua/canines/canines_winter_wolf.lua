@@ -1,5 +1,5 @@
 -- Winter Wolf
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Winter Wolf")
 if not monster then return end
@@ -32,23 +32,23 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 10},
     {type = COMBAT_HOLYDAMAGE, percent = 5},
     {type = COMBAT_ENERGYDAMAGE, percent = -5},
-    {type = COMBAT_DEATHDAMAGE, percent = -5},
+    {type = COMBAT_DEATHDAMAGE, percent = -5}
 })
 
 -- Voices
 monster:voices({
-    {text = "Yoooohhuuuuu!", yell = false},
+    {text = "Yoooohhuuuuu!", yell = false}
 })
 
 -- Loot
 monster:loot({
     {id = 2666, chance = 30000, maxCount = 2},
-    {id = 11212, chance = 10000},
+    {id = 11212, chance = 10000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=10, attack=20
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -30}
+})
 
 monster:register()

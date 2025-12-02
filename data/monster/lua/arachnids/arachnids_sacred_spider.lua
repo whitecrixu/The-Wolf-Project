@@ -1,5 +1,5 @@
 -- Sacred Spider
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Sacred Spider")
 if not monster then return end
@@ -21,18 +21,17 @@ monster:armor(25)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_FIREDAMAGE, percent = -5},
+    {type = COMBAT_FIREDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
@@ -42,13 +41,13 @@ monster:loot({
     {id = 8859, chance = 25000},
     {id = 2159, chance = 7142, maxCount = 4},
     {id = 2463, chance = 4761},
-    {id = 9971, chance = 95},
+    {id = 9971, chance = 95}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-160
--- name=earth, interval=2000, chance=20, range=7, min=-50, max=-80, shootEffect=poison
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -160},
+    {name = "earth", interval = 2000, chance = 20, minDamage = -50, maxDamage = -80, range = 7}
+})
 
 monster:register()

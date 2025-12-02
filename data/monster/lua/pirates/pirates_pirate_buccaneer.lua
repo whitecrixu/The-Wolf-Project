@@ -1,5 +1,5 @@
 -- Pirate Buccaneer
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Pirate Buccaneer")
 if not monster then return end
@@ -16,13 +16,12 @@ monster:corpseId(20471)
 monster:outfit({lookType = 97})
 monster:defense(30)
 monster:armor(30)
-monster:runHealth(50)
+monster:runHealth(42)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isSummonable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -35,19 +34,19 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = -5},
     {type = COMBAT_ENERGYDAMAGE, percent = -5},
     {type = COMBAT_ICEDAMAGE, percent = -5},
-    {type = COMBAT_PHYSICALDAMAGE, percent = -10},
+    {type = COMBAT_PHYSICALDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Give up!", yell = false},
     {text = "Hiyaa", yell = false},
-    {text = "Plundeeeeer!", yell = false},
+    {text = "Plundeeeeer!", yell = false}
 })
 
 -- Loot
@@ -68,13 +67,13 @@ monster:loot({
     {id = 5926, chance = 430},
     {id = 5792, chance = 40},
     {id = 11219, chance = 9780},
-    {id = 5553, chance = 120},
+    {id = 5553, chance = 120}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=80
--- name=physical, interval=2000, chance=20, range=4, max=-100, shootEffect=throwingknife
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -110},
+    {name = "physical", interval = 2000, chance = 20, maxDamage = -100, range = 4}
+})
 
 monster:register()

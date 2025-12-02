@@ -1,5 +1,5 @@
 -- Armenius
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Armenius")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(30)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -28,22 +27,22 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = 35},
     {type = COMBAT_FIREDAMAGE, percent = -10},
-    {type = COMBAT_HOLYDAMAGE, percent = -25},
+    {type = COMBAT_HOLYDAMAGE, percent = -25}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_DROWN, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {condition = CONDITION_DROWN, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "I smell warm blood!", yell = false},
+    {text = "I smell warm blood!", yell = false}
 })
 
 -- Loot
@@ -61,21 +60,14 @@ monster:loot({
     {id = 2479, chance = 420},
     {id = 2127, chance = 230},
     {id = 2534, chance = 230},
-    {id = 2172, chance = 220},
+    {id = 2172, chance = 220}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=50, attack=50
--- name=lifedrain, interval=2000, chance=20, range=1, min=-50, max=-200, radius=1, target=1, areaEffect=smallclouds
--- name=speed, interval=2000, chance=15, radius=1, duration=60000, speedchange=-400, areaEffect=redshimmer
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=outfit, interval=2000, chance=10, duration=5000, areaEffect=groundshaker
--- name=speed, interval=2000, chance=15, duration=3000, speedchange=300, areaEffect=redshimmer
--- name=healing, interval=2000, chance=15, min=15, max=25
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -100},
+    {name = "lifedrain", interval = 2000, chance = 20, minDamage = -50, maxDamage = -200, radius = 1},
+    {name = "speed", interval = 2000, chance = 15, radius = 1}
+})
 
 monster:register()

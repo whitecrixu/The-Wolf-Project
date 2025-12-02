@@ -1,5 +1,5 @@
 -- Troll
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Troll")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(5960)
 monster:outfit({lookType = 15})
 monster:defense(10)
 monster:armor(10)
-monster:runHealth(15)
+monster:runHealth(5)
 
 -- Flags
 monster:attackable(true)
@@ -32,7 +32,7 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 25},
     {type = COMBAT_HOLYDAMAGE, percent = 10},
     {type = COMBAT_EARTHDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -10},
+    {type = COMBAT_DEATHDAMAGE, percent = -10}
 })
 
 -- Voices
@@ -41,7 +41,7 @@ monster:voices({
     {text = "Groar", yell = false},
     {text = "Gruntz!", yell = false},
     {text = "Hmmm, bugs", yell = false},
-    {text = "Hmmm, dogs", yell = false},
+    {text = "Hmmm, dogs", yell = false}
 })
 
 -- Loot
@@ -56,12 +56,12 @@ monster:loot({
     {id = 2448, chance = 5000},
     {id = 2512, chance = 4730},
     {id = 10606, chance = 1000},
-    {id = 2170, chance = 80},
+    {id = 2170, chance = 80}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-15
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -15}
+})
 
 monster:register()

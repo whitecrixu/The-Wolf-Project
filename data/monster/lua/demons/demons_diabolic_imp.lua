@@ -1,5 +1,5 @@
 -- Diabolic Imp
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Diabolic Imp")
 if not monster then return end
@@ -15,13 +15,11 @@ monster:corpseId(6364)
 monster:outfit({lookType = 237})
 monster:defense(25)
 monster:armor(25)
-monster:targetDistance(4)
-monster:runHealth(400)
+monster:runHealth(290)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,21 +29,21 @@ monster:elements({
     {type = COMBAT_DEATHDAMAGE, percent = 10},
     {type = COMBAT_EARTHDAMAGE, percent = 50},
     {type = COMBAT_ICEDAMAGE, percent = -10},
-    {type = COMBAT_HOLYDAMAGE, percent = -10},
+    {type = COMBAT_HOLYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Muahaha!", yell = false},
-    {text = "He he he.", yell = false},
+    {text = "He he he.", yell = false}
 })
 
 -- Loot
@@ -67,22 +65,15 @@ monster:loot({
     {id = 6300, chance = 120},
     {id = 7899, chance = 250},
     {id = 7900, chance = 430},
-    {id = 2185, chance = 830},
+    {id = 2185, chance = 830}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=70, attack=60
--- name=fire, interval=2000, chance=20, range=7, min=-100, max=-240, radius=4, target=1, shootEffect=fire, areaEffect=firearea
--- name=fire, interval=2000, chance=10, range=7, min=-300, max=-430, radius=2, target=1, shootEffect=fire, areaEffect=fireattack
--- name=diabolic imp skill reducer, interval=2000, chance=5, range=5
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=650, max=800, areaEffect=blueshimmer
--- name=speed, interval=2000, chance=15, duration=2000, speedchange=800, areaEffect=redshimmer
--- name=invisible, interval=2000, chance=10, duration=1000, areaEffect=teleport
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -130},
+    {name = "fire", interval = 2000, chance = 20, minDamage = -100, maxDamage = -240, range = 7, radius = 4},
+    {name = "fire", interval = 2000, chance = 10, minDamage = -300, maxDamage = -430, range = 7, radius = 2},
+    {name = "diabolic imp skill reducer", interval = 2000, chance = 5, range = 5}
+})
 
 monster:register()

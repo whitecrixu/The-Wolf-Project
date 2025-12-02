@@ -1,5 +1,5 @@
 -- Corym Vanguard
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Corym Vanguard")
 if not monster then return end
@@ -15,32 +15,31 @@ monster:corpseId(19734)
 monster:outfit({lookType = 534, lookHead = 101, lookLegs = 101})
 monster:defense(20)
 monster:armor(20)
-monster:runHealth(50)
+monster:runHealth(70)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = 20},
-    {type = COMBAT_ENERGYDAMAGE, percent = 20},
+    {type = COMBAT_ENERGYDAMAGE, percent = 20}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Gimme! Gimme!", yell = false},
+    {text = "Gimme! Gimme!", yell = false}
 })
 
 -- Loot
@@ -58,19 +57,14 @@ monster:loot({
     {id = 20098, chance = 3846},
     {id = 20139, chance = 3225},
     {id = 20126, chance = 1612},
-    {id = 20105, chance = 14},
+    {id = 20105, chance = 14}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=40, attack=56
--- name=earth, interval=2000, chance=10, min=-50, max=-100, length=5, spread=3, areaEffect=greenbubble
--- name=death, interval=2000, chance=15, min=-40, max=-70, radius=4, target=1, areaEffect=mortarea
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=30, max=60, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -96},
+    {name = "earth", interval = 2000, chance = 10, minDamage = -50, maxDamage = -100, length = 5, spread = 3},
+    {name = "death", interval = 2000, chance = 15, minDamage = -40, maxDamage = -70, radius = 4}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Vampire
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Vampire")
 if not monster then return end
@@ -15,13 +15,12 @@ monster:corpseId(6006)
 monster:outfit({lookType = 68})
 monster:defense(30)
 monster:armor(30)
-monster:runHealth(30)
+monster:runHealth(47)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -30,17 +29,17 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = 35},
     {type = COMBAT_FIREDAMAGE, percent = -10},
-    {type = COMBAT_HOLYDAMAGE, percent = -25},
+    {type = COMBAT_HOLYDAMAGE, percent = -25}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_DROWN, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {condition = CONDITION_DROWN, immunity = true}
 })
 
 -- Voices
@@ -48,7 +47,7 @@ monster:voices({
     {text = "BLOOD!", yell = true},
     {text = "Let me kiss your neck", yell = false},
     {text = "I smell warm blood!", yell = false},
-    {text = "I call you, my bats! Come!", yell = false},
+    {text = "I call you, my bats! Come!", yell = false}
 })
 
 -- Loot
@@ -66,21 +65,14 @@ monster:loot({
     {id = 2479, chance = 420},
     {id = 2127, chance = 230},
     {id = 2534, chance = 230},
-    {id = 2172, chance = 220},
+    {id = 2172, chance = 220}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-150
--- name=lifedrain, interval=2000, chance=20, range=1, min=-50, max=-200, target=1, areaEffect=redshimmer
--- name=speed, interval=2000, chance=15, range=1, target=1, duration=60000, speedchange=-400, areaEffect=redshimmer
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=outfit, interval=4000, chance=10, duration=5000, areaEffect=groundshaker
--- name=speed, interval=2000, chance=15, duration=3000, speedchange=300, areaEffect=redshimmer
--- name=healing, interval=2000, chance=15, min=15, max=25
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -150},
+    {name = "lifedrain", interval = 2000, chance = 20, minDamage = -50, maxDamage = -200},
+    {name = "speed", interval = 2000, chance = 15}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Metal Gargoyle
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Metal Gargoyle")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(21)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -30,22 +29,22 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = -10},
     {type = COMBAT_ICEDAMAGE, percent = -5},
     {type = COMBAT_PHYSICALDAMAGE, percent = 40},
-    {type = COMBAT_DEATHDAMAGE, percent = 80},
+    {type = COMBAT_DEATHDAMAGE, percent = 80}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true}
 })
 
 -- Voices
 monster:voices({
     {text = "*click*", yell = false},
     {text = "*clonk*", yell = false},
-    {text = "*stomp*", yell = false},
+    {text = "*stomp*", yell = false}
 })
 
 -- Loot
@@ -62,15 +61,15 @@ monster:loot({
     {id = 11227, chance = 2240},
     {id = 23540, chance = 1490},
     {id = 23539, chance = 1490},
-    {id = 9810, chance = 2990},
+    {id = 9810, chance = 2990}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=84, attack=50
--- name=death, interval=2000, chance=10, min=-125, max=-230, length=8, areaEffect=yellowenergy
--- name=lifedrain, interval=2000, chance=9, range=7, min=-85, max=-150, radius=3, target=1, areaEffect=mortarea, shootEffect=suddendeath
--- name=metal gargoyle curse, interval=2000, chance=13
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -134},
+    {name = "death", interval = 2000, chance = 10, minDamage = -125, maxDamage = -230, length = 8},
+    {name = "lifedrain", interval = 2000, chance = 9, minDamage = -85, maxDamage = -150, range = 7, radius = 3},
+    {name = "metal gargoyle curse", interval = 2000, chance = 13}
+})
 
 monster:register()

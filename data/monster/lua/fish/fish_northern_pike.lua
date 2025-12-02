@@ -1,5 +1,5 @@
 -- Northern Pike
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Northern Pike")
 if not monster then return end
@@ -15,8 +15,7 @@ monster:corpseId(2669)
 monster:outfit({lookType = 454})
 monster:defense(5)
 monster:armor(5)
-monster:targetDistance(0)
-monster:runHealth(95)
+monster:runHealth(9)
 
 -- Flags
 monster:attackable(true)
@@ -24,18 +23,24 @@ monster:hostile(true)
 monster:pushable(true)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
+monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_DROWN, immunity = true},
+    {condition = CONDITION_DROWN, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Blub!", yell = false},
+    {text = "Blub!", yell = false}
+})
+
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -19}
 })
 
 monster:register()

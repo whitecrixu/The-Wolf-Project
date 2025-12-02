@@ -1,5 +1,5 @@
 -- Lost Thrower
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Lost Thrower")
 if not monster then return end
@@ -15,13 +15,11 @@ monster:corpseId(19998)
 monster:outfit({lookType = 539})
 monster:defense(30)
 monster:armor(30)
-monster:targetDistance(4)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,14 +29,14 @@ monster:elements({
     {type = COMBAT_DEATHDAMAGE, percent = 5},
     {type = COMBAT_ICEDAMAGE, percent = 5},
     {type = COMBAT_ENERGYDAMAGE, percent = 15},
-    {type = COMBAT_FIREDAMAGE, percent = 40},
+    {type = COMBAT_FIREDAMAGE, percent = 40}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
@@ -59,22 +57,16 @@ monster:loot({
     {id = 20109, chance = 850},
     {id = 7591, chance = 14730},
     {id = 7590, chance = 13470},
-    {id = 13757, chance = 12180},
+    {id = 13757, chance = 12180}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=76, attack=70
--- name=physical, interval=2000, chance=20, range=7, max=-250, radius=1, target=1, shootEffect=throwingstar, areaEffect=explosionarea
--- name=physical, interval=2000, chance=5, range=7, radius=2, areaEffect=redshimmer
--- name=physical, interval=2000, chance=10, range=7, min=-150, max=-300, radius=2, target=1, shootEffect=whirlwindclub, areaEffect=stun
--- name=drunk, interval=2000, chance=10, radius=3, target=1, duration=6000, shootEffect=whirlwindaxe, areaEffect=explosionarea
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=5, min=100, max=500, areaEffect=blueshimmer
--- name=invisible, interval=2000, chance=10, duration=5000, areaEffect=teleport
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -146},
+    {name = "physical", interval = 2000, chance = 20, maxDamage = -250, range = 7, radius = 1},
+    {name = "physical", interval = 2000, chance = 5, range = 7, radius = 2},
+    {name = "physical", interval = 2000, chance = 10, minDamage = -150, maxDamage = -300, range = 7, radius = 2},
+    {name = "drunk", interval = 2000, chance = 10, radius = 3}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Scarab
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Scarab")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(6024)
 monster:outfit({lookType = 83})
 monster:defense(15)
 monster:armor(15)
-monster:runHealth(80)
+monster:runHealth(32)
 
 -- Flags
 monster:attackable(true)
@@ -33,13 +33,13 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = 20},
     {type = COMBAT_PHYSICALDAMAGE, percent = 15},
-    {type = COMBAT_FIREDAMAGE, percent = -18},
+    {type = COMBAT_FIREDAMAGE, percent = -18}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_PARALYZE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_PARALYZE, immunity = true}
 })
 
 -- Loot
@@ -50,19 +50,14 @@ monster:loot({
     {id = 2159, chance = 1098},
     {id = 2150, chance = 540},
     {id = 2149, chance = 413},
-    {id = 2439, chance = 245},
+    {id = 2439, chance = 245}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=65, attack=20
--- name=earth, interval=2000, chance=10, range=1, max=-35, shootEffect=poison
--- name=poisonfield, interval=2000, chance=10, radius=1
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=200, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -85},
+    {name = "earth", interval = 2000, chance = 10, maxDamage = -35},
+    {name = "poisonfield", interval = 2000, chance = 10, radius = 1}
+})
 
 monster:register()

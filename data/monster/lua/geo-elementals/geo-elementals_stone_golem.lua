@@ -1,5 +1,5 @@
 -- Stone Golem
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Stone Golem")
 if not monster then return end
@@ -23,7 +23,6 @@ monster:hostile(true)
 monster:isSummonable(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -34,14 +33,14 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 20},
     {type = COMBAT_ENERGYDAMAGE, percent = 15},
     {type = COMBAT_DEATHDAMAGE, percent = 20},
-    {type = COMBAT_ICEDAMAGE, percent = -10},
+    {type = COMBAT_ICEDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_DROWN, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
 -- Loot
@@ -57,12 +56,12 @@ monster:loot({
     {id = 2395, chance = 2500},
     {id = 5880, chance = 1980},
     {id = 2124, chance = 120},
-    {id = 2156, chance = 30},
+    {id = 2156, chance = 30}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=45, attack=40
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -85}
+})
 
 monster:register()

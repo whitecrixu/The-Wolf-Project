@@ -1,5 +1,5 @@
 -- Deepling Warrior
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Deepling Warrior")
 if not monster then return end
@@ -15,8 +15,7 @@ monster:corpseId(15175)
 monster:outfit({lookType = 441})
 monster:defense(25)
 monster:armor(25)
-monster:targetDistance(0)
-monster:runHealth(30)
+monster:runHealth(160)
 
 -- Flags
 monster:attackable(true)
@@ -24,25 +23,25 @@ monster:hostile(true)
 monster:pushable(true)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = -20},
-    {type = COMBAT_ENERGYDAMAGE, percent = -10},
+    {type = COMBAT_ENERGYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
-    {condition = CONDITION_DROWN, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
+    {condition = CONDITION_DROWN, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Jou wjil all djie!", yell = false},
+    {text = "Jou wjil all djie!", yell = false}
 })
 
 -- Loot
@@ -62,18 +61,13 @@ monster:loot({
     {id = 5895, chance = 961},
     {id = 15453, chance = 684},
     {id = 13870, chance = 574},
-    {id = 15451, chance = 534},
+    {id = 15451, chance = 534}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=50, attack=100
--- name=physical, interval=2000, chance=20, range=7, min=-0, max=-290, target=1, shootEffect=whirlwindaxe
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=50, max=150, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -150},
+    {name = "physical", interval = 2000, chance = 20, maxDamage = -290, range = 7}
+})
 
 monster:register()

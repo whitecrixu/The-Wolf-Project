@@ -1,5 +1,5 @@
 -- Man in the Cave
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Man in the Cave")
 if not monster then return end
@@ -19,17 +19,16 @@ monster:armor(14)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_OUTFIT, immunity = true},
     {condition = CONDITION_DRUNK, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -37,12 +36,7 @@ monster:voices({
     {text = "THE MONKS ARE MINE", yell = true},
     {text = "I will rope you up! All of you!", yell = false},
     {text = "You have been roped up!", yell = false},
-    {text = "A MIC to rule them all!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "Monk", chance = 20, interval = 2000, max = 1},
+    {text = "A MIC to rule them all!", yell = false}
 })
 
 -- Loot
@@ -57,14 +51,14 @@ monster:loot({
     {id = 7463, chance = 6666},
     {id = 7386, chance = 6666},
     {id = 7458, chance = 1000},
-    {id = 2173, chance = 500},
+    {id = 2173, chance = 500}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=60, attack=30
--- name=physical, interval=2000, chance=20, range=7, min=-10, max=-95, shootEffect=smallstone
--- name=lifedrain, interval=1000, chance=100, range=1, min=-20, max=-30, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -90},
+    {name = "physical", interval = 2000, chance = 20, minDamage = -10, maxDamage = -95, range = 7},
+    {name = "lifedrain", interval = 1000, chance = 100, minDamage = -20, maxDamage = -30}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Roaring Water Elemental
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Roaring Water Elemental")
 if not monster then return end
@@ -15,28 +15,27 @@ monster:corpseId(8965)
 monster:outfit({lookType = 11})
 monster:defense(30)
 monster:armor(30)
-monster:runHealth(1)
+monster:runHealth(175)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(85)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = 50},
-    {type = COMBAT_HOLYDAMAGE, percent = 30},
+    {type = COMBAT_HOLYDAMAGE, percent = 30}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_DROWN, immunity = true},
+    {condition = CONDITION_DROWN, immunity = true}
 })
 
 -- Loot
@@ -46,18 +45,13 @@ monster:loot({
     {id = 8302, chance = 9000},
     {id = 2146, chance = 4125, maxCount = 2},
     {id = 7839, chance = 1000, maxCount = 2},
-    {id = 8911, chance = 750},
+    {id = 8911, chance = 750}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=40, attack=90
--- name=ice, interval=1000, chance=15, min=-240, max=-320, radius=2, target=1, areaEffect=bluebubble, shootEffect=ice
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=90, max=150, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -130},
+    {name = "ice", interval = 1000, chance = 15, minDamage = -240, maxDamage = -320, radius = 2}
+})
 
 monster:register()

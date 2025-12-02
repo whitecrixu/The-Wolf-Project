@@ -1,5 +1,5 @@
 -- Glooth Blob
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Glooth Blob")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(10)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -28,19 +27,14 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = -10},
     {type = COMBAT_ICEDAMAGE, percent = 20},
-    {type = COMBAT_ENERGYDAMAGE, percent = -10},
+    {type = COMBAT_ENERGYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-})
-
--- Summons
-monster:summons({
-    {name = "Glooth Blob", chance = 6, interval = 2000, max = 1},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_LIFEDRAIN, combat = true}
 })
 
 -- Loot
@@ -52,15 +46,15 @@ monster:loot({
     {id = 23554, chance = 400},
     {id = 23550, chance = 510},
     {id = 23549, chance = 580},
-    {id = 23551, chance = 560},
+    {id = 23551, chance = 560}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=45, attack=40
--- name=poisoncondition, interval=2000, chance=13, min=-400, max=-480, radius=4, areaEffect=poison
--- name=poison, interval=2000, chance=11, min=-85, max=-180, radius=3, target=1, areaEffect=greenbubble, shootEffect=envenomedarrow
--- name=poison, interval=2000, chance=10, range=7, min=-60, max=-105, target=1, areaEffect=poison, shootEffect=poison
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -85},
+    {name = "poisoncondition", interval = 2000, chance = 13, minDamage = -400, maxDamage = -480, radius = 4},
+    {name = "poison", interval = 2000, chance = 11, minDamage = -85, maxDamage = -180, radius = 3},
+    {name = "poison", interval = 2000, chance = 10, minDamage = -60, maxDamage = -105, range = 7}
+})
 
 monster:register()

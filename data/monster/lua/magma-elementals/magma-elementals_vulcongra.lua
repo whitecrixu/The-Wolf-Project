@@ -1,5 +1,5 @@
 -- Vulcongra
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Vulcongra")
 if not monster then return end
@@ -15,12 +15,11 @@ monster:corpseId(18475)
 monster:outfit({lookType = 509})
 monster:defense(35)
 monster:armor(35)
-monster:runHealth(220)
+monster:runHealth(160)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -28,22 +27,22 @@ monster:staticAttackChance(90)
 -- Resistances
 monster:elements({
     {type = COMBAT_DEATHDAMAGE, percent = 1},
-    {type = COMBAT_ICEDAMAGE, percent = -1},
+    {type = COMBAT_ICEDAMAGE, percent = -1}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Fuchah! Fuchah!", yell = false},
     {text = "Fuchah!", yell = false},
-    {text = "Yag! Yag! Yag!", yell = false},
+    {text = "Yag! Yag! Yag!", yell = false}
 })
 
 -- Loot
@@ -63,15 +62,15 @@ monster:loot({
     {id = 7890, chance = 920},
     {id = 13757, chance = 890},
     {id = 2392, chance = 260},
-    {id = 7899, chance = 130},
+    {id = 7899, chance = 130}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-230
--- name=vulcongra soulfire, interval=2000, chance=100
--- name=fire, interval=2000, chance=10, min=-195, max=-340, length=8, areaEffect=explosion
--- name=fire, interval=2000, chance=15, range=7, min=-100, max=-200, target=1, shootEffect=fire
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -230},
+    {name = "vulcongra soulfire", interval = 2000, chance = 100},
+    {name = "fire", interval = 2000, chance = 10, minDamage = -195, maxDamage = -340, length = 8},
+    {name = "fire", interval = 2000, chance = 15, minDamage = -100, maxDamage = -200, range = 7}
+})
 
 monster:register()

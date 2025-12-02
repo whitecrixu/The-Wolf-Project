@@ -1,5 +1,5 @@
 -- Minotaur Guard
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Minotaur Guard")
 if not monster then return end
@@ -23,7 +23,6 @@ monster:hostile(true)
 monster:isSummonable(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -33,13 +32,13 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 20},
     {type = COMBAT_HOLYDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -10},
+    {type = COMBAT_DEATHDAMAGE, percent = -10}
 })
 
 -- Voices
 monster:voices({
     {text = "Kirll Karrrl!", yell = false},
-    {text = "Kaplar!", yell = false},
+    {text = "Kaplar!", yell = false}
 })
 
 -- Loot
@@ -54,12 +53,12 @@ monster:loot({
     {id = 7618, chance = 400},
     {id = 7401, chance = 80},
     {id = 12428, chance = 8330, maxCount = 2},
-    {id = 12438, chance = 5040},
+    {id = 12438, chance = 5040}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=50
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -80}
+})
 
 monster:register()

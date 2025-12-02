@@ -1,5 +1,5 @@
 -- Orc Berserker
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Orc Berserker")
 if not monster then return end
@@ -23,7 +23,6 @@ monster:hostile(true)
 monster:isSummonable(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -33,12 +32,12 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 15},
     {type = COMBAT_HOLYDAMAGE, percent = 10},
     {type = COMBAT_EARTHDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -10},
+    {type = COMBAT_DEATHDAMAGE, percent = -10}
 })
 
 -- Voices
 monster:voices({
-    {text = "KRAK ORRRRRRK!", yell = true},
+    {text = "KRAK ORRRRRRK!", yell = true}
 })
 
 -- Loot
@@ -52,17 +51,12 @@ monster:loot({
     {id = 2378, chance = 6110},
     {id = 3965, chance = 5000},
     {id = 12433, chance = 9400},
-    {id = 12435, chance = 4000},
+    {id = 12435, chance = 4000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=40, attack=80
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=6000, speedchange=290, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -120}
+})
 
 monster:register()

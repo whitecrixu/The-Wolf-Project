@@ -1,5 +1,5 @@
 -- Braindeath
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Braindeath")
 if not monster then return end
@@ -15,16 +15,14 @@ monster:corpseId(7256)
 monster:outfit({lookType = 256})
 monster:defense(20)
 monster:armor(20)
-monster:targetDistance(4)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -32,14 +30,14 @@ monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = 10},
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
     {type = COMBAT_HOLYDAMAGE, percent = -20},
-    {type = COMBAT_FIREDAMAGE, percent = -15},
+    {type = COMBAT_FIREDAMAGE, percent = -15}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -47,12 +45,7 @@ monster:voices({
     {text = "You have disturbed my thoughts!", yell = false},
     {text = "Let me turn you into something more useful!", yell = false},
     {text = "Let me taste your brain!", yell = false},
-    {text = "You will be punished!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "Vampire", chance = 10, interval = 2000, max = 1},
+    {text = "You will be punished!", yell = false}
 })
 
 -- Loot
@@ -68,24 +61,18 @@ monster:loot({
     {id = 2518, chance = 750},
     {id = 7452, chance = 950},
     {id = 3972, chance = 180},
-    {id = 10580, chance = 4725},
+    {id = 10580, chance = 4725}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=50
--- name=energy, interval=2000, chance=10, range=7, min=-93, max=-170, shootEffect=energy
--- name=fire, interval=2000, chance=10, range=7, min=-75, max=-125, shootEffect=fire
--- name=death, interval=2000, chance=10, range=7, min=-85, max=-170, shootEffect=suddendeath, areaEffect=smallclouds
--- name=earth, interval=2000, chance=10, range=7, min=-65, max=-125, shootEffect=poison
--- name=lifedrain, interval=2000, chance=10, range=7, min=-75, max=-85, areaEffect=redshimmer
--- name=manadrain, interval=2000, chance=10, range=7, max=-155
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=150, max=200, areaEffect=blueshimmer
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=260, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -80},
+    {name = "energy", interval = 2000, chance = 10, minDamage = -93, maxDamage = -170, range = 7},
+    {name = "fire", interval = 2000, chance = 10, minDamage = -75, maxDamage = -125, range = 7},
+    {name = "death", interval = 2000, chance = 10, minDamage = -85, maxDamage = -170, range = 7},
+    {name = "earth", interval = 2000, chance = 10, minDamage = -65, maxDamage = -125, range = 7},
+    {name = "lifedrain", interval = 2000, chance = 10, minDamage = -75, maxDamage = -85, range = 7},
+    {name = "manadrain", interval = 2000, chance = 10, maxDamage = -155, range = 7}
+})
 
 monster:register()

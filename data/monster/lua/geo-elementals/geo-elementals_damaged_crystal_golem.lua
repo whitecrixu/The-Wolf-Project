@@ -1,5 +1,5 @@
 -- Damaged Crystal Golem
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Damaged Crystal Golem")
 if not monster then return end
@@ -15,14 +15,18 @@ monster:corpseId(18466)
 monster:outfit({lookType = 508})
 monster:defense(0)
 monster:armor(0)
-monster:runHealth(500)
+monster:runHealth(50)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
+
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -100}
+})
 
 monster:register()

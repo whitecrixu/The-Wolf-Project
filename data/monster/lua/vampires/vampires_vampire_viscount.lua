@@ -1,5 +1,5 @@
 -- Vampire Viscount
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Vampire Viscount")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(35)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -29,22 +28,22 @@ monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = -5},
     {type = COMBAT_FIREDAMAGE, percent = -5},
     {type = COMBAT_PHYSICALDAMAGE, percent = 5},
-    {type = COMBAT_ICEDAMAGE, percent = 5},
+    {type = COMBAT_ICEDAMAGE, percent = 5}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Prepare to BLEED!", yell = false},
     {text = "Don't struggle. We don't want to waste a drop of blood now, do we?", yell = false},
-    {text = "Ah, refreshments have arrived!", yell = false},
+    {text = "Ah, refreshments have arrived!", yell = false}
 })
 
 -- Loot
@@ -61,20 +60,14 @@ monster:loot({
     {id = 2396, chance = 810},
     {id = 2156, chance = 540},
     {id = 2534, chance = 200},
-    {id = 5911, chance = 70},
+    {id = 5911, chance = 70}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-150
--- name=death, interval=2000, chance=15, range=6, min=-50, max=-100, radius=3, target=1, shootEffect=death, areaEffect=mortarea
--- name=bleedcondition, interval=2000, chance=10, min=-320, max=-560, radius=6, areaEffect=bats
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=outfit, interval=2000, chance=10, duration=4000
--- name=speed, interval=2000, chance=15, duration=4000, speedchange=300, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -150},
+    {name = "death", interval = 2000, chance = 15, minDamage = -50, maxDamage = -100, range = 6, radius = 3},
+    {name = "bleedcondition", interval = 2000, chance = 10, minDamage = -320, maxDamage = -560, radius = 6}
+})
 
 monster:register()

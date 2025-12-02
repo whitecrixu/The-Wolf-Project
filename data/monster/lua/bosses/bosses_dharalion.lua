@@ -1,5 +1,5 @@
 -- Dharalion
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Dharalion")
 if not monster then return end
@@ -15,12 +15,10 @@ monster:corpseId(6011)
 monster:outfit({lookType = 203})
 monster:defense(25)
 monster:armor(15)
-monster:targetDistance(4)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -29,22 +27,17 @@ monster:staticAttackChance(90)
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_OUTFIT, immunity = true},
     {condition = CONDITION_DRUNK, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Feel my wrath!", yell = false},
     {text = "Noone will stop my ascension!", yell = false},
-    {text = "My powers are divine!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "demon skeleton", chance = 6, interval = 1000, max = 2},
+    {text = "My powers are divine!", yell = false}
 })
 
 -- Loot
@@ -67,22 +60,16 @@ monster:loot({
     {id = 2032, chance = 4000},
     {id = 2062, chance = 2857},
     {id = 2125, chance = 1818},
-    {id = 2154, chance = 1333},
+    {id = 2154, chance = 1333}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=28
--- name=manadrain, interval=1000, chance=15, range=7, min=-30, max=-60
--- name=energy, interval=1000, chance=13, range=7, min=-70, max=-90, shootEffect=energy, areaEffect=energy
--- name=physical, interval=1000, chance=10, range=7, min=-80, max=-151, shootEffect=suddendeath
--- name=effect, interval=1000, chance=13, range=7, shootEffect=poison, areaEffect=poison
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=1000, chance=20, min=90, max=120, areaEffect=blueshimmer
--- name=speed, interval=1000, chance=7, duration=10000, speedchange=300, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -58},
+    {name = "manadrain", interval = 1000, chance = 15, minDamage = -30, maxDamage = -60, range = 7},
+    {name = "energy", interval = 1000, chance = 13, minDamage = -70, maxDamage = -90, range = 7},
+    {name = "physical", interval = 1000, chance = 10, minDamage = -80, maxDamage = -151, range = 7},
+    {name = "effect", interval = 1000, chance = 13, range = 7}
+})
 
 monster:register()

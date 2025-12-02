@@ -1,5 +1,5 @@
 -- Merlkin
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Merlkin")
 if not monster then return end
@@ -15,15 +15,13 @@ monster:corpseId(6044)
 monster:outfit({lookType = 117})
 monster:defense(15)
 monster:armor(15)
-monster:targetDistance(4)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -31,21 +29,21 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
     {type = COMBAT_HOLYDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = -15},
-    {type = COMBAT_DEATHDAMAGE, percent = -5},
+    {type = COMBAT_DEATHDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_OUTFIT, immunity = true},
     {condition = CONDITION_DRUNK, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Ugh! Ugh! Ugh!", yell = false},
     {text = "Holy banana!", yell = false},
-    {text = "Chakka! Chakka!", yell = false},
+    {text = "Chakka! Chakka!", yell = false}
 })
 
 -- Loot
@@ -59,20 +57,15 @@ monster:loot({
     {id = 2150, chance = 260},
     {id = 5883, chance = 1000},
     {id = 3966, chance = 100},
-    {id = 12467, chance = 1800},
+    {id = 12467, chance = 1800}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-30
--- name=fire, interval=2000, chance=15, range=7, min=-60, max=-90, shootEffect=fire, areaEffect=fire
--- name=energy, interval=2000, chance=20, range=7, min=-15, max=-45, shootEffect=energy, areaEffect=energy
--- name=poisonfield, interval=2000, chance=15, range=7, radius=1, target=1, shootEffect=poison
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=25, min=30, max=40, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -30},
+    {name = "fire", interval = 2000, chance = 15, minDamage = -60, maxDamage = -90, range = 7},
+    {name = "energy", interval = 2000, chance = 20, minDamage = -15, maxDamage = -45, range = 7},
+    {name = "poisonfield", interval = 2000, chance = 15, range = 7, radius = 1}
+})
 
 monster:register()

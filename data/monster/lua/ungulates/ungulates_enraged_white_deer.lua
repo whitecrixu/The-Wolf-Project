@@ -1,5 +1,5 @@
 -- Enraged White Deer
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Enraged White Deer")
 if not monster then return end
@@ -27,24 +27,19 @@ monster:voices({
     {text = "*wheeze*", yell = false},
     {text = "ROOOAAARR!!", yell = false},
     {text = "*sniff*", yell = false},
-    {text = "*bell*", yell = false},
+    {text = "*bell*", yell = false}
 })
 
 -- Loot
 monster:loot({
     {id = 2671, chance = 19850, maxCount = 3},
     {id = 13534, chance = 20280},
-    {id = 13533, chance = 19520},
+    {id = 13533, chance = 19520}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-45
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=4000, chance=15, min=10, max=40, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -45}
+})
 
 monster:register()

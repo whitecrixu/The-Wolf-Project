@@ -1,5 +1,5 @@
 -- Ice Golem
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Ice Golem")
 if not monster then return end
@@ -19,32 +19,31 @@ monster:armor(25)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(50)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = 25},
-    {type = COMBAT_ENERGYDAMAGE, percent = -20},
+    {type = COMBAT_ENERGYDAMAGE, percent = -20}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_DAZZLED, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
+    {type = COMBAT_HOLYDAMAGE, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_DRUNK, immunity = true},
+    {condition = CONDITION_DRUNK, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Chrrr.", yell = false},
     {text = "Crrrrk.", yell = false},
-    {text = "Gnarr.", yell = false},
+    {text = "Gnarr.", yell = false}
 })
 
 -- Loot
@@ -61,15 +60,15 @@ monster:loot({
     {id = 7290, chance = 266},
     {id = 7449, chance = 177},
     {id = 7902, chance = 111},
-    {id = 2145, chance = 66},
+    {id = 2145, chance = 66}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=100, attack=40
--- name=speed, interval=1000, chance=13, length=8, duration=20000, speedchange=-800, areaEffect=energy
--- name=ice, interval=1000, chance=15, range=7, min=-50, max=-85, shootEffect=smallice, areaEffect=iceattack
--- name=ice golem skill reducer, interval=2000, chance=10
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -140},
+    {name = "speed", interval = 1000, chance = 13, length = 8},
+    {name = "ice", interval = 1000, chance = 15, minDamage = -50, maxDamage = -85, range = 7},
+    {name = "ice golem skill reducer", interval = 2000, chance = 10}
+})
 
 monster:register()

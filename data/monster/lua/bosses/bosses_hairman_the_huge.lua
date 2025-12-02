@@ -1,5 +1,5 @@
 -- Hairman The Huge
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Hairman The Huge")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:armor(20)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -32,19 +31,19 @@ monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = 20},
     {type = COMBAT_ENERGYDAMAGE, percent = 5},
     {type = COMBAT_ICEDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -10},
+    {type = COMBAT_DEATHDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Hugah!", yell = false},
     {text = "Ungh! Ungh!", yell = false},
-    {text = "Huaauaauaauaa!", yell = false},
+    {text = "Huaauaauaauaa!", yell = false}
 })
 
 -- Loot
@@ -54,17 +53,12 @@ monster:loot({
     {id = 2676, chance = 7500, maxCount = 2},
     {id = 2200, chance = 3000},
     {id = 2166, chance = 7500},
-    {id = 2463, chance = 5000},
+    {id = 2463, chance = 5000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=45, attack=40
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=1000, chance=7, duration=3000, speedchange=260, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -85}
+})
 
 monster:register()

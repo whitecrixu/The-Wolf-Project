@@ -1,5 +1,5 @@
 -- Renegade Orc
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Renegade Orc")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(25)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -29,18 +28,18 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_HOLYDAMAGE, percent = 20},
     {type = COMBAT_EARTHDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -2},
+    {type = COMBAT_DEATHDAMAGE, percent = -2}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_FIRE, immunity = true},
+    {condition = CONDITION_FIRE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Harga puchak muhmak!", yell = false},
+    {text = "Harga puchak muhmak!", yell = false}
 })
 
 -- Loot
@@ -62,13 +61,13 @@ monster:loot({
     {id = 2413, chance = 830},
     {id = 7618, chance = 550},
     {id = 2647, chance = 420},
-    {id = 2475, chance = 160},
+    {id = 2475, chance = 160}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-130
--- name=physical, interval=2000, chance=20, range=7, max=-50, shootEffect=throwingknife
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -130},
+    {name = "physical", interval = 2000, chance = 20, maxDamage = -50, range = 7}
+})
 
 monster:register()

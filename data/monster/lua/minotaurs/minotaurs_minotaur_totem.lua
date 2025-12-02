@@ -1,5 +1,5 @@
 -- Minotaur Totem
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Minotaur Totem")
 if not monster then return end
@@ -18,18 +18,16 @@ monster:armor(30)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
-monster:hiddenHealth(true)
 monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=4000, chance=15, min=10, max=1000, areaEffect=blueshimmer
---]]
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -1000}
+})
 
 monster:register()

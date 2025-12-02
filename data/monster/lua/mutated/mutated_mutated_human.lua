@@ -1,5 +1,5 @@
 -- Mutated Human
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Mutated Human")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:armor(15)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -28,18 +27,18 @@ monster:staticAttackChance(90)
 -- Resistances
 monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = 20},
-    {type = COMBAT_HOLYDAMAGE, percent = -25},
+    {type = COMBAT_HOLYDAMAGE, percent = -25}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_DRUNK, immunity = true},
     {condition = CONDITION_DROWN, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -49,7 +48,7 @@ monster:voices({
     {text = "You will be the next infected one... GRAAAAAAAAARRR!", yell = false},
     {text = "Science... is a curse.", yell = false},
     {text = "Run as fast as you can.", yell = false},
-    {text = "Oh by the gods! What is this... aaaaaargh!", yell = false},
+    {text = "Oh by the gods! What is this... aaaaaargh!", yell = false}
 })
 
 -- Loot
@@ -66,20 +65,15 @@ monster:loot({
     {id = 9808, chance = 190},
     {id = 7910, chance = 580},
     {id = 2801, chance = 420},
-    {id = 2170, chance = 70},
+    {id = 2170, chance = 70}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=50, attack=30
--- name=death, interval=2000, chance=15, min=-50, max=-60, length=3, spread=1, areaEffect=poison
--- name=poisoncondition, interval=2000, chance=20, min=-190, max=-280, target=1, areaeffect=greenspark
--- name=speed, interval=2000, chance=10, range=7, target=1, duration=30000, speedchange=-600, areaEffect=stun
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=220, areaEffect=greenbubble
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -80},
+    {name = "death", interval = 2000, chance = 15, minDamage = -50, maxDamage = -60, length = 3, spread = 1},
+    {name = "poisoncondition", interval = 2000, chance = 20, minDamage = -190, maxDamage = -280},
+    {name = "speed", interval = 2000, chance = 10, range = 7}
+})
 
 monster:register()

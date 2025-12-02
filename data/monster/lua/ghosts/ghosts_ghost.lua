@@ -1,5 +1,5 @@
 -- Ghost
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Ghost")
 if not monster then return end
@@ -20,25 +20,24 @@ monster:armor(0)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_BLEEDING, immunity = true},
+    {type = COMBAT_PHYSICALDAMAGE, combat = true},
     {condition = CONDITION_DROWN, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_PARALYZE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {condition = CONDITION_PARALYZE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Huh!", yell = false},
     {text = "Shhhhhh", yell = false},
-    {text = "Buuuuuh", yell = false},
+    {text = "Buuuuuh", yell = false}
 })
 
 -- Loot
@@ -51,13 +50,13 @@ monster:loot({
     {id = 5909, chance = 1940},
     {id = 2532, chance = 860},
     {id = 2165, chance = 180},
-    {id = 10607, chance = 1870},
+    {id = 10607, chance = 1870}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=40
--- name=lifedrain, interval=2000, chance=15, range=1, min=-20, max=-45, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -70},
+    {name = "lifedrain", interval = 2000, chance = 15, minDamage = -20, maxDamage = -45}
+})
 
 monster:register()

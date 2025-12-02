@@ -1,5 +1,5 @@
 -- Ancient Scarab
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Ancient Scarab")
 if not monster then return end
@@ -19,29 +19,23 @@ monster:armor(30)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_PHYSICALDAMAGE, percent = 10},
     {type = COMBAT_FIREDAMAGE, percent = -20},
-    {type = COMBAT_ICEDAMAGE, percent = -5},
+    {type = COMBAT_ICEDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
-})
-
--- Summons
-monster:summons({
-    {name = "Larva", chance = 10, interval = 2000, max = 3},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
@@ -59,20 +53,15 @@ monster:loot({
     {id = 7903, chance = 490},
     {id = 7588, chance = 660},
     {id = 2440, chance = 420},
-    {id = 2540, chance = 480},
+    {id = 2540, chance = 480}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=65
--- name=poison, interval=2000, chance=20, range=7, min=-15, max=-145, shootEffect=poison, areaEffect=poison
--- name=speed, interval=2000, chance=15, range=7, duration=25000, speedchange=-700, shootEffect=poison, areaEffect=poison
--- name=poisoncondition, interval=2000, chance=30, min=-440, max=-520, radius=5, areaEffect=poison
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=380, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -95},
+    {name = "poison", interval = 2000, chance = 20, minDamage = -15, maxDamage = -145, range = 7},
+    {name = "speed", interval = 2000, chance = 15, range = 7},
+    {name = "poisoncondition", interval = 2000, chance = 30, minDamage = -440, maxDamage = -520, radius = 5}
+})
 
 monster:register()

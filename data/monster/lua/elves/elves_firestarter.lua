@@ -1,5 +1,5 @@
 -- Firestarter
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Firestarter")
 if not monster then return end
@@ -28,13 +28,13 @@ monster:staticAttackChance(90)
 -- Resistances
 monster:elements({
     {type = COMBAT_DEATHDAMAGE, percent = -20},
-    {type = COMBAT_ICEDAMAGE, percent = -20},
+    {type = COMBAT_ICEDAMAGE, percent = -20}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -43,7 +43,7 @@ monster:voices({
     {text = "BURN!", yell = true},
     {text = "DEATH to the FALSE GOD!!", yell = true},
     {text = "You shall burn in the thornfires!!", yell = false},
-    {text = "DOWN with the followers of the bog!!", yell = false},
+    {text = "DOWN with the followers of the bog!!", yell = false}
 })
 
 -- Loot
@@ -57,14 +57,14 @@ monster:loot({
     {id = 7840, chance = 30000, maxCount = 12},
     {id = 10552, chance = 5000},
     {id = 13757, chance = 15280},
-    {id = 13943, chance = 340},
+    {id = 13943, chance = 340}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=20, attack=10
--- name=fire, interval=2000, chance=15, max=-21, radius=1, target=1, shootEffect=burstarrow, areaEffect=explosion
--- name=firefield, interval=2000, chance=10, radius=1, target=1, shootEffect=fire
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -30},
+    {name = "fire", interval = 2000, chance = 15, maxDamage = -21, radius = 1},
+    {name = "firefield", interval = 2000, chance = 10, radius = 1}
+})
 
 monster:register()

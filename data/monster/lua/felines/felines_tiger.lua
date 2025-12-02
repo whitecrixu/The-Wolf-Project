@@ -1,5 +1,5 @@
 -- Tiger
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Tiger")
 if not monster then return end
@@ -23,31 +23,25 @@ monster:hostile(true)
 monster:isSummonable(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_DEATHDAMAGE, percent = -10},
-    {type = COMBAT_ICEDAMAGE, percent = -1},
+    {type = COMBAT_ICEDAMAGE, percent = -1}
 })
 
 -- Loot
 monster:loot({
     {id = 2666, chance = 35190, maxCount = 4},
-    {id = 11210, chance = 10830},
+    {id = 11210, chance = 10830}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=20
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=200, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -50}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Shredderthrower
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Shredderthrower")
 if not monster then return end
@@ -18,30 +18,29 @@ monster:armor(1)
 -- Flags
 monster:attackable(false)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushCreatures(true)
-monster:hiddenHealth(true)
+monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_BLEEDING, immunity = true},
+    {type = COMBAT_PHYSICALDAMAGE, combat = true},
     {condition = CONDITION_ENERGY, immunity = true},
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
-    {condition = CONDITION_DAZZLED, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_MANADRAIN, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
+    {type = COMBAT_HOLYDAMAGE, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {type = COMBAT_MANADRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_DRUNK, immunity = true},
     {condition = CONDITION_OUTFIT, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=physical, interval=2000, chance=100, range=7, max=-110, shootEffect=throwingstar
---]]
+-- Attacks
+monster:attacks({
+    {name = "physical", interval = 2000, chance = 100, maxDamage = -110, range = 7}
+})
 
 monster:register()

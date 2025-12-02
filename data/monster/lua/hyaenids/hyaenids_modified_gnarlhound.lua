@@ -1,5 +1,5 @@
 -- Modified Gnarlhound
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Modified Gnarlhound")
 if not monster then return end
@@ -15,8 +15,7 @@ monster:corpseId(13528)
 monster:outfit({lookType = 515})
 monster:defense(0)
 monster:armor(0)
-monster:targetDistance(4)
-monster:runHealth(25)
+monster:runHealth(150)
 
 -- Flags
 monster:attackable(true)
@@ -29,13 +28,18 @@ monster:staticAttackChance(90)
 -- Immunities
 monster:immunities({
     {condition = CONDITION_ENERGY, immunity = true},
-    {condition = CONDITION_BLEEDING, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_DAZZLED, immunity = true},
+    {type = COMBAT_PHYSICALDAMAGE, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_HOLYDAMAGE, combat = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_FIRE, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_FIRE, immunity = true}
+})
+
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -300}
 })
 
 monster:register()

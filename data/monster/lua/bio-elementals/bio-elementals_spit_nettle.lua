@@ -1,5 +1,5 @@
 -- Spit Nettle
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Spit Nettle")
 if not monster then return end
@@ -19,21 +19,20 @@ monster:armor(15)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = 20},
-    {type = COMBAT_FIREDAMAGE, percent = -10},
+    {type = COMBAT_FIREDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_ENERGY, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
@@ -44,18 +43,13 @@ monster:loot({
     {id = 2802, chance = 5263, maxCount = 2},
     {id = 2802, chance = 1010},
     {id = 11231, chance = 833},
-    {id = 2802, chance = 362},
+    {id = 2802, chance = 362}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=poison, interval=1000, chance=20, range=7, min=-15, max=-40, target=1, shootEffect=poison
--- name=poisoncondition, interval=2000, chance=15, range=7, min=-40, max=-100, target=1, shootEffect=poison
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=8, max=16, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "poison", interval = 1000, chance = 20, minDamage = -15, maxDamage = -40, range = 7},
+    {name = "poisoncondition", interval = 2000, chance = 15, minDamage = -40, maxDamage = -100, range = 7}
+})
 
 monster:register()

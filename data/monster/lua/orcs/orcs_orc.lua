@@ -1,5 +1,5 @@
 -- Orc
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Orc")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(5966)
 monster:outfit({lookType = 5})
 monster:defense(10)
 monster:armor(10)
-monster:runHealth(15)
+monster:runHealth(7)
 
 -- Flags
 monster:attackable(true)
@@ -32,14 +32,14 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_HOLYDAMAGE, percent = 10},
     {type = COMBAT_EARTHDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -5},
+    {type = COMBAT_DEATHDAMAGE, percent = -5}
 })
 
 -- Voices
 monster:voices({
     {text = "Grak brrretz!", yell = false},
     {text = "Grow truk grrrrr.", yell = false},
-    {text = "Prek tars, dekklep zurk.", yell = false},
+    {text = "Prek tars, dekklep zurk.", yell = false}
 })
 
 -- Loot
@@ -52,12 +52,12 @@ monster:loot({
     {id = 2385, chance = 5850},
     {id = 2386, chance = 4960},
     {id = 11113, chance = 210},
-    {id = 12435, chance = 590},
+    {id = 12435, chance = 590}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=25, attack=20
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -45}
+})
 
 monster:register()

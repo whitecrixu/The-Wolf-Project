@@ -1,5 +1,5 @@
 -- Weakened Demon
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Weakened Demon")
 if not monster then return end
@@ -18,18 +18,17 @@ monster:armor(5)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(98)
+monster:staticAttackChance(90)
 
 -- Voices
 monster:voices({
-    {text = "UH?", yell = false},
+    {text = "UH?", yell = false}
 })
 
--- Defense spells (for reference, implement with spell system)
---[[
--- name=invisible, interval=2000, chance=10, duration=4000, areaEffect=blueshimmer
---]]
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -5}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Cliff Strider
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Cliff Strider")
 if not monster then return end
@@ -19,29 +19,28 @@ monster:armor(55)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 1},
     {type = COMBAT_PHYSICALDAMAGE, percent = 1},
     {type = COMBAT_DEATHDAMAGE, percent = 40},
-    {type = COMBAT_ICEDAMAGE, percent = 20},
+    {type = COMBAT_ICEDAMAGE, percent = 20}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_ENERGY, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Knorrrr", yell = false},
+    {text = "Knorrrr", yell = false}
 })
 
 -- Loot
@@ -79,17 +78,17 @@ monster:loot({
     {id = 2158, chance = 830},
     {id = 2487, chance = 310},
     {id = 2645, chance = 100},
-    {id = 2444, chance = 70},
+    {id = 2444, chance = 70}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=95, attack=95
--- name=physical, interval=2000, chance=20, max=-800, radius=4, target=1, shootEffect=largerock, areaEffect=stones
--- name=cliff strider skill reducer, interval=2000, chance=10
--- name=cliff strider electrify, interval=2000, chance=15, range=1
--- name=physical, interval=2000, chance=10, max=-1000, length=6, areaEffect=groundshaker
--- name=manadrain, interval=2000, chance=15, min=-100, max=-300, radius=4, areaEffect=yellowenergy
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -190},
+    {name = "physical", interval = 2000, chance = 20, maxDamage = -800, radius = 4},
+    {name = "cliff strider skill reducer", interval = 2000, chance = 10},
+    {name = "cliff strider electrify", interval = 2000, chance = 15},
+    {name = "physical", interval = 2000, chance = 10, maxDamage = -1000, length = 6},
+    {name = "manadrain", interval = 2000, chance = 15, minDamage = -100, maxDamage = -300, radius = 4}
+})
 
 monster:register()

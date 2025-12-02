@@ -1,5 +1,5 @@
 -- Salamander
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Salamander")
 if not monster then return end
@@ -15,12 +15,11 @@ monster:corpseId(19707)
 monster:outfit({lookType = 529})
 monster:defense(5)
 monster:armor(5)
-monster:runHealth(10)
+monster:runHealth(7)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -28,7 +27,7 @@ monster:staticAttackChance(90)
 -- Voices
 monster:voices({
     {text = "Chrrch!", yell = false},
-    {text = "Chhh!", yell = false},
+    {text = "Chhh!", yell = false}
 })
 
 -- Loot
@@ -41,17 +40,12 @@ monster:loot({
     {id = 2398, chance = 3780},
     {id = 2460, chance = 2180},
     {id = 2419, chance = 420},
-    {id = 19736, chance = 32830, maxCount = 5},
+    {id = 19736, chance = 32830, maxCount = 5}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=30
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=6000, chance=20, max=4, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -60}
+})
 
 monster:register()

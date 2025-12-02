@@ -1,5 +1,5 @@
 -- Island Troll
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Island Troll")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(7930)
 monster:outfit({lookType = 282})
 monster:defense(10)
 monster:armor(10)
-monster:runHealth(15)
+monster:runHealth(5)
 
 -- Flags
 monster:attackable(true)
@@ -33,7 +33,7 @@ monster:voices({
     {text = "Hmmm, dogs", yell = false},
     {text = "Hmmm, worms", yell = false},
     {text = "Groar", yell = false},
-    {text = "Gruntz!", yell = false},
+    {text = "Gruntz!", yell = false}
 })
 
 -- Loot
@@ -49,12 +49,12 @@ monster:loot({
     {id = 2448, chance = 5000},
     {id = 5097, chance = 5000},
     {id = 2170, chance = 70},
-    {id = 7963, chance = 40},
+    {id = 7963, chance = 40}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-10
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -10}
+})
 
 monster:register()

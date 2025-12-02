@@ -1,5 +1,5 @@
 -- Apocalypse
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Apocalypse")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(188)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -29,11 +28,11 @@ monster:immunities({
     {condition = CONDITION_ENERGY, immunity = true},
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_OUTFIT, immunity = true},
     {condition = CONDITION_DRUNK, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -41,7 +40,7 @@ monster:voices({
     {text = "BOW TO THE POWER OF THE RUTHLESS SEVEN!", yell = true},
     {text = "DESTRUCTION!", yell = true},
     {text = "CHAOS!", yell = true},
-    {text = "DEATH TO ALL!", yell = true},
+    {text = "DEATH TO ALL!", yell = true}
 })
 
 -- Loot
@@ -102,26 +101,20 @@ monster:loot({
     {id = 2185, chance = 3500},
     {id = 3955, chance = 100},
     {id = 2188, chance = 2500},
-    {id = 2143, chance = 12500, maxCount = 15},
+    {id = 2143, chance = 12500, maxCount = 15}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=230, attack=210
--- name=death, interval=1000, chance=8, min=-800, max=-1900, radius=9, areaEffect=mortarea
--- name=speed, interval=1000, chance=12, radius=6, duration=60000, speedchange=-850, areaEffect=poison
--- name=strength, interval=1000, chance=10, min=-600, max=-1450, radius=5, areaEffect=blackspark
--- name=fire, interval=3000, chance=13, range=7, min=-300, max=-800, radius=7, target=1, shootEffect=fire, areaEffect=firearea
--- name=manadrain, interval=3000, chance=8, min=-600, max=-700, radius=10, areaEffect=energyarea
--- name=energy, interval=2000, chance=9, min=-400, max=-800, length=8, areaEffect=redshimmer
--- name=poisoncondition, interval=5000, chance=18, min=-800, max=-1000, areaEffect=greenspark
--- name=lifedrain, interval=2000, chance=6, min=-600, max=-1200, radius=14, areaEffect=greenshimmer
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=1000, chance=15, min=1000, max=3000, areaEffect=blueshimmer
--- name=speed, interval=2000, chance=8, duration=6000, speedchange=480, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -440},
+    {name = "death", interval = 1000, chance = 8, minDamage = -800, maxDamage = -1900, radius = 9},
+    {name = "speed", interval = 1000, chance = 12, radius = 6},
+    {name = "strength", interval = 1000, chance = 10, minDamage = -600, maxDamage = -1450, radius = 5},
+    {name = "fire", interval = 3000, chance = 13, minDamage = -300, maxDamage = -800, range = 7, radius = 7},
+    {name = "manadrain", interval = 3000, chance = 8, minDamage = -600, maxDamage = -700, radius = 10},
+    {name = "energy", interval = 2000, chance = 9, minDamage = -400, maxDamage = -800, length = 8},
+    {name = "poisoncondition", interval = 5000, chance = 18, minDamage = -800, maxDamage = -1000},
+    {name = "lifedrain", interval = 2000, chance = 6, minDamage = -600, maxDamage = -1200, radius = 14}
+})
 
 monster:register()

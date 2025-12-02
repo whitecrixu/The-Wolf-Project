@@ -1,5 +1,5 @@
 -- Minotaur Bruiser
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Minotaur Bruiser")
 if not monster then return end
@@ -24,7 +24,7 @@ monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
@@ -40,12 +40,12 @@ monster:loot({
     {id = 12428, chance = 2000, maxCount = 2},
     {id = 5878, chance = 980},
     {id = 2554, chance = 310},
-    {id = 2172, chance = 120},
+    {id = 2172, chance = 120}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-45
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -45}
+})
 
 monster:register()

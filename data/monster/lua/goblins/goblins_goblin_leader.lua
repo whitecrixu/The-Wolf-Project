@@ -1,5 +1,5 @@
 -- Goblin Leader
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Goblin Leader")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(6002)
 monster:outfit({lookType = 61})
 monster:defense(10)
 monster:armor(10)
-monster:runHealth(10)
+monster:runHealth(7)
 
 -- Flags
 monster:attackable(true)
@@ -32,7 +32,7 @@ monster:voices({
     {text = "Go go, Gobo attack !!", yell = false},
     {text = "Me the greenest and the meanest!", yell = false},
     {text = "Me have power to crush you!", yell = false},
-    {text = "Goblinkiller! Catch him !!", yell = false},
+    {text = "Goblinkiller! Catch him !!", yell = false}
 })
 
 -- Loot
@@ -46,13 +46,13 @@ monster:loot({
     {id = 2235, chance = 9000},
     {id = 2559, chance = 12800},
     {id = 2406, chance = 15400},
-    {id = 2449, chance = 1300},
+    {id = 2449, chance = 1300}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=40, attack=20
--- name=physical, interval=2000, chance=15, range=7, max=-45, shootEffect=smallstone
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -60},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -45, range = 7}
+})
 
 monster:register()

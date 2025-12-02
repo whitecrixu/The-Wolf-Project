@@ -1,5 +1,5 @@
 -- Stone Devourer
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Stone Devourer")
 if not monster then return end
@@ -15,14 +15,13 @@ monster:corpseId(18375)
 monster:outfit({lookType = 486})
 monster:defense(35)
 monster:armor(35)
-monster:runHealth(1)
+monster:runHealth(420)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -30,7 +29,7 @@ monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = 30},
     {type = COMBAT_PHYSICALDAMAGE, percent = 1},
     {type = COMBAT_ENERGYDAMAGE, percent = 30},
-    {type = COMBAT_HOLYDAMAGE, percent = 30},
+    {type = COMBAT_HOLYDAMAGE, percent = 30}
 })
 
 -- Immunities
@@ -38,12 +37,12 @@ monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Rumble!", yell = false},
+    {text = "Rumble!", yell = false}
 })
 
 -- Loot
@@ -69,15 +68,15 @@ monster:loot({
     {id = 7452, chance = 1490},
     {id = 2454, chance = 920},
     {id = 2445, chance = 850},
-    {id = 2393, chance = 570},
+    {id = 2393, chance = 570}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=122, attack=150
--- name=earth, interval=2000, chance=15, range=7, min=-230, max=-460, target=1, shootEffect=smallearth, areaEffect=stones
--- name=physical, interval=2000, chance=15, range=7, max=-650, target=1, shootEffect=largerock
--- name=lifedrain, interval=2000, chance=15, min=-150, max=-260, length=5, areaEffect=stones
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -272},
+    {name = "earth", interval = 2000, chance = 15, minDamage = -230, maxDamage = -460, range = 7},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -650, range = 7},
+    {name = "lifedrain", interval = 2000, chance = 15, minDamage = -150, maxDamage = -260, length = 5}
+})
 
 monster:register()

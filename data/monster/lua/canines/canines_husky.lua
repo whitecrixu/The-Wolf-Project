@@ -1,5 +1,5 @@
 -- Husky
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Husky")
 if not monster then return end
@@ -29,7 +29,12 @@ monster:staticAttackChance(90)
 monster:voices({
     {text = "Yoooohuuuu!", yell = false},
     {text = "Grrrrrrr", yell = false},
-    {text = "Ruff, ruff!", yell = false},
+    {text = "Ruff, ruff!", yell = false}
+})
+
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -28}
 })
 
 monster:register()

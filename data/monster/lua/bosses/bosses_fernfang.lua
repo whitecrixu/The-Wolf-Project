@@ -1,5 +1,5 @@
 -- Fernfang
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Fernfang")
 if not monster then return end
@@ -15,12 +15,10 @@ monster:corpseId(20566)
 monster:outfit({lookType = 206})
 monster:defense(10)
 monster:armor(15)
-monster:targetDistance(4)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -28,12 +26,12 @@ monster:staticAttackChance(90)
 -- Resistances
 monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = 70},
-    {type = COMBAT_EARTHDAMAGE, percent = 40},
+    {type = COMBAT_EARTHDAMAGE, percent = 40}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -41,12 +39,7 @@ monster:voices({
     {text = "You desecrated this place!", yell = false},
     {text = "I will cleanse this isle!", yell = false},
     {text = "Grrrrrrr", yell = false},
-    {text = "Yoooohhuuuu!", yell = true},
-})
-
--- Summons
-monster:summons({
-    {name = "War Wolf", chance = 13, interval = 1000, max = 3},
+    {text = "Yoooohhuuuu!", yell = true}
 })
 
 -- Loot
@@ -59,23 +52,15 @@ monster:loot({
     {id = 2044, chance = 6666},
     {id = 2689, chance = 20000, maxCount = 3},
     {id = 2401, chance = 3333},
-    {id = 2166, chance = 1428},
+    {id = 2166, chance = 1428}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=50, attack=40
--- name=manadrain, interval=1000, chance=25, range=7, min=-25, max=-45, areaEffect=redshimmer
--- name=energy, interval=1000, chance=13, range=7, min=-70, max=-90, shootEffect=energy, areaEffect=energy
--- name=physical, interval=1000, chance=10, range=7, min=-140, max=-180, shootEffect=suddendeath
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=1000, chance=15, min=90, max=120, areaEffect=blueshimmer
--- name=speed, interval=1000, chance=7, duration=10000, speedchange=310, areaEffect=redshimmer
--- name=effect, interval=1000, chance=5, areaEffect=redshimmer
--- name=outfit, interval=1000, chance=5, duration=14000, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -90},
+    {name = "manadrain", interval = 1000, chance = 25, minDamage = -25, maxDamage = -45, range = 7},
+    {name = "energy", interval = 1000, chance = 13, minDamage = -70, maxDamage = -90, range = 7},
+    {name = "physical", interval = 1000, chance = 10, minDamage = -140, maxDamage = -180, range = 7}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Xenia
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Xenia")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(20542)
 monster:outfit({lookType = 137, lookHead = 95, lookBody = 115, lookLegs = 115, lookFeet = 95})
 monster:defense(14)
 monster:armor(12)
-monster:runHealth(10)
+monster:runHealth(29)
 
 -- Flags
 monster:attackable(true)
@@ -24,7 +24,6 @@ monster:hostile(true)
 monster:isSummonable(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
@@ -34,14 +33,14 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 10},
     {type = COMBAT_HOLYDAMAGE, percent = 7},
     {type = COMBAT_DEATHDAMAGE, percent = -7},
-    {type = COMBAT_PHYSICALDAMAGE, percent = -6},
+    {type = COMBAT_PHYSICALDAMAGE, percent = -6}
 })
 
 -- Voices
 monster:voices({
     {text = "Stand still!", yell = false},
     {text = "One more head for me!", yell = false},
-    {text = "Head off!", yell = false},
+    {text = "Head off!", yell = false}
 })
 
 -- Loot
@@ -58,13 +57,13 @@ monster:loot({
     {id = 2147, chance = 2500, maxCount = 2},
     {id = 2145, chance = 2500, maxCount = 2},
     {id = 2200, chance = 1000},
-    {id = 2463, chance = 1333},
+    {id = 2463, chance = 1333}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-50
--- name=physical, interval=1000, chance=15, range=7, min=-28, max=-42, shootEffect=spear
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -50},
+    {name = "physical", interval = 1000, chance = 15, minDamage = -28, maxDamage = -42, range = 7}
+})
 
 monster:register()

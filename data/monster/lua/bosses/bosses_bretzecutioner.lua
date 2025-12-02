@@ -1,5 +1,5 @@
 -- Bretzecutioner
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Bretzecutioner")
 if not monster then return end
@@ -19,10 +19,9 @@ monster:armor(30)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -31,21 +30,21 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 30},
     {type = COMBAT_EARTHDAMAGE, percent = 20},
     {type = COMBAT_HOLYDAMAGE, percent = -3},
-    {type = COMBAT_ICEDAMAGE, percent = -15},
+    {type = COMBAT_ICEDAMAGE, percent = -15}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_ENERGY, immunity = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "COME HERE AND DIE!", yell = false},
     {text = "Destructiooooon!", yell = false},
-    {text = "It's a good day to destroy!", yell = false},
+    {text = "It's a good day to destroy!", yell = false}
 })
 
 -- Loot
@@ -74,18 +73,13 @@ monster:loot({
     {id = 2125, chance = 24000},
     {id = 2521, chance = 16000},
     {id = 6300, chance = 100000},
-    {id = 5741, chance = 4000},
+    {id = 5741, chance = 4000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-514
--- name=physical, interval=2000, chance=15, range=7, max=-200, shootEffect=largerock
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=420, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -514},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -200, range = 7}
+})
 
 monster:register()

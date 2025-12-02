@@ -1,5 +1,5 @@
 -- Draken Warmaster
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Draken Warmaster")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:armor(40)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
@@ -30,20 +29,20 @@ monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = 5},
     {type = COMBAT_DEATHDAMAGE, percent = 50},
     {type = COMBAT_ENERGYDAMAGE, percent = 5},
-    {type = COMBAT_ICEDAMAGE, percent = -5},
+    {type = COMBAT_ICEDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Attack aggrezzively! Dezztroy zze intruderzz!", yell = false},
-    {text = "Hizzzzz!", yell = false},
+    {text = "Hizzzzz!", yell = false}
 })
 
 -- Loot
@@ -63,18 +62,13 @@ monster:loot({
     {id = 11304, chance = 960},
     {id = 11301, chance = 790},
     {id = 11321, chance = 12010},
-    {id = 11322, chance = 7000},
+    {id = 11322, chance = 7000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=90, attack=60
--- name=fire, interval=2000, chance=10, min=-240, max=-520, length=4, spread=3, areaEffect=explosion
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=510, max=600, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -150},
+    {name = "fire", interval = 2000, chance = 10, minDamage = -240, maxDamage = -520, length = 4, spread = 3}
+})
 
 monster:register()

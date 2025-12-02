@@ -1,5 +1,5 @@
 -- Pig
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Pig")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(6000)
 monster:outfit({lookType = 60})
 monster:defense(0)
 monster:armor(0)
-monster:runHealth(25)
+monster:runHealth(2)
 
 -- Flags
 monster:attackable(true)
@@ -30,13 +30,18 @@ monster:staticAttackChance(90)
 -- Voices
 monster:voices({
     {text = "Oink oink", yell = false},
-    {text = "Oink", yell = false},
+    {text = "Oink", yell = false}
 })
 
 -- Loot
 monster:loot({
     {id = 2666, chance = 64000, maxCount = 4},
-    {id = 10610, chance = 950},
+    {id = 10610, chance = 950}
+})
+
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -5}
 })
 
 monster:register()

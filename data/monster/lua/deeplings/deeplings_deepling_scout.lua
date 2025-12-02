@@ -1,5 +1,5 @@
 -- Deepling Scout
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Deepling Scout")
 if not monster then return end
@@ -15,8 +15,7 @@ monster:corpseId(13839)
 monster:outfit({lookType = 413})
 monster:defense(10)
 monster:armor(10)
-monster:targetDistance(0)
-monster:runHealth(50)
+monster:runHealth(24)
 
 -- Flags
 monster:attackable(true)
@@ -29,15 +28,15 @@ monster:staticAttackChance(90)
 -- Resistances
 monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = -10},
-    {type = COMBAT_ENERGYDAMAGE, percent = -10},
+    {type = COMBAT_ENERGYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
     {condition = CONDITION_DROWN, immunity = true},
-    {condition = CONDITION_FIRE, immunity = true},
+    {condition = CONDITION_FIRE, immunity = true}
 })
 
 -- Voices
@@ -45,7 +44,7 @@ monster:voices({
     {text = "Njaaarh!!", yell = false},
     {text = "Begjone, intrjuder!!", yell = false},
     {text = "Djon't djare stjare injo the eyes of the djeep!", yell = false},
-    {text = "Ljeave this sjacred pljace while you cjan", yell = false},
+    {text = "Ljeave this sjacred pljace while you cjan", yell = false}
 })
 
 -- Loot
@@ -58,13 +57,13 @@ monster:loot({
     {id = 13870, chance = 310},
     {id = 5895, chance = 310},
     {id = 2149, chance = 121},
-    {id = 9930, chance = 111},
+    {id = 9930, chance = 111}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=40, attack=40
--- name=drown, interval=2000, chance=15, range=7, min=-40, max=-100, target=1, shootEffect=spear, areaEffect=bluebubble
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -80},
+    {name = "drown", interval = 2000, chance = 15, minDamage = -40, maxDamage = -100, range = 7}
+})
 
 monster:register()

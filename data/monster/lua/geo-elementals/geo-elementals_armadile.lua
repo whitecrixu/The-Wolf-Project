@@ -1,5 +1,5 @@
 -- Armadile
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Armadile")
 if not monster then return end
@@ -15,14 +15,12 @@ monster:corpseId(18378)
 monster:outfit({lookType = 487})
 monster:defense(25)
 monster:armor(25)
-monster:targetDistance(4)
-monster:runHealth(300)
+monster:runHealth(380)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -34,19 +32,19 @@ monster:elements({
     {type = COMBAT_DEATHDAMAGE, percent = 1},
     {type = COMBAT_FIREDAMAGE, percent = 20},
     {type = COMBAT_ENERGYDAMAGE, percent = 15},
-    {type = COMBAT_ICEDAMAGE, percent = 15},
+    {type = COMBAT_ICEDAMAGE, percent = 15}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Creak!", yell = false},
+    {text = "Creak!", yell = false}
 })
 
 -- Loot
@@ -71,20 +69,15 @@ monster:loot({
     {id = 7428, chance = 1150},
     {id = 2169, chance = 1000},
     {id = 2528, chance = 620},
-    {id = 8878, chance = 230},
+    {id = 8878, chance = 230}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=50, attack=50
--- name=drunk, interval=2000, chance=15, radius=4, target=1, duration=5000, areaEffect=firearea
--- name=manadrain, interval=2000, chance=15, range=7, min=-430, max=-550, areaEffect=blueshimmer
--- name=poisoncondition, interval=2000, chance=15, min=-200, max=-400, radius=4, areaEffect=poison
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=invisible, interval=2000, chance=15, duration=5000, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -100},
+    {name = "drunk", interval = 2000, chance = 15, radius = 4},
+    {name = "manadrain", interval = 2000, chance = 15, minDamage = -430, maxDamage = -550, range = 7},
+    {name = "poisoncondition", interval = 2000, chance = 15, minDamage = -200, maxDamage = -400, radius = 4}
+})
 
 monster:register()

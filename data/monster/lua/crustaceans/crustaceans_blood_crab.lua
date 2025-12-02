@@ -1,5 +1,5 @@
 -- Blood Crab
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Blood Crab")
 if not monster then return end
@@ -21,7 +21,6 @@ monster:armor(20)
 monster:attackable(true)
 monster:hostile(true)
 monster:isSummonable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
@@ -29,14 +28,14 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = 20},
     {type = COMBAT_FIREDAMAGE, percent = -10},
-    {type = COMBAT_ENERGYDAMAGE, percent = -5},
+    {type = COMBAT_ENERGYDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_FREEZING, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_DROWN, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_DROWN, immunity = true}
 })
 
 -- Loot
@@ -46,12 +45,12 @@ monster:loot({
     {id = 10550, chance = 6260},
     {id = 2464, chance = 5555},
     {id = 2478, chance = 2170},
-    {id = 2143, chance = 480},
+    {id = 2143, chance = 480}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=40, attack=45
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -85}
+})
 
 monster:register()

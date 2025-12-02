@@ -1,5 +1,5 @@
 -- Shard Of Corruption
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Shard Of Corruption")
 if not monster then return end
@@ -23,7 +23,6 @@ monster:hostile(true)
 monster:isSummonable(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -33,20 +32,20 @@ monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = 60},
     {type = COMBAT_FIREDAMAGE, percent = 30},
     {type = COMBAT_ENERGYDAMAGE, percent = 25},
-    {type = COMBAT_ICEDAMAGE, percent = -15},
+    {type = COMBAT_ICEDAMAGE, percent = -15}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_DROWN, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-150, skill=45
--- name=earth, interval=2000, chance=10, range=7, max=-115, target=1, shootEffect=smallearth, areaEffect=greenbubble
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -150},
+    {name = "earth", interval = 2000, chance = 10, maxDamage = -115, range = 7}
+})
 
 monster:register()

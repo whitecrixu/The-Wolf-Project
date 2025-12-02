@@ -1,5 +1,5 @@
 -- Nomad
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Nomad")
 if not monster then return end
@@ -15,12 +15,11 @@ monster:corpseId(20462)
 monster:outfit({lookType = 150, lookHead = 115, lookBody = 39, lookLegs = 59, lookFeet = 2, lookAddons = 2})
 monster:defense(15)
 monster:armor(15)
-monster:runHealth(15)
+monster:runHealth(16)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
@@ -30,7 +29,7 @@ monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = 20},
     {type = COMBAT_PHYSICALDAMAGE, percent = -10},
     {type = COMBAT_ICEDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -10},
+    {type = COMBAT_DEATHDAMAGE, percent = -10}
 })
 
 -- Loot
@@ -44,13 +43,13 @@ monster:loot({
     {id = 12412, chance = 2140},
     {id = 2509, chance = 900},
     {id = 2459, chance = 660},
-    {id = 8267, chance = 210},
+    {id = 8267, chance = 210}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-80
--- name=physical, interval=2000, chance=10, radius=1, areaeffect=whitenote
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -80},
+    {name = "physical", interval = 2000, chance = 10, radius = 1}
+})
 
 monster:register()

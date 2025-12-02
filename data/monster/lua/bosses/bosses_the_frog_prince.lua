@@ -1,5 +1,5 @@
 -- The Frog Prince
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("The Frog Prince")
 if not monster then return end
@@ -30,18 +30,18 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 85},
     {type = COMBAT_ICEDAMAGE, percent = 90},
-    {type = COMBAT_FIREDAMAGE, percent = 10},
+    {type = COMBAT_FIREDAMAGE, percent = 10}
 })
 
 -- Voices
 monster:voices({
     {text = "Ribbit!", yell = false},
-    {text = "Ribbit! Ribbit!", yell = false},
+    {text = "Ribbit! Ribbit!", yell = false}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=10, attack=1
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -11}
+})
 
 monster:register()

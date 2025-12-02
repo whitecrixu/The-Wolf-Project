@@ -1,5 +1,5 @@
 -- War Golem
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("War Golem")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(40)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -32,13 +31,13 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 5},
     {type = COMBAT_PHYSICALDAMAGE, percent = 25},
     {type = COMBAT_ICEDAMAGE, percent = 30},
-    {type = COMBAT_DEATHDAMAGE, percent = 25},
+    {type = COMBAT_DEATHDAMAGE, percent = 25}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_PARALYZE, immunity = true},
+    {condition = CONDITION_PARALYZE, immunity = true}
 })
 
 -- Voices
@@ -51,7 +50,7 @@ monster:voices({
     {text = "Auto repair in progress.", yell = false},
     {text = "The battle is joined!", yell = false},
     {text = "Termination initialized!", yell = false},
-    {text = "Rrrtttarrrttarrrtta", yell = false},
+    {text = "Rrrtttarrrttarrrtta", yell = false}
 })
 
 -- Loot
@@ -79,22 +78,16 @@ monster:loot({
     {id = 7422, chance = 120},
     {id = 7428, chance = 770},
     {id = 2177, chance = 1000},
-    {id = 13292, chance = 100},
+    {id = 13292, chance = 100}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=90, attack=110
--- name=energy, interval=2000, chance=15, range=7, min=-165, max=-220, shootEffect=energy
--- name=outfit, interval=2000, chance=1, range=7, duration=3000
--- name=war golem electrify, interval=2000, chance=15, range=1
--- name=war golem skill reducer, interval=2000, chance=10
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=300, areaEffect=redshimmer
--- name=healing, interval=2000, chance=15, min=200, max=250, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -200},
+    {name = "energy", interval = 2000, chance = 15, minDamage = -165, maxDamage = -220, range = 7},
+    {name = "outfit", interval = 2000, chance = 1, range = 7},
+    {name = "war golem electrify", interval = 2000, chance = 15},
+    {name = "war golem skill reducer", interval = 2000, chance = 10}
+})
 
 monster:register()

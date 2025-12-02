@@ -1,5 +1,5 @@
 -- Deepling Guard
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Deepling Guard")
 if not monster then return end
@@ -16,8 +16,7 @@ monster:corpseId(15187)
 monster:outfit({lookType = 442})
 monster:defense(35)
 monster:armor(35)
-monster:targetDistance(0)
-monster:runHealth(20)
+monster:runHealth(190)
 
 -- Flags
 monster:attackable(true)
@@ -25,29 +24,28 @@ monster:hostile(true)
 monster:isSummonable(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = -20},
     {type = COMBAT_EARTHDAMAGE, percent = -20},
-    {type = COMBAT_DEATHDAMAGE, percent = 10},
+    {type = COMBAT_DEATHDAMAGE, percent = 10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
     {condition = CONDITION_DROWN, immunity = true},
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_PARALYZE, immunity = true},
+    {condition = CONDITION_PARALYZE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "QJELL NETA NA!!", yell = false},
+    {text = "QJELL NETA NA!!", yell = false}
 })
 
 -- Loot
@@ -67,19 +65,14 @@ monster:loot({
     {id = 15647, chance = 751},
     {id = 15644, chance = 362},
     {id = 15645, chance = 333},
-    {id = 15545, chance = 10},
+    {id = 15545, chance = 10}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=90, attack=80
--- name=physical, interval=2000, chance=20, range=7, min=-0, max=-200, target=1, shootEffect=whirlwindsword
--- name=drown, interval=2000, chance=15, range=7, min=-100, max=-150, target=1, shootEffect=spear, areaEffect=bluebubble
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=100, max=200, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -170},
+    {name = "physical", interval = 2000, chance = 20, maxDamage = -200, range = 7},
+    {name = "drown", interval = 2000, chance = 15, minDamage = -100, maxDamage = -150, range = 7}
+})
 
 monster:register()

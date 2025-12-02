@@ -1,5 +1,5 @@
 -- Minotaur Mage
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Minotaur Mage")
 if not monster then return end
@@ -15,13 +15,11 @@ monster:corpseId(5981)
 monster:outfit({lookType = 23})
 monster:defense(15)
 monster:armor(15)
-monster:targetDistance(4)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
@@ -31,18 +29,18 @@ monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = 20},
     {type = COMBAT_HOLYDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -10},
+    {type = COMBAT_DEATHDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Learrn tha secrret uf deathhh!", yell = false},
-    {text = "Kaplar!", yell = false},
+    {text = "Kaplar!", yell = false}
 })
 
 -- Loot
@@ -57,15 +55,15 @@ monster:loot({
     {id = 2189, chance = 600},
     {id = 7620, chance = 490},
     {id = 12428, chance = 3020, maxCount = 2},
-    {id = 12429, chance = 6430, maxCount = 2},
+    {id = 12429, chance = 6430, maxCount = 2}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=10, attack=20
--- name=energy, interval=2000, chance=15, range=7, min=-20, max=-59, shootEffect=energy, areaEffect=energy
--- name=fire, interval=2000, chance=15, range=7, min=-50, max=-105, radius=1, target=1, shootEffect=fire, areaEffect=firearea
--- name=energyfield, interval=2000, chance=10, range=7, radius=1, target=1, shootEffect=energyball
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -30},
+    {name = "energy", interval = 2000, chance = 15, minDamage = -20, maxDamage = -59, range = 7},
+    {name = "fire", interval = 2000, chance = 15, minDamage = -50, maxDamage = -105, range = 7, radius = 1},
+    {name = "energyfield", interval = 2000, chance = 10, range = 7, radius = 1}
+})
 
 monster:register()

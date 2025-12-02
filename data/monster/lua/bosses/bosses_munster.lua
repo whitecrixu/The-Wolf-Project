@@ -1,5 +1,5 @@
 -- Munster
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Munster")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(2813)
 monster:outfit({lookType = 56})
 monster:defense(4)
 monster:armor(2)
-monster:runHealth(10)
+monster:runHealth(5)
 
 -- Flags
 monster:attackable(true)
@@ -25,16 +25,11 @@ monster:isSummonable(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
 monster:pushable(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Voices
 monster:voices({
-    {text = "Meeeeep!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "Rat", chance = 20, interval = 2000, max = 2},
+    {text = "Meeeeep!", yell = false}
 })
 
 -- Loot
@@ -43,12 +38,12 @@ monster:loot({
     {id = 2696, chance = 50000},
     {id = 2687, chance = 5000},
     {id = 2650, chance = 50000},
-    {id = 2449, chance = 5000},
+    {id = 2449, chance = 5000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, min=-1, max=-15
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = -1, maxDamage = -15}
+})
 
 monster:register()

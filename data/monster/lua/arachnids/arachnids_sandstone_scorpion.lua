@@ -1,5 +1,5 @@
 -- Sandstone Scorpion
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Sandstone Scorpion")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(40)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -29,20 +28,20 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 50},
     {type = COMBAT_HOLYDAMAGE, percent = -1},
     {type = COMBAT_ICEDAMAGE, percent = -5},
-    {type = COMBAT_ENERGYDAMAGE, percent = -10},
+    {type = COMBAT_ENERGYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "*rattle*", yell = false},
     {text = "*tak tak*", yell = false},
-    {text = "*tak tak tak*", yell = false},
+    {text = "*tak tak tak*", yell = false}
 })
 
 -- Loot
@@ -53,17 +52,12 @@ monster:loot({
     {id = 2439, chance = 6250},
     {id = 2457, chance = 5000},
     {id = 2529, chance = 1724},
-    {id = 13535, chance = 280},
+    {id = 13535, chance = 280}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=60, attack=55
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=60, max=100, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -115}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- The Old Widow
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("The Old Widow")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(17)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -28,15 +27,10 @@ monster:staticAttackChance(90)
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_OUTFIT, immunity = true},
     {condition = CONDITION_DRUNK, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
-})
-
--- Summons
-monster:summons({
-    {name = "giant spider", chance = 13, interval = 1000, max = 2},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
@@ -55,21 +49,15 @@ monster:loot({
     {id = 2171, chance = 25000},
     {id = 5886, chance = 25000},
     {id = 7416, chance = 3225},
-    {id = 7419, chance = 1639},
+    {id = 7419, chance = 1639}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, min=-100, max=-500
--- name=poison, interval=1000, chance=15, range=7, min=-250, max=-300, shootEffect=poison, areaEffect=poison
--- name=speed, interval=1000, chance=20, range=7, duration=25000, speedchange=-850, shootEffect=poison, areaEffect=poison
--- name=poisonfield, interval=1000, chance=10, range=7, radius=4, target=1, shootEffect=poison
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=1000, chance=17, min=225, max=275, areaEffect=blueshimmer
--- name=speed, interval=1000, chance=8, duration=6000, speedchange=345, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = -100, maxDamage = -500},
+    {name = "poison", interval = 1000, chance = 15, minDamage = -250, maxDamage = -300, range = 7},
+    {name = "speed", interval = 1000, chance = 20, range = 7},
+    {name = "poisonfield", interval = 1000, chance = 10, range = 7, radius = 4}
+})
 
 monster:register()

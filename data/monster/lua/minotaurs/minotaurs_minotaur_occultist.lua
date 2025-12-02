@@ -1,5 +1,5 @@
 -- Minotaur Occultist
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Minotaur Occultist")
 if not monster then return end
@@ -15,18 +15,16 @@ monster:corpseId(5981)
 monster:outfit({lookType = 23})
 monster:defense(10)
 monster:armor(10)
-monster:targetDistance(4)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
@@ -39,15 +37,15 @@ monster:loot({
     {id = 7620, chance = 3500},
     {id = 2050, chance = 3500},
     {id = 2461, chance = 1800},
-    {id = 12429, chance = 1800},
+    {id = 12429, chance = 1800}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-10
--- name=energy, interval=2000, chance=15, range=7, max=-20, shootEffect=energy, areaEffect=energy
--- name=fire, interval=2000, chance=15, range=7, max=-20, shootEffect=fire, areaEffect=firearea
--- name=energyfield, interval=2000, chance=10, range=7, target=1, shootEffect=energyball
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -10},
+    {name = "energy", interval = 2000, chance = 15, maxDamage = -20, range = 7},
+    {name = "fire", interval = 2000, chance = 15, maxDamage = -20, range = 7},
+    {name = "energyfield", interval = 2000, chance = 10, range = 7}
+})
 
 monster:register()

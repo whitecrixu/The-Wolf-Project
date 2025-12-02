@@ -1,5 +1,5 @@
 -- The Bloodtusk
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("The Bloodtusk")
 if not monster then return end
@@ -28,13 +28,13 @@ monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = 20},
     {type = COMBAT_ICEDAMAGE, percent = 20},
     {type = COMBAT_PHYSICALDAMAGE, percent = 15},
-    {type = COMBAT_FIREDAMAGE, percent = -10},
+    {type = COMBAT_FIREDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
@@ -45,12 +45,12 @@ monster:loot({
     {id = 8614, chance = 58825, maxCount = 2},
     {id = 7463, chance = 42175},
     {id = 7432, chance = 50500},
-    {id = 11238, chance = 38000, maxCount = 2},
+    {id = 11238, chance = 38000, maxCount = 2}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=50, attack=40
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -90}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Spectre
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Spectre")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:armor(35)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -30,7 +29,7 @@ monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = 90},
     {type = COMBAT_ICEDAMAGE, percent = 1},
     {type = COMBAT_FIREDAMAGE, percent = -8},
-    {type = COMBAT_ENERGYDAMAGE, percent = -8},
+    {type = COMBAT_ENERGYDAMAGE, percent = -8}
 })
 
 -- Immunities
@@ -38,16 +37,16 @@ monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
     {condition = CONDITION_DROWN, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_DRUNK, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {condition = CONDITION_DRUNK, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Revenge ... is so ... sweet!", yell = false},
-    {text = "Life...force! Feed me your... lifeforce!", yell = false},
+    {text = "Life...force! Feed me your... lifeforce!", yell = false}
 })
 
 -- Loot
@@ -69,23 +68,16 @@ monster:loot({
     {id = 7590, chance = 920},
     {id = 2134, chance = 110},
     {id = 2136, chance = 110},
-    {id = 11227, chance = 1000},
+    {id = 11227, chance = 1000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=65, attack=82
--- name=drunk, interval=2000, chance=15, radius=4, duration=6000, areaEffect=purplenote
--- name=spectre drown, interval=2000, chance=15
--- name=manadrain, interval=2000, chance=15, range=7, min=-100, max=-400
--- name=lifedrain, interval=2000, chance=20, range=7, min=-300, max=-550, areaEffect=redshimmer
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=25, min=100, max=250, areaEffect=blueshimmer
--- name=healing, interval=2000, chance=10, min=370, max=700, areaEffect=blueshimmer
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=290, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -147},
+    {name = "drunk", interval = 2000, chance = 15, radius = 4},
+    {name = "spectre drown", interval = 2000, chance = 15},
+    {name = "manadrain", interval = 2000, chance = 15, minDamage = -100, maxDamage = -400, range = 7},
+    {name = "lifedrain", interval = 2000, chance = 20, minDamage = -300, maxDamage = -550, range = 7}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Servant Golem
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Servant Golem")
 if not monster then return end
@@ -19,14 +19,13 @@ monster:armor(25)
 -- Flags
 monster:attackable(false)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_PARALYZE, immunity = true},
+    {condition = CONDITION_PARALYZE, immunity = true}
 })
 
 -- Voices
@@ -49,17 +48,12 @@ monster:voices({
     {text = "Warning: This human is extremely handsome!", yell = false},
     {text = "Mommy?", yell = false},
     {text = "Everything is working as intended!", yell = false},
-    {text = "Rrrtttarrrttarrrtta", yell = false},
+    {text = "Rrrtttarrrttarrrtta", yell = false}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=10, length=8, duration=1000, speedchange=300, areaEffect=poff
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=240, areaEffect=purpleenergy
---]]
+-- Attacks
+monster:attacks({
+    {name = "speed", interval = 2000, chance = 10, length = 8}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Demodras
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Demodras")
 if not monster then return end
@@ -15,12 +15,11 @@ monster:corpseId(5984)
 monster:outfit({lookType = 204})
 monster:defense(25)
 monster:armor(35)
-monster:runHealth(300)
+monster:runHealth(450)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -28,20 +27,15 @@ monster:staticAttackChance(90)
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "I WILL SET THE WORLD IN FIRE!", yell = true},
-    {text = "I WILL PROTECT MY BROOD!", yell = true},
-})
-
--- Summons
-monster:summons({
-    {name = "Dragon", chance = 17, interval = 1000, max = 2},
+    {text = "I WILL PROTECT MY BROOD!", yell = true}
 })
 
 -- Loot
@@ -64,20 +58,15 @@ monster:loot({
     {id = 2528, chance = 1333},
     {id = 5948, chance = 5000},
     {id = 5882, chance = 5000},
-    {id = 5919, chance = 100000},
+    {id = 5919, chance = 100000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, min=-160, max=-600
--- name=fire, interval=3000, chance=20, range=7, min=-250, max=-350, radius=4, target=1, shootEffect=fire, areaEffect=firearea
--- name=firefield, interval=1000, chance=10, range=7, radius=6, target=1, shootEffect=fire
--- name=fire, interval=4000, chance=20, min=-250, max=-550, length=8, spread=3, areaEffect=firearea
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=1000, chance=25, min=400, max=700, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = -160, maxDamage = -600},
+    {name = "fire", interval = 3000, chance = 20, minDamage = -250, maxDamage = -350, range = 7, radius = 4},
+    {name = "firefield", interval = 1000, chance = 10, range = 7, radius = 6},
+    {name = "fire", interval = 4000, chance = 20, minDamage = -250, maxDamage = -550, length = 8, spread = 3}
+})
 
 monster:register()

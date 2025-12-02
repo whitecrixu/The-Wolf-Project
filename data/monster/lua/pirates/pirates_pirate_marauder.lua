@@ -1,5 +1,5 @@
 -- Pirate Marauder
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Pirate Marauder")
 if not monster then return end
@@ -16,13 +16,12 @@ monster:corpseId(20483)
 monster:outfit({lookType = 93})
 monster:defense(15)
 monster:armor(15)
-monster:runHealth(20)
+monster:runHealth(21)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isConvinceable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
@@ -32,19 +31,19 @@ monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = 20},
     {type = COMBAT_DEATHDAMAGE, percent = -5},
     {type = COMBAT_FIREDAMAGE, percent = -10},
-    {type = COMBAT_ENERGYDAMAGE, percent = -5},
+    {type = COMBAT_ENERGYDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Plundeeeeer!", yell = false},
     {text = "Give up!", yell = false},
-    {text = "Hiyaa!", yell = false},
+    {text = "Hiyaa!", yell = false}
 })
 
 -- Loot
@@ -63,13 +62,13 @@ monster:loot({
     {id = 5928, chance = 80},
     {id = 5792, chance = 90},
     {id = 5927, chance = 430},
-    {id = 11219, chance = 9720},
+    {id = 11219, chance = 9720}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=60, attack=40
--- name=physical, interval=2000, chance=15, range=7, max=-40, shootEffect=spear
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -100},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -40, range = 7}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Nightstalker
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Nightstalker")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(15)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -30,13 +29,13 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = -5},
     {type = COMBAT_DEATHDAMAGE, percent = -5},
     {type = COMBAT_ICEDAMAGE, percent = 20},
-    {type = COMBAT_HOLYDAMAGE, percent = 20},
+    {type = COMBAT_HOLYDAMAGE, percent = 20}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -46,7 +45,7 @@ monster:voices({
     {text = "I've been in the shadow under your bed last night.", yell = false},
     {text = "You never know what hides in the night.", yell = false},
     {text = "I remember your face - and I know where you sleep.", yell = false},
-    {text = "Only the sweetest and cruelest dreams for you, my love.", yell = false},
+    {text = "Only the sweetest and cruelest dreams for you, my love.", yell = false}
 })
 
 -- Loot
@@ -62,26 +61,14 @@ monster:loot({
     {id = 2195, chance = 121},
     {id = 7427, chance = 121},
     {id = 2171, chance = 121},
-    {id = 8870, chance = 520},
+    {id = 8870, chance = 520}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=50, attack=30
--- name=lifedrain, interval=2000, chance=20, range=7, min=-60, max=-170, target=1, areaEffect=holyarea
--- name=speed, interval=2000, chance=15, target=1, duration=15000, speedchange=-600, areaEffect=sleep
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=240, areaEffect=redshimmer
--- name=invisible, interval=2000, chance=10, duration=4000, areaEffect=yellowbubble
--- name=outfit, interval=5000, chance=10, duration=4000
--- name=outfit, interval=5000, chance=10, duration=4000
--- name=outfit, interval=5000, chance=10, duration=4000
--- name=outfit, interval=5000, chance=10, duration=4000
--- name=outfit, interval=5000, chance=10, duration=4000
--- name=outfit, interval=5000, chance=1, duration=4000
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -80},
+    {name = "lifedrain", interval = 2000, chance = 20, minDamage = -60, maxDamage = -170, range = 7},
+    {name = "speed", interval = 2000, chance = 15}
+})
 
 monster:register()

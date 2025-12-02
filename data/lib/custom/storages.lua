@@ -4,4 +4,5 @@
 
 Storage = {
 	combatProtectionStorage = 50722,
+	promotion = 50723,
 }

@@ -1,5 +1,5 @@
 -- Priestess
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Priestess")
 if not monster then return end
@@ -15,13 +15,11 @@ monster:corpseId(20491)
 monster:outfit({lookType = 58})
 monster:defense(15)
 monster:armor(15)
-monster:targetDistance(4)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -32,24 +30,19 @@ monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = 70},
     {type = COMBAT_DEATHDAMAGE, percent = 5},
     {type = COMBAT_PHYSICALDAMAGE, percent = -5},
-    {type = COMBAT_HOLYDAMAGE, percent = -10},
+    {type = COMBAT_HOLYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Your energy is mine.", yell = false},
     {text = "Now, your life has come to an end, hahahha!", yell = false},
-    {text = "Throw the soul on the altar!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "ghoul", chance = 10, interval = 2000, max = 2},
+    {text = "Throw the soul on the altar!", yell = false}
 })
 
 -- Loot
@@ -72,20 +65,15 @@ monster:loot({
     {id = 11220, chance = 9840},
     {id = 10556, chance = 1800},
     {id = 10562, chance = 5230},
-    {id = 2374, chance = 1400},
+    {id = 2374, chance = 1400}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=65, attack=20
--- name=death, interval=2000, chance=20, range=7, min=-55, max=-120, shootEffect=suddendeath, areaEffect=mortarea
--- name=manadrain, interval=2000, chance=15, range=7, min=-2, max=-170
--- name=poisoncondition, interval=2000, chance=15, range=7, min=-200, shootEffect=poison
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=50, max=80, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -85},
+    {name = "death", interval = 2000, chance = 20, minDamage = -55, maxDamage = -120, range = 7},
+    {name = "manadrain", interval = 2000, chance = 15, minDamage = -2, maxDamage = -170, range = 7},
+    {name = "poisoncondition", interval = 2000, chance = 15, minDamage = -200, range = 7}
+})
 
 monster:register()

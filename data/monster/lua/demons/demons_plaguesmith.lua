@@ -1,5 +1,5 @@
 -- Plaguesmith
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Plaguesmith")
 if not monster then return end
@@ -15,16 +15,15 @@ monster:corpseId(6516)
 monster:outfit({lookType = 247})
 monster:defense(40)
 monster:armor(40)
-monster:runHealth(500)
+monster:runHealth(825)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -32,14 +31,14 @@ monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = 20},
     {type = COMBAT_DEATHDAMAGE, percent = 1},
     {type = COMBAT_ENERGYDAMAGE, percent = -10},
-    {type = COMBAT_HOLYDAMAGE, percent = -10},
+    {type = COMBAT_HOLYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -47,7 +46,7 @@ monster:voices({
     {text = "You are looking a bit feverish!", yell = false},
     {text = "You don't look that good!", yell = false},
     {text = "Hachoo!", yell = false},
-    {text = "Cough Cough", yell = false},
+    {text = "Cough Cough", yell = false}
 })
 
 -- Loot
@@ -80,21 +79,15 @@ monster:loot({
     {id = 5888, chance = 1010},
     {id = 2444, chance = 952},
     {id = 2127, chance = 341},
-    {id = 3957, chance = 100},
+    {id = 3957, chance = 100}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=1500, chance=100, skill=100, attack=98
--- name=poison, interval=2000, chance=15, min=-60, max=-114, radius=4, areaEffect=poison
--- name=poison, interval=2000, chance=10, min=-100, max=-350, length=5, spread=3, areaEffect=yellowbubble
--- name=speed, interval=2000, chance=15, radius=4, duration=30000, speedchange=-800, areaEffect=poison
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=200, max=280, areaEffect=blueshimmer
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=440, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 1500, chance = 100, minDamage = 0, maxDamage = -198},
+    {name = "poison", interval = 2000, chance = 15, minDamage = -60, maxDamage = -114, radius = 4},
+    {name = "poison", interval = 2000, chance = 10, minDamage = -100, maxDamage = -350, length = 5, spread = 3},
+    {name = "speed", interval = 2000, chance = 15, radius = 4}
+})
 
 monster:register()

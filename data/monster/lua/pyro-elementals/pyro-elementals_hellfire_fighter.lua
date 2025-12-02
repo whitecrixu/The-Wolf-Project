@@ -1,5 +1,5 @@
 -- Hellfire Fighter
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Hellfire Fighter")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:armor(35)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -30,14 +29,14 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 25},
     {type = COMBAT_PHYSICALDAMAGE, percent = 50},
     {type = COMBAT_DEATHDAMAGE, percent = 20},
-    {type = COMBAT_ICEDAMAGE, percent = -25},
+    {type = COMBAT_ICEDAMAGE, percent = -25}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
@@ -60,16 +59,16 @@ monster:loot({
     {id = 2136, chance = 190},
     {id = 13757, chance = 670},
     {id = 10553, chance = 9570},
-    {id = 10581, chance = 5060},
+    {id = 10581, chance = 5060}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=120, attack=80
--- name=firefield, interval=2000, chance=10, range=7, radius=3, shootEffect=fire
--- name=fire, interval=2000, chance=10, min=-392, max=-1500, length=8, areaEffect=fireattack
--- name=fire, interval=2000, chance=15, range=7, min=-60, max=-330, radius=3, areaEffect=fire
--- name=hellfire fighter soulfire, interval=2000, chance=15
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -200},
+    {name = "firefield", interval = 2000, chance = 10, range = 7, radius = 3},
+    {name = "fire", interval = 2000, chance = 10, minDamage = -392, maxDamage = -1500, length = 8},
+    {name = "fire", interval = 2000, chance = 15, minDamage = -60, maxDamage = -330, range = 7, radius = 3},
+    {name = "hellfire fighter soulfire", interval = 2000, chance = 15}
+})
 
 monster:register()

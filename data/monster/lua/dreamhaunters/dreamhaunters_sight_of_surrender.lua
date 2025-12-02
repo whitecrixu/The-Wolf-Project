@@ -1,5 +1,5 @@
 -- Sight of Surrender
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Sight of Surrender")
 if not monster then return end
@@ -19,10 +19,9 @@ monster:armor(70)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -32,13 +31,13 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = 30},
     {type = COMBAT_EARTHDAMAGE, percent = 10},
-    {type = COMBAT_HOLYDAMAGE, percent = -5},
+    {type = COMBAT_HOLYDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -46,7 +45,7 @@ monster:voices({
     {text = "BOW LOW!", yell = false},
     {text = "FEEL THE TRUE MEANING OF VANQUISH!", yell = false},
     {text = "HAHAHAHA DO YOU WANT TO AMUSE YOUR MASTER?", yell = false},
-    {text = "NOW YOU WILL SURRENDER!", yell = false},
+    {text = "NOW YOU WILL SURRENDER!", yell = false}
 })
 
 -- Loot
@@ -75,20 +74,14 @@ monster:loot({
     {id = 22396, chance = 1800},
     {id = 22517, chance = 100000},
     {id = 22518, chance = 100000},
-    {id = 22542, chance = 460},
+    {id = 22542, chance = 460}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=100, attack=200
--- name=energy, interval=2000, chance=15, min=-500, max=-800, length=8, target=1, areaEffect=yellowenergy
--- name=physical, interval=2000, chance=20, max=-500, radius=1, target=1, shootEffect=largerock
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=30, min=550, max=1100, areaEffect=blueshimmer
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=520, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -300},
+    {name = "energy", interval = 2000, chance = 15, minDamage = -500, maxDamage = -800, length = 8},
+    {name = "physical", interval = 2000, chance = 20, maxDamage = -500, radius = 1}
+})
 
 monster:register()

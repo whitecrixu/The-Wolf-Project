@@ -1,5 +1,5 @@
 -- Minotaur Poacher
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Minotaur Poacher")
 if not monster then return end
@@ -24,7 +24,7 @@ monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
@@ -37,13 +37,13 @@ monster:loot({
     {id = 2666, chance = 5000},
     {id = 5878, chance = 1400},
     {id = 2455, chance = 710},
-    {id = 12428, chance = 710},
+    {id = 12428, chance = 710}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-15
--- name=physical, interval=2000, chance=40, range=7, max=-20, shootEffect=bolt
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -15},
+    {name = "physical", interval = 2000, chance = 40, maxDamage = -20, range = 7}
+})
 
 monster:register()

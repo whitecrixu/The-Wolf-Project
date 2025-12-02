@@ -1,5 +1,5 @@
 -- Yalahari
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Yalahari")
 if not monster then return end
@@ -19,15 +19,14 @@ monster:armor(0)
 -- Flags
 monster:attackable(true)
 monster:hostile(false)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_BLEEDING, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {type = COMBAT_PHYSICALDAMAGE, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true}
 })
 
 -- Voices
@@ -38,7 +37,12 @@ monster:voices({
     {text = "Our wisdom and knowledge are unequalled in this world.", yell = false},
     {text = "That knowledge would overburden your fragile mind.", yell = false},
     {text = "I wouldn't expect you to understand.", yell = false},
-    {text = "One day Yalahar will return to its former glory.", yell = false},
+    {text = "One day Yalahar will return to its former glory.", yell = false}
+})
+
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -30}
 })
 
 monster:register()

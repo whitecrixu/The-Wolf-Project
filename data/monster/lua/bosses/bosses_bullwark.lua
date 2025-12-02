@@ -1,5 +1,5 @@
 -- Bullwark
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Bullwark")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(40)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -29,25 +28,20 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 1},
     {type = COMBAT_ICEDAMAGE, percent = 1},
     {type = COMBAT_FIREDAMAGE, percent = 1},
-    {type = COMBAT_DEATHDAMAGE, percent = 1},
+    {type = COMBAT_DEATHDAMAGE, percent = 1}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "MOOOOH!", yell = false},
     {text = "Grrrr.", yell = false},
-    {text = "Raaaargh!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "Moohtant", chance = 10, interval = 2000, max = 1},
+    {text = "Raaaargh!", yell = false}
 })
 
 -- Loot
@@ -67,19 +61,14 @@ monster:loot({
     {id = 7452, chance = 440},
     {id = 7427, chance = 290},
     {id = 9971, chance = 290},
-    {id = 7401, chance = 290},
+    {id = 7401, chance = 290}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-1300
--- name=physical, interval=2000, chance=15, max=-200, radius=3, areaEffect=blackspark
--- name=lifedrain, interval=2000, chance=15, range=7, min=-100, max=-225, radius=4, target=1, areaEffect=redshimmer
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=4000, chance=15, min=2000, max=4000, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -1300},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -200, radius = 3},
+    {name = "lifedrain", interval = 2000, chance = 15, minDamage = -100, maxDamage = -225, range = 7, radius = 4}
+})
 
 monster:register()

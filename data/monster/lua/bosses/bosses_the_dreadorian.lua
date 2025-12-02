@@ -1,5 +1,5 @@
 -- The Dreadorian
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("The Dreadorian")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:armor(25)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,23 +30,18 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 30},
     {type = COMBAT_DEATHDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = -10},
-    {type = COMBAT_HOLYDAMAGE, percent = -10},
+    {type = COMBAT_HOLYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_FIRE, immunity = true},
+    {condition = CONDITION_FIRE, immunity = true}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=64, attack=100
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=50, min=100, max=150, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -164}
+})
 
 monster:register()

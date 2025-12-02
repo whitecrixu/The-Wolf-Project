@@ -1,5 +1,5 @@
 -- Seagull
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Seagull")
 if not monster then return end
@@ -16,8 +16,7 @@ monster:corpseId(6076)
 monster:outfit({lookType = 223})
 monster:defense(5)
 monster:armor(5)
-monster:targetDistance(11)
-monster:runHealth(25)
+monster:runHealth(2)
 
 -- Flags
 monster:attackable(true)
@@ -26,9 +25,9 @@ monster:isSummonable(true)
 monster:pushable(true)
 monster:staticAttackChance(90)
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=10, attack=3
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -13}
+})
 
 monster:register()

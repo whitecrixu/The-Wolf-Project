@@ -1,5 +1,5 @@
 -- Incineron
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Incineron")
 if not monster then return end
@@ -20,14 +20,13 @@ monster:armor(25)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_ENERGYDAMAGE, percent = 20},
+    {type = COMBAT_ENERGYDAMAGE, percent = 20}
 })
 
 -- Immunities
@@ -35,13 +34,13 @@ monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=fire, interval=2000, chance=100, max=-1000, length=8, spread=1, areaEffect=firearea
--- name=fire, interval=2000, chance=100, range=7, max=-395, radius=7, shootEffect=fire, areaEffect=firearea
---]]
+-- Attacks
+monster:attacks({
+    {name = "fire", interval = 2000, chance = 100, maxDamage = -1000, length = 8, spread = 1},
+    {name = "fire", interval = 2000, chance = 100, maxDamage = -395, range = 7, radius = 7}
+})
 
 monster:register()

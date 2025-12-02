@@ -1,5 +1,5 @@
 -- Bug
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Bug")
 if not monster then return end
@@ -28,18 +28,18 @@ monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_FIREDAMAGE, percent = -10},
+    {type = COMBAT_FIREDAMAGE, percent = -10}
 })
 
 -- Loot
 monster:loot({
     {id = 2148, chance = 51170, maxCount = 6},
-    {id = 2679, chance = 2590, maxCount = 3},
+    {id = 2679, chance = 2590, maxCount = 3}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=20, attack=15
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -35}
+})
 
 monster:register()

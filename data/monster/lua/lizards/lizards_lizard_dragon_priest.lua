@@ -1,5 +1,5 @@
 -- Lizard Dragon Priest
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Lizard Dragon Priest")
 if not monster then return end
@@ -15,36 +15,29 @@ monster:corpseId(11280)
 monster:outfit({lookType = 339})
 monster:defense(15)
 monster:armor(15)
-monster:targetDistance(4)
-monster:runHealth(50)
+monster:runHealth(145)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_FIREDAMAGE, percent = 45},
+    {type = COMBAT_FIREDAMAGE, percent = 45}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "I ssssmell warm blood!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "Dragon Hatchling", chance = 20, interval = 2000, max = 2},
+    {text = "I ssssmell warm blood!", yell = false}
 })
 
 -- Loot
@@ -65,20 +58,14 @@ monster:loot({
     {id = 2187, chance = 1480},
     {id = 5881, chance = 1130},
     {id = 11303, chance = 450},
-    {id = 2168, chance = 770},
+    {id = 2168, chance = 770}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=25
--- name=fireball, interval=2000, chance=20, range=7, min=-125, max=-190, target=1
--- name=poisoncondition, interval=2000, chance=15, range=7, min=-320, max=-400, radius=1, target=1, shootEffect=poison, areaEffect=poison
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=30, min=200, max=300, areaEffect=blueshimmer
--- name=invisible, interval=2000, chance=15, duration=4000, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -55},
+    {name = "fireball", interval = 2000, chance = 20, minDamage = -125, maxDamage = -190, range = 7},
+    {name = "poisoncondition", interval = 2000, chance = 15, minDamage = -320, maxDamage = -400, range = 7, radius = 1}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Hero
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Hero")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(40)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -32,13 +31,13 @@ monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = 50},
     {type = COMBAT_EARTHDAMAGE, percent = 50},
     {type = COMBAT_PHYSICALDAMAGE, percent = 30},
-    {type = COMBAT_DEATHDAMAGE, percent = -20},
+    {type = COMBAT_DEATHDAMAGE, percent = -20}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -46,7 +45,7 @@ monster:voices({
     {text = "Let's have a fight!", yell = false},
     {text = "Welcome to my battleground.", yell = false},
     {text = "Have you seen princess Lumelia?", yell = false},
-    {text = "I will sing a tune at your grave.", yell = false},
+    {text = "I will sing a tune at your grave.", yell = false}
 })
 
 -- Loot
@@ -76,18 +75,13 @@ monster:loot({
     {id = 7591, chance = 720},
     {id = 2114, chance = 80},
     {id = 2164, chance = 470},
-    {id = 2488, chance = 660},
+    {id = 2488, chance = 660}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=70, attack=60
--- name=physical, interval=2000, chance=20, range=7, max=-120, shootEffect=arrow
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=20, min=200, max=250, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -130},
+    {name = "physical", interval = 2000, chance = 20, maxDamage = -120, range = 7}
+})
 
 monster:register()

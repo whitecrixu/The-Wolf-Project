@@ -1,5 +1,5 @@
 -- Golden Servant
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Golden Servant")
 if not monster then return end
@@ -15,12 +15,11 @@ monster:corpseId(13489)
 monster:outfit({lookType = 396})
 monster:defense(20)
 monster:armor(20)
-monster:runHealth(50)
+monster:runHealth(55)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -30,21 +29,21 @@ monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = 80},
     {type = COMBAT_FIREDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = 5},
-    {type = COMBAT_DEATHDAMAGE, percent = 5},
+    {type = COMBAT_DEATHDAMAGE, percent = 5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_DAZZLED, immunity = true},
+    {type = COMBAT_HOLYDAMAGE, combat = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_PARALYZE, immunity = true},
+    {condition = CONDITION_PARALYZE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Error. LOAD 'PROGRAM", yell = false},
     {text = "8,1", yell = false},
-    {text = "Remain. Obedient.", yell = false},
+    {text = "Remain. Obedient.", yell = false}
 })
 
 -- Loot
@@ -61,15 +60,15 @@ monster:loot({
     {id = 8900, chance = 520},
     {id = 2165, chance = 450},
     {id = 2381, chance = 3003},
-    {id = 2796, chance = 1450},
+    {id = 2796, chance = 1450}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=50
--- name=energy, interval=2000, chance=15, min=-60, max=-100, radius=4, target=1, shootEffect=energy, areaEffect=yellowenergy
--- name=energy, interval=2000, chance=15, min=-80, max=-110, radius=4, target=1, shootEffect=energy, areaEffect=energy
--- name=energy, interval=2000, chance=10, min=-90, max=-150, length=5, spread=2, areaEffect=yellowenergy
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -80},
+    {name = "energy", interval = 2000, chance = 15, minDamage = -60, maxDamage = -100, radius = 4},
+    {name = "energy", interval = 2000, chance = 15, minDamage = -80, maxDamage = -110, radius = 4},
+    {name = "energy", interval = 2000, chance = 10, minDamage = -90, maxDamage = -150, length = 5, spread = 2}
+})
 
 monster:register()

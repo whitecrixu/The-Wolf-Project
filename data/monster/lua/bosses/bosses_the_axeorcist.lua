@@ -1,5 +1,5 @@
 -- The Axeorcist
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("The Axeorcist")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(15)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -29,23 +28,23 @@ monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = -10},
     {type = COMBAT_ENERGYDAMAGE, percent = -10},
     {type = COMBAT_DEATHDAMAGE, percent = -10},
-    {type = COMBAT_HOLYDAMAGE, percent = 10},
+    {type = COMBAT_HOLYDAMAGE, percent = 10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "DEESTRUCTIOON!", yell = true},
-    {text = "Blood! Carnage! Muhahaha!", yell = true},
+    {text = "Blood! Carnage! Muhahaha!", yell = true}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=45, attack=100
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -145}
+})
 
 monster:register()

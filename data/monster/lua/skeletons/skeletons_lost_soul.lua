@@ -1,5 +1,5 @@
 -- Lost Soul
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Lost Soul")
 if not monster then return end
@@ -15,13 +15,12 @@ monster:corpseId(6310)
 monster:outfit({lookType = 232})
 monster:defense(30)
 monster:armor(30)
-monster:runHealth(450)
+monster:runHealth(580)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -30,24 +29,24 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = 50},
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
-    {type = COMBAT_HOLYDAMAGE, percent = -20},
+    {type = COMBAT_HOLYDAMAGE, percent = -20}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Forgive Meeeee!", yell = false},
     {text = "Mouuuurn meeee!", yell = false},
-    {text = "Help meeee!", yell = false},
+    {text = "Help meeee!", yell = false}
 })
 
 -- Loot
@@ -75,14 +74,14 @@ monster:loot({
     {id = 5741, chance = 170},
     {id = 7407, chance = 740},
     {id = 11233, chance = 33010},
-    {id = 2528, chance = 740},
+    {id = 2528, chance = 740}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=60, attack=120
--- name=death, interval=2000, chance=10, min=-40, max=-210, length=3, areaEffect=redshimmer
--- name=speed, interval=2000, chance=20, radius=6, duration=4000, speedchange=-800, areaEffect=smallclouds
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -180},
+    {name = "death", interval = 2000, chance = 10, minDamage = -40, maxDamage = -210, length = 3},
+    {name = "speed", interval = 2000, chance = 20, radius = 6}
+})
 
 monster:register()

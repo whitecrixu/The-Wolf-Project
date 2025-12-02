@@ -1,5 +1,5 @@
 -- Furious Troll
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Furious Troll")
 if not monster then return end
@@ -20,24 +20,18 @@ monster:armor(15)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Slice! Slice!", yell = false},
-    {text = "DIE!!!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "Mechanical Fighter", chance = 90, interval = 2000, max = 1},
+    {text = "DIE!!!", yell = false}
 })
 
 -- Loot
@@ -45,12 +39,12 @@ monster:loot({
     {id = 2148, chance = 93000, maxCount = 146},
     {id = 2152, chance = 6000},
     {id = 10606, chance = 4400},
-    {id = 2391, chance = 750},
+    {id = 2391, chance = 750}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-100
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -100}
+})
 
 monster:register()

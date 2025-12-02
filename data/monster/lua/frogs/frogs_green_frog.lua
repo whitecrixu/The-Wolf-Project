@@ -1,5 +1,5 @@
 -- Green Frog
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Green Frog")
 if not monster then return end
@@ -16,7 +16,6 @@ monster:corpseId(6079)
 monster:outfit({lookType = 224, lookHead = 69, lookBody = 66, lookLegs = 69, lookFeet = 66})
 monster:defense(5)
 monster:armor(5)
-monster:targetDistance(6)
 
 -- Flags
 monster:attackable(true)
@@ -30,12 +29,12 @@ monster:staticAttackChance(90)
 -- Voices
 monster:voices({
     {text = "Ribbit!", yell = false},
-    {text = "Ribbit! Ribbit!", yell = false},
+    {text = "Ribbit! Ribbit!", yell = false}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=10, attack=25
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -35}
+})
 
 monster:register()

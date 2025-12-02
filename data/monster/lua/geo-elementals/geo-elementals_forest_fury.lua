@@ -1,5 +1,5 @@
 -- Forest Fury
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Forest Fury")
 if not monster then return end
@@ -15,27 +15,25 @@ monster:corpseId(21359)
 monster:outfit({lookType = 569})
 monster:defense(20)
 monster:armor(20)
-monster:targetDistance(4)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = 10},
-    {type = COMBAT_FIREDAMAGE, percent = -5},
+    {type = COMBAT_FIREDAMAGE, percent = -5}
 })
 
 -- Voices
 monster:voices({
     {text = "To arms, sisters!", yell = false},
     {text = "Feel the wrath of mother forest!", yell = false},
-    {text = "By the power of Greenskull!", yell = false},
+    {text = "By the power of Greenskull!", yell = false}
 })
 
 -- Loot
@@ -48,14 +46,14 @@ monster:loot({
     {id = 21311, chance = 7030},
     {id = 2455, chance = 2750},
     {id = 9970, chance = 470},
-    {id = 7438, chance = 90},
+    {id = 7438, chance = 90}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=40, attack=50
--- name=physical, interval=1500, chance=40, range=7, max=-100, radius=4, target=1, shootEffect=huntingspear, areaEffect=greenshimmer
--- name=forest fury skill reducer, interval=2000, chance=20, range=5
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -90},
+    {name = "physical", interval = 1500, chance = 40, maxDamage = -100, range = 7, radius = 4},
+    {name = "forest fury skill reducer", interval = 2000, chance = 20, range = 5}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Sandcrawler
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Sandcrawler")
 if not monster then return end
@@ -22,29 +22,28 @@ monster:attackable(true)
 monster:hostile(true)
 monster:isSummonable(true)
 monster:isConvinceable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_FIREDAMAGE, percent = -5},
+    {type = COMBAT_FIREDAMAGE, percent = -5}
 })
 
 -- Voices
 monster:voices({
-    {text = "Chrk chrk!", yell = false},
+    {text = "Chrk chrk!", yell = false}
 })
 
 -- Loot
 monster:loot({
     {id = 2148, chance = 33333, maxCount = 6},
-    {id = 11373, chance = 2173},
+    {id = 11373, chance = 2173}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=10, attack=3
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -13}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Rocko
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Rocko")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:armor(10)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,22 +30,22 @@ monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = 15},
     {type = COMBAT_FIREDAMAGE, percent = 30},
     {type = COMBAT_ENERGYDAMAGE, percent = 25},
-    {type = COMBAT_ICEDAMAGE, percent = 20},
+    {type = COMBAT_ICEDAMAGE, percent = 20}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=28, attack=100
--- name=poison, interval=2000, chance=20, max=-125, length=8, areaEffect=poison
--- name=physical, interval=2000, chance=20, max=-411, length=8, areaEffect=groundshaker
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -128},
+    {name = "poison", interval = 2000, chance = 20, maxDamage = -125, length = 8},
+    {name = "physical", interval = 2000, chance = 20, maxDamage = -411, length = 8}
+})
 
 monster:register()

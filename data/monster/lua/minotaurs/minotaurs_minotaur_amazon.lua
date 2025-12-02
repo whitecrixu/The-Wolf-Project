@@ -1,5 +1,5 @@
 -- Minotaur Amazon
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Minotaur Amazon")
 if not monster then return end
@@ -15,13 +15,11 @@ monster:corpseId(23371)
 monster:outfit({lookType = 608})
 monster:defense(35)
 monster:armor(35)
-monster:targetDistance(4)
-monster:runHealth(240)
+monster:runHealth(260)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -32,13 +30,13 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = -5},
     {type = COMBAT_ICEDAMAGE, percent = 5},
     {type = COMBAT_DEATHDAMAGE, percent = 10},
-    {type = COMBAT_HOLYDAMAGE, percent = 10},
+    {type = COMBAT_HOLYDAMAGE, percent = 10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -46,7 +44,7 @@ monster:voices({
     {text = "I'll protect the herd!", yell = false},
     {text = "Never surrender!", yell = false},
     {text = "You won't hurt us!", yell = false},
-    {text = "I will not allow your evil to continue!", yell = false},
+    {text = "I will not allow your evil to continue!", yell = false}
 })
 
 -- Loot
@@ -74,17 +72,17 @@ monster:loot({
     {id = 2197, chance = 1450},
     {id = 2154, chance = 870},
     {id = 2475, chance = 1160},
-    {id = 7443, chance = 720},
+    {id = 7443, chance = 720}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=50, attack=50
--- name=manadrain, interval=2000, chance=10, min=-50, max=-305, length=8, areaEffect=redshimmer
--- name=lifedrain, interval=2000, chance=16, min=-50, max=-150, radius=4, areaEffect=redshimmer
--- name=physical, interval=2000, chance=22, range=7, min=-0, max=-150, shootEffect=huntingspear, areaEffect=explosionarea
--- name=bleedcondition, interval=2000, chance=40, min=-300, max=-400, radius=4, target=1, shootEffect=throwingknife, areaEffect=redspark
--- name=minotaur amazon paralyze, interval=2000, chance=15
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -100},
+    {name = "manadrain", interval = 2000, chance = 10, minDamage = -50, maxDamage = -305, length = 8},
+    {name = "lifedrain", interval = 2000, chance = 16, minDamage = -50, maxDamage = -150, radius = 4},
+    {name = "physical", interval = 2000, chance = 22, maxDamage = -150, range = 7},
+    {name = "bleedcondition", interval = 2000, chance = 40, minDamage = -300, maxDamage = -400, radius = 4},
+    {name = "minotaur amazon paralyze", interval = 2000, chance = 15}
+})
 
 monster:register()

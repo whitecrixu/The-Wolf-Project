@@ -1,5 +1,5 @@
 -- Lesser Swarmer
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Lesser Swarmer")
 if not monster then return end
@@ -15,22 +15,21 @@ monster:corpseId(15388)
 monster:outfit({lookType = 460})
 monster:defense(5)
 monster:armor(5)
-monster:targetDistance(0)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
+monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=34, attack=35
--- name=lifedrain, interval=2000, chance=15, range=5, min=-15, max=-70, target=1, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -69},
+    {name = "lifedrain", interval = 2000, chance = 15, minDamage = -15, maxDamage = -70, range = 5}
+})
 
 monster:register()

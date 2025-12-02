@@ -1,5 +1,5 @@
 -- Calamary
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Calamary")
 if not monster then return end
@@ -15,8 +15,7 @@ monster:corpseId(15280)
 monster:outfit({lookType = 451})
 monster:defense(0)
 monster:armor(0)
-monster:targetDistance(0)
-monster:runHealth(75)
+monster:runHealth(7)
 
 -- Flags
 monster:attackable(true)
@@ -24,30 +23,36 @@ monster:hostile(false)
 monster:pushable(true)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = -5},
-    {type = COMBAT_PHYSICALDAMAGE, percent = -5},
+    {type = COMBAT_PHYSICALDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_DROWN, immunity = true},
-    {condition = CONDITION_FIRE, immunity = true},
+    {condition = CONDITION_FIRE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Bubble!", yell = false},
-    {text = "Bobble!", yell = false},
+    {text = "Bobble!", yell = false}
 })
 
 -- Loot
 monster:loot({
-    {id = 2670, chance = 12270, maxCount = 2},
+    {id = 2670, chance = 12270, maxCount = 2}
+})
+
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -15}
 })
 
 monster:register()

@@ -1,5 +1,5 @@
 -- White Deer
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("White Deer")
 if not monster then return end
@@ -15,7 +15,7 @@ monster:corpseId(13513)
 monster:outfit({lookType = 400})
 monster:defense(0)
 monster:armor(0)
-monster:runHealth(195)
+monster:runHealth(19)
 
 -- Flags
 monster:attackable(true)
@@ -29,7 +29,12 @@ monster:voices({
     {text = "*wheeze*", yell = false},
     {text = "ROOOAAARR!!", yell = false},
     {text = "*sniff*", yell = false},
-    {text = "*bell*", yell = false},
+    {text = "*bell*", yell = false}
+})
+
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -39}
 })
 
 monster:register()

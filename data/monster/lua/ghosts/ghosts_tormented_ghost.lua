@@ -1,5 +1,5 @@
 -- Tormented Ghost
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Tormented Ghost")
 if not monster then return end
@@ -20,29 +20,28 @@ monster:armor(10)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_BLEEDING, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_PARALYZE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_PHYSICALDAMAGE, combat = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {condition = CONDITION_PARALYZE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Haaahhh!", yell = false},
-    {text = "Grrglll", yell = false},
+    {text = "Grrglll", yell = false}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=140
--- name=lifedrain, interval=3000, chance=15, range=1, min=-55, max=-105
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -170},
+    {name = "lifedrain", interval = 3000, chance = 15, minDamage = -55, maxDamage = -105}
+})
 
 monster:register()

@@ -92,10 +92,7 @@ bool ScriptingManager::loadScriptSystems()
 	// XML loading disabled - using RevScriptSys only
 
 	g_creatureEvents = new CreatureEvents();
-	if (!g_creatureEvents->loadFromXml()) {
-		std::cout << "> ERROR: Unable to load creature events!" << std::endl;
-		return false;
-	}
+	// XML loading disabled - using RevScriptSys only
 
 	g_globalEvents = new GlobalEvents();
 	// XML loading disabled - using RevScriptSys only

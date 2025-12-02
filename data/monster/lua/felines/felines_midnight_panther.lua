@@ -1,5 +1,5 @@
 -- Midnight Panther
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Midnight Panther")
 if not monster then return end
@@ -20,43 +20,35 @@ monster:armor(30)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_DEATHDAMAGE, percent = -1},
-    {type = COMBAT_FIREDAMAGE, percent = 1},
+    {type = COMBAT_FIREDAMAGE, percent = 1}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_ENERGY, immunity = true},
+    {condition = CONDITION_ENERGY, immunity = true}
 })
 
 -- Loot
 monster:loot({
-    {id = 2148, chance = 100000, maxCount = 57},
+    {id = 2148, chance = 10000, maxCount = 57},
     {id = 2666, chance = 25000, maxCount = 4},
     {id = 13026, chance = 12500},
     {id = 2168, chance = 12500},
-    {id = 13027, chance = 100000},
+    {id = 13027, chance = 100000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=1500, chance=100, skill=40, attack=36
--- name=energy, interval=2000, chance=15, range=7, min=-75, max=-215, shootEffect=energy, areaEffect=energyarea
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=370, areaEffect=redshimmer
--- name=healing, interval=2000, chance=15, min=50, max=125, areaEffect=blueshimmer
--- name=invisible, interval=2000, chance=15, duration=5000, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 1500, chance = 100, minDamage = 0, maxDamage = -76},
+    {name = "energy", interval = 2000, chance = 15, minDamage = -75, maxDamage = -215, range = 7}
+})
 
 monster:register()

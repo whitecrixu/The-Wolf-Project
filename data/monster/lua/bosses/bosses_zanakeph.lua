@@ -1,5 +1,5 @@
 -- Zanakeph
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Zanakeph")
 if not monster then return end
@@ -15,12 +15,11 @@ monster:corpseId(6306)
 monster:outfit({lookType = 231})
 monster:defense(40)
 monster:armor(40)
-monster:runHealth(700)
+monster:runHealth(1300)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -29,23 +28,23 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = 50},
-    {type = COMBAT_HOLYDAMAGE, percent = -25},
+    {type = COMBAT_HOLYDAMAGE, percent = -25}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "FEEEED MY ETERNAL HUNGER!", yell = true},
-    {text = "I SENSE LIFE", yell = true},
+    {text = "I SENSE LIFE", yell = true}
 })
 
 -- Loot
@@ -72,25 +71,20 @@ monster:loot({
     {id = 13291, chance = 6780},
     {id = 5741, chance = 5000},
     {id = 8885, chance = 3390},
-    {id = 2498, chance = 1690},
+    {id = 2498, chance = 1690}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=90, attack=96
--- name=physical, interval=2000, chance=5, range=7, min=-300, max=-400, radius=4, target=1, areaEffect=redspark
--- name=death, interval=2000, chance=10, range=7, min=-125, max=-600, shootEffect=suddendeath, areaEffect=smallclouds
--- name=earth, interval=2000, chance=5, range=7, min=-100, max=-390, radius=4, target=1, shootEffect=poison, areaEffect=poison
--- name=earth, interval=2000, chance=15, range=7, max=-180, target=1, shootEffect=poison, areaEffect=poison
--- name=earth, interval=2000, chance=10, min=-150, max=-690, length=8, spread=3, areaEffect=poison
--- name=lifedrain, interval=2000, chance=10, min=-300, max=-700, length=8, spread=3, areaEffect=redshimmer
--- name=lifedrain, interval=2000, chance=10, min=-100, max=-200, radius=3, areaEffect=redshimmer
--- name=undead dragon curse, interval=2000, chance=10
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=200, max=250, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -186},
+    {name = "physical", interval = 2000, chance = 5, minDamage = -300, maxDamage = -400, range = 7, radius = 4},
+    {name = "death", interval = 2000, chance = 10, minDamage = -125, maxDamage = -600, range = 7},
+    {name = "earth", interval = 2000, chance = 5, minDamage = -100, maxDamage = -390, range = 7, radius = 4},
+    {name = "earth", interval = 2000, chance = 15, maxDamage = -180, range = 7},
+    {name = "earth", interval = 2000, chance = 10, minDamage = -150, maxDamage = -690, length = 8, spread = 3},
+    {name = "lifedrain", interval = 2000, chance = 10, minDamage = -300, maxDamage = -700, length = 8, spread = 3},
+    {name = "lifedrain", interval = 2000, chance = 10, minDamage = -100, maxDamage = -200, radius = 3},
+    {name = "undead dragon curse", interval = 2000, chance = 10}
+})
 
 monster:register()

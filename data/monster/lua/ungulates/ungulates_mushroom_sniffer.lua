@@ -1,5 +1,5 @@
 -- Mushroom Sniffer
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Mushroom Sniffer")
 if not monster then return end
@@ -33,14 +33,19 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 90},
     {type = COMBAT_DEATHDAMAGE, percent = 90},
     {type = COMBAT_HOLYDAMAGE, percent = 90},
-    {type = COMBAT_PHYSICALDAMAGE, percent = 90},
+    {type = COMBAT_PHYSICALDAMAGE, percent = 90}
 })
 
 -- Voices
 monster:voices({
     {text = "Sniff", yell = false},
     {text = "Oink", yell = false},
-    {text = "Oink oink", yell = false},
+    {text = "Oink oink", yell = false}
+})
+
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -50}
 })
 
 monster:register()

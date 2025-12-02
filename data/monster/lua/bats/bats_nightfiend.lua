@@ -1,5 +1,5 @@
 -- Nightfiend
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Nightfiend")
 if not monster then return end
@@ -15,12 +15,10 @@ monster:corpseId(2669)
 monster:outfit({lookType = 568})
 monster:defense(11)
 monster:armor(11)
-monster:targetDistance(4)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,21 +29,21 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 5},
     {type = COMBAT_ICEDAMAGE, percent = 5},
     {type = COMBAT_FIREDAMAGE, percent = -5},
-    {type = COMBAT_HOLYDAMAGE, percent = -5},
+    {type = COMBAT_HOLYDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=20, attack=30
--- name=physical, interval=1000, chance=10, range=7, min=-5, max=-40, shootEffect=throwingknife
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -50},
+    {name = "physical", interval = 1000, chance = 10, minDamage = -5, maxDamage = -40, range = 7}
+})
 
 monster:register()

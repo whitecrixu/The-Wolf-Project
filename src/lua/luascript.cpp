@@ -27,6 +27,7 @@
 #include "game.h"
 #include "protocolstatus.h"
 #include "spells.h"
+#include "combat.h"
 #include "iologindata.h"
 #include "configmanager.h"
 #include "teleport.h"
@@ -13557,19 +13558,192 @@ int LuaScriptInterface::luaMonsterTypeSummons(lua_State* L)
 
 int LuaScriptInterface::luaMonsterTypeAttacks(lua_State* L)
 {
-	// monsterType:attacks(attacks)
-	// Note: For full attack support, attacks should be defined in XML or extended later
+	// monsterType:attacks({{name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -50}, ...})
 	MonsterType* monsterType = getUserdata<MonsterType>(L, 1);
-	if (monsterType) {
-		if (lua_gettop(L) == 1) {
-			lua_pushnumber(L, monsterType->info.attackSpells.size());
-		} else {
-			// For now, just acknowledge - full attack parsing needs XML integration
-			pushBoolean(L, true);
-		}
-	} else {
+	if (!monsterType) {
 		lua_pushnil(L);
+		return 1;
 	}
+
+	if (lua_gettop(L) == 1) {
+		lua_pushnumber(L, monsterType->info.attackSpells.size());
+		return 1;
+	}
+
+	if (!isTable(L, 2)) {
+		pushBoolean(L, false);
+		return 1;
+	}
+
+	lua_pushnil(L);
+	while (lua_next(L, 2) != 0) {
+		if (isTable(L, -1)) {
+			lua_getfield(L, -1, "name");
+			std::string attackName = getString(L, -1);
+			lua_pop(L, 1);
+
+			// Transform to lowercase for comparison
+			std::transform(attackName.begin(), attackName.end(), attackName.begin(), ::tolower);
+
+			spellBlock_t sb;
+			sb.combatSpell = true;
+			sb.chance = 100;
+			sb.speed = 2000;
+			sb.range = 1;
+			sb.minCombatValue = 0;
+			sb.maxCombatValue = 0;
+			sb.isMelee = false;
+
+			// Read common parameters
+			lua_getfield(L, -1, "interval");
+			if (lua_isnumber(L, -1)) {
+				sb.speed = getNumber<uint32_t>(L, -1);
+			}
+			lua_pop(L, 1);
+
+			lua_getfield(L, -1, "chance");
+			if (lua_isnumber(L, -1)) {
+				sb.chance = getNumber<uint32_t>(L, -1);
+			}
+			lua_pop(L, 1);
+
+			lua_getfield(L, -1, "minDamage");
+			if (lua_isnumber(L, -1)) {
+				sb.minCombatValue = getNumber<int32_t>(L, -1);
+			}
+			lua_pop(L, 1);
+
+			lua_getfield(L, -1, "maxDamage");
+			if (lua_isnumber(L, -1)) {
+				sb.maxCombatValue = getNumber<int32_t>(L, -1);
+			}
+			lua_pop(L, 1);
+
+			lua_getfield(L, -1, "range");
+			if (lua_isnumber(L, -1)) {
+				sb.range = getNumber<uint32_t>(L, -1);
+			}
+			lua_pop(L, 1);
+
+			// Ensure min/max are negative (damage)
+			if (sb.minCombatValue > 0) sb.minCombatValue = -sb.minCombatValue;
+			if (sb.maxCombatValue > 0) sb.maxCombatValue = -sb.maxCombatValue;
+
+			// Swap if needed so min <= max
+			if (sb.minCombatValue < sb.maxCombatValue) {
+				std::swap(sb.minCombatValue, sb.maxCombatValue);
+			}
+
+			// Determine combat type based on attack name
+			CombatType_t combatType = COMBAT_PHYSICALDAMAGE;
+			bool isValidAttack = true;
+
+			if (attackName == "melee") {
+				sb.isMelee = true;
+				sb.range = 1;
+				combatType = COMBAT_PHYSICALDAMAGE;
+			} else if (attackName == "fire" || attackName == "fireball" || attackName == "firestrike" || attackName == "fire strike" || attackName == "firewave" || attackName == "firefield") {
+				combatType = COMBAT_FIREDAMAGE;
+			} else if (attackName == "energy" || attackName == "energystrike" || attackName == "energy strike" || attackName == "energybeam" || attackName == "energywave" || attackName == "energyfield") {
+				combatType = COMBAT_ENERGYDAMAGE;
+			} else if (attackName == "ice" || attackName == "icestrike" || attackName == "ice strike" || attackName == "icewave") {
+				combatType = COMBAT_ICEDAMAGE;
+			} else if (attackName == "earth" || attackName == "earthstrike" || attackName == "earth strike" || attackName == "earthwave" || attackName == "poison" || attackName == "poisonfield") {
+				combatType = COMBAT_EARTHDAMAGE;
+			} else if (attackName == "death" || attackName == "deathstrike" || attackName == "death strike" || attackName == "deathwave" || attackName == "suddendeath") {
+				combatType = COMBAT_DEATHDAMAGE;
+			} else if (attackName == "holy" || attackName == "holystrike" || attackName == "holy strike") {
+				combatType = COMBAT_HOLYDAMAGE;
+			} else if (attackName == "lifedrain" || attackName == "life drain") {
+				combatType = COMBAT_LIFEDRAIN;
+			} else if (attackName == "manadrain" || attackName == "mana drain") {
+				combatType = COMBAT_MANADRAIN;
+			} else if (attackName == "physical") {
+				combatType = COMBAT_PHYSICALDAMAGE;
+			} else if (attackName == "drown" || attackName == "drowndamage") {
+				combatType = COMBAT_DROWNDAMAGE;
+			} else if (attackName == "speed") {
+				// Speed attack - skip for now (condition based)
+				isValidAttack = false;
+			} else if (attackName == "invisible" || attackName == "outfit") {
+				// Condition based - skip
+				isValidAttack = false;
+			} else if (attackName == "healing") {
+				// Skip healing in attacks - it's a defense
+				isValidAttack = false;
+			} else {
+				// Unknown attack type - try as physical damage
+				combatType = COMBAT_PHYSICALDAMAGE;
+			}
+
+			if (isValidAttack && (sb.minCombatValue != 0 || sb.maxCombatValue != 0 || sb.isMelee)) {
+				// Create combat spell
+				Combat* combat = new Combat();
+				combat->setParam(COMBAT_PARAM_TYPE, combatType);
+
+				if (sb.isMelee) {
+					combat->setParam(COMBAT_PARAM_BLOCKSHIELD, 1);
+					combat->setParam(COMBAT_PARAM_BLOCKARMOR, 1);
+				}
+
+				// Read area/radius for spells
+				lua_getfield(L, -1, "radius");
+				int32_t radius = 0;
+				if (lua_isnumber(L, -1)) {
+					radius = getNumber<int32_t>(L, -1);
+				}
+				lua_pop(L, 1);
+
+				lua_getfield(L, -1, "length");
+				int32_t length = 0;
+				if (lua_isnumber(L, -1)) {
+					length = getNumber<int32_t>(L, -1);
+				}
+				lua_pop(L, 1);
+
+				lua_getfield(L, -1, "spread");
+				int32_t spread = 0;
+				if (lua_isnumber(L, -1)) {
+					spread = getNumber<int32_t>(L, -1);
+				}
+				lua_pop(L, 1);
+
+				// Set area if radius or length specified
+				if (radius > 0) {
+					AreaCombat* area = new AreaCombat();
+					area->setupArea(radius);
+					combat->setArea(area);
+				} else if (length > 0) {
+					AreaCombat* area = new AreaCombat();
+					area->setupArea(length, spread);
+					combat->setArea(area);
+				}
+
+				// Read shoot effect
+				lua_getfield(L, -1, "shootEffect");
+				if (lua_isnumber(L, -1)) {
+					combat->setParam(COMBAT_PARAM_DISTANCEEFFECT, getNumber<uint32_t>(L, -1));
+				}
+				lua_pop(L, 1);
+
+				// Read area effect
+				lua_getfield(L, -1, "effect");
+				if (lua_isnumber(L, -1)) {
+					combat->setParam(COMBAT_PARAM_EFFECT, getNumber<uint32_t>(L, -1));
+				}
+				lua_pop(L, 1);
+
+				CombatSpell* combatSpell = new CombatSpell(combat, true, true);
+				combatSpell->setScriptInterface(nullptr);
+
+				sb.spell = combatSpell;
+				monsterType->info.attackSpells.push_back(std::move(sb));
+			}
+		}
+		lua_pop(L, 1);
+	}
+
+	pushBoolean(L, true);
 	return 1;
 }
 

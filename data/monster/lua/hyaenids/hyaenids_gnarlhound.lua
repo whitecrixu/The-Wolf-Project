@@ -1,5 +1,5 @@
 -- Gnarlhound
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Gnarlhound")
 if not monster then return end
@@ -23,14 +23,13 @@ monster:hostile(true)
 monster:isSummonable(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Voices
 monster:voices({
     {text = "Gnarllll!", yell = false},
-    {text = "Grrrrrr!", yell = false},
+    {text = "Grrrrrr!", yell = false}
 })
 
 -- Loot
@@ -38,12 +37,12 @@ monster:loot({
     {id = 2666, chance = 39075, maxCount = 3},
     {id = 2148, chance = 48000, maxCount = 30},
     {id = 3976, chance = 33300, maxCount = 3},
-    {id = 11324, chance = 25550},
+    {id = 11324, chance = 25550}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=35
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -65}
+})
 
 monster:register()

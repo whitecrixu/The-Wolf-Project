@@ -1,5 +1,5 @@
 -- Behemoth
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Behemoth")
 if not monster then return end
@@ -19,10 +19,9 @@ monster:armor(45)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -32,20 +31,20 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
     {type = COMBAT_PHYSICALDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -5},
+    {type = COMBAT_DEATHDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "You're so little!", yell = false},
     {text = "Human flesh - delicious!", yell = false},
-    {text = "Crush the intruders!", yell = false},
+    {text = "Crush the intruders!", yell = false}
 })
 
 -- Loot
@@ -74,18 +73,13 @@ monster:loot({
     {id = 7396, chance = 170},
     {id = 2125, chance = 2530},
     {id = 7413, chance = 90},
-    {id = 12403, chance = 14000},
+    {id = 12403, chance = 14000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=80, attack=100
--- name=physical, interval=2000, chance=15, range=7, max=-200, shootEffect=largerock
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=300, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -180},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -200, range = 7}
+})
 
 monster:register()

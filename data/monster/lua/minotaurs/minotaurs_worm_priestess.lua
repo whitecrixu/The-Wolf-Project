@@ -1,5 +1,5 @@
 -- Worm Priestess
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Worm Priestess")
 if not monster then return end
@@ -15,13 +15,11 @@ monster:corpseId(23470)
 monster:outfit({lookType = 613})
 monster:defense(20)
 monster:armor(20)
-monster:targetDistance(4)
-monster:runHealth(200)
+monster:runHealth(110)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,7 +29,7 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 25},
     {type = COMBAT_EARTHDAMAGE, percent = -10},
     {type = COMBAT_DEATHDAMAGE, percent = -10},
-    {type = COMBAT_ICEDAMAGE, percent = 5},
+    {type = COMBAT_ICEDAMAGE, percent = 5}
 })
 
 -- Voices
@@ -40,7 +38,7 @@ monster:voices({
     {text = "The great worm will swallow you!", yell = false},
     {text = "And our enemies he will swallow!", yell = false},
     {text = "The worm may guide me in this hour of darkness!", yell = false},
-    {text = "From the earthy depths he comes and brings freedom!", yell = false},
+    {text = "From the earthy depths he comes and brings freedom!", yell = false}
 })
 
 -- Loot
@@ -65,23 +63,17 @@ monster:loot({
     {id = 8910, chance = 1590},
     {id = 2154, chance = 560},
     {id = 2156, chance = 430},
-    {id = 7401, chance = 160},
+    {id = 7401, chance = 160}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=50, attack=50
--- name=lifedrain, interval=2000, chance=24, range=7, min=-50, max=-130, target=1, shootEffect=smallstone
--- name=energy, interval=2000, chance=16, range=4, min=-100, max=-165, shootEffect=smallearth, areaEffect=poison
--- name=worm priestess paralyze, interval=2000, chance=12
--- name=death, interval=2000, chance=10, range=7, min=-115, max=-200, radius=3, target=1, shootEffect=death, areaEffect=mortarea
--- name=earth, interval=2000, chance=13, range=7, min=-200, max=-300, radius=4, target=1, shootEffect=smallearth, areaEffect=greenspark
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=8, min=100, max=150, areaEffect=redshimmer
--- name=haste, interval=2000, chance=9, duration=1000, speedchange=198, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -100},
+    {name = "lifedrain", interval = 2000, chance = 24, minDamage = -50, maxDamage = -130, range = 7},
+    {name = "energy", interval = 2000, chance = 16, minDamage = -100, maxDamage = -165, range = 4},
+    {name = "worm priestess paralyze", interval = 2000, chance = 12},
+    {name = "death", interval = 2000, chance = 10, minDamage = -115, maxDamage = -200, range = 7, radius = 3},
+    {name = "earth", interval = 2000, chance = 13, minDamage = -200, maxDamage = -300, range = 7, radius = 4}
+})
 
 monster:register()

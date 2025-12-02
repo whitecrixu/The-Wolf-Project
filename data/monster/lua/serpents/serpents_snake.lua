@@ -1,5 +1,5 @@
 -- Snake
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Snake")
 if not monster then return end
@@ -31,17 +31,17 @@ monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = 5},
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_FIREDAMAGE, percent = -10},
-    {type = COMBAT_ICEDAMAGE, percent = -10},
+    {type = COMBAT_ICEDAMAGE, percent = -10}
 })
 
 -- Voices
 monster:voices({
-    {text = "Zzzzzzt", yell = false},
+    {text = "Zzzzzzt", yell = false}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=10, attack=8
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -18}
+})
 
 monster:register()

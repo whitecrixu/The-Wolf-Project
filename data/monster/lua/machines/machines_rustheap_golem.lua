@@ -1,5 +1,5 @@
 -- Rustheap Golem
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Rustheap Golem")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(40)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -29,21 +28,21 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 70},
     {type = COMBAT_ENERGYDAMAGE, percent = -5},
     {type = COMBAT_PHYSICALDAMAGE, percent = -5},
-    {type = COMBAT_DEATHDAMAGE, percent = 10},
+    {type = COMBAT_DEATHDAMAGE, percent = 10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true}
 })
 
 -- Voices
 monster:voices({
     {text = "*clatter*", yell = false},
     {text = "*krrk*", yell = false},
-    {text = "*frzzp*", yell = false},
+    {text = "*frzzp*", yell = false}
 })
 
 -- Loot
@@ -64,20 +63,15 @@ monster:loot({
     {id = 23542, chance = 330},
     {id = 23541, chance = 2930},
     {id = 9810, chance = 5860},
-    {id = 9813, chance = 4230},
+    {id = 9813, chance = 4230}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=118, attack=50
--- name=rustheap golem electrify, interval=2000, chance=11, range=7
--- name=frazzlemaw paralyze, interval=2000, chance=10
--- name=rustheap golem wave, interval=2000, chance=9, min=-100, max=-210
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=11, duration=6000, speedchange=428, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -168},
+    {name = "rustheap golem electrify", interval = 2000, chance = 11, range = 7},
+    {name = "frazzlemaw paralyze", interval = 2000, chance = 10},
+    {name = "rustheap golem wave", interval = 2000, chance = 9, minDamage = -100, maxDamage = -210}
+})
 
 monster:register()

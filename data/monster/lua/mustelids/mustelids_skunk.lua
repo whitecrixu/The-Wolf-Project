@@ -1,5 +1,5 @@
 -- Skunk
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Skunk")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(6035)
 monster:outfit({lookType = 106})
 monster:defense(5)
 monster:armor(5)
-monster:runHealth(8)
+monster:runHealth(2)
 
 -- Flags
 monster:attackable(true)
@@ -30,13 +30,13 @@ monster:staticAttackChance(90)
 -- Loot
 monster:loot({
     {id = 9114, chance = 4910},
-    {id = 11191, chance = 940},
+    {id = 11191, chance = 940}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-5
--- name=poison, interval=2000, chance=10, range=1, max=-3
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -5},
+    {name = "poison", interval = 2000, chance = 10, maxDamage = -3}
+})
 
 monster:register()

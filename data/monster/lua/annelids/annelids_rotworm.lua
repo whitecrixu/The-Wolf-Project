@@ -1,5 +1,5 @@
 -- Rotworm
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Rotworm")
 if not monster then return end
@@ -21,8 +21,7 @@ monster:armor(10)
 monster:attackable(true)
 monster:hostile(true)
 monster:isConvinceable(true)
-monster:pushable(false)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Loot
 monster:loot({
@@ -32,12 +31,12 @@ monster:loot({
     {id = 2671, chance = 20120},
     {id = 2376, chance = 3000},
     {id = 2398, chance = 4500},
-    {id = 10609, chance = 10000},
+    {id = 10609, chance = 10000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-40
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -40}
+})
 
 monster:register()

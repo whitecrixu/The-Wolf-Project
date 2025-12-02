@@ -1,5 +1,5 @@
 -- Walker
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Walker")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(40)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,19 +30,19 @@ monster:elements({
     {type = COMBAT_DEATHDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = 5},
     {type = COMBAT_EARTHDAMAGE, percent = 50},
-    {type = COMBAT_HOLYDAMAGE, percent = 40},
+    {type = COMBAT_HOLYDAMAGE, percent = 40}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "*zzzt, zzzt*", yell = false},
+    {text = "*zzzt, zzzt*", yell = false}
 })
 
 -- Loot
@@ -58,14 +57,14 @@ monster:loot({
     {id = 7591, chance = 3230},
     {id = 7590, chance = 2300},
     {id = 23540, chance = 1780},
-    {id = 2645, chance = 450},
+    {id = 2645, chance = 450}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=70, attack=50
--- name=walker skill reducer, interval=2000, chance=21
--- name=fire, interval=2000, chance=17, min=-125, max=-245, length=8, areaEffect=explosion
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -120},
+    {name = "walker skill reducer", interval = 2000, chance = 21},
+    {name = "fire", interval = 2000, chance = 17, minDamage = -125, maxDamage = -245, length = 8}
+})
 
 monster:register()

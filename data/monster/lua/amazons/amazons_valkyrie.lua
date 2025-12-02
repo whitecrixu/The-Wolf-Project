@@ -1,5 +1,5 @@
 -- Valkyrie
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Valkyrie")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(20523)
 monster:outfit({lookType = 139, lookHead = 113, lookBody = 57, lookLegs = 95, lookFeet = 113})
 monster:defense(20)
 monster:armor(20)
-monster:runHealth(20)
+monster:runHealth(19)
 
 -- Flags
 monster:attackable(true)
@@ -24,7 +24,6 @@ monster:hostile(true)
 monster:isSummonable(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
@@ -34,7 +33,7 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 10},
     {type = COMBAT_HOLYDAMAGE, percent = 5},
     {type = COMBAT_DEATHDAMAGE, percent = -5},
-    {type = COMBAT_PHYSICALDAMAGE, percent = -5},
+    {type = COMBAT_PHYSICALDAMAGE, percent = -5}
 })
 
 -- Voices
@@ -43,7 +42,7 @@ monster:voices({
     {text = "Head off!", yell = false},
     {text = "Your head will be mine!", yell = false},
     {text = "Stand still!", yell = false},
-    {text = "One more head for me!", yell = false},
+    {text = "One more head for me!", yell = false}
 })
 
 -- Loot
@@ -61,13 +60,13 @@ monster:loot({
     {id = 7618, chance = 591},
     {id = 2145, chance = 200},
     {id = 12399, chance = 5800},
-    {id = 12400, chance = 3400},
+    {id = 12400, chance = 3400}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-70
--- name=physical, interval=2000, chance=15, range=7, max=-50, shootEffect=spear
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -70},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -50, range = 7}
+})
 
 monster:register()

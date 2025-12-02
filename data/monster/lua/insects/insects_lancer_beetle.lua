@@ -1,5 +1,5 @@
 -- Lancer Beetle
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Lancer Beetle")
 if not monster then return end
@@ -15,32 +15,32 @@ monster:corpseId(11375)
 monster:outfit({lookType = 348})
 monster:defense(20)
 monster:armor(20)
-monster:runHealth(30)
+monster:runHealth(40)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
+monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_DEATHDAMAGE, percent = 50},
+    {type = COMBAT_DEATHDAMAGE, percent = 50}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_PARALYZE, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {condition = CONDITION_PARALYZE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Crump!", yell = true},
+    {text = "Crump!", yell = true}
 })
 
 -- Loot
@@ -51,21 +51,16 @@ monster:loot({
     {id = 10557, chance = 8333},
     {id = 10609, chance = 4166},
     {id = 11374, chance = 1123},
-    {id = 2150, chance = 247},
+    {id = 2150, chance = 247}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=40, attack=46
--- name=poisonfield, interval=2000, chance=10, radius=4, areaEffect=poison
--- name=lifedrain, interval=2000, chance=15, max=-90, length=7, areaEffect=greenspark
--- name=poisoncondition, interval=2000, chance=10, range=7, min=-40, max=-80, shootEffect=poison
--- name=lancer beetle curse, interval=2000, chance=5, range=5
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=invisible, interval=2000, chance=10, duration=3000, areaEffect=groundshaker
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -86},
+    {name = "poisonfield", interval = 2000, chance = 10, radius = 4},
+    {name = "lifedrain", interval = 2000, chance = 15, maxDamage = -90, length = 7},
+    {name = "poisoncondition", interval = 2000, chance = 10, minDamage = -40, maxDamage = -80, range = 7},
+    {name = "lancer beetle curse", interval = 2000, chance = 5, range = 5}
+})
 
 monster:register()

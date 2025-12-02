@@ -1,5 +1,5 @@
 -- Rot Elemental
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Rot Elemental")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(10)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,21 +30,21 @@ monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = 30},
     {type = COMBAT_HOLYDAMAGE, percent = 20},
     {type = COMBAT_DEATHDAMAGE, percent = 20},
-    {type = COMBAT_FIREDAMAGE, percent = -5},
+    {type = COMBAT_FIREDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "*glibb*", yell = false},
-    {text = "*splib*", yell = false},
+    {text = "*splib*", yell = false}
 })
 
 -- Loot
@@ -62,22 +61,16 @@ monster:loot({
     {id = 2155, chance = 80},
     {id = 23554, chance = 130},
     {id = 23551, chance = 60},
-    {id = 23529, chance = 5660},
+    {id = 23529, chance = 5660}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=58, attack=50
--- name=earth, interval=2000, chance=13, range=7, min=-150, max=-250, radius=3, target=1, shootEffect=gloothspear, areaEffect=poison
--- name=earth, interval=2000, chance=15, min=-150, max=-230, length=6, areaEffect=poison
--- name=poisoncondition, interval=2000, chance=10, range=7, min=-200, max=-300, target=1, shootEffect=poison, areaEffect=poison
--- name=rot elemental paralyze, interval=2000, chance=11
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=7, min=40, max=60, areaEffect=blueshimmer
--- name=speed, interval=2000, chance=9, duration=7000, speedchange=470, areaEffect=smoke
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -108},
+    {name = "earth", interval = 2000, chance = 13, minDamage = -150, maxDamage = -250, range = 7, radius = 3},
+    {name = "earth", interval = 2000, chance = 15, minDamage = -150, maxDamage = -230, length = 6},
+    {name = "poisoncondition", interval = 2000, chance = 10, minDamage = -200, maxDamage = -300, range = 7},
+    {name = "rot elemental paralyze", interval = 2000, chance = 11}
+})
 
 monster:register()

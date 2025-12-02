@@ -1,5 +1,5 @@
 -- Blood Priest
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Blood Priest")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(30)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,19 +30,19 @@ monster:elements({
     {type = COMBAT_DEATHDAMAGE, percent = 5},
     {type = COMBAT_PHYSICALDAMAGE, percent = -5},
     {type = COMBAT_FIREDAMAGE, percent = -10},
-    {type = COMBAT_HOLYDAMAGE, percent = -5},
+    {type = COMBAT_HOLYDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_DROWN, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_DROWN, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Blood for the dark god!", yell = false},
+    {text = "Blood for the dark god!", yell = false}
 })
 
 -- Loot
@@ -66,21 +65,16 @@ monster:loot({
     {id = 2195, chance = 120},
     {id = 5911, chance = 640},
     {id = 2436, chance = 180},
-    {id = 8901, chance = 290},
+    {id = 8901, chance = 290}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=40
--- name=death, interval=2000, chance=20, range=7, min=-60, max=-100, target=1, shootEffect=death, areaEffect=smallclouds
--- name=lifedrain, interval=2000, chance=15, min=-40, max=-60, radius=4, areaEffect=redshimmer
--- name=manadrain, interval=3000, chance=10, range=1, min=-80, max=-130, length=7, target=1, areaEffect=blackspark
--- name=bleedcondition, interval=2000, chance=5, range=1, min=-160, max=-290, radius=1, target=1, areaEffect=redspark
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=20, min=80, max=120, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -70},
+    {name = "death", interval = 2000, chance = 20, minDamage = -60, maxDamage = -100, range = 7},
+    {name = "lifedrain", interval = 2000, chance = 15, minDamage = -40, maxDamage = -60, radius = 4},
+    {name = "manadrain", interval = 3000, chance = 10, minDamage = -80, maxDamage = -130, length = 7},
+    {name = "bleedcondition", interval = 2000, chance = 5, minDamage = -160, maxDamage = -290, radius = 1}
+})
 
 monster:register()

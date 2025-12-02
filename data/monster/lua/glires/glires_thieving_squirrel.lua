@@ -1,5 +1,5 @@
 -- Thieving Squirrel
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Thieving Squirrel")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(7628)
 monster:outfit({lookType = 274})
 monster:defense(5)
 monster:armor(5)
-monster:runHealth(55)
+monster:runHealth(5)
 
 -- Flags
 monster:attackable(true)
@@ -25,21 +25,22 @@ monster:isSummonable(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
 monster:pushable(true)
+monster:staticAttackChance(90)
 
 -- Voices
 monster:voices({
-    {text = "Chchch", yell = false},
+    {text = "Chchch", yell = false}
 })
 
 -- Loot
 monster:loot({
     {id = 11100, chance = 100000},
-    {id = 7910, chance = 980},
+    {id = 7910, chance = 980}
 })
 
--- Defense spells (for reference, implement with spell system)
---[[
--- name=invisible, interval=2000, chance=10, duration=3000, areaEffect=blueshimmer
---]]
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -11}
+})
 
 monster:register()

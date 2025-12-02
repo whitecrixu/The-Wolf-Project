@@ -1,5 +1,5 @@
 -- Orshabaal
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Orshabaal")
 if not monster then return end
@@ -15,29 +15,29 @@ monster:corpseId(2916)
 monster:outfit({lookType = 201})
 monster:defense(111)
 monster:armor(90)
-monster:runHealth(2500)
+monster:runHealth(2050)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_DEATHDAMAGE, percent = 50},
     {type = COMBAT_HOLYDAMAGE, percent = -1},
-    {type = COMBAT_ICEDAMAGE, percent = -1},
+    {type = COMBAT_ICEDAMAGE, percent = -1}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -46,12 +46,7 @@ monster:voices({
     {text = "YOU ARE DOOMED!", yell = false},
     {text = "ORSHABAAL IS BACK!", yell = false},
     {text = "Be prepared for the day my masters will come for you!", yell = false},
-    {text = "SOULS FOR ORSHABAAL!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "demon", chance = 10, interval = 1000, max = 4},
+    {text = "SOULS FOR ORSHABAAL!", yell = false}
 })
 
 -- Loot
@@ -100,25 +95,18 @@ monster:loot({
     {id = 2164, chance = 6666},
     {id = 2176, chance = 6666},
     {id = 5808, chance = 6666},
-    {id = 2402, chance = 6666},
+    {id = 2402, chance = 6666}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=190, attack=199
--- name=manadrain, interval=1000, chance=13, range=7, min=-300, max=-600
--- name=manadrain, interval=1000, chance=6, min=-150, max=-350, radius=5, areaEffect=poison
--- name=effect, interval=1000, chance=6, radius=5, areaEffect=blackspark
--- name=fire, interval=1000, chance=34, range=7, min=-310, max=-600, radius=7, target=1, shootEffect=fire, areaEffect=firearea
--- name=firefield, interval=1000, chance=10, range=7, radius=4, target=1, shootEffect=fire
--- name=energy, interval=1000, chance=15, min=-500, max=-850, length=8, areaEffect=energy
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=1000, chance=9, min=1500, max=2500, areaEffect=blueshimmer
--- name=healing, interval=1000, chance=17, min=600, max=1000, areaEffect=blueshimmer
--- name=speed, interval=1000, chance=5, duration=7000, speedchange=1901, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -389},
+    {name = "manadrain", interval = 1000, chance = 13, minDamage = -300, maxDamage = -600, range = 7},
+    {name = "manadrain", interval = 1000, chance = 6, minDamage = -150, maxDamage = -350, radius = 5},
+    {name = "effect", interval = 1000, chance = 6, radius = 5},
+    {name = "fire", interval = 1000, chance = 34, minDamage = -310, maxDamage = -600, range = 7, radius = 7},
+    {name = "firefield", interval = 1000, chance = 10, range = 7, radius = 4},
+    {name = "energy", interval = 1000, chance = 15, minDamage = -500, maxDamage = -850, length = 8}
+})
 
 monster:register()

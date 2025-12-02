@@ -1,5 +1,5 @@
 -- Crazed Beggar
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Crazed Beggar")
 if not monster then return end
@@ -25,7 +25,7 @@ monster:isSummonable(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
 monster:pushable(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -33,7 +33,7 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_HOLYDAMAGE, percent = 10},
     {type = COMBAT_EARTHDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -10},
+    {type = COMBAT_DEATHDAMAGE, percent = -10}
 })
 
 -- Voices
@@ -43,7 +43,7 @@ monster:voices({
     {text = "You are one of THEM! Die!", yell = false},
     {text = "Wanna buy roses??", yell = false},
     {text = "They're coming!", yell = false},
-    {text = "Make it stop!", yell = false},
+    {text = "Make it stop!", yell = false}
 })
 
 -- Loot
@@ -62,12 +62,12 @@ monster:loot({
     {id = 9808, chance = 80},
     {id = 2213, chance = 120},
     {id = 2072, chance = 360},
-    {id = 6092, chance = 300},
+    {id = 6092, chance = 300}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=15, attack=20
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -35}
+})
 
 monster:register()

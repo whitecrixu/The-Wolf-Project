@@ -1,5 +1,5 @@
 -- Lost Husher
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Lost Husher")
 if not monster then return end
@@ -15,13 +15,11 @@ monster:corpseId(19964)
 monster:outfit({lookType = 537})
 monster:defense(25)
 monster:armor(25)
-monster:targetDistance(4)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -33,19 +31,19 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 15},
     {type = COMBAT_PHYSICALDAMAGE, percent = 5},
     {type = COMBAT_FIREDAMAGE, percent = 40},
-    {type = COMBAT_DEATHDAMAGE, percent = 5},
+    {type = COMBAT_DEATHDAMAGE, percent = 5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Arr far zwar!", yell = false},
+    {text = "Arr far zwar!", yell = false}
 })
 
 -- Loot
@@ -76,22 +74,16 @@ monster:loot({
     {id = 2436, chance = 280},
     {id = 7886, chance = 880},
     {id = 2432, chance = 330},
-    {id = 7885, chance = 50},
+    {id = 7885, chance = 50}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=death, interval=2000, chance=10, min=-150, max=-300, length=6, areaEffect=blacksmoke
--- name=manadrain, interval=2000, chance=10, min=-150, max=-250, radius=5, areaEffect=blacksmoke
--- name=death, interval=2000, chance=10, range=7, min=-150, max=-200, shootEffect=suddendeath, areaEffect=mortarea
--- name=earth, interval=2000, chance=10, range=7, min=-150, max=-250, radius=2, target=1, shootEffect=smallearth, areaEffect=greenshimmer
--- name=drunk, interval=2000, chance=10, radius=4, duration=6000, areaEffect=rednote
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=75, max=92, areaEffect=yellowenergy
--- name=invisible, interval=2000, chance=15, duration=5000, areaEffect=teleport
---]]
+-- Attacks
+monster:attacks({
+    {name = "death", interval = 2000, chance = 10, minDamage = -150, maxDamage = -300, length = 6},
+    {name = "manadrain", interval = 2000, chance = 10, minDamage = -150, maxDamage = -250, radius = 5},
+    {name = "death", interval = 2000, chance = 10, minDamage = -150, maxDamage = -200, range = 7},
+    {name = "earth", interval = 2000, chance = 10, minDamage = -150, maxDamage = -250, range = 7, radius = 2},
+    {name = "drunk", interval = 2000, chance = 10, radius = 4}
+})
 
 monster:register()

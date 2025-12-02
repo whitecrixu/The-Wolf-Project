@@ -1,5 +1,5 @@
 -- Undead Minion
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Undead Minion")
 if not monster then return end
@@ -22,7 +22,6 @@ monster:attackable(true)
 monster:hostile(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,8 +30,8 @@ monster:staticAttackChance(90)
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_DRUNK, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {condition = CONDITION_DRUNK, immunity = true}
 })
 
 -- Loot
@@ -43,13 +42,13 @@ monster:loot({
     {id = 2513, chance = 1000},
     {id = 6570, chance = 5538},
     {id = 6571, chance = 1538},
-    {id = 2515, chance = 5000},
+    {id = 2515, chance = 5000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=1000, chance=100, skill=80, attack=55
--- name=lifedrain, interval=1000, chance=13, min=-100, max=-160, radius=4, areaEffect=mortarea
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 1000, chance = 100, minDamage = 0, maxDamage = -135},
+    {name = "lifedrain", interval = 1000, chance = 13, minDamage = -100, maxDamage = -160, radius = 4}
+})
 
 monster:register()

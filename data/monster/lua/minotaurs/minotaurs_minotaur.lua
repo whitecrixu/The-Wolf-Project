@@ -1,5 +1,5 @@
 -- Minotaur
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Minotaur")
 if not monster then return end
@@ -32,13 +32,13 @@ monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = -10},
     {type = COMBAT_DEATHDAMAGE, percent = -5},
-    {type = COMBAT_ENERGYDAMAGE, percent = -15},
+    {type = COMBAT_ENERGYDAMAGE, percent = -15}
 })
 
 -- Voices
 monster:voices({
     {text = "Kaplar!", yell = false},
-    {text = "Hurr!", yell = false},
+    {text = "Hurr!", yell = false}
 })
 
 -- Loot
@@ -54,12 +54,12 @@ monster:loot({
     {id = 2554, chance = 310},
     {id = 5878, chance = 990},
     {id = 2172, chance = 110},
-    {id = 12428, chance = 2090, maxCount = 2},
+    {id = 12428, chance = 2090, maxCount = 2}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=20, attack=30
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -50}
+})
 
 monster:register()

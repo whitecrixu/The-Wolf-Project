@@ -1,5 +1,5 @@
 -- Hive Overseer
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Hive Overseer")
 if not monster then return end
@@ -15,7 +15,6 @@ monster:corpseId(15354)
 monster:outfit({lookType = 458})
 monster:defense(45)
 monster:armor(45)
-monster:targetDistance(4)
 
 -- Flags
 monster:attackable(true)
@@ -23,30 +22,26 @@ monster:hostile(true)
 monster:pushable(true)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 70},
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_PHYSICALDAMAGE, percent = 60},
-    {type = COMBAT_HOLYDAMAGE, percent = 10},
+    {type = COMBAT_HOLYDAMAGE, percent = 10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Zopp!", yell = false},
-    {text = "Kropp!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "Spidris Elite", chance = 40, interval = 2000, max = 2},
+    {text = "Kropp!", yell = false}
 })
 
 -- Loot
@@ -66,20 +61,14 @@ monster:loot({
     {id = 15492, chance = 1650},
     {id = 15643, chance = 830},
     {id = 15491, chance = 920},
-    {id = 2645, chance = 550},
+    {id = 2645, chance = 550}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=90, attack=90
--- name=earth, interval=2000, chance=20, min=-60, max=-80, radius=4, areaEffect=poison
--- name=poisoncondition, interval=2000, chance=20, min=-600, max=-1000, radius=4, areaEffect=greenbubble
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=50, min=50, max=100, areaEffect=blueshimmer
--- name=healing, interval=2000, chance=15, min=500, max=700, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -180},
+    {name = "earth", interval = 2000, chance = 20, minDamage = -60, maxDamage = -80, radius = 4},
+    {name = "poisoncondition", interval = 2000, chance = 20, minDamage = -600, maxDamage = -1000, radius = 4}
+})
 
 monster:register()

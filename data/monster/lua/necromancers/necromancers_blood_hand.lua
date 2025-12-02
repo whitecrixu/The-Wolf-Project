@@ -1,5 +1,5 @@
 -- Blood Hand
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Blood Hand")
 if not monster then return end
@@ -15,12 +15,10 @@ monster:corpseId(21257)
 monster:outfit({lookType = 552})
 monster:defense(25)
 monster:armor(25)
-monster:targetDistance(0)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,20 +29,20 @@ monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = 5},
     {type = COMBAT_DEATHDAMAGE, percent = 5},
     {type = COMBAT_FIREDAMAGE, percent = -10},
-    {type = COMBAT_HOLYDAMAGE, percent = -5},
+    {type = COMBAT_HOLYDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_DROWN, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_DROWN, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Blood for the dark god!", yell = false},
-    {text = "Die, filth!", yell = false},
+    {text = "Die, filth!", yell = false}
 })
 
 -- Loot
@@ -65,20 +63,15 @@ monster:loot({
     {id = 2195, chance = 210},
     {id = 5911, chance = 500},
     {id = 2436, chance = 130},
-    {id = 7456, chance = 10},
+    {id = 7456, chance = 10}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=60, attack=45
--- name=lifedrain, interval=2000, chance=20, min=-50, max=-100, radius=4, areaEffect=redshimmer
--- name=speed, interval=2000, chance=10, radius=4, target=1, duration=15000, speedchange=-600, areaEffect=yellowspark
--- name=bleedcondition, interval=2000, chance=15, min=-120, max=-160, radius=6, areaEffect=blackspark
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=physical, interval=2000, chance=10, radius=1, areaEffect=insects
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -105},
+    {name = "lifedrain", interval = 2000, chance = 20, minDamage = -50, maxDamage = -100, radius = 4},
+    {name = "speed", interval = 2000, chance = 10, radius = 4},
+    {name = "bleedcondition", interval = 2000, chance = 15, minDamage = -120, maxDamage = -160, radius = 6}
+})
 
 monster:register()

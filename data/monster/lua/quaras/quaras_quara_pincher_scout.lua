@@ -1,5 +1,5 @@
 -- Quara Pincher Scout
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Quara Pincher Scout")
 if not monster then return end
@@ -19,30 +19,29 @@ monster:armor(45)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = -10},
-    {type = COMBAT_PHYSICALDAMAGE, percent = 10},
+    {type = COMBAT_PHYSICALDAMAGE, percent = 10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Clank clank!", yell = false},
     {text = "Clap!", yell = false},
-    {text = "Crrrk! Crrrk!", yell = false},
+    {text = "Crrrk! Crrrk!", yell = false}
 })
 
 -- Loot
@@ -55,13 +54,13 @@ monster:loot({
     {id = 2147, chance = 3440},
     {id = 5895, chance = 1000},
     {id = 2177, chance = 1000},
-    {id = 13305, chance = 10},
+    {id = 13305, chance = 10}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=70, attack=60
--- name=speed, interval=2000, chance=20, range=1, duration=3000, speedchange=-600, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -130},
+    {name = "speed", interval = 2000, chance = 20}
+})
 
 monster:register()

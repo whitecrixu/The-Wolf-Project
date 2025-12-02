@@ -1,5 +1,5 @@
 -- Lost Basher
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Lost Basher")
 if not monster then return end
@@ -20,29 +20,28 @@ monster:armor(30)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_DEATHDAMAGE, percent = 1},
     {type = COMBAT_ICEDAMAGE, percent = 1},
     {type = COMBAT_ENERGYDAMAGE, percent = 15},
-    {type = COMBAT_FIREDAMAGE, percent = 40},
+    {type = COMBAT_FIREDAMAGE, percent = 40}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Yhouuuu!", yell = false},
+    {text = "Yhouuuu!", yell = false}
 })
 
 -- Loot
@@ -75,20 +74,15 @@ monster:loot({
     {id = 7427, chance = 160},
     {id = 2477, chance = 310},
     {id = 2454, chance = 120},
-    {id = 18413, chance = 840},
+    {id = 18413, chance = 840}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=80, attack=78
--- name=physical, interval=2000, chance=15, range=7, max=-220, radius=3, target=1, shootEffect=whirlwindaxe, areaEffect=explosionarea
--- name=drunk, interval=2000, chance=15, radius=4, target=1, duration=6000, shootEffect=whirlwindclub, areaEffect=rednote
--- name=speed, interval=2000, chance=15, radius=2, duration=15000, speedchange=-650, areaEffect=energy
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=250, max=500, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -158},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -220, range = 7, radius = 3},
+    {name = "drunk", interval = 2000, chance = 15, radius = 4},
+    {name = "speed", interval = 2000, chance = 15, radius = 2}
+})
 
 monster:register()

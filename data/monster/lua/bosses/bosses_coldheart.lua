@@ -1,5 +1,5 @@
 -- Coldheart
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Coldheart")
 if not monster then return end
@@ -19,22 +19,21 @@ monster:armor(25)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(50)
+monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
-    {condition = CONDITION_FIRE, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
+    {condition = CONDITION_FIRE, immunity = true}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=100, attack=40
--- name=ice, interval=2000, chance=25, max=-710, length=8, areaEffect=icearea
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -140},
+    {name = "ice", interval = 2000, chance = 25, maxDamage = -710, length = 8}
+})
 
 monster:register()

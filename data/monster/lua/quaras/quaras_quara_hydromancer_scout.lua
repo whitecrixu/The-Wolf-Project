@@ -1,5 +1,5 @@
 -- Quara Hydromancer Scout
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Quara Hydromancer Scout")
 if not monster then return end
@@ -19,23 +19,22 @@ monster:armor(15)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_ENERGYDAMAGE, percent = -10},
+    {type = COMBAT_ENERGYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -45,7 +44,7 @@ monster:voices({
     {text = "Quara tsha Fach!", yell = false},
     {text = "Tssssha Quara!", yell = false},
     {text = "Blubber.", yell = false},
-    {text = "Blup.", yell = false},
+    {text = "Blup.", yell = false}
 })
 
 -- Loot
@@ -62,22 +61,17 @@ monster:loot({
     {id = 2214, chance = 590},
     {id = 2476, chance = 890},
     {id = 2425, chance = 1180},
-    {id = 2670, chance = 8400, maxCount = 4},
+    {id = 2670, chance = 8400, maxCount = 4}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=40
--- name=ice, interval=2000, chance=10, min=-100, max=-180, length=8, areaEffect=greenspark
--- name=ice, interval=2000, chance=10, min=-90, max=-150, radius=3, areaEffect=bubbles
--- name=lifedrain, interval=2000, chance=10, min=-170, max=-240, length=8, areaEffect=bubbles
--- name=lifedrain, interval=2000, chance=15, range=7, max=-170, target=1, areaEffect=redshimmer
--- name=speed, interval=2000, chance=15, range=7, duration=15000, speedchange=-600, areaEffect=redshimmer
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=100, max=120, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -70},
+    {name = "ice", interval = 2000, chance = 10, minDamage = -100, maxDamage = -180, length = 8},
+    {name = "ice", interval = 2000, chance = 10, minDamage = -90, maxDamage = -150, radius = 3},
+    {name = "lifedrain", interval = 2000, chance = 10, minDamage = -170, maxDamage = -240, length = 8},
+    {name = "lifedrain", interval = 2000, chance = 15, maxDamage = -170, range = 7},
+    {name = "speed", interval = 2000, chance = 15, range = 7}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Mad Scientist
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Mad Scientist")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(15)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,13 +30,13 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_ICEDAMAGE, percent = 10},
     {type = COMBAT_HOLYDAMAGE, percent = 20},
-    {type = COMBAT_DEATHDAMAGE, percent = -5},
+    {type = COMBAT_DEATHDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_DROWN, immunity = true},
+    {condition = CONDITION_DROWN, immunity = true}
 })
 
 -- Voices
@@ -45,7 +44,7 @@ monster:voices({
     {text = "Die in the name of Science!", yell = false},
     {text = "You will regret interrupting my studies!", yell = false},
     {text = "Let me test this!", yell = false},
-    {text = "I will study your corpse!", yell = false},
+    {text = "I will study your corpse!", yell = false}
 })
 
 -- Loot
@@ -61,20 +60,15 @@ monster:loot({
     {id = 7762, chance = 470},
     {id = 6324, chance = 820},
     {id = 2687, chance = 1200, maxCount = 5},
-    {id = 7440, chance = 130},
+    {id = 7440, chance = 130}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=25, attack=20
--- name=drown, interval=2000, chance=15, range=7, min=-20, max=-56, radius=3, target=1, shootEffect=smallearth, areaEffect=poff
--- name=earth, interval=2000, chance=15, min=-20, max=-36, shootEffect=poison, areaEffect=energy
--- name=speed, interval=2000, chance=10, range=7, target=1, duration=2000, speedchange=-300, shootEffect=poison, areaEffect=smallplants
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=10, max=30, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -45},
+    {name = "drown", interval = 2000, chance = 15, minDamage = -20, maxDamage = -56, range = 7, radius = 3},
+    {name = "earth", interval = 2000, chance = 15, minDamage = -20, maxDamage = -36},
+    {name = "speed", interval = 2000, chance = 10, range = 7}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Defiler
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Defiler")
 if not monster then return end
@@ -15,35 +15,34 @@ monster:corpseId(6532)
 monster:outfit({lookType = 238})
 monster:defense(20)
 monster:armor(20)
-monster:runHealth(85)
+monster:runHealth(365)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = 20},
-    {type = COMBAT_FIREDAMAGE, percent = -25},
+    {type = COMBAT_FIREDAMAGE, percent = -25}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Blubb", yell = false},
-    {text = "Blubb Blubb", yell = false},
+    {text = "Blubb Blubb", yell = false}
 })
 
 -- Loot
@@ -64,22 +63,17 @@ monster:loot({
     {id = 2145, chance = 2439, maxCount = 2},
     {id = 2156, chance = 1538},
     {id = 2154, chance = 1219},
-    {id = 2155, chance = 613},
+    {id = 2155, chance = 613}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=50, attack=80
--- name=poison, interval=2000, chance=20, range=7, min=-160, max=-270, shootEffect=poison
--- name=poisoncondition, interval=2000, chance=15, range=7, min=-400, max=-640, radius=7, areaEffect=greenspark
--- name=poison, interval=2000, chance=20, min=-120, max=-170, radius=3, areaEffect=poison
--- name=poisoncondition, interval=2000, chance=10, min=-500, max=-1000, length=8, spread=3, areaEffect=smallplants
--- name=speed, interval=2000, chance=15, length=8, spread=3, duration=15000, speedchange=-700, areaEffect=smallclouds
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=280, max=350, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -130},
+    {name = "poison", interval = 2000, chance = 20, minDamage = -160, maxDamage = -270, range = 7},
+    {name = "poisoncondition", interval = 2000, chance = 15, minDamage = -400, maxDamage = -640, range = 7, radius = 7},
+    {name = "poison", interval = 2000, chance = 20, minDamage = -120, maxDamage = -170, radius = 3},
+    {name = "poisoncondition", interval = 2000, chance = 10, minDamage = -500, maxDamage = -1000, length = 8, spread = 3},
+    {name = "speed", interval = 2000, chance = 15, length = 8, spread = 3}
+})
 
 monster:register()

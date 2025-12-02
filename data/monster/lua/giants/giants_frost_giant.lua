@@ -1,5 +1,5 @@
 -- Frost Giant
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Frost Giant")
 if not monster then return end
@@ -22,13 +22,12 @@ monster:attackable(true)
 monster:hostile(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true}
 })
 
 -- Voices
@@ -38,7 +37,7 @@ monster:voices({
     {text = "Joh Thun!", yell = false},
     {text = "Brore Smode!", yell = false},
     {text = "Horre Sjan Flan!", yell = false},
-    {text = "Forle Bramma!", yell = false},
+    {text = "Forle Bramma!", yell = false}
 })
 
 -- Loot
@@ -54,18 +53,13 @@ monster:loot({
     {id = 7618, chance = 819},
     {id = 7290, chance = 60},
     {id = 2209, chance = 130},
-    {id = 10575, chance = 5000},
+    {id = 10575, chance = 5000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=45, attack=40
--- name=physical, interval=2000, chance=15, range=7, max=-90, shootEffect=largerock
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=300, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -85},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -90, range = 7}
+})
 
 monster:register()

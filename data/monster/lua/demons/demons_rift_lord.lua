@@ -1,5 +1,5 @@
 -- Rift Lord
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Rift Lord")
 if not monster then return end
@@ -18,8 +18,12 @@ monster:armor(0)
 -- Flags
 monster:attackable(false)
 monster:hostile(false)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(98)
+monster:staticAttackChance(90)
+
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -5}
+})
 
 monster:register()

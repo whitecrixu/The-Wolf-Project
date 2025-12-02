@@ -1,5 +1,5 @@
 -- Mr. Punish
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Mr. Punish")
 if not monster then return end
@@ -15,32 +15,31 @@ monster:corpseId(6331)
 monster:outfit({lookType = 234})
 monster:defense(72)
 monster:armor(64)
-monster:runHealth(2000)
+monster:runHealth(1200)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(50)
+monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_ENERGY, immunity = true},
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
 monster:loot({
-    {id = 6537, chance = 100000},
+    {id = 6537, chance = 100000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, min=-660, max=-1280
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = -660, maxDamage = -1280}
+})
 
 monster:register()

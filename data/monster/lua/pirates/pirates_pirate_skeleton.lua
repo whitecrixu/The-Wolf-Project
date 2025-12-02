@@ -1,5 +1,5 @@
 -- Pirate Skeleton
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Pirate Skeleton")
 if not monster then return end
@@ -15,7 +15,7 @@ monster:corpseId(6070)
 monster:outfit({lookType = 195})
 monster:defense(15)
 monster:armor(15)
-monster:runHealth(20)
+monster:runHealth(19)
 
 -- Flags
 monster:attackable(true)
@@ -26,12 +26,12 @@ monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_HOLYDAMAGE, percent = -25},
+    {type = COMBAT_HOLYDAMAGE, percent = -25}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_CURSED, immunity = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true}
 })
 
 -- Loot
@@ -43,12 +43,12 @@ monster:loot({
     {id = 2376, chance = 550},
     {id = 2449, chance = 960},
     {id = 2229, chance = 4460},
-    {id = 10559, chance = 4730},
+    {id = 10559, chance = 4730}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=40, attack=20
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -60}
+})
 
 monster:register()

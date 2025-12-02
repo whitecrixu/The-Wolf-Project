@@ -1,5 +1,5 @@
 -- Frazzlemaw
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Frazzlemaw")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(30)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -32,19 +31,19 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 15},
     {type = COMBAT_ICEDAMAGE, percent = 5},
     {type = COMBAT_EARTHDAMAGE, percent = 20},
-    {type = COMBAT_HOLYDAMAGE, percent = -10},
+    {type = COMBAT_HOLYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Mwaaaahnducate youuuuuu *gurgle*", yell = false},
-    {text = "mwaaah!", yell = false},
+    {text = "mwaaah!", yell = false}
 })
 
 -- Loot
@@ -78,22 +77,17 @@ monster:loot({
     {id = 22396, chance = 450},
     {id = 22532, chance = 18760},
     {id = 22533, chance = 16000},
-    {id = 2240, chance = 9420},
+    {id = 2240, chance = 9420}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=90, attack=80
--- name=bleedcondition, interval=2000, chance=10, min=-300, max=-400, radius=3, areaEffect=redspark
--- name=physical, interval=2000, chance=10, max=-700, length=5, target=1, areaEffect=explosionarea
--- name=physical, interval=2000, chance=15, max=-400, radius=2, target=1, shootEffect=largerock, areaEffect=stones
--- name=speed, interval=2000, chance=15, radius=5, duration=15000, speedchange=-600, areaEffect=redshimmer
--- name=manadrain, interval=2000, chance=10, min=-80, max=-150, radius=4, areaEffect=redshimmer
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=250, max=425, areaEffect=greenspark
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -170},
+    {name = "bleedcondition", interval = 2000, chance = 10, minDamage = -300, maxDamage = -400, radius = 3},
+    {name = "physical", interval = 2000, chance = 10, maxDamage = -700, length = 5},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -400, radius = 2},
+    {name = "speed", interval = 2000, chance = 15, radius = 5},
+    {name = "manadrain", interval = 2000, chance = 10, minDamage = -80, maxDamage = -150, radius = 4}
+})
 
 monster:register()

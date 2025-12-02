@@ -1,5 +1,5 @@
 -- Angry Adventurer
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Angry Adventurer")
 if not monster then return end
@@ -21,13 +21,12 @@ monster:attackable(true)
 monster:hostile(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=15, attack=16
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -31}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Dwarf Geomancer
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Dwarf Geomancer")
 if not monster then return end
@@ -15,17 +15,15 @@ monster:corpseId(6015)
 monster:outfit({lookType = 66})
 monster:defense(15)
 monster:armor(15)
-monster:targetDistance(4)
-monster:runHealth(110)
+monster:runHealth(38)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -34,19 +32,19 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
     {type = COMBAT_HOLYDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = -5},
-    {type = COMBAT_DEATHDAMAGE, percent = -1},
+    {type = COMBAT_DEATHDAMAGE, percent = -1}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Hail Durin!", yell = false},
     {text = "Earth is the strongest element.", yell = false},
-    {text = "Dust to dust.", yell = false},
+    {text = "Dust to dust.", yell = false}
 })
 
 -- Loot
@@ -64,18 +62,13 @@ monster:loot({
     {id = 5880, chance = 120},
     {id = 7886, chance = 470},
     {id = 12419, chance = 7000},
-    {id = 12414, chance = 8000},
+    {id = 12414, chance = 8000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=earth, interval=2000, chance=20, range=7, min=-50, max=-110, shootEffect=smallearth, areaEffect=greenbubble
--- name=manadrain, interval=2000, chance=10, range=7, min=-50, max=-80
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=40, min=75, max=125, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "earth", interval = 2000, chance = 20, minDamage = -50, maxDamage = -110, range = 7},
+    {name = "manadrain", interval = 2000, chance = 10, minDamage = -50, maxDamage = -80, range = 7}
+})
 
 monster:register()

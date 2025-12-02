@@ -1,5 +1,5 @@
 -- Barbarian Skullhunter
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Barbarian Skullhunter")
 if not monster then return end
@@ -21,9 +21,8 @@ monster:armor(15)
 monster:attackable(true)
 monster:hostile(true)
 monster:isConvinceable(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -32,19 +31,19 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_PHYSICALDAMAGE, percent = 5},
     {type = COMBAT_EARTHDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -1},
+    {type = COMBAT_DEATHDAMAGE, percent = -1}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_PARALYZE, immunity = true},
+    {condition = CONDITION_PARALYZE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "You will become my trophy.", yell = false},
     {text = "Fight harder, coward.", yell = false},
-    {text = "Show that you are a worthy opponent.", yell = false},
+    {text = "Show that you are a worthy opponent.", yell = false}
 })
 
 -- Loot
@@ -61,12 +60,12 @@ monster:loot({
     {id = 5913, chance = 500},
     {id = 2168, chance = 250},
     {id = 7462, chance = 100},
-    {id = 7457, chance = 120},
+    {id = 7457, chance = 120}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=20, attack=40
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -60}
+})
 
 monster:register()

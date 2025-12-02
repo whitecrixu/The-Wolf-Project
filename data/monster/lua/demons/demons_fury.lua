@@ -1,5 +1,5 @@
 -- Fury
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Fury")
 if not monster then return end
@@ -20,10 +20,9 @@ monster:armor(20)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -32,14 +31,14 @@ monster:elements({
     {type = COMBAT_DEATHDAMAGE, percent = -10},
     {type = COMBAT_ENERGYDAMAGE, percent = -10},
     {type = COMBAT_EARTHDAMAGE, percent = -10},
-    {type = COMBAT_PHYSICALDAMAGE, percent = -10},
+    {type = COMBAT_PHYSICALDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_FIRE, immunity = true},
+    {condition = CONDITION_FIRE, immunity = true}
 })
 
 -- Voices
@@ -47,7 +46,7 @@ monster:voices({
     {text = "Ahhhhrrrr!", yell = false},
     {text = "Waaaaah!", yell = false},
     {text = "Carnage!", yell = false},
-    {text = "Dieee!", yell = false},
+    {text = "Dieee!", yell = false}
 })
 
 -- Loot
@@ -73,24 +72,19 @@ monster:loot({
     {id = 5944, chance = 50},
     {id = 2124, chance = 410},
     {id = 8844, chance = 29280, maxCount = 4},
-    {id = 6301, chance = 60},
+    {id = 6301, chance = 60}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=50, attack=170
--- name=fire, interval=2000, chance=10, min=-200, max=-300, length=8, spread=3, areaEffect=explosionarea
--- name=death, interval=2000, chance=5, min=-120, max=-700, length=8, areaEffect=redspark
--- name=death, interval=2000, chance=10, min=-120, max=-300, radius=4, areaEffect=redspark
--- name=fury skill reducer, interval=2000, chance=5
--- name=lifedrain, interval=2000, chance=10, min=-120, max=-300, radius=3, areaEffect=blackspark
--- name=death, interval=2000, chance=10, range=7, min=-125, max=-250, shootEffect=suddendeath, areaEffect=smallclouds
--- name=speed, interval=2000, chance=15, range=7, duration=30000, speedchange=-800, shootEffect=suddendeath, areaEffect=smallclouds
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=800, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -220},
+    {name = "fire", interval = 2000, chance = 10, minDamage = -200, maxDamage = -300, length = 8, spread = 3},
+    {name = "death", interval = 2000, chance = 5, minDamage = -120, maxDamage = -700, length = 8},
+    {name = "death", interval = 2000, chance = 10, minDamage = -120, maxDamage = -300, radius = 4},
+    {name = "fury skill reducer", interval = 2000, chance = 5},
+    {name = "lifedrain", interval = 2000, chance = 10, minDamage = -120, maxDamage = -300, radius = 3},
+    {name = "death", interval = 2000, chance = 10, minDamage = -125, maxDamage = -250, range = 7},
+    {name = "speed", interval = 2000, chance = 15, range = 7}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Rorc
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Rorc")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(25)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -29,12 +28,12 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_EARTHDAMAGE, percent = -20},
     {type = COMBAT_DEATHDAMAGE, percent = -5},
-    {type = COMBAT_HOLYDAMAGE, percent = 10},
+    {type = COMBAT_HOLYDAMAGE, percent = 10}
 })
 
 -- Voices
 monster:voices({
-    {text = "Kroaaah!!", yell = false},
+    {text = "Kroaaah!!", yell = false}
 })
 
 -- Loot
@@ -46,18 +45,12 @@ monster:loot({
     {id = 2129, chance = 7410},
     {id = 2428, chance = 2040},
     {id = 2425, chance = 930},
-    {id = 21313, chance = 790},
+    {id = 21313, chance = 790}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=40, attack=40
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=40, max=55
--- name=speed, interval=2000, chance=15, duration=3000, speedchange=300, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -80}
+})
 
 monster:register()

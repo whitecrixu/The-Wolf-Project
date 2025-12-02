@@ -1,5 +1,5 @@
 -- Cyclops Smith
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Cyclops Smith")
 if not monster then return end
@@ -21,9 +21,9 @@ monster:armor(25)
 monster:attackable(true)
 monster:hostile(true)
 monster:isConvinceable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -31,14 +31,14 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 10},
     {type = COMBAT_HOLYDAMAGE, percent = 1},
     {type = COMBAT_EARTHDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -5},
+    {type = COMBAT_DEATHDAMAGE, percent = -5}
 })
 
 -- Voices
 monster:voices({
     {text = "Outis emoi g' onoma.", yell = false},
     {text = "Whack da humy!", yell = false},
-    {text = "Ai humy phary ty kaynon", yell = false},
+    {text = "Ai humy phary ty kaynon", yell = false}
 })
 
 -- Loot
@@ -56,14 +56,14 @@ monster:loot({
     {id = 7588, chance = 390},
     {id = 2209, chance = 90},
     {id = 7452, chance = 150},
-    {id = 10574, chance = 10280},
+    {id = 10574, chance = 10280}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=50, attack=50
--- name=physical, interval=2000, chance=10, range=7, max=-70, shootEffect=whirlwindclub
--- name=drunk, interval=2000, chance=10, duration=4000, shootEffect=whirlwindclub, areaEffect=stun
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -100},
+    {name = "physical", interval = 2000, chance = 10, maxDamage = -70, range = 7},
+    {name = "drunk", interval = 2000, chance = 10}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Deepling Elite
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Deepling Elite")
 if not monster then return end
@@ -15,7 +15,6 @@ monster:corpseId(15176)
 monster:outfit({lookType = 441})
 monster:defense(30)
 monster:armor(30)
-monster:targetDistance(0)
 
 -- Flags
 monster:attackable(true)
@@ -29,7 +28,7 @@ monster:staticAttackChance(90)
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_PARALYZE, immunity = true},
+    {condition = CONDITION_PARALYZE, immunity = true}
 })
 
 -- Loot
@@ -49,18 +48,13 @@ monster:loot({
     {id = 13838, chance = 3380},
     {id = 5895, chance = 2000},
     {id = 15453, chance = 1234},
-    {id = 15451, chance = 640},
+    {id = 15451, chance = 640}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=90, attack=80
--- name=physical, interval=2000, chance=20, range=7, min=-0, max=-225, target=1, shootEffect=largerock
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=150, max=200, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -170},
+    {name = "physical", interval = 2000, chance = 20, maxDamage = -225, range = 7}
+})
 
 monster:register()

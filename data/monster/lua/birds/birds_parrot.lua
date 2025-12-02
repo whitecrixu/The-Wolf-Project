@@ -1,5 +1,5 @@
 -- Parrot
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Parrot")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(6056)
 monster:outfit({lookType = 217})
 monster:defense(5)
 monster:armor(5)
-monster:runHealth(25)
+monster:runHealth(2)
 
 -- Flags
 monster:attackable(true)
@@ -42,12 +42,12 @@ monster:voices({
     {text = "Tarrrrp?", yell = false},
     {text = "You are corrrrupt! Corrrrupt!", yell = false},
     {text = "You powerrrrrrabuserrrrr!", yell = false},
-    {text = "You advanshed, you advanshed!", yell = false},
+    {text = "You advanshed, you advanshed!", yell = false}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=10, attack=5
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -15}
+})
 
 monster:register()

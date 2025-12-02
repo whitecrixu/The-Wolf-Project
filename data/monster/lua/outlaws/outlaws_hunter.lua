@@ -1,5 +1,5 @@
 -- Hunter
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Hunter")
 if not monster then return end
@@ -16,22 +16,20 @@ monster:corpseId(20419)
 monster:outfit({lookType = 129, lookHead = 95, lookBody = 116, lookLegs = 121, lookFeet = 115})
 monster:defense(15)
 monster:armor(15)
-monster:targetDistance(4)
-monster:runHealth(10)
+monster:runHealth(15)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = 20},
-    {type = COMBAT_PHYSICALDAMAGE, percent = -10},
+    {type = COMBAT_PHYSICALDAMAGE, percent = -10}
 })
 
 -- Voices
@@ -39,7 +37,7 @@ monster:voices({
     {text = "Guess who we're hunting, haha!", yell = false},
     {text = "Guess who we are hunting!", yell = false},
     {text = "Bullseye!", yell = false},
-    {text = "You'll make a nice trophy!", yell = false},
+    {text = "You'll make a nice trophy!", yell = false}
 })
 
 -- Loot
@@ -60,13 +58,13 @@ monster:loot({
     {id = 5875, chance = 610},
     {id = 2147, chance = 150},
     {id = 5907, chance = 120},
-    {id = 12425, chance = 10240},
+    {id = 12425, chance = 10240}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=10, attack=20
--- name=physical, interval=2000, chance=50, range=7, max=-100, shootEffect=arrow
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -30},
+    {name = "physical", interval = 2000, chance = 50, maxDamage = -100, range = 7}
+})
 
 monster:register()

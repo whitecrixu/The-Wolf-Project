@@ -1,5 +1,5 @@
 -- Energy Elemental
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Energy Elemental")
 if not monster then return end
@@ -20,25 +20,24 @@ monster:armor(15)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
-monster:staticAttackChance(85)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = 30},
     {type = COMBAT_HOLYDAMAGE, percent = 10},
     {type = COMBAT_DEATHDAMAGE, percent = 5},
-    {type = COMBAT_EARTHDAMAGE, percent = -15},
+    {type = COMBAT_EARTHDAMAGE, percent = -15}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_ENERGY, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_PARALYZE, immunity = true},
+    {condition = CONDITION_PARALYZE, immunity = true}
 })
 
 -- Loot
@@ -56,20 +55,15 @@ monster:loot({
     {id = 2170, chance = 1020},
     {id = 2167, chance = 892},
     {id = 2189, chance = 636},
-    {id = 2515, chance = 243},
+    {id = 2515, chance = 243}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=40, attack=70
--- name=energy, interval=2000, chance=10, range=7, min=-125, max=-252, radius=2, target=1, shootEffect=energy, areaEffect=energy
--- name=energy, interval=2000, chance=15, range=7, min=-100, max=-130, target=1, shootEffect=energyball, areaEffect=energy
--- name=energy elemental electrify, interval=2000, chance=20
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=90, max=150, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -110},
+    {name = "energy", interval = 2000, chance = 10, minDamage = -125, maxDamage = -252, range = 7, radius = 2},
+    {name = "energy", interval = 2000, chance = 15, minDamage = -100, maxDamage = -130, range = 7},
+    {name = "energy elemental electrify", interval = 2000, chance = 20}
+})
 
 monster:register()

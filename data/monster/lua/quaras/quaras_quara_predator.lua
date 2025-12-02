@@ -1,5 +1,5 @@
 -- Quara Predator
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Quara Predator")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(45)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -27,22 +26,22 @@ monster:staticAttackChance(90)
 -- Resistances
 monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = -10},
-    {type = COMBAT_ENERGYDAMAGE, percent = -25},
+    {type = COMBAT_ENERGYDAMAGE, percent = -25}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
     {condition = CONDITION_DROWN, immunity = true},
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Rrrah!", yell = false},
-    {text = "Rraaar!", yell = false},
+    {text = "Rraaar!", yell = false}
 })
 
 -- Loot
@@ -60,18 +59,12 @@ monster:loot({
     {id = 7383, chance = 680},
     {id = 7897, chance = 420},
     {id = 5741, chance = 400},
-    {id = 13305, chance = 10},
+    {id = 13305, chance = 10}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=80, attack=105
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=270, areaEffect=greenshimmer
--- name=healing, interval=2000, chance=10, min=25, max=75, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -185}
+})
 
 monster:register()

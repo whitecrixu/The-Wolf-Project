@@ -1,5 +1,5 @@
 -- Dwarf Miner
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Dwarf Miner")
 if not monster then return end
@@ -24,13 +24,13 @@ monster:isSummonable(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
 monster:pushable(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Voices
 monster:voices({
     {text = "Work, work!", yell = false},
     {text = "Intruders in the mines!", yell = false},
-    {text = "Mine, all mine!", yell = false},
+    {text = "Mine, all mine!", yell = false}
 })
 
 -- Loot
@@ -42,12 +42,12 @@ monster:loot({
     {id = 2484, chance = 6666},
     {id = 2666, chance = 3846},
     {id = 2213, chance = 793},
-    {id = 5880, chance = 793},
+    {id = 5880, chance = 793}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=24, attack=15
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -39}
+})
 
 monster:register()

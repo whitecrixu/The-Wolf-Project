@@ -1,5 +1,5 @@
 -- Orc Marauder
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Orc Marauder")
 if not monster then return end
@@ -15,12 +15,11 @@ monster:corpseId(11251)
 monster:outfit({lookType = 342})
 monster:defense(25)
 monster:armor(25)
-monster:targetDistance(4)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
+monster:isConvinceable(true)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -28,17 +27,17 @@ monster:staticAttackChance(90)
 -- Resistances
 monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = 5},
-    {type = COMBAT_EARTHDAMAGE, percent = -5},
+    {type = COMBAT_EARTHDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Grrrrrr", yell = false},
+    {text = "Grrrrrr", yell = false}
 })
 
 -- Loot
@@ -53,18 +52,13 @@ monster:loot({
     {id = 12435, chance = 3800},
     {id = 8857, chance = 70},
     {id = 12407, chance = 4830},
-    {id = 2455, chance = 440},
+    {id = 2455, chance = 440}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=40, attack=40
--- name=physical, interval=2000, chance=50, range=7, max=-100, shootEffect=onyxarrow
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=350, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -80},
+    {name = "physical", interval = 2000, chance = 50, maxDamage = -100, range = 7}
+})
 
 monster:register()

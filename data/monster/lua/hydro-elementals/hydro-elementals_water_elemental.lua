@@ -1,5 +1,5 @@
 -- Water Elemental
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Water Elemental")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(20)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -29,7 +28,7 @@ monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = 35},
     {type = COMBAT_HOLYDAMAGE, percent = 50},
     {type = COMBAT_DEATHDAMAGE, percent = 50},
-    {type = COMBAT_ENERGYDAMAGE, percent = -25},
+    {type = COMBAT_ENERGYDAMAGE, percent = -25}
 })
 
 -- Immunities
@@ -38,9 +37,9 @@ monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
     {condition = CONDITION_DROWN, immunity = true},
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {type = COMBAT_LIFEDRAIN, combat = true}
 })
 
 -- Loot
@@ -59,21 +58,15 @@ monster:loot({
     {id = 2168, chance = 930},
     {id = 7158, chance = 940},
     {id = 7159, chance = 1050},
-    {id = 10220, chance = 260},
+    {id = 10220, chance = 260}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=80
--- name=drown, interval=2000, chance=10, range=7, min=-125, max=-235, radius=2, target=1, areaEffect=bluebubble
--- name=icicle, interval=2000, chance=20, range=7, min=-88, max=-150
--- name=poisoncondition, interval=2000, chance=15, min=-225, max=-260, radius=5, areaEffect=poison
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=5, min=50, max=80, areaEffect=blueshimmer
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=300, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -110},
+    {name = "drown", interval = 2000, chance = 10, minDamage = -125, maxDamage = -235, range = 7, radius = 2},
+    {name = "icicle", interval = 2000, chance = 20, minDamage = -88, maxDamage = -150, range = 7},
+    {name = "poisoncondition", interval = 2000, chance = 15, minDamage = -225, maxDamage = -260, radius = 5}
+})
 
 monster:register()

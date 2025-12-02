@@ -1,5 +1,5 @@
 -- Stalker
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Stalker")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(15)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
@@ -27,13 +26,13 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_DEATHDAMAGE, percent = 5},
     {type = COMBAT_PHYSICALDAMAGE, percent = -20},
-    {type = COMBAT_HOLYDAMAGE, percent = -5},
+    {type = COMBAT_HOLYDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true}
 })
 
 -- Loot
@@ -45,18 +44,13 @@ monster:loot({
     {id = 2260, chance = 8670},
     {id = 2412, chance = 530},
     {id = 2425, chance = 1210},
-    {id = 12430, chance = 1550},
+    {id = 12430, chance = 1550}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=60, attack=20
--- name=lifedrain, interval=1000, chance=15, range=1, min=-20, max=-30, areaEffect=redshimmer
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=invisible, interval=2000, chance=40, duration=6000, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -80},
+    {name = "lifedrain", interval = 1000, chance = 15, minDamage = -20, maxDamage = -30}
+})
 
 monster:register()

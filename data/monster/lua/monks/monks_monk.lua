@@ -1,5 +1,5 @@
 -- Monk
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Monk")
 if not monster then return end
@@ -22,7 +22,6 @@ monster:attackable(true)
 monster:hostile(true)
 monster:isSummonable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,19 +30,19 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = 50},
     {type = COMBAT_DEATHDAMAGE, percent = 50},
-    {type = COMBAT_PHYSICALDAMAGE, percent = -10},
+    {type = COMBAT_PHYSICALDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Repent Heretic!", yell = false},
     {text = "A prayer to the almighty one!", yell = false},
-    {text = "I will punish the sinners!", yell = false},
+    {text = "I will punish the sinners!", yell = false}
 })
 
 -- Loot
@@ -60,18 +59,12 @@ monster:loot({
     {id = 2401, chance = 440},
     {id = 2177, chance = 1002},
     {id = 2193, chance = 2240},
-    {id = 2166, chance = 100},
+    {id = 2166, chance = 100}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=65
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=30, max=50, areaEffect=blueshimmer
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=300, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -95}
+})
 
 monster:register()

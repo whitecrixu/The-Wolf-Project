@@ -1,5 +1,5 @@
 -- Horestis
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Horestis")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(25)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -29,27 +28,22 @@ monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = 50},
     {type = COMBAT_ICEDAMAGE, percent = 20},
     {type = COMBAT_ENERGYDAMAGE, percent = 5},
-    {type = COMBAT_PHYSICALDAMAGE, percent = -5},
+    {type = COMBAT_PHYSICALDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_CURSED, immunity = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Feel my eternal wrath!", yell = false},
     {text = "I might be dead but I'm not gone!", yell = false},
-    {text = "Receive a lesson of the past!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "Sandstone Scorpion", chance = 12, interval = 1000, max = 1},
+    {text = "Receive a lesson of the past!", yell = false}
 })
 
 -- Loot
@@ -66,22 +60,17 @@ monster:loot({
     {id = 2446, chance = 5000},
     {id = 11207, chance = 2500},
     {id = 9811, chance = 2500},
-    {id = 2447, chance = 2500},
+    {id = 2447, chance = 2500}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-450
--- name=death, interval=1000, chance=12, range=7, min=-200, max=-750, shootEffect=suddendeath, areaEffect=mortarea
--- name=lifedrain, interval=3000, chance=17, min=-400, max=-500, length=8, areaEffect=redshimmer
--- name=drunk, interval=3000, chance=11, radius=6, duration=25000, areaEffect=poison
--- name=speed, interval=1000, chance=25, length=7, spread=3, duration=30000, speedchange=-350, areaEffect=poison
--- name=poisoncondition, interval=2000, chance=30, min=-35, max=-35, radius=5
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=200, max=400, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -450},
+    {name = "death", interval = 1000, chance = 12, minDamage = -200, maxDamage = -750, range = 7},
+    {name = "lifedrain", interval = 3000, chance = 17, minDamage = -400, maxDamage = -500, length = 8},
+    {name = "drunk", interval = 3000, chance = 11, radius = 6},
+    {name = "speed", interval = 1000, chance = 25, length = 7, spread = 3},
+    {name = "poisoncondition", interval = 2000, chance = 30, minDamage = -35, maxDamage = -35, radius = 5}
+})
 
 monster:register()

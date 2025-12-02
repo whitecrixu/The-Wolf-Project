@@ -1,5 +1,5 @@
 -- Enslaved Dwarf
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Enslaved Dwarf")
 if not monster then return end
@@ -19,30 +19,29 @@ monster:armor(30)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = 1},
     {type = COMBAT_DEATHDAMAGE, percent = 1},
-    {type = COMBAT_EARTHDAMAGE, percent = 20},
+    {type = COMBAT_EARTHDAMAGE, percent = 20}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Bark!", yell = false},
-    {text = "Blood!", yell = false},
+    {text = "Blood!", yell = false}
 })
 
 -- Loot
@@ -72,22 +71,17 @@ monster:loot({
     {id = 7413, chance = 1170},
     {id = 2475, chance = 580},
     {id = 11227, chance = 4660},
-    {id = 13757, chance = 780},
+    {id = 13757, chance = 780}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=100, attack=91
--- name=physical, interval=2000, chance=15, range=7, max=-340, shootEffect=largerock
--- name=physical, interval=2000, chance=10, range=7, max=-250, radius=3, target=1, shootEffect=explosion, areaEffect=explosion
--- name=drunk, interval=2000, chance=20, radius=5, duration=6000, areaEffect=yellowspark
--- name=enslaved dwarf skill reducer 1, interval=2000, chance=5
--- name=enslaved dwarf skill reducer 2, interval=2000, chance=5
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=396, max=478, areaEffect=greenshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -191},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -340, range = 7},
+    {name = "physical", interval = 2000, chance = 10, maxDamage = -250, range = 7, radius = 3},
+    {name = "drunk", interval = 2000, chance = 20, radius = 5},
+    {name = "enslaved dwarf skill reducer 1", interval = 2000, chance = 5},
+    {name = "enslaved dwarf skill reducer 2", interval = 2000, chance = 5}
+})
 
 monster:register()

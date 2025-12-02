@@ -1,5 +1,5 @@
 -- Lizard Sentinel
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Lizard Sentinel")
 if not monster then return end
@@ -15,8 +15,7 @@ monster:corpseId(6040)
 monster:outfit({lookType = 114})
 monster:defense(15)
 monster:armor(15)
-monster:targetDistance(4)
-monster:runHealth(10)
+monster:runHealth(26)
 
 -- Flags
 monster:attackable(true)
@@ -31,18 +30,18 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = 20},
-    {type = COMBAT_FIREDAMAGE, percent = -10},
+    {type = COMBAT_FIREDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Tssss!", yell = false},
+    {text = "Tssss!", yell = false}
 })
 
 -- Loot
@@ -58,13 +57,13 @@ monster:loot({
     {id = 5876, chance = 990},
     {id = 7618, chance = 590},
     {id = 2381, chance = 510},
-    {id = 2145, chance = 190},
+    {id = 2145, chance = 190}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=20, attack=30
--- name=physical, interval=2000, chance=30, range=7, max=-70, shootEffect=spear
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -50},
+    {name = "physical", interval = 2000, chance = 30, maxDamage = -70, range = 7}
+})
 
 monster:register()

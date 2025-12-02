@@ -1,5 +1,5 @@
 -- Pirate Ghost
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Pirate Ghost")
 if not monster then return end
@@ -25,16 +25,16 @@ monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_HOLYDAMAGE, percent = -25},
+    {type = COMBAT_HOLYDAMAGE, percent = -25}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_BLEEDING, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {type = COMBAT_PHYSICALDAMAGE, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
 -- Voices
@@ -43,7 +43,7 @@ monster:voices({
     {text = "Hell is waiting for You!", yell = false},
     {text = "It's alive!", yell = false},
     {text = "The curse! Aww the curse!", yell = false},
-    {text = "You will not get my treasure!", yell = false},
+    {text = "You will not get my treasure!", yell = false}
 })
 
 -- Loot
@@ -53,19 +53,14 @@ monster:loot({
     {id = 2165, chance = 650},
     {id = 1951, chance = 910},
     {id = 2383, chance = 130},
-    {id = 2655, chance = 130},
+    {id = 2655, chance = 130}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=50
--- name=lifedrain, interval=2000, chance=15, min=-40, max=-80, radius=1, areaEffect=redshimmer
--- name=death, interval=2000, chance=10, range=7, min=-50, max=-65, radius=3, target=1, areaEffect=rednote
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=5, min=40, max=70, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -80},
+    {name = "lifedrain", interval = 2000, chance = 15, minDamage = -40, maxDamage = -80, radius = 1},
+    {name = "death", interval = 2000, chance = 10, minDamage = -50, maxDamage = -65, range = 7, radius = 3}
+})
 
 monster:register()

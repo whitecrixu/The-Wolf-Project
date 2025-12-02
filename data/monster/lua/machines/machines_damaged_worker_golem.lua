@@ -1,5 +1,5 @@
 -- Damaged Worker Golem
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Damaged Worker Golem")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(25)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -32,13 +31,13 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = -5},
     {type = COMBAT_PHYSICALDAMAGE, percent = 25},
     {type = COMBAT_ICEDAMAGE, percent = 10},
-    {type = COMBAT_DEATHDAMAGE, percent = 10},
+    {type = COMBAT_DEATHDAMAGE, percent = 10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_PARALYZE, immunity = true},
+    {condition = CONDITION_PARALYZE, immunity = true}
 })
 
 -- Voices
@@ -50,7 +49,7 @@ monster:voices({
     {text = "Rrrtttarrrttarrrtta", yell = false},
     {text = "Danger will...chrrr! Danger!", yell = false},
     {text = "Self-diagnosis failed.", yell = false},
-    {text = "Aw... chhhrrr orders.", yell = false},
+    {text = "Aw... chhhrrr orders.", yell = false}
 })
 
 -- Loot
@@ -60,18 +59,13 @@ monster:loot({
     {id = 5880, chance = 400},
     {id = 9808, chance = 790},
     {id = 10572, chance = 200},
-    {id = 2207, chance = 570},
+    {id = 2207, chance = 570}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=50, attack=15
--- name=physical, interval=2000, chance=15, range=7, max=-45, shootEffect=smallstone
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=5, max=11, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -65},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -45, range = 7}
+})
 
 monster:register()

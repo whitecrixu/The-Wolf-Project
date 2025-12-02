@@ -1,5 +1,5 @@
 -- Roaring Lion
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Roaring Lion")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:armor(20)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
@@ -29,18 +28,18 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 20},
     {type = COMBAT_ICEDAMAGE, percent = 25},
     {type = COMBAT_EARTHDAMAGE, percent = 25},
-    {type = COMBAT_HOLYDAMAGE, percent = 50},
+    {type = COMBAT_HOLYDAMAGE, percent = 50}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Groarrrr! Rwarrrr!", yell = false},
-    {text = "Growl!", yell = false},
+    {text = "Growl!", yell = false}
 })
 
 -- Loot
@@ -56,17 +55,12 @@ monster:loot({
     {id = 2150, chance = 5860},
     {id = 2193, chance = 2280},
     {id = 2164, chance = 710},
-    {id = 2491, chance = 400},
+    {id = 2491, chance = 400}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-200
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=230, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -200}
+})
 
 monster:register()

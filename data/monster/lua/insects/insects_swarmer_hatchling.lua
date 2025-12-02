@@ -1,5 +1,5 @@
 -- Swarmer Hatchling
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Swarmer Hatchling")
 if not monster then return end
@@ -15,22 +15,21 @@ monster:corpseId(15388)
 monster:outfit({lookType = 460})
 monster:defense(20)
 monster:armor(12)
-monster:targetDistance(0)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
+monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=34, attack=45
--- name=drown, interval=1000, chance=11, range=5, min=-15, max=-100, target=1, shootEffect=spear, areaEffect=bluebubble
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -79},
+    {name = "drown", interval = 1000, chance = 11, minDamage = -15, maxDamage = -100, range = 5}
+})
 
 monster:register()

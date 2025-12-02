@@ -1,5 +1,5 @@
 -- Slug
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Slug")
 if not monster then return end
@@ -20,26 +20,25 @@ monster:armor(15)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
-    {type = COMBAT_DEATHDAMAGE, percent = 7},
+    {type = COMBAT_DEATHDAMAGE, percent = 7}
 })
 
 -- Loot
 monster:loot({
     {id = 2148, chance = 62000, maxCount = 40},
-    {id = 3976, chance = 5000, maxCount = 3},
+    {id = 3976, chance = 5000, maxCount = 3}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=45, attack=16
--- name=poison, interval=1000, chance=15, range=7, min=-5, max=-40, target=1, shootEffect=poison
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -61},
+    {name = "poison", interval = 1000, chance = 15, minDamage = -5, maxDamage = -40, range = 7}
+})
 
 monster:register()

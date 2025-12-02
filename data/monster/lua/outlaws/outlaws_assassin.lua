@@ -1,5 +1,5 @@
 -- Assassin
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Assassin")
 if not monster then return end
@@ -22,7 +22,6 @@ monster:attackable(true)
 monster:hostile(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -30,19 +29,19 @@ monster:staticAttackChance(90)
 -- Resistances
 monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = -5},
-    {type = COMBAT_DEATHDAMAGE, percent = -5},
+    {type = COMBAT_DEATHDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Die!", yell = false},
     {text = "Feel the hand of death!", yell = false},
-    {text = "You are on my deathlist!", yell = false},
+    {text = "You are on my deathlist!", yell = false}
 })
 
 -- Loot
@@ -59,19 +58,14 @@ monster:loot({
     {id = 3968, chance = 480},
     {id = 2513, chance = 1600},
     {id = 2145, chance = 220},
-    {id = 3969, chance = 230},
+    {id = 3969, chance = 230}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=60
--- name=physical, interval=2000, chance=15, range=7, max=-40, shootEffect=throwingstar
--- name=poisoncondition, interval=2000, chance=10, range=7, min=-120, max=-160, shootEffect=poison, areaEffect=poison
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=invisible, interval=2000, chance=10, duration=2000, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -90},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -40, range = 7},
+    {name = "poisoncondition", interval = 2000, chance = 10, minDamage = -120, maxDamage = -160, range = 7}
+})
 
 monster:register()

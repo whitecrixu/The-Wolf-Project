@@ -1,5 +1,5 @@
 -- Gravedigger
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Gravedigger")
 if not monster then return end
@@ -15,38 +15,37 @@ monster:corpseId(21279)
 monster:outfit({lookType = 558})
 monster:defense(20)
 monster:armor(20)
-monster:runHealth(200)
+monster:runHealth(150)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = -5},
     {type = COMBAT_FIREDAMAGE, percent = -10},
-    {type = COMBAT_HOLYDAMAGE, percent = -5},
+    {type = COMBAT_HOLYDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
     {condition = CONDITION_ENERGY, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "High Five!", yell = false},
     {text = "scrabble", yell = false},
-    {text = "Put it there!", yell = false},
+    {text = "Put it there!", yell = false}
 })
 
 -- Loot
@@ -65,22 +64,15 @@ monster:loot({
     {id = 2436, chance = 130},
     {id = 10609, chance = 100},
     {id = 5669, chance = 100},
-    {id = 5925, chance = 50},
+    {id = 5925, chance = 50}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=70, attack=80
--- name=manadrain, interval=2000, chance=10, range=1, min=-40, max=-250, areaEffect=blueshimmer
--- name=death, interval=2000, chance=15, range=1, min=-175, max=-300, shootEffect=death
--- name=drunk, interval=2000, chance=10, radius=5, duration=4000, areaEffect=smallclouds
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=invisible, interval=2000, chance=15, duration=5000, areaEffect=redshimmer
--- name=healing, interval=2000, chance=20, min=100, max=250, areaEffect=blueshimmer
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=420, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -150},
+    {name = "manadrain", interval = 2000, chance = 10, minDamage = -40, maxDamage = -250},
+    {name = "death", interval = 2000, chance = 15, minDamage = -175, maxDamage = -300},
+    {name = "drunk", interval = 2000, chance = 10, radius = 5}
+})
 
 monster:register()

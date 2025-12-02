@@ -1,5 +1,5 @@
 -- Quara Constrictor Scout
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Quara Constrictor Scout")
 if not monster then return end
@@ -16,28 +16,27 @@ monster:corpseId(6065)
 monster:outfit({lookType = 46})
 monster:defense(15)
 monster:armor(15)
-monster:runHealth(20)
+monster:runHealth(45)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = -10},
-    {type = COMBAT_PHYSICALDAMAGE, percent = -5},
+    {type = COMBAT_PHYSICALDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true}
 })
 
 -- Voices
@@ -45,7 +44,7 @@ monster:voices({
     {text = "Gaaahhh!", yell = false},
     {text = "Gluh! Gluh!", yell = false},
     {text = "Tssss!", yell = false},
-    {text = "Boohaa!", yell = false},
+    {text = "Boohaa!", yell = false}
 })
 
 -- Loot
@@ -56,13 +55,13 @@ monster:loot({
     {id = 2465, chance = 4660},
     {id = 2150, chance = 4350},
     {id = 5895, chance = 290},
-    {id = 2670, chance = 9680, maxCount = 3},
+    {id = 2670, chance = 9680, maxCount = 3}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=50, attack=45
--- name=lifedrain, interval=2000, chance=15, max=-80, radius=3, areaEffect=blackspark
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -95},
+    {name = "lifedrain", interval = 2000, chance = 15, maxDamage = -80, radius = 3}
+})
 
 monster:register()

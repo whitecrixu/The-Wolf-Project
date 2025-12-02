@@ -1,5 +1,5 @@
 -- Execowtioner
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Execowtioner")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(40)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -30,13 +29,13 @@ monster:elements({
     {type = COMBAT_DEATHDAMAGE, percent = 15},
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = 10},
-    {type = COMBAT_EARTHDAMAGE, percent = 20},
+    {type = COMBAT_EARTHDAMAGE, percent = 20}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -46,7 +45,7 @@ monster:voices({
     {text = "Justice is swift and unavoidable!", yell = false},
     {text = "I'll bring justice!", yell = false},
     {text = "There is excellence in execution!", yell = false},
-    {text = "Your sentence is death!", yell = false},
+    {text = "Your sentence is death!", yell = false}
 })
 
 -- Loot
@@ -68,14 +67,14 @@ monster:loot({
     {id = 23547, chance = 1420},
     {id = 2430, chance = 770},
     {id = 7413, chance = 390},
-    {id = 7401, chance = 520},
+    {id = 7401, chance = 520}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=90, attack=80
--- name=lifedrain, interval=2000, chance=8, range=7, min=-135, max=-280, radius=5, target=1, shootEffect=whirlwindaxe, areaEffect=redspark
--- name=physical, interval=2000, chance=8, range=7, min=-90, max=-200, target=1, shootEffect=whirlwindaxe, areaEffect=explosionarea
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -170},
+    {name = "lifedrain", interval = 2000, chance = 8, minDamage = -135, maxDamage = -280, range = 7, radius = 5},
+    {name = "physical", interval = 2000, chance = 8, minDamage = -90, maxDamage = -200, range = 7}
+})
 
 monster:register()

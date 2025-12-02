@@ -1,5 +1,5 @@
 -- Goblin
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Goblin")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(6002)
 monster:outfit({lookType = 61})
 monster:defense(10)
 monster:armor(10)
-monster:runHealth(15)
+monster:runHealth(5)
 
 -- Flags
 monster:attackable(true)
@@ -32,7 +32,7 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_HOLYDAMAGE, percent = 1},
     {type = COMBAT_EARTHDAMAGE, percent = -12},
-    {type = COMBAT_DEATHDAMAGE, percent = -10},
+    {type = COMBAT_DEATHDAMAGE, percent = -10}
 })
 
 -- Voices
@@ -41,7 +41,7 @@ monster:voices({
     {text = "Zig Zag! Gobo attack!", yell = false},
     {text = "Help! Goblinkiller!", yell = false},
     {text = "Bugga! Bugga!", yell = false},
-    {text = "Me green, me mean!", yell = false},
+    {text = "Me green, me mean!", yell = false}
 })
 
 -- Loot
@@ -57,13 +57,13 @@ monster:loot({
     {id = 2406, chance = 8870},
     {id = 2559, chance = 9700},
     {id = 1294, chance = 15290, maxCount = 3},
-    {id = 12495, chance = 910},
+    {id = 12495, chance = 910}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=10, attack=10
--- name=physical, interval=2000, chance=10, range=7, max=-25, shootEffect=smallstone
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -20},
+    {name = "physical", interval = 2000, chance = 10, maxDamage = -25, range = 7}
+})
 
 monster:register()

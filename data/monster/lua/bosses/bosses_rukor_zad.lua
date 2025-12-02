@@ -1,5 +1,5 @@
 -- Rukor Zad
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Rukor Zad")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(15)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -27,19 +26,19 @@ monster:staticAttackChance(90)
 -- Resistances
 monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = -5},
-    {type = COMBAT_DEATHDAMAGE, percent = -5},
+    {type = COMBAT_DEATHDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "I can kill a man in a thousand ways. And that`s only with a spoon!", yell = false},
     {text = "You shouldn't have come here!", yell = false},
-    {text = "Haiiii!", yell = false},
+    {text = "Haiiii!", yell = false}
 })
 
 -- Loot
@@ -56,21 +55,16 @@ monster:loot({
     {id = 2509, chance = 1940},
     {id = 3968, chance = 1480},
     {id = 3969, chance = 1240},
-    {id = 2145, chance = 1220},
+    {id = 2145, chance = 1220}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-170
--- name=physical, interval=2000, chance=15, range=7, max=-100, shootEffect=throwingstar
--- name=physical, interval=2000, chance=15, range=7, max=-100, shootEffect=poisonarrow
--- name=poisoncondition, interval=2000, chance=10, range=7, min=-8, max=-8, shootEffect=poison, areaEffect=poison
--- name=drunk, interval=3000, chance=34, range=7, duration=5000
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=invisible, interval=2000, chance=10, duration=2000, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -170},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -100, range = 7},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -100, range = 7},
+    {name = "poisoncondition", interval = 2000, chance = 10, minDamage = -8, maxDamage = -8, range = 7},
+    {name = "drunk", interval = 3000, chance = 34, range = 7}
+})
 
 monster:register()

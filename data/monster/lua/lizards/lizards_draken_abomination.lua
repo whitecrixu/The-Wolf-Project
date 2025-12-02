@@ -1,5 +1,5 @@
 -- Draken Abomination
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Draken Abomination")
 if not monster then return end
@@ -20,34 +20,28 @@ monster:armor(30)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = -5},
     {type = COMBAT_ENERGYDAMAGE, percent = -5},
-    {type = COMBAT_ICEDAMAGE, percent = 5},
+    {type = COMBAT_ICEDAMAGE, percent = 5}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Ugggh!", yell = false},
-    {text = "Gll", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "Death Blob", chance = 10, interval = 2000, max = 2},
+    {text = "Gll", yell = false}
 })
 
 -- Loot
@@ -71,22 +65,17 @@ monster:loot({
     {id = 13538, chance = 360},
     {id = 11304, chance = 780},
     {id = 11301, chance = 470},
-    {id = 11302, chance = 560},
+    {id = 11302, chance = 560}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=110, attack=70
--- name=fire, interval=2000, chance=10, min=-310, max=-630, length=4, spread=3, areaEffect=explosion
--- name=draken abomination curse, interval=2000, chance=10, range=5
--- name=death, interval=2000, chance=15, min=-170, max=-370, length=4, areaEffect=mortarea
--- name=drunk, interval=2000, chance=15, range=7, radius=4, duration=9000, shootEffect=poison, areaEffect=poison
--- name=physical, interval=2000, chance=10, range=7, radius=3, areaEffect=greenspark
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=650, max=700, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -180},
+    {name = "fire", interval = 2000, chance = 10, minDamage = -310, maxDamage = -630, length = 4, spread = 3},
+    {name = "draken abomination curse", interval = 2000, chance = 10, range = 5},
+    {name = "death", interval = 2000, chance = 15, minDamage = -170, maxDamage = -370, length = 4},
+    {name = "drunk", interval = 2000, chance = 15, range = 7, radius = 4},
+    {name = "physical", interval = 2000, chance = 10, range = 7, radius = 3}
+})
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Feversleep
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Feversleep")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(45)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,14 +30,14 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 5},
     {type = COMBAT_ENERGYDAMAGE, percent = 5},
     {type = COMBAT_ICEDAMAGE, percent = 5},
-    {type = COMBAT_HOLYDAMAGE, percent = -10},
+    {type = COMBAT_HOLYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
@@ -55,23 +54,17 @@ monster:loot({
     {id = 18413, chance = 11000},
     {id = 18419, chance = 18000},
     {id = 22537, chance = 17000},
-    {id = 22538, chance = 14000},
+    {id = 22538, chance = 14000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=90, attack=90
--- name=poisoncondition, interval=2000, chance=20, min=-800, max=-1000, radius=7, areaEffect=yellowbubble
--- name=manadrain, interval=2000, chance=10, min=-70, max=-100, radius=5, areaEffect=redshimmer
--- name=feversleep skill reducer, interval=2000, chance=10
--- name=lifedrain, interval=2000, chance=10, min=-250, max=-300, length=6, target=1, areaEffect=yellowenergy
--- name=death, interval=2000, chance=15, min=-150, max=-300, radius=1, target=1, shootEffect=suddendeath, areaEffect=mortarea
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=20, min=250, max=425, areaEffect=blueshimmer
--- name=invisible, interval=2000, chance=10, duration=5000, areaEffect=blackspark
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -180},
+    {name = "poisoncondition", interval = 2000, chance = 20, minDamage = -800, maxDamage = -1000, radius = 7},
+    {name = "manadrain", interval = 2000, chance = 10, minDamage = -70, maxDamage = -100, radius = 5},
+    {name = "feversleep skill reducer", interval = 2000, chance = 10},
+    {name = "lifedrain", interval = 2000, chance = 10, minDamage = -250, maxDamage = -300, length = 6},
+    {name = "death", interval = 2000, chance = 15, minDamage = -150, maxDamage = -300, radius = 1}
+})
 
 monster:register()

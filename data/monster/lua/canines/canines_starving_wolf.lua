@@ -1,5 +1,5 @@
 -- starving wolf
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("starving wolf")
 if not monster then return end
@@ -28,36 +28,31 @@ monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_PHYSICALDAMAGE, percent = -30},
+    {type = COMBAT_PHYSICALDAMAGE, percent = -30}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Gaarrrrrr", yell = false},
     {text = "Gnoorrr", yell = false},
-    {text = "Yoooohhuuuu!", yell = false},
+    {text = "Yoooohhuuuu!", yell = false}
 })
 
 -- Loot
 monster:loot({
     {id = 2666, chance = 5300, maxCount = 2},
     {id = 5897, chance = 1430},
-    {id = 220, chance = 64730},
+    {id = 220, chance = 64730}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=10, attack=25
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=physical, interval=2000, chance=10, radius=1, areaEffect=yellowbubble
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -35}
+})
 
 monster:register()

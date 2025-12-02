@@ -1,5 +1,5 @@
 -- Retching Horror
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Retching Horror")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(30)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -29,21 +28,21 @@ monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = 10},
     {type = COMBAT_DEATHDAMAGE, percent = 20},
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
-    {type = COMBAT_ICEDAMAGE, percent = 15},
+    {type = COMBAT_ICEDAMAGE, percent = 15}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Wait for us, little maggot...", yell = false},
     {text = "We will devour you...", yell = false},
-    {text = "My little beetles, go forth, eat, feast!", yell = false},
+    {text = "My little beetles, go forth, eat, feast!", yell = false}
 })
 
 -- Loot
@@ -63,17 +62,17 @@ monster:loot({
     {id = 8910, chance = 1800},
     {id = 8920, chance = 960},
     {id = 22539, chance = 16400},
-    {id = 22541, chance = 14000},
+    {id = 22541, chance = 14000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=90, attack=80
--- name=drunk, interval=2000, chance=10, length=4, spread=3, target=1, duration=5000, areaEffect=greenshimmer
--- name=speed, interval=2000, chance=15, radius=4, target=1, duration=15000, speedchange=-700, shootEffect=whirlwindclub, areaEffect=stun
--- name=physical, interval=2000, chance=15, max=-110, radius=4, areaEffect=blackspark
--- name=physical, interval=2000, chance=15, max=-200, radius=1, target=1, shootEffect=sniperarrow
--- name=fire, interval=2000, chance=10, min=-200, max=-350, radius=1, target=1, shootEffect=fire, areaEffect=fireattack
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -170},
+    {name = "drunk", interval = 2000, chance = 10, length = 4, spread = 3},
+    {name = "speed", interval = 2000, chance = 15, radius = 4},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -110, radius = 4},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -200, radius = 1},
+    {name = "fire", interval = 2000, chance = 10, minDamage = -200, maxDamage = -350, radius = 1}
+})
 
 monster:register()

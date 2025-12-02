@@ -1,5 +1,5 @@
 -- Dwarf
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Dwarf")
 if not monster then return end
@@ -30,12 +30,12 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = 10},
     {type = COMBAT_FIREDAMAGE, percent = -5},
-    {type = COMBAT_DEATHDAMAGE, percent = -5},
+    {type = COMBAT_DEATHDAMAGE, percent = -5}
 })
 
 -- Voices
 monster:voices({
-    {text = "Hail Durin!", yell = false},
+    {text = "Hail Durin!", yell = false}
 })
 
 -- Loot
@@ -50,12 +50,12 @@ monster:loot({
     {id = 2553, chance = 10000},
     {id = 2484, chance = 8000},
     {id = 5880, chance = 700},
-    {id = 2213, chance = 100},
+    {id = 2213, chance = 100}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=20, attack=20
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -40}
+})
 
 monster:register()

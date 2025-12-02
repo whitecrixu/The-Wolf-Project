@@ -1,5 +1,5 @@
 -- Minotaur Archer
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Minotaur Archer")
 if not monster then return end
@@ -16,7 +16,6 @@ monster:corpseId(5982)
 monster:outfit({lookType = 24})
 monster:defense(10)
 monster:armor(10)
-monster:targetDistance(4)
 monster:runHealth(10)
 
 -- Flags
@@ -25,7 +24,6 @@ monster:hostile(true)
 monster:isSummonable(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:staticAttackChance(90)
 
 -- Resistances
@@ -33,13 +31,13 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 20},
     {type = COMBAT_HOLYDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -1},
+    {type = COMBAT_DEATHDAMAGE, percent = -1}
 })
 
 -- Voices
 monster:voices({
     {text = "Ruan Wihmpy!", yell = false},
-    {text = "Kaplar!", yell = false},
+    {text = "Kaplar!", yell = false}
 })
 
 -- Loot
@@ -54,13 +52,13 @@ monster:loot({
     {id = 2483, chance = 530},
     {id = 12407, chance = 15400},
     {id = 12439, chance = 8260},
-    {id = 12428, chance = 1990, maxCount = 2},
+    {id = 12428, chance = 1990, maxCount = 2}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=10, attack=25
--- name=physical, interval=2000, chance=40, range=7, max=-80, shootEffect=bolt
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -35},
+    {name = "physical", interval = 2000, chance = 40, maxDamage = -80, range = 7}
+})
 
 monster:register()

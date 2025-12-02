@@ -1,5 +1,5 @@
 -- Quara Mantassin
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Quara Mantassin")
 if not monster then return end
@@ -16,34 +16,33 @@ monster:corpseId(6064)
 monster:outfit({lookType = 72})
 monster:defense(15)
 monster:armor(15)
-monster:runHealth(40)
+monster:runHealth(80)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isConvinceable(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = -10},
-    {type = COMBAT_ENERGYDAMAGE, percent = -25},
+    {type = COMBAT_ENERGYDAMAGE, percent = -25}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_DROWN, immunity = true},
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Zuerk Pachak!", yell = false},
-    {text = "Shrrrr", yell = false},
+    {text = "Shrrrr", yell = false}
 })
 
 -- Loot
@@ -59,18 +58,12 @@ monster:loot({
     {id = 2146, chance = 1000},
     {id = 5895, chance = 630},
     {id = 2479, chance = 100},
-    {id = 2656, chance = 50},
+    {id = 2656, chance = 50}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=45, attack=50
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=invisible, interval=2000, chance=20, duration=3000, areaEffect=blueshimmer
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=400, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -95}
+})
 
 monster:register()

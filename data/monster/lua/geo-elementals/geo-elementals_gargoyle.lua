@@ -1,5 +1,5 @@
 -- Gargoyle
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Gargoyle")
 if not monster then return end
@@ -15,28 +15,27 @@ monster:corpseId(6027)
 monster:outfit({lookType = 95})
 monster:defense(25)
 monster:armor(25)
-monster:runHealth(30)
+monster:runHealth(25)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = 40},
     {type = COMBAT_DEATHDAMAGE, percent = 1},
-    {type = COMBAT_FIREDAMAGE, percent = -10},
+    {type = COMBAT_FIREDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
 -- Voices
@@ -45,7 +44,7 @@ monster:voices({
     {text = "Stone sweet stone.", yell = false},
     {text = "Feel my claws, softskin.", yell = false},
     {text = "Chhhhhrrrrk!", yell = false},
-    {text = "There is a stone in your shoe!", yell = false},
+    {text = "There is a stone in your shoe!", yell = false}
 })
 
 -- Loot
@@ -62,17 +61,12 @@ monster:loot({
     {id = 2129, chance = 1480},
     {id = 2209, chance = 260},
     {id = 11227, chance = 190},
-    {id = 11195, chance = 11730},
+    {id = 11195, chance = 11730}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=55, attack=20
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=20, min=5, max=15, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -75}
+})
 
 monster:register()

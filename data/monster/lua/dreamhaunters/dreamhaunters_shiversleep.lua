@@ -1,5 +1,5 @@
 -- Shiversleep
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Shiversleep")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(55)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -27,21 +26,21 @@ monster:staticAttackChance(90)
 -- Resistances
 monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = -10},
-    {type = COMBAT_FIREDAMAGE, percent = -10},
+    {type = COMBAT_FIREDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_ENERGY, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Knorrrr!", yell = false},
+    {text = "Knorrrr!", yell = false}
 })
 
 -- Loot
@@ -63,14 +62,14 @@ monster:loot({
     {id = 5904, chance = 632},
     {id = 2487, chance = 632},
     {id = 18453, chance = 603},
-    {id = 18450, chance = 603},
+    {id = 18450, chance = 603}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=90, attack=90
--- name=earth, interval=1800, chance=10, min=-300, max=-685, length=7, areaEffect=stones
--- name=earth, interval=2000, chance=9, min=-250, max=-590, radius=6, areaEffect=bigplants
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -180},
+    {name = "earth", interval = 1800, chance = 10, minDamage = -300, maxDamage = -685, length = 7},
+    {name = "earth", interval = 2000, chance = 9, minDamage = -250, maxDamage = -590, radius = 6}
+})
 
 monster:register()

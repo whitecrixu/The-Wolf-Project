@@ -1,5 +1,5 @@
 -- Tarantula
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Tarantula")
 if not monster then return end
@@ -23,7 +23,6 @@ monster:hostile(true)
 monster:isSummonable(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
@@ -31,14 +30,14 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
     {type = COMBAT_FIREDAMAGE, percent = -15},
-    {type = COMBAT_ICEDAMAGE, percent = -10},
+    {type = COMBAT_ICEDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_OUTFIT, immunity = true},
-    {condition = CONDITION_DRUNK, immunity = true},
+    {condition = CONDITION_DRUNK, immunity = true}
 })
 
 -- Loot
@@ -49,18 +48,13 @@ monster:loot({
     {id = 2510, chance = 2000},
     {id = 2457, chance = 990},
     {id = 2169, chance = 120},
-    {id = 8859, chance = 4820},
+    {id = 8859, chance = 4820}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=45
--- name=poison, interval=2000, chance=10, range=1, radius=1, target=1, shootEffect=poison, areaEffect=carniphila
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=220, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -75},
+    {name = "poison", interval = 2000, chance = 10, radius = 1}
+})
 
 monster:register()

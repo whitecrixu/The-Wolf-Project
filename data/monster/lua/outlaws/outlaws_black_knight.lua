@@ -1,5 +1,5 @@
 -- Black Knight
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Black Knight")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(40)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -30,15 +29,15 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 80},
     {type = COMBAT_PHYSICALDAMAGE, percent = 20},
     {type = COMBAT_DEATHDAMAGE, percent = 20},
-    {type = COMBAT_HOLYDAMAGE, percent = -10},
+    {type = COMBAT_HOLYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {type = COMBAT_ICEDAMAGE, combat = true}
 })
 
 -- Voices
@@ -47,7 +46,7 @@ monster:voices({
     {text = "No prisoners!", yell = true},
     {text = "NO MERCY!", yell = true},
     {text = "By Bolg's Blood!", yell = false},
-    {text = "You're no match for me!", yell = false},
+    {text = "You're no match for me!", yell = false}
 })
 
 -- Loot
@@ -73,13 +72,13 @@ monster:loot({
     {id = 2414, chance = 110},
     {id = 7895, chance = 950},
     {id = 2114, chance = 210},
-    {id = 2195, chance = 320},
+    {id = 2195, chance = 320}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=90, attack=60
--- name=physical, interval=2000, chance=20, range=7, max=-200, shootEffect=spear
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -150},
+    {name = "physical", interval = 2000, chance = 20, maxDamage = -200, range = 7}
+})
 
 monster:register()

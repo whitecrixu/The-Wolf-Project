@@ -1,5 +1,5 @@
 -- Lesser Death Minion
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Lesser Death Minion")
 if not monster then return end
@@ -28,14 +28,14 @@ monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_HOLYDAMAGE, percent = -5},
+    {type = COMBAT_HOLYDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_CURSED, immunity = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
     {condition = CONDITION_DROWN, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true}
 })
 
 -- Loot
@@ -48,13 +48,13 @@ monster:loot({
     {id = 2398, chance = 4850},
     {id = 2388, chance = 4820},
     {id = 2511, chance = 2000},
-    {id = 2376, chance = 1920},
+    {id = 2376, chance = 1920}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-17
--- name=lifedrain, interval=2000, chance=15, range=1, min=-7, max=-13
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -17},
+    {name = "lifedrain", interval = 2000, chance = 15, minDamage = -7, maxDamage = -13}
+})
 
 monster:register()

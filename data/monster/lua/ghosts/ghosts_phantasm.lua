@@ -1,5 +1,5 @@
 -- Phantasm
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Phantasm")
 if not monster then return end
@@ -15,13 +15,12 @@ monster:corpseId(6344)
 monster:outfit({lookType = 241, lookHead = 20})
 monster:defense(0)
 monster:armor(0)
-monster:runHealth(350)
+monster:runHealth(395)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -32,16 +31,16 @@ monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = 20},
     {type = COMBAT_HOLYDAMAGE, percent = -10},
     {type = COMBAT_FIREDAMAGE, percent = -10},
-    {type = COMBAT_ENERGYDAMAGE, percent = -10},
+    {type = COMBAT_ENERGYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_BLEEDING, immunity = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {type = COMBAT_PHYSICALDAMAGE, combat = true}
 })
 
 -- Voices
@@ -49,13 +48,7 @@ monster:voices({
     {text = "Oh my, you forgot to put your pants on!", yell = false},
     {text = "Weeheeheeheehee!", yell = false},
     {text = "Its nothing but a dream!", yell = false},
-    {text = "Give in!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "Phantasm Summon", chance = 20, interval = 2000, max = 1},
-    {name = "Phantasm Summon", chance = 20, interval = 2000, max = 1},
+    {text = "Give in!", yell = false}
 })
 
 -- Loot
@@ -77,23 +70,16 @@ monster:loot({
     {id = 7451, chance = 550},
     {id = 2147, chance = 12160, maxCount = 3},
     {id = 9970, chance = 12810, maxCount = 3},
-    {id = 2150, chance = 14570, maxCount = 3},
+    {id = 2150, chance = 14570, maxCount = 3}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=90, attack=95
--- name=death, interval=2000, chance=10, range=7, min=-250, max=-610, shootEffect=suddendeath, areaEffect=smallclouds
--- name=manadrain, interval=2000, chance=20, min=-5, max=-80, radius=3, areaEffect=yellowbubble
--- name=phantasm drown, interval=2000, chance=15
--- name=drunk, interval=2000, chance=15, radius=5, duration=6000, areaEffect=redshimmer
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=30, min=228, max=449, areaEffect=blueshimmer
--- name=speed, interval=2000, chance=10, duration=6000, speedchange=500, areaEffect=redshimmer
--- name=invisible, interval=2000, chance=25, duration=8000, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -185},
+    {name = "death", interval = 2000, chance = 10, minDamage = -250, maxDamage = -610, range = 7},
+    {name = "manadrain", interval = 2000, chance = 20, minDamage = -5, maxDamage = -80, radius = 3},
+    {name = "phantasm drown", interval = 2000, chance = 15},
+    {name = "drunk", interval = 2000, chance = 15, radius = 5}
+})
 
 monster:register()

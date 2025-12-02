@@ -1,5 +1,5 @@
 -- Magma Crawler
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Magma Crawler")
 if not monster then return end
@@ -15,13 +15,11 @@ monster:corpseId(17336)
 monster:outfit({lookType = 492})
 monster:defense(45)
 monster:armor(45)
-monster:targetDistance(4)
-monster:runHealth(300)
+monster:runHealth(480)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -31,20 +29,20 @@ monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = 10},
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
     {type = COMBAT_DEATHDAMAGE, percent = 1},
-    {type = COMBAT_PHYSICALDAMAGE, percent = 1},
+    {type = COMBAT_PHYSICALDAMAGE, percent = 1}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Crrroak!", yell = false},
+    {text = "Crrroak!", yell = false}
 })
 
 -- Loot
@@ -73,21 +71,16 @@ monster:loot({
     {id = 2529, chance = 1530},
     {id = 2154, chance = 1160},
     {id = 5911, chance = 970},
-    {id = 18409, chance = 670},
+    {id = 18409, chance = 670}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-350
--- name=magma crawler soulfire, interval=2000, chance=20
--- name=soulfire, interval=2000, chance=10, range=7, target=1
--- name=fire, interval=2000, chance=10, min=-300, max=-1200, length=8, areaEffect=mortarea
--- name=fire, interval=2000, chance=15, min=-290, max=-700, radius=3, areaEffect=fireattack
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=invisible, interval=2000, chance=10, duration=5000
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -350},
+    {name = "magma crawler soulfire", interval = 2000, chance = 20},
+    {name = "soulfire", interval = 2000, chance = 10, range = 7},
+    {name = "fire", interval = 2000, chance = 10, minDamage = -300, maxDamage = -1200, length = 8},
+    {name = "fire", interval = 2000, chance = 15, minDamage = -290, maxDamage = -700, radius = 3}
+})
 
 monster:register()

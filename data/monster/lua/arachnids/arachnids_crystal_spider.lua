@@ -1,5 +1,5 @@
 -- Crystal Spider
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Crystal Spider")
 if not monster then return end
@@ -20,29 +20,28 @@ monster:armor(40)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = 20},
-    {type = COMBAT_ENERGYDAMAGE, percent = -20},
+    {type = COMBAT_ENERGYDAMAGE, percent = -20}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_OUTFIT, immunity = true},
     {condition = CONDITION_DRUNK, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Screeech!", yell = false},
+    {text = "Screeech!", yell = false}
 })
 
 -- Loot
@@ -65,20 +64,15 @@ monster:loot({
     {id = 7902, chance = 650},
     {id = 2171, chance = 120},
     {id = 7437, chance = 130},
-    {id = 5801, chance = 70},
+    {id = 5801, chance = 70}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-250
--- name=speed, interval=2000, chance=15, range=7, radius=6, duration=15000, speedchange=-800, areaEffect=poff
--- name=ice, interval=2000, chance=15, range=7, min=-50, max=-100, target=1, shootEffect=ice, areaEffect=icearea
--- name=speed, interval=2000, chance=20, range=7, target=1, duration=10000, speedchange=-600, shootEffect=snowball
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=250, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -250},
+    {name = "speed", interval = 2000, chance = 15, range = 7, radius = 6},
+    {name = "ice", interval = 2000, chance = 15, minDamage = -50, maxDamage = -100, range = 7},
+    {name = "speed", interval = 2000, chance = 20, range = 7}
+})
 
 monster:register()

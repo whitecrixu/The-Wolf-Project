@@ -1,5 +1,5 @@
 -- Sulphur Scuttler
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Sulphur Scuttler")
 if not monster then return end
@@ -19,26 +19,25 @@ monster:armor(25)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_FIREDAMAGE, percent = -10},
+    {type = COMBAT_FIREDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Chrrr!", yell = false},
+    {text = "Chrrr!", yell = false}
 })
 
 -- Loot
@@ -54,16 +53,16 @@ monster:loot({
     {id = 2149, chance = 65000, maxCount = 4},
     {id = 5904, chance = 81670},
     {id = 2165, chance = 46670},
-    {id = 2171, chance = 20000},
+    {id = 2171, chance = 20000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-200
--- name=speed, interval=2000, chance=20, range=7, duration=10000, speedchange=-600, shootEffect=death, areaEffect=mortarea
--- name=earth, interval=2000, chance=5, max=-394, radius=6, areaEffect=smallplants
--- name=manadrain, interval=2000, chance=10, max=-200, length=6, areaEffect=greenspark
--- name=poison, interval=2000, chance=15, max=-120, length=8, spread=3, areaEffect=yellowbubble
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -200},
+    {name = "speed", interval = 2000, chance = 20, range = 7},
+    {name = "earth", interval = 2000, chance = 5, maxDamage = -394, radius = 6},
+    {name = "manadrain", interval = 2000, chance = 10, maxDamage = -200, length = 6},
+    {name = "poison", interval = 2000, chance = 15, maxDamage = -120, length = 8, spread = 3}
+})
 
 monster:register()

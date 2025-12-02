@@ -1,5 +1,5 @@
 -- Lizard Snakecharmer
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Lizard Snakecharmer")
 if not monster then return end
@@ -15,8 +15,7 @@ monster:corpseId(6041)
 monster:outfit({lookType = 115})
 monster:defense(15)
 monster:armor(15)
-monster:targetDistance(4)
-monster:runHealth(15)
+monster:runHealth(32)
 
 -- Flags
 monster:attackable(true)
@@ -24,31 +23,26 @@ monster:hostile(true)
 monster:isIllusionable(true)
 monster:pushable(true)
 monster:canPushItems(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_ICEDAMAGE, percent = 20},
     {type = COMBAT_PHYSICALDAMAGE, percent = -20},
-    {type = COMBAT_FIREDAMAGE, percent = -10},
+    {type = COMBAT_FIREDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
 -- Voices
 monster:voices({
     {text = "I ssssmell warm blood!", yell = false},
-    {text = "Shhhhhhhh", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "cobra", chance = 20, interval = 2000, max = 1},
+    {text = "Shhhhhhhh", yell = false}
 })
 
 -- Loot
@@ -65,20 +59,14 @@ monster:loot({
     {id = 7620, chance = 860},
     {id = 2154, chance = 150},
     {id = 2168, chance = 340},
-    {id = 3971, chance = 230},
+    {id = 3971, chance = 230}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=20, attack=20
--- name=poisoncondition, interval=2000, chance=15, range=7, min=-100, max=-200, shootEffect=poison
--- name=earth, interval=2000, chance=15, range=7, min=-50, max=-110, radius=1, target=1, shootEffect=poison, areaEffect=greenbubble
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=50, min=50, max=100, areaEffect=blueshimmer
--- name=invisible, interval=2000, chance=10, duration=3000, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -40},
+    {name = "poisoncondition", interval = 2000, chance = 15, minDamage = -100, maxDamage = -200, range = 7},
+    {name = "earth", interval = 2000, chance = 15, minDamage = -50, maxDamage = -110, range = 7, radius = 1}
+})
 
 monster:register()

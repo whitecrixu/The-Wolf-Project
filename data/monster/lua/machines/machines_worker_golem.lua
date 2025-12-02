@@ -1,5 +1,5 @@
 -- Worker Golem
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Worker Golem")
 if not monster then return end
@@ -19,10 +19,9 @@ monster:armor(35)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -31,13 +30,13 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = -5},
     {type = COMBAT_PHYSICALDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = 10},
-    {type = COMBAT_DEATHDAMAGE, percent = 10},
+    {type = COMBAT_DEATHDAMAGE, percent = 10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_PARALYZE, immunity = true},
+    {condition = CONDITION_PARALYZE, immunity = true}
 })
 
 -- Voices
@@ -46,7 +45,7 @@ monster:voices({
     {text = "klonk klonk klonk", yell = false},
     {text = "Rrrtttarrrttarrrtta", yell = false},
     {text = "Awaiting orders.", yell = false},
-    {text = "Secret objective complete.", yell = false},
+    {text = "Secret objective complete.", yell = false}
 })
 
 -- Loot
@@ -69,18 +68,13 @@ monster:loot({
     {id = 7428, chance = 130},
     {id = 7590, chance = 1470},
     {id = 10572, chance = 2270},
-    {id = 9979, chance = 2270},
+    {id = 9979, chance = 2270}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=50, attack=80
--- name=physical, interval=2000, chance=15, range=7, max=-125, shootEffect=smallstone
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=200, max=250, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -130},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -125, range = 7}
+})
 
 monster:register()

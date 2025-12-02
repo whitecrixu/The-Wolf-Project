@@ -1,5 +1,5 @@
 -- Orc Spearman
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Orc Spearman")
 if not monster then return end
@@ -16,7 +16,6 @@ monster:corpseId(5996)
 monster:outfit({lookType = 50})
 monster:defense(10)
 monster:armor(10)
-monster:targetDistance(4)
 monster:runHealth(10)
 
 -- Flags
@@ -33,12 +32,12 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_HOLYDAMAGE, percent = 20},
     {type = COMBAT_EARTHDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -10},
+    {type = COMBAT_DEATHDAMAGE, percent = -10}
 })
 
 -- Voices
 monster:voices({
-    {text = "Ugaar!", yell = false},
+    {text = "Ugaar!", yell = false}
 })
 
 -- Loot
@@ -50,13 +49,13 @@ monster:loot({
     {id = 2482, chance = 9000},
     {id = 2468, chance = 10000},
     {id = 12435, chance = 2300},
-    {id = 11113, chance = 150},
+    {id = 11113, chance = 150}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=15, attack=20
--- name=physical, interval=2000, chance=20, range=7, max=-30, shootEffect=spear
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -35},
+    {name = "physical", interval = 2000, chance = 20, maxDamage = -30, range = 7}
+})
 
 monster:register()

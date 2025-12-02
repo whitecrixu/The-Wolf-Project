@@ -1,5 +1,5 @@
 -- Gorgo
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Gorgo")
 if not monster then return end
@@ -15,30 +15,29 @@ monster:corpseId(10524)
 monster:outfit({lookType = 330})
 monster:defense(30)
 monster:armor(30)
-monster:runHealth(600)
+monster:runHealth(450)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = 20},
     {type = COMBAT_FIREDAMAGE, percent = -5},
-    {type = COMBAT_ENERGYDAMAGE, percent = -10},
+    {type = COMBAT_ENERGYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
-    {condition = CONDITION_DROWN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
+    {condition = CONDITION_DROWN, immunity = true}
 })
 
 -- Loot
@@ -53,21 +52,16 @@ monster:loot({
     {id = 7887, chance = 46470},
     {id = 7884, chance = 46470},
     {id = 7885, chance = 33300},
-    {id = 7413, chance = 33300},
+    {id = 7413, chance = 33300}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-450
--- name=lifedrain, interval=2000, chance=20, range=7, min=-21, max=-350, target=1, shootEffect=earth, areaEffect=carniphila
--- name=earth, interval=2000, chance=15, min=-250, max=-500, length=8, spread=3, areaEffect=carniphila
--- name=speed, interval=2000, chance=25, radius=7, target=1, speedchange=-400, areaEffect=poff
--- name=outfit, interval=2000, chance=1, range=7, target=1, duration=3000
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=25, min=150, max=300, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -450},
+    {name = "lifedrain", interval = 2000, chance = 20, minDamage = -21, maxDamage = -350, range = 7},
+    {name = "earth", interval = 2000, chance = 15, minDamage = -250, maxDamage = -500, length = 8, spread = 3},
+    {name = "speed", interval = 2000, chance = 25, radius = 7},
+    {name = "outfit", interval = 2000, chance = 1, range = 7}
+})
 
 monster:register()

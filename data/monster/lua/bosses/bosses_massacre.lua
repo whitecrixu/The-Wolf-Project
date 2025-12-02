@@ -1,5 +1,5 @@
 -- Massacre
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Massacre")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:armor(15)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -30,27 +29,22 @@ monster:immunities({
     {condition = CONDITION_ENERGY, immunity = true},
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_OUTFIT, immunity = true},
     {condition = CONDITION_DRUNK, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
 monster:loot({
-    {id = 6540, chance = 100000},
+    {id = 6540, chance = 100000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=150, attack=150
--- name=physical, interval=2000, chance=24, range=7, min=-280, max=-500, shootEffect=largerock
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=12, duration=4000, speedchange=380, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -300},
+    {name = "physical", interval = 2000, chance = 24, minDamage = -280, maxDamage = -500, range = 7}
+})
 
 monster:register()

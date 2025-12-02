@@ -1,5 +1,5 @@
 -- Furyosa
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Furyosa")
 if not monster then return end
@@ -19,10 +19,9 @@ monster:armor(20)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -30,14 +29,14 @@ monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = 40},
     {type = COMBAT_DEATHDAMAGE, percent = 10},
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
-    {type = COMBAT_PHYSICALDAMAGE, percent = 10},
+    {type = COMBAT_PHYSICALDAMAGE, percent = 10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_FIRE, immunity = true},
+    {condition = CONDITION_FIRE, immunity = true}
 })
 
 -- Voices
@@ -47,12 +46,7 @@ monster:voices({
     {text = "Die!", yell = false},
     {text = "Dieeee!", yell = false},
     {text = "Caaarnaaage!", yell = false},
-    {text = "Ahhhhrrrr!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "Fury", chance = 10, interval = 2000, max = 1},
+    {text = "Ahhhhrrrr!", yell = false}
 })
 
 -- Loot
@@ -79,24 +73,18 @@ monster:loot({
     {id = 2124, chance = 410},
     {id = 6301, chance = 60},
     {id = 2539, chance = 100},
-    {id = 21725, chance = 100},
+    {id = 21725, chance = 100}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-625
--- name=death, interval=2000, chance=20, min=-260, max=-310, radius=6, areaEffect=mortarea
--- name=manadrain, interval=2000, chance=10, min=-50, max=-210, length=8, areaEffect=yellowspark
--- name=fire, interval=2000, chance=10, min=-200, max=-300, length=8, spread=3, areaEffect=explosionarea
--- name=death, interval=2000, chance=5, min=-300, max=-800, length=8, areaEffect=redspark
--- name=physical, interval=3000, chance=18, max=-150, radius=5, target=1, areaEffect=groundshaker
--- name=fury skill reducer, interval=2000, chance=5
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=invisible, interval=2000, chance=10, duration=8000, areaEffect=blueshimmer
--- name=healing, interval=7000, chance=20, min=500, max=700, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -625},
+    {name = "death", interval = 2000, chance = 20, minDamage = -260, maxDamage = -310, radius = 6},
+    {name = "manadrain", interval = 2000, chance = 10, minDamage = -50, maxDamage = -210, length = 8},
+    {name = "fire", interval = 2000, chance = 10, minDamage = -200, maxDamage = -300, length = 8, spread = 3},
+    {name = "death", interval = 2000, chance = 5, minDamage = -300, maxDamage = -800, length = 8},
+    {name = "physical", interval = 3000, chance = 18, maxDamage = -150, radius = 5},
+    {name = "fury skill reducer", interval = 2000, chance = 5}
+})
 
 monster:register()

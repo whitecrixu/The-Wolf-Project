@@ -1,5 +1,5 @@
 -- Furious Orc Berserker
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Furious Orc Berserker")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(6017)
 monster:outfit({lookType = 74})
 monster:defense(2)
 monster:armor(1)
-monster:runHealth(15)
+monster:runHealth(1)
 
 -- Flags
 monster:attackable(true)
@@ -30,12 +30,12 @@ monster:staticAttackChance(90)
 -- Loot
 monster:loot({
     {id = 2684, chance = 9000, maxCount = 2},
-    {id = 2666, chance = 20000, maxCount = 2},
+    {id = 2666, chance = 20000, maxCount = 2}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = 0}
+})
 
 monster:register()

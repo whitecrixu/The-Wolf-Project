@@ -1,5 +1,5 @@
 -- Orc Rider
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Orc Rider")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:armor(15)
 monster:attackable(true)
 monster:hostile(true)
 monster:isConvinceable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -30,13 +29,13 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_HOLYDAMAGE, percent = 10},
     {type = COMBAT_EARTHDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -5},
+    {type = COMBAT_DEATHDAMAGE, percent = -5}
 })
 
 -- Voices
 monster:voices({
     {text = "Grrrrrrr", yell = false},
-    {text = "Orc arga Huummmak!", yell = false},
+    {text = "Orc arga Huummmak!", yell = false}
 })
 
 -- Loot
@@ -51,17 +50,12 @@ monster:loot({
     {id = 2425, chance = 1100},
     {id = 12435, chance = 9760},
     {id = 11113, chance = 2000},
-    {id = 11235, chance = 9410},
+    {id = 11235, chance = 9410}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=55, attack=40
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=200, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -95}
+})
 
 monster:register()

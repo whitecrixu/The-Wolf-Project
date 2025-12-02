@@ -1,5 +1,5 @@
 -- Lizard Chosen
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Lizard Chosen")
 if not monster then return end
@@ -15,34 +15,33 @@ monster:corpseId(11288)
 monster:outfit({lookType = 344})
 monster:defense(45)
 monster:armor(45)
-monster:runHealth(50)
+monster:runHealth(305)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 10},
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
-    {type = COMBAT_ICEDAMAGE, percent = 10},
+    {type = COMBAT_ICEDAMAGE, percent = 10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Grzzzzzzz!", yell = false},
     {text = "Garrrblarrrrzzzz!", yell = false},
-    {text = "Kzzzzzz!", yell = false},
+    {text = "Kzzzzzz!", yell = false}
 })
 
 -- Loot
@@ -63,20 +62,15 @@ monster:loot({
     {id = 2528, chance = 1100},
     {id = 11304, chance = 940},
     {id = 11302, chance = 140},
-    {id = 11301, chance = 980},
+    {id = 11301, chance = 980}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=80, attack=80
--- name=poisoncondition, interval=2000, chance=15, min=-240, max=-320, length=3, spread=2, areaEffect=poison
--- name=earth, interval=2000, chance=15, min=-190, max=-340, radius=3, areaEffect=greenspark
--- name=earth, interval=2000, chance=10, min=-90, max=-180, length=8, areaEffect=greenbubble
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=75, max=125, areaEffect=greenshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -160},
+    {name = "poisoncondition", interval = 2000, chance = 15, minDamage = -240, maxDamage = -320, length = 3, spread = 2},
+    {name = "earth", interval = 2000, chance = 15, minDamage = -190, maxDamage = -340, radius = 3},
+    {name = "earth", interval = 2000, chance = 10, minDamage = -90, maxDamage = -180, length = 8}
+})
 
 monster:register()

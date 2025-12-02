@@ -1,5 +1,5 @@
 -- Guzzlemaw
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Guzzlemaw")
 if not monster then return end
@@ -19,10 +19,9 @@ monster:armor(50)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -31,20 +30,20 @@ monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 5},
     {type = COMBAT_ENERGYDAMAGE, percent = 5},
     {type = COMBAT_ICEDAMAGE, percent = 5},
-    {type = COMBAT_EARTHDAMAGE, percent = 15},
+    {type = COMBAT_EARTHDAMAGE, percent = 15}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Gmmmooooh! *chomp*", yell = false},
     {text = "MWAAAH! *gurgle*", yell = false},
-    {text = "*chomp* Mmmoh! *chomp*", yell = false},
+    {text = "*chomp* Mmmoh! *chomp*", yell = false}
 })
 
 -- Loot
@@ -77,22 +76,17 @@ monster:loot({
     {id = 22396, chance = 920},
     {id = 22532, chance = 15000},
     {id = 22533, chance = 14000},
-    {id = 2240, chance = 10110},
+    {id = 2240, chance = 10110}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=95, attack=95
--- name=bleedcondition, interval=2000, chance=10, min=-500, max=-1000, radius=3, areaEffect=redspark
--- name=physical, interval=2000, chance=10, max=-900, length=8, spread=3, target=1, areaEffect=explosionarea
--- name=physical, interval=2000, chance=20, max=-500, radius=2, target=1, shootEffect=largerock, areaEffect=stones
--- name=speed, interval=2000, chance=15, radius=6, duration=15000, speedchange=-800, areaEffect=redshimmer
--- name=manadrain, interval=2000, chance=10, min=-120, max=-250, radius=4, areaEffect=redshimmer
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=20, min=250, max=425, areaEffect=greenspark
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -190},
+    {name = "bleedcondition", interval = 2000, chance = 10, minDamage = -500, maxDamage = -1000, radius = 3},
+    {name = "physical", interval = 2000, chance = 10, maxDamage = -900, length = 8, spread = 3},
+    {name = "physical", interval = 2000, chance = 20, maxDamage = -500, radius = 2},
+    {name = "speed", interval = 2000, chance = 15, radius = 6},
+    {name = "manadrain", interval = 2000, chance = 10, minDamage = -120, maxDamage = -250, radius = 4}
+})
 
 monster:register()

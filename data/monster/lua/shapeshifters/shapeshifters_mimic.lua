@@ -1,5 +1,5 @@
 -- Mimic
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Mimic")
 if not monster then return end
@@ -15,12 +15,16 @@ monster:corpseId(1740)
 monster:outfit({lookType = 92})
 monster:defense(3)
 monster:armor(2)
-monster:targetDistance(5)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:pushable(true)
 monster:staticAttackChance(0)
+
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -6}
+})
 
 monster:register()

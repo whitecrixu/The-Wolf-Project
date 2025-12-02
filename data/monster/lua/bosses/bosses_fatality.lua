@@ -1,5 +1,5 @@
 -- Fatality
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Fatality")
 if not monster then return end
@@ -20,7 +20,6 @@ monster:armor(16)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
@@ -28,18 +27,18 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = -10},
     {type = COMBAT_ICEDAMAGE, percent = 10},
-    {type = COMBAT_ENERGYDAMAGE, percent = 20},
+    {type = COMBAT_ENERGYDAMAGE, percent = 20}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=31, attack=100
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -131}
+})
 
 monster:register()

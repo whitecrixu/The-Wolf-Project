@@ -1,5 +1,5 @@
 -- Slime
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Slime")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(15)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
@@ -27,27 +26,22 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = 20},
     {type = COMBAT_FIREDAMAGE, percent = -10},
-    {type = COMBAT_ENERGYDAMAGE, percent = -10},
+    {type = COMBAT_ENERGYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Blubb", yell = false},
+    {text = "Blubb", yell = false}
 })
 
--- Summons
-monster:summons({
-    {name = "Slime", chance = 10, interval = 2000, max = 1},
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -85}
 })
-
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=45, attack=40
---]]
 
 monster:register()

@@ -1,5 +1,5 @@
 -- Souleater
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Souleater")
 if not monster then return end
@@ -19,10 +19,9 @@ monster:armor(30)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -30,14 +29,14 @@ monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = 50},
     {type = COMBAT_FIREDAMAGE, percent = -10},
     {type = COMBAT_ENERGYDAMAGE, percent = -10},
-    {type = COMBAT_PHYSICALDAMAGE, percent = 70},
+    {type = COMBAT_PHYSICALDAMAGE, percent = 70}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true}
 })
 
 -- Voices
@@ -45,7 +44,7 @@ monster:voices({
     {text = "Life is such a fickle thing!", yell = false},
     {text = "I will devour your soul.", yell = false},
     {text = "Souuuls!", yell = false},
-    {text = "I will feed on you.", yell = false},
+    {text = "I will feed on you.", yell = false}
 })
 
 -- Loot
@@ -61,22 +60,16 @@ monster:loot({
     {id = 2185, chance = 980},
     {id = 12635, chance = 20},
     {id = 6300, chance = 300},
-    {id = 5884, chance = 140},
+    {id = 5884, chance = 140}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=60, attack=60
--- name=icicle, interval=2000, chance=20, range=7, min=-50, max=-100, target=1
--- name=souleater drown, interval=2000, chance=10
--- name=death, interval=2000, chance=10, min=-100, max=-200, length=4, spread=3, areaEffect=rednote
--- name=lifedrain, interval=2000, chance=25, min=-30, max=-60, radius=4, areaEffect=redshimmer
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=invisible, interval=2000, chance=5, duration=3000, areaEffect=blueshimmer
--- name=healing, interval=2000, chance=15, min=120, max=125, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -120},
+    {name = "icicle", interval = 2000, chance = 20, minDamage = -50, maxDamage = -100, range = 7},
+    {name = "souleater drown", interval = 2000, chance = 10},
+    {name = "death", interval = 2000, chance = 10, minDamage = -100, maxDamage = -200, length = 4, spread = 3},
+    {name = "lifedrain", interval = 2000, chance = 25, minDamage = -30, maxDamage = -60, radius = 4}
+})
 
 monster:register()

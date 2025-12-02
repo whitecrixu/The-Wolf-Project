@@ -1,5 +1,5 @@
 -- Raging mage
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Raging mage")
 if not monster then return end
@@ -15,20 +15,19 @@ monster:corpseId(13834)
 monster:outfit({lookType = 416})
 monster:defense(25)
 monster:armor(25)
-monster:runHealth(300)
+monster:runHealth(350)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = -25},
-    {type = COMBAT_DEATHDAMAGE, percent = 15},
+    {type = COMBAT_DEATHDAMAGE, percent = 15}
 })
 
 -- Immunities
@@ -36,18 +35,13 @@ monster:immunities({
     {condition = CONDITION_ENERGY, immunity = true},
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Behold the all permeating powers I draw from this gate!!", yell = false},
-    {text = "ENERGY!!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "Golden Servant", chance = 50, interval = 2000, max = 1},
+    {text = "ENERGY!!", yell = false}
 })
 
 -- Loot
@@ -73,15 +67,15 @@ monster:loot({
     {id = 2195, chance = 610},
     {id = 9980, chance = 610},
     {id = 5741, chance = 610},
-    {id = 8902, chance = 610},
+    {id = 8902, chance = 610}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-50
--- name=thunderstorm, interval=2000, chance=35, range=7, min=-100, max=-200, target=1
--- name=manadrain, interval=2000, chance=15, range=7, min=-100, max=-200
--- name=energyfield, interval=2000, chance=15, range=7, radius=2, target=1, shootEffect=energy
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -50},
+    {name = "thunderstorm", interval = 2000, chance = 35, minDamage = -100, maxDamage = -200, range = 7},
+    {name = "manadrain", interval = 2000, chance = 15, minDamage = -100, maxDamage = -200, range = 7},
+    {name = "energyfield", interval = 2000, chance = 15, range = 7, radius = 2}
+})
 
 monster:register()

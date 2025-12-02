@@ -1,5 +1,5 @@
 -- Spidris Elite
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Spidris Elite")
 if not monster then return end
@@ -15,7 +15,6 @@ monster:corpseId(15296)
 monster:outfit({lookType = 457})
 monster:defense(30)
 monster:armor(30)
-monster:targetDistance(0)
 
 -- Flags
 monster:attackable(true)
@@ -23,16 +22,17 @@ monster:hostile(true)
 monster:pushable(true)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_HOLYDAMAGE, percent = -10},
+    {type = COMBAT_HOLYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Loot
@@ -51,12 +51,12 @@ monster:loot({
     {id = 2153, chance = 1120},
     {id = 15489, chance = 1280},
     {id = 15492, chance = 1390},
-    {id = 15491, chance = 1170},
+    {id = 15491, chance = 1170}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=75, attack=82
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -157}
+})
 
 monster:register()

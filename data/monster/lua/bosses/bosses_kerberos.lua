@@ -1,5 +1,5 @@
 -- Kerberos
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Kerberos")
 if not monster then return end
@@ -20,30 +20,29 @@ monster:armor(40)
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = 20},
     {type = COMBAT_ENERGYDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = -5},
-    {type = COMBAT_HOLYDAMAGE, percent = -25},
+    {type = COMBAT_HOLYDAMAGE, percent = -25}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_FIRE, immunity = true},
+    {condition = CONDITION_FIRE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "GROOOWL!", yell = false},
-    {text = "GRRRRR!", yell = false},
+    {text = "GRRRRR!", yell = false}
 })
 
 -- Loot
@@ -62,17 +61,17 @@ monster:loot({
     {id = 7890, chance = 96880},
     {id = 7590, chance = 96880, maxCount = 3},
     {id = 7453, chance = 3130},
-    {id = 2466, chance = 31250},
+    {id = 2466, chance = 31250}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-508
--- name=earth, interval=2000, chance=5, max=-700, length=8, spread=3, areaEffect=carniphila
--- name=death, interval=2000, chance=10, range=7, max=-498, shootEffect=suddendeath, areaEffect=smallclouds
--- name=fire, interval=2000, chance=10, max=-662, length=8, spread=3, areaEffect=firearea
--- name=lifedrain, interval=2000, chance=10, max=-976, length=8, spread=3, areaEffect=redshimmer
--- name=earth, interval=2000, chance=5, range=7, max=-549, shootEffect=poison, areaEffect=poison
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -508},
+    {name = "earth", interval = 2000, chance = 5, maxDamage = -700, length = 8, spread = 3},
+    {name = "death", interval = 2000, chance = 10, maxDamage = -498, range = 7},
+    {name = "fire", interval = 2000, chance = 10, maxDamage = -662, length = 8, spread = 3},
+    {name = "lifedrain", interval = 2000, chance = 10, maxDamage = -976, length = 8, spread = 3},
+    {name = "earth", interval = 2000, chance = 5, maxDamage = -549, range = 7}
+})
 
 monster:register()

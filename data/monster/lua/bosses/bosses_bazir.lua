@@ -1,5 +1,5 @@
 -- Bazir
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Bazir")
 if not monster then return end
@@ -15,25 +15,25 @@ monster:corpseId(2916)
 monster:outfit({lookType = 35})
 monster:defense(160)
 monster:armor(160)
-monster:runHealth(3000)
+monster:runHealth(11000)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
+monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_ENERGY, immunity = true},
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_OUTFIT, immunity = true},
     {condition = CONDITION_DRUNK, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -41,12 +41,7 @@ monster:voices({
     {text = "COME HERE! FREE ITEMS FOR EVERYONE!", yell = true},
     {text = "BOW TO THE POWER OF THE RUTHLESS SEVEN!", yell = false},
     {text = "Slay your friends and I will spare you!", yell = true},
-    {text = "DON'T BE AFRAID! I AM COMING IN PEACE!", yell = true},
-})
-
--- Summons
-monster:summons({
-    {name = "bazir", chance = 15, interval = 1000, max = 1},
+    {text = "DON'T BE AFRAID! I AM COMING IN PEACE!", yell = true}
 })
 
 -- Loot
@@ -107,33 +102,23 @@ monster:loot({
     {id = 2377, chance = 20000},
     {id = 3955, chance = 100},
     {id = 2185, chance = 3500},
-    {id = 2143, chance = 12500, maxCount = 15},
+    {id = 2143, chance = 12500, maxCount = 15}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=200, attack=250
--- name=manadrain, interval=1000, chance=7, range=7, min=-100, max=-1000, shootEffect=energy, areaEffect=poff
--- name=drunk, interval=1000, chance=7, range=7, shootEffect=energy, areaEffect=energyarea
--- name=strength, interval=1000, chance=9, range=7, shootEffect=largerock, areaEffect=energyarea
--- name=lifedrain, interval=1000, chance=13, min=-400, max=-700, radius=8, areaEffect=bluebubble
--- name=manadrain, interval=1000, chance=10, min=-400, max=-700, radius=8, areaEffect=greenshimmer
--- name=speed, interval=1000, chance=12, radius=6, duration=60000, speedchange=-1900, areaEffect=poison
--- name=strength, interval=1000, chance=8, radius=5, areaEffect=blackspark
--- name=outfit, interval=1000, chance=2, radius=8, duration=5000, areaEffect=bluebubble
--- name=outfit, interval=1000, chance=2, radius=8, duration=5000, areaEffect=bluebubble
--- name=fire, interval=1000, chance=34, range=7, min=-100, max=-900, radius=7, target=1, shootEffect=fire, areaEffect=firearea
--- name=lifedrain, interval=1000, chance=15, min=-500, max=-850, length=8, areaEffect=redshimmer
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=1000, chance=15, min=5000, max=10000, areaEffect=blueshimmer
--- name=healing, interval=1000, chance=25, min=2000, max=3000, areaEffect=blueshimmer
--- name=speed, interval=1000, chance=8, duration=5000, speedchange=1901, areaEffect=redshimmer
--- name=invisible, interval=1000, chance=4, duration=10000, areaEffect=blueshimmer
--- name=invisible, interval=1000, chance=17, duration=2000, areaEffect=blueshimmer
--- name=outfit, interval=1000, chance=2, duration=7000, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -450},
+    {name = "manadrain", interval = 1000, chance = 7, minDamage = -100, maxDamage = -1000, range = 7},
+    {name = "drunk", interval = 1000, chance = 7, range = 7},
+    {name = "strength", interval = 1000, chance = 9, range = 7},
+    {name = "lifedrain", interval = 1000, chance = 13, minDamage = -400, maxDamage = -700, radius = 8},
+    {name = "manadrain", interval = 1000, chance = 10, minDamage = -400, maxDamage = -700, radius = 8},
+    {name = "speed", interval = 1000, chance = 12, radius = 6},
+    {name = "strength", interval = 1000, chance = 8, radius = 5},
+    {name = "outfit", interval = 1000, chance = 2, radius = 8},
+    {name = "outfit", interval = 1000, chance = 2, radius = 8},
+    {name = "fire", interval = 1000, chance = 34, minDamage = -100, maxDamage = -900, range = 7, radius = 7},
+    {name = "lifedrain", interval = 1000, chance = 15, minDamage = -500, maxDamage = -850, length = 8}
+})
 
 monster:register()

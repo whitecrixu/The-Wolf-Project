@@ -1,5 +1,5 @@
 -- Elf Scout
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Elf Scout")
 if not monster then return end
@@ -16,7 +16,6 @@ monster:corpseId(6012)
 monster:outfit({lookType = 64})
 monster:defense(10)
 monster:armor(10)
-monster:targetDistance(4)
 
 -- Flags
 monster:attackable(true)
@@ -24,19 +23,18 @@ monster:hostile(true)
 monster:isSummonable(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = 20},
-    {type = COMBAT_DEATHDAMAGE, percent = -1},
+    {type = COMBAT_DEATHDAMAGE, percent = -1}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -45,7 +43,7 @@ monster:voices({
     {text = "Feel the sting of my arrows!", yell = false},
     {text = "Thy blood will quench the soil's thirst!", yell = false},
     {text = "Evicor guide my arrow.", yell = false},
-    {text = "Your existence will end here!", yell = false},
+    {text = "Your existence will end here!", yell = false}
 })
 
 -- Loot
@@ -60,13 +58,13 @@ monster:loot({
     {id = 10552, chance = 5200},
     {id = 2456, chance = 4000},
     {id = 5921, chance = 1130},
-    {id = 7438, chance = 140},
+    {id = 7438, chance = 140}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=20, attack=20
--- name=physical, interval=2000, chance=15, range=7, max=-80, shootEffect=arrow
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -40},
+    {name = "physical", interval = 2000, chance = 15, maxDamage = -80, range = 7}
+})
 
 monster:register()

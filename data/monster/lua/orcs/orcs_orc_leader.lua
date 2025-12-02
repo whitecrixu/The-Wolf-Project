@@ -1,5 +1,5 @@
 -- Orc Leader
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Orc Leader")
 if not monster then return end
@@ -23,7 +23,6 @@ monster:hostile(true)
 monster:isSummonable(true)
 monster:isConvinceable(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -33,18 +32,18 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_HOLYDAMAGE, percent = 20},
     {type = COMBAT_EARTHDAMAGE, percent = -10},
-    {type = COMBAT_DEATHDAMAGE, percent = -5},
+    {type = COMBAT_DEATHDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_FIRE, immunity = true},
+    {condition = CONDITION_FIRE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Ulderek futgyr human!", yell = false},
+    {text = "Ulderek futgyr human!", yell = false}
 })
 
 -- Loot
@@ -66,13 +65,13 @@ monster:loot({
     {id = 2475, chance = 180},
     {id = 12435, chance = 19510},
     {id = 11113, chance = 1030},
-    {id = 12436, chance = 2008},
+    {id = 12436, chance = 2008}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=40, attack=74
--- name=physical, interval=2000, chance=20, range=7, max=-70, shootEffect=throwingknife
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -114},
+    {name = "physical", interval = 2000, chance = 20, maxDamage = -70, range = 7}
+})
 
 monster:register()

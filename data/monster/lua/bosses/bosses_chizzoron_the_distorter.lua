@@ -1,5 +1,5 @@
 -- Chizzoron the Distorter
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Chizzoron the Distorter")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(70)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -29,25 +28,20 @@ monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = 10},
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
     {type = COMBAT_DEATHDAMAGE, percent = 30},
-    {type = COMBAT_ICEDAMAGE, percent = 20},
+    {type = COMBAT_ICEDAMAGE, percent = 20}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Humanzzz! Leave Zzaion at onzzzze!", yell = false},
     {text = "I pray to my mazzterzz, the mighty dragonzzz!", yell = false},
-    {text = "You are not worzzy to touch zzizz zzacred ground!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "Lizard Dragon Priest", chance = 10, interval = 2000, max = 2},
+    {text = "You are not worzzy to touch zzizz zzacred ground!", yell = false}
 })
 
 -- Loot
@@ -60,16 +54,16 @@ monster:loot({
     {id = 2155, chance = 16300},
     {id = 2169, chance = 11025},
     {id = 7591, chance = 5750},
-    {id = 2492, chance = 5750},
+    {id = 2492, chance = 5750}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=60, attack=130
--- name=poison, interval=2000, chance=20, range=7, max=-430, radius=1, target=1, shootEffect=poison, areaEffect=poison
--- name=fire, interval=2000, chance=10, max=-874, spread=3, shootEffect=fire, areaEffect=firearea
--- name=physical, interval=2000, chance=15, min=-300, max=-646, radius=3, areaEffect=poff
--- name=lifedrain, interval=2000, chance=15, range=7, min=-148, max=-250, target=1, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -190},
+    {name = "poison", interval = 2000, chance = 20, maxDamage = -430, range = 7, radius = 1},
+    {name = "fire", interval = 2000, chance = 10, maxDamage = -874, spread = 3},
+    {name = "physical", interval = 2000, chance = 15, minDamage = -300, maxDamage = -646, radius = 3},
+    {name = "lifedrain", interval = 2000, chance = 15, minDamage = -148, maxDamage = -250, range = 7}
+})
 
 monster:register()

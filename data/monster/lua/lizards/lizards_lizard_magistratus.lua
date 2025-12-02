@@ -1,5 +1,5 @@
 -- Lizard Magistratus
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Lizard Magistratus")
 if not monster then return end
@@ -15,7 +15,6 @@ monster:corpseId(6041)
 monster:outfit({lookType = 115})
 monster:defense(15)
 monster:armor(15)
-monster:targetDistance(4)
 
 -- Flags
 monster:attackable(true)
@@ -27,17 +26,17 @@ monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_FIREDAMAGE, percent = 80},
+    {type = COMBAT_FIREDAMAGE, percent = 80}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Shhhhhhhh", yell = false},
+    {text = "Shhhhhhhh", yell = false}
 })
 
 -- Loot
@@ -48,18 +47,13 @@ monster:loot({
     {id = 2147, chance = 8970, maxCount = 5},
     {id = 7589, chance = 6280},
     {id = 5881, chance = 450},
-    {id = 5876, chance = 220},
+    {id = 5876, chance = 220}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=30, attack=30
--- name=lizard magistratus curse, interval=2000, chance=10, range=5
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=50, min=200, max=250, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -60},
+    {name = "lizard magistratus curse", interval = 2000, chance = 10, range = 5}
+})
 
 monster:register()

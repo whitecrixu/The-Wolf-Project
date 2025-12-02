@@ -1,5 +1,5 @@
 -- Teleskor
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Teleskor")
 if not monster then return end
@@ -19,20 +19,19 @@ monster:armor(15)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_HOLYDAMAGE, percent = -5},
+    {type = COMBAT_HOLYDAMAGE, percent = -5}
 })
 
 -- Voices
 monster:voices({
     {text = "Who disturbs my slumber?", yell = false},
-    {text = "Mourn the dead, do not hunt them!", yell = false},
+    {text = "Mourn the dead, do not hunt them!", yell = false}
 })
 
 -- Loot
@@ -44,12 +43,12 @@ monster:loot({
     {id = 2511, chance = 45000},
     {id = 2050, chance = 36000},
     {id = 2388, chance = 27000},
-    {id = 2376, chance = 27000},
+    {id = 2376, chance = 27000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-30
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -30}
+})
 
 monster:register()

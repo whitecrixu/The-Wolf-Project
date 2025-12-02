@@ -1,5 +1,5 @@
 -- Bad Dream
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Bad Dream")
 if not monster then return end
@@ -19,24 +19,23 @@ monster:armor(0)
 -- Flags
 monster:attackable(false)
 monster:hostile(false)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_ENERGY, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
-    {condition = CONDITION_BLEEDING, immunity = true},
-    {condition = CONDITION_DAZZLED, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
+    {type = COMBAT_PHYSICALDAMAGE, combat = true},
+    {type = COMBAT_HOLYDAMAGE, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
-    {condition = CONDITION_DROWN, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
+    {condition = CONDITION_DROWN, immunity = true}
 })
 
 -- Voices
@@ -44,7 +43,12 @@ monster:voices({
     {text = "Ruu... mosha tak..", yell = false},
     {text = "Kororr roshakk!", yell = false},
     {text = "Grrrr!...", yell = false},
-    {text = "Brrzfchh", yell = false},
+    {text = "Brrzfchh", yell = false}
+})
+
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -1440}
 })
 
 monster:register()

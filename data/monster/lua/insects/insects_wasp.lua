@@ -1,5 +1,5 @@
 -- Wasp
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Wasp")
 if not monster then return end
@@ -27,27 +27,27 @@ monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_FIREDAMAGE, percent = -10},
+    {type = COMBAT_FIREDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Bssssss", yell = false},
+    {text = "Bssssss", yell = false}
 })
 
 -- Loot
 monster:loot({
-    {id = 5902, chance = 3000},
+    {id = 5902, chance = 3000}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=1500, chance=100, skill=30, attack=10
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 1500, chance = 100, minDamage = 0, maxDamage = -40}
+})
 
 monster:register()

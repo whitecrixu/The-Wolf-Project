@@ -1,5 +1,5 @@
 -- Deathspawn
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Deathspawn")
 if not monster then return end
@@ -28,26 +28,26 @@ monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = 10},
     {type = COMBAT_FIREDAMAGE, percent = -15},
     {type = COMBAT_ENERGYDAMAGE, percent = -15},
-    {type = COMBAT_ICEDAMAGE, percent = -15},
+    {type = COMBAT_ICEDAMAGE, percent = -15}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
 -- Voices
 monster:voices({
     {text = "Ribbit!", yell = false},
-    {text = "Ribbit! Ribbit!", yell = false},
+    {text = "Ribbit! Ribbit!", yell = false}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=10, attack=40
--- name=fire, interval=1000, chance=10, min=-400, max=-700, length=7, areaEffect=explosion
--- name=energy, interval=1000, chance=11, min=-250, max=-450, length=7, areaEffect=purpleenergy
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -50},
+    {name = "fire", interval = 1000, chance = 10, minDamage = -400, maxDamage = -700, length = 7},
+    {name = "energy", interval = 1000, chance = 11, minDamage = -250, maxDamage = -450, length = 7}
+})
 
 monster:register()

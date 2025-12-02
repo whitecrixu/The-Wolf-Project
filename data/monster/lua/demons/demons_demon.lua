@@ -1,5 +1,5 @@
 -- Demon
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Demon")
 if not monster then return end
@@ -19,10 +19,9 @@ monster:armor(55)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -31,16 +30,16 @@ monster:elements({
     {type = COMBAT_ENERGYDAMAGE, percent = 50},
     {type = COMBAT_EARTHDAMAGE, percent = 40},
     {type = COMBAT_ICEDAMAGE, percent = -10},
-    {type = COMBAT_HOLYDAMAGE, percent = -10},
+    {type = COMBAT_HOLYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_DROWN, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -49,12 +48,7 @@ monster:voices({
     {text = "MUHAHAHAHA!", yell = false},
     {text = "CHAMEK ATH UTHUL ARAK!", yell = false},
     {text = "I SMELL FEEEEAAAAAR!", yell = false},
-    {text = "Your resistance is futile!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "fire elemental", chance = 10, interval = 2000, max = 1},
+    {text = "Your resistance is futile!", yell = false}
 })
 
 -- Loot
@@ -87,24 +81,18 @@ monster:loot({
     {id = 2164, chance = 170},
     {id = 2472, chance = 70},
     {id = 7393, chance = 100},
-    {id = 7382, chance = 80},
+    {id = 7382, chance = 80}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=70, attack=130
--- name=manadrain, interval=2000, chance=10, range=7, max=-120
--- name=fire, interval=2000, chance=20, range=7, min=-150, max=-250, radius=7, target=1, shootEffect=fire, areaEffect=firearea
--- name=firefield, interval=2000, chance=10, range=7, radius=1, target=1, shootEffect=fire
--- name=lifedrain, interval=2000, chance=10, min=-300, max=-490, length=8, areaEffect=purpleenergy
--- name=energy strike, interval=2000, chance=10, range=1, min=-210, max=-300
--- name=speed, interval=2000, chance=15, radius=1, target=1, duration=30000, speedchange=-700, areaEffect=redshimmer
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=180, max=250, areaEffect=blueshimmer
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=320, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -200},
+    {name = "manadrain", interval = 2000, chance = 10, maxDamage = -120, range = 7},
+    {name = "fire", interval = 2000, chance = 20, minDamage = -150, maxDamage = -250, range = 7, radius = 7},
+    {name = "firefield", interval = 2000, chance = 10, range = 7, radius = 1},
+    {name = "lifedrain", interval = 2000, chance = 10, minDamage = -300, maxDamage = -490, length = 8},
+    {name = "energy strike", interval = 2000, chance = 10, minDamage = -210, maxDamage = -300},
+    {name = "speed", interval = 2000, chance = 15, radius = 1}
+})
 
 monster:register()

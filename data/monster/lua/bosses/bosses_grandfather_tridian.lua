@@ -1,5 +1,5 @@
 -- Grandfather Tridian
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Grandfather Tridian")
 if not monster then return end
@@ -15,39 +15,31 @@ monster:corpseId(20391)
 monster:outfit({lookType = 193})
 monster:defense(25)
 monster:armor(25)
-monster:targetDistance(4)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(50)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_HOLYDAMAGE, percent = 20},
     {type = COMBAT_ICEDAMAGE, percent = 5},
-    {type = COMBAT_PHYSICALDAMAGE, percent = 35},
+    {type = COMBAT_PHYSICALDAMAGE, percent = 35}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "I will bring peace to your misguided soul!", yell = false},
-    {text = "Your intrusion can't be tolerated!", yell = false},
-})
-
--- Summons
-monster:summons({
-    {name = "Crypt Shambler", chance = 10, interval = 2000, max = 1},
-    {name = "Ghost", chance = 10, interval = 2000, max = 1},
+    {text = "Your intrusion can't be tolerated!", yell = false}
 })
 
 -- Loot
@@ -76,20 +68,14 @@ monster:loot({
     {id = 5670, chance = 130},
     {id = 12608, chance = 100},
     {id = 5801, chance = 100},
-    {id = 2656, chance = 40},
+    {id = 2656, chance = 40}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-100
--- name=lifedrain, interval=2000, chance=25, range=1, min=-138, max=-362, radius=1, target=1, shootEffect=holy, areaEffect=holyarea
--- name=lifedrain, interval=2000, chance=15, range=1, max=-50, radius=1, target=1, areaEffect=redshimmer
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=25, min=60, max=90, areaEffect=blueshimmer
--- name=invisible, interval=2000, chance=15, duration=4000, areaEffect=yellowbubble
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -100},
+    {name = "lifedrain", interval = 2000, chance = 25, minDamage = -138, maxDamage = -362, radius = 1},
+    {name = "lifedrain", interval = 2000, chance = 15, maxDamage = -50, radius = 1}
+})
 
 monster:register()

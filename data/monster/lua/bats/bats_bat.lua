@@ -1,5 +1,5 @@
 -- Bat
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Bat")
 if not monster then return end
@@ -29,22 +29,22 @@ monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_EARTHDAMAGE, percent = -20},
+    {type = COMBAT_EARTHDAMAGE, percent = -20}
 })
 
 -- Voices
 monster:voices({
-    {text = "Flap!Flap!", yell = false},
+    {text = "Flap!Flap!", yell = false}
 })
 
 -- Loot
 monster:loot({
-    {id = 5894, chance = 1220},
+    {id = 5894, chance = 1220}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=10, attack=8
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -18}
+})
 
 monster:register()

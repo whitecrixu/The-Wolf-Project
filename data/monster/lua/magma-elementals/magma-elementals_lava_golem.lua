@@ -1,5 +1,5 @@
 -- Lava Golem
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Lava Golem")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(60)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -29,20 +28,20 @@ monster:elements({
     {type = COMBAT_ICEDAMAGE, percent = -5},
     {type = COMBAT_PHYSICALDAMAGE, percent = 1},
     {type = COMBAT_ENERGYDAMAGE, percent = 1},
-    {type = COMBAT_DEATHDAMAGE, percent = 1},
+    {type = COMBAT_DEATHDAMAGE, percent = 1}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
-    {text = "Grrrrunt", yell = false},
+    {text = "Grrrrunt", yell = false}
 })
 
 -- Loot
@@ -75,18 +74,18 @@ monster:loot({
     {id = 2519, chance = 1250},
     {id = 2156, chance = 1200},
     {id = 8902, chance = 530},
-    {id = 7899, chance = 410},
+    {id = 7899, chance = 410}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-390
--- name=fire, interval=2000, chance=15, min=-350, max=-700, length=8, areaEffect=fireattack
--- name=manadrain, interval=2000, chance=10, min=-600, max=-1300, length=8, areaEffect=mortarea
--- name=lava golem soulfire, interval=2000, chance=15
--- name=fire, interval=2000, chance=15, min=-220, max=-350, radius=4, target=1, areaEffect=firearea
--- name=speed, interval=2000, chance=10, length=5, spread=3, duration=10000, speedchange=-300, areaEffect=yellowspark
--- name=fire, interval=2000, chance=30, min=-280, max=-350, radius=3, areaEffect=fire
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -390},
+    {name = "fire", interval = 2000, chance = 15, minDamage = -350, maxDamage = -700, length = 8},
+    {name = "manadrain", interval = 2000, chance = 10, minDamage = -600, maxDamage = -1300, length = 8},
+    {name = "lava golem soulfire", interval = 2000, chance = 15},
+    {name = "fire", interval = 2000, chance = 15, minDamage = -220, maxDamage = -350, radius = 4},
+    {name = "speed", interval = 2000, chance = 10, length = 5, spread = 3},
+    {name = "fire", interval = 2000, chance = 30, minDamage = -280, maxDamage = -350, radius = 3}
+})
 
 monster:register()

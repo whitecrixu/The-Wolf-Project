@@ -1,5 +1,5 @@
 -- Poison Spider
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Poison Spider")
 if not monster then return end
@@ -16,7 +16,7 @@ monster:corpseId(5974)
 monster:outfit({lookType = 36})
 monster:defense(5)
 monster:armor(5)
-monster:runHealth(6)
+monster:runHealth(2)
 
 -- Flags
 monster:attackable(true)
@@ -29,23 +29,23 @@ monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
-    {type = COMBAT_FIREDAMAGE, percent = -10},
+    {type = COMBAT_FIREDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
 -- Loot
 monster:loot({
     {id = 2148, chance = 75000, maxCount = 4},
-    {id = 12441, chance = 1140},
+    {id = 12441, chance = 1140}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-20
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -20}
+})
 
 monster:register()

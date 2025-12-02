@@ -1,5 +1,5 @@
 -- Frost Dragon
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Frost Dragon")
 if not monster then return end
@@ -15,31 +15,30 @@ monster:corpseId(7091)
 monster:outfit({lookType = 248})
 monster:defense(45)
 monster:armor(45)
-monster:runHealth(250)
+monster:runHealth(180)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
 monster:isIllusionable(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(70)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_PHYSICALDAMAGE, percent = 10},
-    {type = COMBAT_DEATHDAMAGE, percent = 10},
+    {type = COMBAT_DEATHDAMAGE, percent = 10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_INVISIBLE, immunity = true},
     {condition = CONDITION_FIRE, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
-    {condition = CONDITION_POISON, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
+    {type = COMBAT_EARTHDAMAGE, combat = true}
 })
 
 -- Voices
@@ -47,7 +46,7 @@ monster:voices({
     {text = "YOU WILL FREEZE!", yell = true},
     {text = "ZCHHHHH!", yell = true},
     {text = "I am so cool", yell = false},
-    {text = "Chill out!.", yell = false},
+    {text = "Chill out!.", yell = false}
 })
 
 -- Loot
@@ -70,25 +69,19 @@ monster:loot({
     {id = 2498, chance = 210},
     {id = 2528, chance = 340},
     {id = 7402, chance = 120},
-    {id = 2396, chance = 350},
+    {id = 2396, chance = 350}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=57, attack=67
--- name=lifedrain, interval=2000, chance=10, min=-175, max=-380, length=8, spread=3, areaEffect=poff
--- name=speed, interval=2000, chance=5, radius=3, duration=12000, speedchange=-700, areaEffect=poff
--- name=speed, interval=2000, chance=15, length=7, spread=3, duration=18000, speedchange=-850, areaEffect=iceattack
--- name=ice, interval=2000, chance=5, min=-60, max=-120, radius=3, areaEffect=icetornado
--- name=ice, interval=2000, chance=10, min=-100, max=-240, radius=4, target=1, areaEffect=icearea
--- name=physical, interval=2000, chance=5, max=-220, length=1, areaEffect=poff
--- name=speed, interval=2000, chance=20, radius=4, target=1, duration=12000, speedchange=-600, areaEffect=icearea
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=150, max=200, areaEffect=blueshimmer
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=290, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -124},
+    {name = "lifedrain", interval = 2000, chance = 10, minDamage = -175, maxDamage = -380, length = 8, spread = 3},
+    {name = "speed", interval = 2000, chance = 5, radius = 3},
+    {name = "speed", interval = 2000, chance = 15, length = 7, spread = 3},
+    {name = "ice", interval = 2000, chance = 5, minDamage = -60, maxDamage = -120, radius = 3},
+    {name = "ice", interval = 2000, chance = 10, minDamage = -100, maxDamage = -240, radius = 4},
+    {name = "physical", interval = 2000, chance = 5, maxDamage = -220, length = 1},
+    {name = "speed", interval = 2000, chance = 20, radius = 4}
+})
 
 monster:register()

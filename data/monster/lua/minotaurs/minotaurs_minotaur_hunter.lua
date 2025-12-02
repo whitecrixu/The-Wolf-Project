@@ -1,5 +1,5 @@
 -- Minotaur Hunter
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Minotaur Hunter")
 if not monster then return end
@@ -15,13 +15,11 @@ monster:corpseId(23466)
 monster:outfit({lookType = 612})
 monster:defense(30)
 monster:armor(30)
-monster:targetDistance(4)
-monster:runHealth(300)
+monster:runHealth(140)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -30,13 +28,13 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 10},
     {type = COMBAT_HOLYDAMAGE, percent = 10},
-    {type = COMBAT_ICEDAMAGE, percent = -5},
+    {type = COMBAT_ICEDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -45,7 +43,7 @@ monster:voices({
     {text = "This time the prey is you!", yell = false},
     {text = "You are hunted!", yell = false},
     {text = "Bullseye!", yell = false},
-    {text = "You'll make a fine trophy!", yell = false},
+    {text = "You'll make a fine trophy!", yell = false}
 })
 
 -- Loot
@@ -70,22 +68,16 @@ monster:loot({
     {id = 2154, chance = 470},
     {id = 2156, chance = 400},
     {id = 7401, chance = 190},
-    {id = 23537, chance = 170},
+    {id = 23537, chance = 170}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=50, attack=50
--- name=physical, interval=2000, chance=22, range=7, min=-0, max=-150, shootEffect=spear, areaEffect=explosionarea
--- name=bleedcondition, interval=2000, chance=40, range=7, min=-300, max=-400, radius=3, target=1, shootEffect=throwingknife, areaEffect=blackspark
--- name=fire, interval=2000, chance=15, range=7, min=-160, max=-260, radius=2, target=1, shootEffect=burstarrow, areaEffect=explosion
--- name=lifedrain, interval=2000, chance=14, min=-35, max=-150, radius=4, areaEffect=explosionarea
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=7, min=95, max=180, areaEffect=blueshimmer
--- name=speed, interval=2000, chance=10, duration=5000, speedchange=520, areaEffect=poff
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -100},
+    {name = "physical", interval = 2000, chance = 22, maxDamage = -150, range = 7},
+    {name = "bleedcondition", interval = 2000, chance = 40, minDamage = -300, maxDamage = -400, range = 7, radius = 3},
+    {name = "fire", interval = 2000, chance = 15, minDamage = -160, maxDamage = -260, range = 7, radius = 2},
+    {name = "lifedrain", interval = 2000, chance = 14, minDamage = -35, maxDamage = -150, radius = 4}
+})
 
 monster:register()

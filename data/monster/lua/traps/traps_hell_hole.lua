@@ -1,5 +1,5 @@
 -- Hell Hole
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Hell Hole")
 if not monster then return end
@@ -18,29 +18,27 @@ monster:armor(0)
 -- Flags
 monster:attackable(false)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushCreatures(true)
-monster:hiddenHealth(true)
-monster:staticAttackChance(100)
+monster:staticAttackChance(90)
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_BLEEDING, immunity = true},
+    {type = COMBAT_PHYSICALDAMAGE, combat = true},
     {condition = CONDITION_ENERGY, immunity = true},
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_POISON, immunity = true},
-    {condition = CONDITION_FREEZING, immunity = true},
-    {condition = CONDITION_DAZZLED, immunity = true},
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_LIFEDRAIN, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true},
+    {type = COMBAT_HOLYDAMAGE, combat = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {type = COMBAT_LIFEDRAIN, combat = true},
     {condition = CONDITION_PARALYZE, immunity = true},
     {condition = CONDITION_DROWN, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
--- Summons
-monster:summons({
-    {name = "Deathspawn", chance = 25, interval = 2000, max = 1},
+-- Attacks (default melee)
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -20}
 })
 
 monster:register()

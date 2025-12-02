@@ -1,5 +1,5 @@
 -- Grand Mother Foulscale
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Grand Mother Foulscale")
 if not monster then return end
@@ -15,12 +15,11 @@ monster:corpseId(5973)
 monster:outfit({lookType = 34})
 monster:defense(20)
 monster:armor(27)
-monster:runHealth(400)
+monster:runHealth(185)
 
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -29,25 +28,20 @@ monster:staticAttackChance(90)
 monster:elements({
     {type = COMBAT_EARTHDAMAGE, percent = 80},
     {type = COMBAT_ENERGYDAMAGE, percent = 20},
-    {type = COMBAT_ICEDAMAGE, percent = -10},
+    {type = COMBAT_ICEDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_FIRE, immunity = true},
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
 monster:voices({
     {text = "GROOAAARRR", yell = true},
-    {text = "FCHHHHH", yell = true},
-})
-
--- Summons
-monster:summons({
-    {name = "dragon hatchlings", chance = 40, interval = 4000, max = 4},
+    {text = "FCHHHHH", yell = true}
 })
 
 -- Loot
@@ -74,19 +68,14 @@ monster:loot({
     {id = 2516, chance = 500},
     {id = 2409, chance = 500},
     {id = 7430, chance = 650},
-    {id = 2177, chance = 150},
+    {id = 2177, chance = 150}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, min=-20, max=-170
--- name=fire, interval=2000, chance=15, range=7, min=-45, max=-85, radius=4, target=1, shootEffect=fire, areaEffect=firearea
--- name=fire, interval=2000, chance=8, min=-90, max=-150, length=8, spread=3, areaEffect=firearea
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=1000, chance=17, min=34, max=66, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = -20, maxDamage = -170},
+    {name = "fire", interval = 2000, chance = 15, minDamage = -45, maxDamage = -85, range = 7, radius = 4},
+    {name = "fire", interval = 2000, chance = 8, minDamage = -90, maxDamage = -150, length = 8, spread = 3}
+})
 
 monster:register()

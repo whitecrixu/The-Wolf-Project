@@ -1,5 +1,5 @@
 -- Hellspawn
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Hellspawn")
 if not monster then return end
@@ -19,7 +19,6 @@ monster:armor(40)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
 monster:staticAttackChance(90)
@@ -32,13 +31,13 @@ monster:elements({
     {type = COMBAT_DEATHDAMAGE, percent = -5},
     {type = COMBAT_ICEDAMAGE, percent = -10},
     {type = COMBAT_HOLYDAMAGE, percent = 30},
-    {type = COMBAT_EARTHDAMAGE, percent = 80},
+    {type = COMBAT_EARTHDAMAGE, percent = 80}
 })
 
 -- Immunities
 monster:immunities({
     {condition = CONDITION_PARALYZE, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -47,7 +46,7 @@ monster:voices({
     {text = "You little weasel will not live to see another day.", yell = false},
     {text = "I'm just a messenger of what's yet to come.", yell = false},
     {text = "HRAAAAAAAAAAAAAAAARRRR", yell = true},
-    {text = "I'm taking you down with me!", yell = false},
+    {text = "I'm taking you down with me!", yell = false}
 })
 
 -- Loot
@@ -72,20 +71,14 @@ monster:loot({
     {id = 7439, chance = 934},
     {id = 9969, chance = 151},
     {id = 9948, chance = 140},
-    {id = 7421, chance = 103},
+    {id = 7421, chance = 103}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=70, attack=88
--- name=fireball, interval=2000, chance=20, min=-150, max=-175
--- name=hellspawn soulfire, interval=2000, chance=10, range=5
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=10, min=120, max=230, areaEffect=blueshimmer
--- name=speed, interval=2000, chance=15, duration=5000, speedchange=270, areaEffect=redshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -158},
+    {name = "fireball", interval = 2000, chance = 20, minDamage = -150, maxDamage = -175},
+    {name = "hellspawn soulfire", interval = 2000, chance = 10, range = 5}
+})
 
 monster:register()

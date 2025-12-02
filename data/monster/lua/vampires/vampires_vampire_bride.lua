@@ -1,5 +1,5 @@
 -- Vampire Bride
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Vampire Bride")
 if not monster then return end
@@ -19,10 +19,9 @@ monster:armor(20)
 -- Flags
 monster:attackable(true)
 monster:hostile(true)
-monster:pushable(false)
 monster:canPushItems(true)
 monster:canPushCreatures(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
@@ -31,13 +30,13 @@ monster:elements({
     {type = COMBAT_DROWNDAMAGE, percent = 10},
     {type = COMBAT_ICEDAMAGE, percent = 20},
     {type = COMBAT_FIREDAMAGE, percent = -10},
-    {type = COMBAT_HOLYDAMAGE, percent = -10},
+    {type = COMBAT_HOLYDAMAGE, percent = -10}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_CURSED, immunity = true},
-    {condition = CONDITION_INVISIBLE, immunity = true},
+    {type = COMBAT_DEATHDAMAGE, combat = true},
+    {condition = CONDITION_INVISIBLE, immunity = true}
 })
 
 -- Voices
@@ -47,7 +46,7 @@ monster:voices({
     {text = "Come, let me kiss you, darling. Oh wait, I meant kill.", yell = false},
     {text = "Enjoy the pain - I know you love it.", yell = false},
     {text = "Are you suffering nicely enough?", yell = false},
-    {text = "You won't regret you came to me, sweetheart.", yell = false},
+    {text = "You won't regret you came to me, sweetheart.", yell = false}
 })
 
 -- Loot
@@ -68,21 +67,16 @@ monster:loot({
     {id = 7733, chance = 200},
     {id = 5670, chance = 170},
     {id = 9447, chance = 60},
-    {id = 13293, chance = 20},
+    {id = 13293, chance = 20}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, max=-190
--- name=lifedrain, interval=3000, chance=15, range=1, min=-60, max=-130, target=1, areaEffect=redshimmer
--- name=death, interval=2000, chance=10, range=7, min=-60, max=-150, target=1, shootEffect=suddendeath, areaEffect=mortarea
--- name=death, interval=4000, chance=5, range=7, min=-60, max=-150, target=1, shootEffect=suddendeath, areaEffect=hearts
--- name=energy, interval=2000, chance=15, range=7, min=-60, max=-150, target=1, shootEffect=energy
---]]
-
--- Defense spells (for reference, implement with spell system)
---[[
--- name=healing, interval=2000, chance=15, min=40, max=80, areaEffect=blueshimmer
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -190},
+    {name = "lifedrain", interval = 3000, chance = 15, minDamage = -60, maxDamage = -130},
+    {name = "death", interval = 2000, chance = 10, minDamage = -60, maxDamage = -150, range = 7},
+    {name = "death", interval = 4000, chance = 5, minDamage = -60, maxDamage = -150, range = 7},
+    {name = "energy", interval = 2000, chance = 15, minDamage = -60, maxDamage = -150, range = 7}
+})
 
 monster:register()

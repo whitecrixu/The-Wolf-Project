@@ -1,5 +1,5 @@
 -- Chakoya Tribewarden
--- Auto-converted from XML
+-- Converted from XML
 
 local monster = Game.createMonsterType("Chakoya Tribewarden")
 if not monster then return end
@@ -21,21 +21,20 @@ monster:armor(10)
 monster:attackable(true)
 monster:hostile(true)
 monster:isConvinceable(true)
-monster:pushable(false)
 monster:canPushItems(true)
-monster:staticAttackChance(80)
+monster:staticAttackChance(90)
 
 -- Resistances
 monster:elements({
     {type = COMBAT_FIREDAMAGE, percent = 25},
     {type = COMBAT_HOLYDAMAGE, percent = 10},
     {type = COMBAT_ENERGYDAMAGE, percent = -15},
-    {type = COMBAT_DEATHDAMAGE, percent = -5},
+    {type = COMBAT_DEATHDAMAGE, percent = -5}
 })
 
 -- Immunities
 monster:immunities({
-    {condition = CONDITION_FREEZING, immunity = true},
+    {type = COMBAT_ICEDAMAGE, combat = true}
 })
 
 -- Voices
@@ -43,7 +42,7 @@ monster:voices({
     {text = "Quisavu tukavi!", yell = false},
     {text = "Si siyoqua jamjam!", yell = false},
     {text = "Achuq! jinuma!", yell = false},
-    {text = "Si ji jusipa!", yell = false},
+    {text = "Si ji jusipa!", yell = false}
 })
 
 -- Loot
@@ -55,12 +54,12 @@ monster:loot({
     {id = 7158, chance = 130},
     {id = 7159, chance = 190},
     {id = 2669, chance = 90},
-    {id = 2406, chance = 4680},
+    {id = 2406, chance = 4680}
 })
 
--- Attacks (for reference, implement with spell system)
---[[
--- name=melee, interval=2000, chance=100, skill=20, attack=20
---]]
+-- Attacks
+monster:attacks({
+    {name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -40}
+})
 
 monster:register()
