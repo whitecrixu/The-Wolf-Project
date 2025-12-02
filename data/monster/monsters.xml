@@ -311,6 +311,7 @@
 	<monster name="Zushuka" file="Bosses/zushuka.xml" />
 
 	<!-- Canines -->
+	<monster name="Aggresive Wolf" file="Canines/aggressive wolf.xml" />
 	<monster name="Crystal Wolf" file="Canines/crystal wolf.xml" />
 	<monster name="Dog" file="Canines/dog.xml" />
 	<monster name="Hellhound" file="Canines/hellhound.xml" />
@@ -392,9 +393,11 @@
 
 	<!-- Djinn -->
 	<monster name="Blue Djinn" file="Djinn/blue djinn.xml" />
+	<monster name="Dawnfire Asura" file="Djinn/dawnfire asura.xml" />
 	<monster name="Efreet" file="Djinn/efreet.xml" />
 	<monster name="Green Djinn" file="Djinn/green djinn.xml" />
 	<monster name="Marid" file="Djinn/marid.xml" />
+	<monster name="Midnight Asura" file="Djinn/midnight asura.xml" />
 
 	<!-- Dragons -->
 	<monster name="Dragon Hatchling" file="Dragons/dragon hatchling.xml" />
@@ -678,6 +681,7 @@
 	<!-- Monks -->
 	<monster name="Dark Monk" file="Monks/dark monk.xml" />
 	<monster name="Monk" file="Monks/monk.xml" />
+	<monster name="Training Monk" file="Monks/training monk.xml" />
 
 	<!-- Mustelids -->
 	<monster name="Badger" file="Mustelids/badger.xml" />
@@ -811,10 +815,12 @@
 	<monster name="Lost Soul" file="Skeletons/lost soul.xml" />
 	<monster name="Party Skeleton" file="Skeletons/party skeleton.xml" />
 	<monster name="Skeleton" file="Skeletons/skeleton.xml" />
+	<monster name="Skeleton Elite Warrior" file="Skeletons/skeleton elite warrior.xml" />
 	<monster name="Skeleton Warrior" file="Skeletons/skeleton warrior.xml" />
 	<monster name="Sloth Wraith" file="Skeletons/sloth wraith.xml" />
 	<monster name="Spectral Scum" file="Skeletons/spectral scum.xml" />
 	<monster name="Undead Cavebear" file="Skeletons/undead cavebear.xml" />
+	<monster name="Undead Elite Gladiator" file="Skeletons/undead elite gladiator.xml" />
 	<monster name="Undead Gladiator" file="Skeletons/undead gladiator.xml" />
 	<monster name="Undead Minion" file="Skeletons/undead minion.xml" />
 	<monster name="Undead Mine Worker" file="Skeletons/undead mine worker.xml" />

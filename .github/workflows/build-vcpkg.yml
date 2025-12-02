@@ -64,7 +64,7 @@ jobs:
 
       - name: Install dependencies via vcpkg
         run: |
-          vcpkg install boost-iostreams boost-system gmp libmysql lua pugixml
+          vcpkg install boost-asio boost-iostreams boost-system gmp libmysql lua pugixml
 
       - name: Configure CMake
         run: cmake -B build -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" -DCMAKE_BUILD_TYPE=Release -DUSE_LUAJIT=OFF
