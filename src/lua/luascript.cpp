@@ -2675,6 +2675,12 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("MoveEvent", "position", LuaScriptInterface::luaMoveEventPosition);
 	registerMethod("MoveEvent", "premium", LuaScriptInterface::luaMoveEventPremium);
 	registerMethod("MoveEvent", "vocation", LuaScriptInterface::luaMoveEventVocation);
+	registerMethod("MoveEvent", "onEquip", LuaScriptInterface::luaMoveEventOnCallback);
+	registerMethod("MoveEvent", "onDeEquip", LuaScriptInterface::luaMoveEventOnCallback);
+	registerMethod("MoveEvent", "onStepIn", LuaScriptInterface::luaMoveEventOnCallback);
+	registerMethod("MoveEvent", "onStepOut", LuaScriptInterface::luaMoveEventOnCallback);
+	registerMethod("MoveEvent", "onAddItem", LuaScriptInterface::luaMoveEventOnCallback);
+	registerMethod("MoveEvent", "onRemoveItem", LuaScriptInterface::luaMoveEventOnCallback);
 
 	// GlobalEvent (RevScriptSys)
 	registerClass("GlobalEvent", "", LuaScriptInterface::luaCreateGlobalEvent);
@@ -12910,12 +12916,39 @@ int LuaScriptInterface::luaActionOnUse(lua_State* L)
 	// action:onUse(callback)
 	Action* action = getUserdata<Action>(L, 1);
 	if (action) {
-		if (!action->loadCallback()) {
-			pushBoolean(L, false);
-			return 1;
+		if (!action->getScriptInterface()) {
+			action->setScriptInterface(&g_luaEnvironment);
 		}
-		action->scripted = true;
-		pushBoolean(L, true);
+		
+		if (lua_isfunction(L, 2)) {
+			// Get our events table
+			lua_rawgeti(L, LUA_REGISTRYINDEX, g_luaEnvironment.getEventTableRef());
+			if (!isTable(L, -1)) {
+				lua_pop(L, 1);
+				pushBoolean(L, false);
+				return 1;
+			}
+			
+			// Push the callback function
+			lua_pushvalue(L, 2);
+			
+			// Get a unique event ID
+			int32_t eventId = g_luaEnvironment.getRunningEventId();
+			g_luaEnvironment.incrementRunningEventId();
+			
+			// Store the function in the events table
+			lua_rawseti(L, -2, eventId);
+			lua_pop(L, 1); // Pop the events table
+			
+			// Set the script ID
+			action->setScriptId(eventId);
+			action->scripted = true;
+			
+			pushBoolean(L, true);
+		} else {
+			std::cout << "[Warning - LuaScriptInterface::luaActionOnUse] Callback is not a function." << std::endl;
+			pushBoolean(L, false);
+		}
 	} else {
 		lua_pushnil(L);
 	}
@@ -13110,12 +13143,31 @@ int LuaScriptInterface::luaMoveEventOnCallback(lua_State* L)
 	// moveevent:onEquip / :onDeEquip / :onAddItem / etc.
 	MoveEvent* moveevent = getUserdata<MoveEvent>(L, 1);
 	if (moveevent) {
-		if (!moveevent->loadCallback()) {
-			pushBoolean(L, false);
-			return 1;
+		if (!moveevent->getScriptInterface()) {
+			moveevent->setScriptInterface(&g_luaEnvironment);
 		}
-		moveevent->scripted = true;
-		pushBoolean(L, true);
+		
+		if (lua_isfunction(L, 2)) {
+			lua_rawgeti(L, LUA_REGISTRYINDEX, g_luaEnvironment.getEventTableRef());
+			if (!isTable(L, -1)) {
+				lua_pop(L, 1);
+				pushBoolean(L, false);
+				return 1;
+			}
+			
+			lua_pushvalue(L, 2);
+			int32_t eventId = g_luaEnvironment.getRunningEventId();
+			g_luaEnvironment.incrementRunningEventId();
+			lua_rawseti(L, -2, eventId);
+			lua_pop(L, 1);
+			
+			moveevent->setScriptId(eventId);
+			moveevent->scripted = true;
+			pushBoolean(L, true);
+		} else {
+			std::cout << "[Warning - LuaScriptInterface::luaMoveEventOnCallback] Callback is not a function." << std::endl;
+			pushBoolean(L, false);
+		}
 	} else {
 		lua_pushnil(L);
 	}
@@ -13225,12 +13277,31 @@ int LuaScriptInterface::luaTalkActionOnSay(lua_State* L)
 	// talkaction:onSay(callback)
 	TalkAction* talkAction = getUserdata<TalkAction>(L, 1);
 	if (talkAction) {
-		if (!talkAction->loadCallback()) {
-			pushBoolean(L, false);
-			return 1;
+		if (!talkAction->getScriptInterface()) {
+			talkAction->setScriptInterface(&g_luaEnvironment);
 		}
-		talkAction->scripted = true;
-		pushBoolean(L, true);
+		
+		if (lua_isfunction(L, 2)) {
+			lua_rawgeti(L, LUA_REGISTRYINDEX, g_luaEnvironment.getEventTableRef());
+			if (!isTable(L, -1)) {
+				lua_pop(L, 1);
+				pushBoolean(L, false);
+				return 1;
+			}
+			
+			lua_pushvalue(L, 2);
+			int32_t eventId = g_luaEnvironment.getRunningEventId();
+			g_luaEnvironment.incrementRunningEventId();
+			lua_rawseti(L, -2, eventId);
+			lua_pop(L, 1);
+			
+			talkAction->setScriptId(eventId);
+			talkAction->scripted = true;
+			pushBoolean(L, true);
+		} else {
+			std::cout << "[Warning - LuaScriptInterface::luaTalkActionOnSay] Callback is not a function." << std::endl;
+			pushBoolean(L, false);
+		}
 	} else {
 		lua_pushnil(L);
 	}
@@ -13370,12 +13441,31 @@ int LuaScriptInterface::luaCreatureEventOnCallback(lua_State* L)
 	// creatureevent:onLogin / :onLogout / etc.
 	CreatureEvent* creatureEvent = getUserdata<CreatureEvent>(L, 1);
 	if (creatureEvent) {
-		if (!creatureEvent->loadCallback()) {
-			pushBoolean(L, false);
-			return 1;
+		if (!creatureEvent->getScriptInterface()) {
+			creatureEvent->setScriptInterface(&g_luaEnvironment);
 		}
-		creatureEvent->scripted = true;
-		pushBoolean(L, true);
+		
+		if (lua_isfunction(L, 2)) {
+			lua_rawgeti(L, LUA_REGISTRYINDEX, g_luaEnvironment.getEventTableRef());
+			if (!isTable(L, -1)) {
+				lua_pop(L, 1);
+				pushBoolean(L, false);
+				return 1;
+			}
+			
+			lua_pushvalue(L, 2);
+			int32_t eventId = g_luaEnvironment.getRunningEventId();
+			g_luaEnvironment.incrementRunningEventId();
+			lua_rawseti(L, -2, eventId);
+			lua_pop(L, 1);
+			
+			creatureEvent->setScriptId(eventId);
+			creatureEvent->scripted = true;
+			pushBoolean(L, true);
+		} else {
+			std::cout << "[Warning - LuaScriptInterface::luaCreatureEventOnCallback] Callback is not a function." << std::endl;
+			pushBoolean(L, false);
+		}
 	} else {
 		lua_pushnil(L);
 	}
@@ -13448,12 +13538,31 @@ int LuaScriptInterface::luaGlobalEventOnCallback(lua_State* L)
 	// globalevent:onThink / :onStartup / etc.
 	GlobalEvent* globalEvent = getUserdata<GlobalEvent>(L, 1);
 	if (globalEvent) {
-		if (!globalEvent->loadCallback()) {
-			pushBoolean(L, false);
-			return 1;
+		if (!globalEvent->getScriptInterface()) {
+			globalEvent->setScriptInterface(&g_luaEnvironment);
 		}
-		globalEvent->scripted = true;
-		pushBoolean(L, true);
+		
+		if (lua_isfunction(L, 2)) {
+			lua_rawgeti(L, LUA_REGISTRYINDEX, g_luaEnvironment.getEventTableRef());
+			if (!isTable(L, -1)) {
+				lua_pop(L, 1);
+				pushBoolean(L, false);
+				return 1;
+			}
+			
+			lua_pushvalue(L, 2);
+			int32_t eventId = g_luaEnvironment.getRunningEventId();
+			g_luaEnvironment.incrementRunningEventId();
+			lua_rawseti(L, -2, eventId);
+			lua_pop(L, 1);
+			
+			globalEvent->setScriptId(eventId);
+			globalEvent->scripted = true;
+			pushBoolean(L, true);
+		} else {
+			std::cout << "[Warning - LuaScriptInterface::luaGlobalEventOnCallback] Callback is not a function." << std::endl;
+			pushBoolean(L, false);
+		}
 	} else {
 		lua_pushnil(L);
 	}

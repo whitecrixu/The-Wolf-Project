@@ -237,6 +237,17 @@ class LuaScriptInterface
 			return luaState;
 		}
 
+		// RevScriptSys helpers
+		int32_t getEventTableRef() const {
+			return eventTableRef;
+		}
+		int32_t getRunningEventId() const {
+			return runningEventId;
+		}
+		void incrementRunningEventId() {
+			++runningEventId;
+		}
+
 		bool pushFunction(int32_t functionId);
 
 		static int luaErrorHandler(lua_State* L);

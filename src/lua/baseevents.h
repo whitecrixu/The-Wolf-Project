@@ -49,6 +49,9 @@ class Event
 		LuaScriptInterface* getScriptInterface() const {
 			return scriptInterface;
 		}
+		void setScriptInterface(LuaScriptInterface* interface) {
+			scriptInterface = interface;
+		}
 		int32_t getScriptId() const {
 			return scriptId;
 		}
