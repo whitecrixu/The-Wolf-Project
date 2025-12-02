@@ -5,13 +5,13 @@
 
 ---
 
-**The Wolf Project** is an advanced modification of [The Forgotten Server](https://github.com/otland/forgottenserver) engine, created to combine the **nostalgia of classic Tibia 10.98** with modern content from newer updates.
+**The Wolf Project** is an advanced modification of [The Forgotten Server](https://github.com/otland/forgottenserver) engine, created to combine the **nostalgia of classic Tibia 11.00** with modern content from newer updates.
 
 ## 🎯 Project Goals
 
 Our goal is to create a server that:
-- **Preserves the spirit and atmosphere of Tibia from the 10.98 era** – mechanics, balance, gameplay style
-- **One stable protocol** – we develop the engine on protocol 10.98, no support for newer versions
+- **Preserves the spirit and atmosphere of Tibia from the 11.00 era** – mechanics, balance, gameplay style
+- **One stable protocol** – we develop the engine on protocol 11.00, no support for newer versions
 - **New content from modern Tibia** – weapons, armor, items and elements from the latest Tibia updates
 - **Based on OTCv8** – modified client providing modern features while maintaining retro aesthetics
 - **Offers stability and performance** – optimized C++ code using the latest standards
@@ -22,7 +22,7 @@ The wolf symbolizes strength, perseverance, and loyalty to the pack. Just as wol
 
 ## ✨ Key Features
 
-### 🕹️ Nostalgia 10.98
+### 🕹️ Nostalgia 11.00
 - Original combat and magic mechanics
 - Classic vocation and spell system
 - Authentic NPC behaviors and quests
@@ -33,10 +33,10 @@ The wolf symbolizes strength, perseverance, and loyalty to the pack. Just as wol
 - New items, runes, and potions
 - Additional monsters and bosses
 - Fresh quests and mechanics inspired by modern Tibia
-- Everything balanced for the 10.98 atmosphere
+- Everything balanced for the 11.00 atmosphere
 
 ### 🚀 Stable Technology
-- **Single protocol 10.98** – no support for newer versions
+- **Single protocol 11.00** – no support for newer versions
 - Compatibility with **OTCv8** (modified Open Tibia Client)
 - Optimized server performance
 - Extended Lua scripting capabilities
@@ -52,9 +52,9 @@ The wolf symbolizes strength, perseverance, and loyalty to the pack. Just as wol
 | Client | Status | Notes |
 |--------|--------|-------|
 | OTCv8 (modified) | ✅ Supported | **Recommended client** - full compatibility |
-| OTClient 10.98 | ✅ Supported | Basic compatibility |
+| Tibia 11.00 | ✅ Supported | Basic compatibility |
 
-> ⚠️ **Note:** This project is developed exclusively on protocol **10.98**. We do not plan to support newer Tibia protocols.
+> ⚠️ **Note:** This project is developed exclusively on protocol **11.00**. We do not plan to support newer Tibia protocols.
 
 ## 🚀 Getting Started
 
