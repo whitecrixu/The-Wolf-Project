@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
     libboost-system-dev \
     libgmp-dev \
     libluajit-5.1-dev \
-    libmariadb-dev \
+    libmysqlclient-dev \
     libpugixml-dev \
     && rm -rf /var/lib/apt/lists/*
 
@@ -24,7 +24,7 @@ RUN apt-get update && apt-get install -y \
     libboost-system1.74.0 \
     libgmp10 \
     libluajit-5.1-2 \
-    libmariadb3 \
+    libmysqlclient21 \
     libpugixml1v5 \
     && rm -rf /var/lib/apt/lists/*
 
