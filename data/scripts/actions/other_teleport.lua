@@ -1,6 +1,12 @@
 -- Converted from: other/teleport.lua
 -- Original XML: actions.xml
 
+-- IDs that teleport UP (ladders)
+local upFloorIds = {1386, 3678, 5543, 8599}
+
+-- IDs that teleport DOWN (sewer grates, etc.)
+local downFloorIds = {430, 1369}
+
 local action1 = Action()
 action1:id(430)
 
@@ -21,23 +27,41 @@ action6:id(8599)
 
 local function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 
-	local t = Tile(fromPosition)
-	if t:hasFlag(TILESTATE_PROTECTIONZONE) and player:isPzLocked() then
-		player:sendTextMessage(MESSAGE_STATUS_SMALL, Game.getReturnMessage(RETURNVALUE_PLAYERISPZLOCKED))
+	if isInArray(upFloorIds, item.itemid) then
+		-- Going UP - teleport one level up and one tile south
+		local newPos = Position(fromPosition.x, fromPosition.y + 1, fromPosition.z - 1)
+		local tile = Tile(newPos)
+		
+		if not tile or not tile:getGround() then
+			player:sendCancelMessage("Sorry, not possible.")
+			return true
+		end
+		
+		if tile:hasFlag(TILESTATE_PROTECTIONZONE) and player:isPzLocked() then
+			player:sendTextMessage(MESSAGE_STATUS_SMALL, Game.getReturnMessage(RETURNVALUE_PLAYERISPZLOCKED))
+			return true
+		end
+		
+		player:teleportTo(newPos, true)
+		return true
+	else
+		-- Going DOWN
+		local newPos = Position(fromPosition.x, fromPosition.y, fromPosition.z + 1)
+		local tile = Tile(newPos)
+		
+		if not tile or not tile:getGround() then
+			player:sendCancelMessage("Sorry, not possible.")
+			return true
+		end
+		
+		if tile:hasFlag(TILESTATE_PROTECTIONZONE) and player:isPzLocked() then
+			player:sendTextMessage(MESSAGE_STATUS_SMALL, Game.getReturnMessage(RETURNVALUE_PLAYERISPZLOCKED))
+			return true
+		end
+		
+		player:teleportTo(newPos, true)
 		return true
 	end
-
-	if item.itemid == draw_well and item.actionid ~= 100 then
-		return false
-	end
-
-	if isInArray(upFloorIds, item.itemid) then
-		fromPosition:moveUpstairs()
-	else
-		fromPosition.z = fromPosition.z + 1
-	end
-	player:teleportTo(fromPosition, false)
-	return true
 end
 
 action1:onUse(onUse)

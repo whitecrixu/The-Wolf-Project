@@ -12742,6 +12742,9 @@ bool LuaEnvironment::initState()
 	luaL_openlibs(luaState);
 	registerFunctions();
 
+	// Initialize event table for RevScriptSys callbacks
+	lua_newtable(luaState);
+	eventTableRef = luaL_ref(luaState, LUA_REGISTRYINDEX);
 	runningEventId = EVENT_ID_USER;
 	return true;
 }
@@ -12773,6 +12776,12 @@ bool LuaEnvironment::closeState()
 			luaL_unref(luaState, LUA_REGISTRYINDEX, parameter);
 		}
 		luaL_unref(luaState, LUA_REGISTRYINDEX, timerEventDesc.function);
+	}
+
+	// Release event table for RevScriptSys
+	if (eventTableRef != -1) {
+		luaL_unref(luaState, LUA_REGISTRYINDEX, eventTableRef);
+		eventTableRef = -1;
 	}
 
 	combatIdMap.clear();
@@ -12900,7 +12909,7 @@ void LuaEnvironment::executeTimerEvent(uint32_t eventIndex)
 int LuaScriptInterface::luaCreateAction(lua_State* L)
 {
 	// Action()
-	Action* action = new Action(getScriptEnv()->getScriptInterface());
+	Action* action = new Action(&g_luaEnvironment);
 	if (action) {
 		action->fromLua = true;
 		pushUserdata<Action>(L, action);
@@ -13074,7 +13083,7 @@ int LuaScriptInterface::luaActionCheckFloor(lua_State* L)
 int LuaScriptInterface::luaCreateMoveEvent(lua_State* L)
 {
 	// MoveEvent()
-	MoveEvent* moveevent = new MoveEvent(getScriptEnv()->getScriptInterface());
+	MoveEvent* moveevent = new MoveEvent(&g_luaEnvironment);
 	if (moveevent) {
 		moveevent->fromLua = true;
 		pushUserdata<MoveEvent>(L, moveevent);
@@ -13257,12 +13266,12 @@ int LuaScriptInterface::luaMoveEventPosition(lua_State* L)
 // RevScriptSys - TalkAction
 int LuaScriptInterface::luaCreateTalkAction(lua_State* L)
 {
-	// TalkAction(words)
-	TalkAction* talkAction = new TalkAction(getScriptEnv()->getScriptInterface());
+	// TalkAction(words) - position 1 is the TalkAction table (from __call), position 2+ are actual arguments
+	TalkAction* talkAction = new TalkAction(&g_luaEnvironment);
 	if (talkAction) {
 		talkAction->fromLua = true;
-		if (lua_gettop(L) >= 1) {
-			talkAction->setWords(getString(L, 1));
+		if (lua_gettop(L) >= 2 && lua_isstring(L, 2)) {
+			talkAction->setWords(getString(L, 2));
 		}
 		pushUserdata<TalkAction>(L, talkAction);
 		setMetatable(L, -1, "TalkAction");
@@ -13362,12 +13371,12 @@ int LuaScriptInterface::luaTalkActionSeparator(lua_State* L)
 // RevScriptSys - CreatureEvent
 int LuaScriptInterface::luaCreateCreatureEvent(lua_State* L)
 {
-	// CreatureEvent(name)
-	CreatureEvent* creatureEvent = new CreatureEvent(getScriptEnv()->getScriptInterface());
+	// CreatureEvent(name) - position 1 is the CreatureEvent table (from __call), position 2+ are actual arguments
+	CreatureEvent* creatureEvent = new CreatureEvent(&g_luaEnvironment);
 	if (creatureEvent) {
 		creatureEvent->fromLua = true;
-		if (lua_gettop(L) >= 1) {
-			creatureEvent->setName(getString(L, 1));
+		if (lua_gettop(L) >= 2 && lua_isstring(L, 2)) {
+			creatureEvent->setName(getString(L, 2));
 		}
 		pushUserdata<CreatureEvent>(L, creatureEvent);
 		setMetatable(L, -1, "CreatureEvent");
@@ -13475,12 +13484,13 @@ int LuaScriptInterface::luaCreatureEventOnCallback(lua_State* L)
 // RevScriptSys - GlobalEvent
 int LuaScriptInterface::luaCreateGlobalEvent(lua_State* L)
 {
-	// GlobalEvent(name)
-	GlobalEvent* globalEvent = new GlobalEvent(getScriptEnv()->getScriptInterface());
+	// GlobalEvent(name) - position 1 is the GlobalEvent table (from __call), position 2+ are actual arguments
+	GlobalEvent* globalEvent = new GlobalEvent(&g_luaEnvironment);
 	if (globalEvent) {
 		globalEvent->fromLua = true;
-		if (lua_gettop(L) >= 1) {
-			globalEvent->setName(getString(L, 1));
+		// Check if name argument was passed (position 2)
+		if (lua_gettop(L) >= 2 && lua_isstring(L, 2)) {
+			globalEvent->setName(getString(L, 2));
 		}
 		pushUserdata<GlobalEvent>(L, globalEvent);
 		setMetatable(L, -1, "GlobalEvent");

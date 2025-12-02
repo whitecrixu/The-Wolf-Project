@@ -101,7 +101,8 @@ bool Database::executeQuery(const std::string& query)
 	databaseLock.lock();
 
 	while (mysql_real_query(handle, query.c_str(), query.length()) != 0) {
-		std::cout << "[Error - mysql_real_query] Query: " << query.substr(0, 256) << std::endl << "Message: " << mysql_error(handle) << std::endl;
+		std::cout << "[Error - mysql_real_query] Query length: " << query.length() << std::endl;
+		std::cout << "[Error - mysql_real_query] Query: " << query << std::endl << "Message: " << mysql_error(handle) << std::endl;
 		auto error = mysql_errno(handle);
 		if (error != CR_SERVER_LOST && error != CR_SERVER_GONE_ERROR && error != CR_CONN_HOST_ERROR && error != 1053/*ER_SERVER_SHUTDOWN*/ && error != CR_CONNECTION_ERROR) {
 			success = false;
@@ -172,8 +173,8 @@ std::string Database::escapeBlob(const char* s, uint32_t length) const
 
 	if (length != 0) {
 		char* output = new char[maxLength];
-		mysql_real_escape_string(handle, output, s, length);
-		escaped.append(output);
+		unsigned long escapedLength = mysql_real_escape_string(handle, output, s, length);
+		escaped.append(output, escapedLength);
 		delete[] output;
 	}
 
