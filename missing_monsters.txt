@@ -1,0 +1,951 @@
+=== BRAKUJĄCE POTWORY ===
+The-Wolf-Project ma: 750 potworów
+WolfOTS-main ma: 1683 potworów
+Brakuje: 945 potworów
+
+Lista brakujących:
+abyssal calamary
+acolyte of darkness
+adult goanna
+afflicted strider
+aftershock
+aggressive lava
+aggressive matter
+a greedy eye
+agressive chicken
+agrestic chicken
+ahau
+alchemist container
+alptramun
+amenef the burning
+an astral glyph
+ancient lion archer
+ancient lion knight
+ancient lion warlock
+ancient spawn of morgathla
+angry demon
+angry orc ancestor spirit
+angry plant
+angry sugar fairy
+animated clomp
+animated cyclops
+animated feather
+animated guzzlemaw
+animated moohtant
+animated mummy
+animated ogre brute
+animated ogre savage
+animated ogre shaman
+animated rotworm
+animated skunk
+animated snowman
+animated stone golem
+animated stone rhino
+animated sword
+an observer eye
+anomaly
+antenna
+arachnophobica
+arbaziloth
+arctic faun
+ascending ferumbras
+ashes of burning hatred
+a shielded astral glyph
+aspect of power
+ayana the crimson curse
+azerus2
+baby dragon
+bakragore
+baleful bunny
+bane of light
+barkless devotee
+barkless fanatic
+bashmu
+beast hulking prehemoth
+biting book
+biting cold
+black cobra
+black sphinx acolyte
+black vixen
+blaze of burning hatred
+blemished spawn
+blight mariner
+blind monstrosity
+bloated man-maggot
+bloodback
+blood guardian
+blood totem
+bluebeak
+blue butterfly
+boar man
+bone capsule
+bone jaw
+bones
+bonny bunny
+bony sea devil
+boogy
+bound astral power
+brachiodemon
+bragrumol
+brain head
+brain parasite
+brain squid
+bramble wyrmling
+branchy crawler
+breach brood
+bride of night
+bright percht sleigh
+brinebrute inferniarch
+brittle skeleton
+broken shaper
+brokul
+broodrider inferniarch
+brother chill
+brother freeze
+brother worm
+brown horse
+bulltaur alchemist
+bulltaur brute
+bulltaur forgepriest
+burning book
+burning gladiator
+burrowing beetle
+burster spectre
+candy floss elemental
+candy horror
+canopic jar
+capricious phantom
+captured dwarf
+carnisylvan sapling
+carnivostrich
+cart packed with gold
+cave chimera
+cave devourer
+cave parrot
+cave spider
+cerebellum
+chagorz
+charged anomaly
+charged disruption
+charger
+charging outburst
+chasm spawn
+chayenne
+cheese thief
+cinder wyrmling
+cloak of terror
+clomp
+cobra assassin
+cobra scout
+cobra vizier
+cold percht sleigh
+concentrated death
+condensed sins
+containment crystal
+containment machine
+control tower
+converter
+corrupted soul
+corrupt naga
+cosmic energy prism a
+cosmic energy prism a invu
+cosmic energy prism b
+cosmic energy prism b invu
+cosmic energy prism c
+cosmic energy prism c invu
+cosmic energy prism d
+cosmic energy prism d invu
+count vlarkorth
+courage leech
+crackler
+crape man
+crazed dwarf
+crazed summer rearguard
+crazed summer vanguard
+crazed winter rearguard
+crazed winter vanguard
+cream blob
+crusader
+crusader guardian
+crypt warden
+crypt warrior
+cublarc the plunderer
+cult believer
+cult enforcer
+cult scholar
+cunning werepanther
+cursed ape
+cursed book
+cursed prospector
+custodian
+damage resonance
+damned soul
+dark carnisylvan
+dark druid
+darkfang
+dark faun
+dark knight
+dark knowledge
+darklight construct
+darklight emitter
+darklight matter
+darklight source
+darklight striker
+dark paladin
+dark percht sleigh
+dark sorcerer
+dark soul
+dawn bat
+dawnfire asura
+dawnfly
+dawn scorpion
+dazed leaf golem
+death dragon
+deathling scout
+deathling spellsinger
+deepsea blood crab
+deep terror
+deepworm
+demon blood
+demon goblin
+demon slave
+depolarized crackler
+despair
+desperate soul
+destabilized ferumbras
+destroyed pillar
+diamond servant replica
+digestive ooze
+diremaw
+disgusting ooze
+disruption
+distorted phantom
+doctor marrow
+dorokoll the mystic
+dorokoll the mystic stop
+dragolisk
+dragon egg
+dragon essence
+dragonking zyrtarch
+dragon servant
+dragon warden
+dragon wrath
+dreadful harvester
+dread intruder
+dreadmaw
+dread minion
+druid familiar
+druid's apparition
+drume
+duke krule
+duskbringer
+dworc shadowstalker
+earl osam
+earworm
+echo of chagorz
+echo of ichgahal
+echo of murcion
+echo of vemiath
+eclipse knight
+egg
+ekatrix
+elder bloodjaw
+electric sparks
+elf overseer
+elite pirat
+eliz the unyielding
+eliz the unyielding stop
+elvira hammerthrust
+ember beast
+emerald tortoise
+empowered glooth horror
+energetic book
+energuardian of tales
+energy pulse
+enfeebled silencer
+enraged sand brood
+enraged soul
+enthralled demon
+eradicator
+eradicator2
+eruption of destruction
+eshtaba the conjurer
+eshtaba the conjurer stop
+essence of malice
+evil prospector
+exotic bat
+exotic cave spider
+eyeless devourer
+faceless bane
+fahim the wise
+falcon knight
+falcon paladin
+fallen challenger
+faun
+feeble glooth horror
+feral sphinx
+feral werecrocodile
+feroxa
+feroxa2
+feroxa3
+feroxa4
+feroxa5
+ferumbras essence
+ferumbras mortal shell
+ferumbras soul splinter
+fetter
+fiery blood
+fiery heart
+flame of burning hatred
+fleabringer
+flimsy lost soul
+floating savant
+flying book
+foam stalker
+force field
+foreshock
+fox
+foxmouse
+freakish lost soul
+freed soul
+frenzy
+frost flower asura
+frost servant
+frozen man
+frozen minion
+frozen soul
+fruit drop
+fungosaurus
+furious scorpion
+gaffir
+gazer spectre
+gelidrazah the frozen
+generator
+ghost wolf
+ghulosh
+ghulosh' deathgaze
+giant beaver
+giant spider wyda
+gingerbread man
+girtablilu warrior
+gloom maw
+gloom wolf
+glooth bandit
+glooth battery
+glooth bomb
+glooth brigand
+glooth-generator
+glooth horror
+glooth masher
+glooth slasher
+glooth trasher
+gnome pack crawler
+goggle cake
+golden servant replica
+goldhanded cultist
+goldhanded cultist bride
+gore horn
+gorerilla
+gorga
+gorger inferniarch
+gorzindel
+goshnar's cruelty
+goshnar's greed
+goshnar's hatred
+goshnar's malice
+goshnar's megalomania blue
+goshnar's megalomania green
+goshnar's megalomania purple
+goshnar's spite
+gralvalon
+grand canon dominus
+grand chaplain gaunder
+grand commander soeren
+grand master oberon
+greater canopic jar
+greater splinter of madness
+greed
+greedbeast
+grey horse
+grimeleech
+gryphon
+guard captain quaid
+guard castle
+guardian of tales
+guilt
+hardened usurper archer
+hardened usurper knight
+hardened usurper warlock
+harpy
+hateful soul
+haunted dragon
+hawk hopper
+hazardous phantom
+headpecker
+headwalker
+hellflayer
+hellhunter inferniarch
+hibernal moth
+high templar cobrass
+high voltage elemental
+hirintror
+honey elemental
+horadron
+horrible dream
+hulking carnisylvan
+hulking prehemoth
+icecold book
+ice dragon
+ichgahal
+icicle
+iks ahpututu
+iks aucar
+iks chuka
+iks churrascan
+iks pututu
+iks yapunac
+imp intruder
+imp minion
+infernal demon
+infernal phantom
+ink blob
+ink splash
+inkwing
+insane siren
+instable breach brood
+instable sparkion
+invading demon
+irgix the flimsy
+iron servant replica
+izcandar the banished
+jailer
+jungle moa
+juvenile bashmu
+juvenile cyclops
+kalyassa
+katex blood tongue
+kesar
+king zelos
+knight familiar
+knight's apparition
+knowledge elemental
+knowledge raider
+kroazur
+lacewing moth
+lady tenebris
+lamassu
+last planegazer
+lava creature
+lavafungus
+lava lurker
+lava lurker attendant
+lavaworm
+leiden
+lesser fire devil
+lesser splinter of madness
+librarian
+liodile
+lion archer
+lion commander
+lion hydra
+lion knight
+lion warlock
+liquor spirit
+lloyd
+lokathmor
+lokathmor stuck
+lord azaram
+lost exile
+lost gnome
+lost time
+lovely deer
+lovely frazzlemaw
+lovely polar bear
+lovely rotworm
+lovely scorpion
+lovely snake
+lovely souleater
+lovely yielothax
+lucifuga aranea
+lumbering carnivor
+magma bubble
+magma crystal
+makara
+makeshift home
+malicious minion
+malicious soul
+malkhar deathbringer
+malkhar deathbringer stop
+malofur mangrinder
+malvaroth
+manticore
+mantosaurus
+many faces
+maxxenius
+mazoran
+mazzinor
+meadow strider
+meandering mushroom
+mean lost soul
+mean maw
+mean minion
+mega dragon
+megasylvan yselda
+melting frozen horror
+memory of a banshee
+memory of a book
+memory of a carnisylvan
+memory of a dwarf
+memory of a faun
+memory of a frazzlemaw
+memory of a fungus
+memory of a golem
+memory of a hero
+memory of a hydra
+memory of a lizard
+memory of a mammoth
+memory of a manticore
+memory of an amazon
+memory of an elf
+memory of an insectoid
+memory of an ogre
+memory of a pirate
+memory of a scarab
+memory of a shaper
+memory of a vampire
+memory of a werelion
+memory of a wolf
+memory of a yalahari
+menacing carnivor
+mercurial menace
+merikh the slaughterer
+mezlon the defiler
+mezlon the defiler stop
+midnight asura
+midnight warrior
+mighty splinter of madness
+mind-wrecking dream
+minotaur cult follower
+minotaur cult prophet
+minotaur cult zealot
+minotaur idol
+mirror image
+misguided bully
+misguided shadow
+misguided thief
+mitmah scout
+mitmah seer
+mitmah vanguard
+mole
+monk familiar
+monk of the order
+monk's apparition
+morbol
+mornenion
+morshabaal
+mould phantom
+mountain troll
+mounted thorn knight
+mozradek
+muglex clan assassin
+muglex clan footman
+muglex clan scavenger
+murcion
+mushroom
+mutated visco
+mycobiontic beetle
+naga archer
+naga warrior
+necromantic focus
+neferi the spy
+neutral deepling warrior
+nibblemaw
+nighthunter
+nightmare tendril
+nightmarish dream
+nomad blue
+nomad female
+norcferatu abomination
+norcferatu heartless
+norcferatu minion
+norcferatu nightweaver
+noxious ripptor
+nymph
+oberon's bile
+oberon's hate
+oberon's ire
+oberon's spite
+ocyakao
+ogre brute
+ogre rowdy
+ogre ruffian
+ogre sage
+ogre savage
+ogre shaman
+old bear
+old beholder
+old bug
+old giant spider
+old pig
+old spider
+old wasp
+old wolf
+omnivora
+omrafir
+oozing carcass
+oozing corpus
+orc armor
+orc cult fanatic
+orc cult inquisitor
+orc cultist
+orc cult minion
+orc cult priest
+orc helmet
+orclops bloodbreaker
+orclops doomhauler
+orclops ravager
+orc sambackpack
+orc shield
+organic matter
+outburst
+overcharge
+overcharged demon
+overcharged disruption
+paladin familiar
+paladin's apparition
+parder
+party skeleton
+percht
+percht minion
+phantasm summon
+pillar of death
+pillar of draining
+pillar of healing
+pillar of protection
+pillar of summoning
+pinata dragon
+pirat artillerist
+pirat bombardier
+pirat cutthroat
+pirat mate
+pirat scoundrel
+pixie
+plagirath
+plagueroot
+plant abomination
+plant attendant
+plunder patriarch
+poisonous carnisylvan
+pooka
+poor soul
+possessed tree
+powerful soul
+preceptor lazare
+priestess of the wild sun
+prince drazzak
+professor maxxen
+putrid mummy
+quara looter
+quara plunderer
+quara raider
+rage of mazoran
+rage squid
+ragiaz
+raging fire
+ratmiral blackwhiskers
+ravenous beyondling
+ravenous hunger
+ravenous lava lurker
+raxias
+razzagorn
+realityquake
+reality reaver
+red butterfly
+redeemed soul
+reflection of mawhawk
+reflection of obujos
+renegade knight
+renegade quara constrictor
+renegade quara hydromancer
+renegade quara mantassin
+renegade quara pincher
+renegade quara predator
+retainer of baeloc
+rhindeer
+rift breacher
+rift fragment
+rift invader
+rift minion
+rift spawn
+ripper spectre
+risen soldier
+rogue naga
+rootthing amber shaper
+rootthing bug tracker
+rootthing nutshell
+rotten golem
+rotten man-maggot
+rupture
+sabretooth
+sacred snake
+salamander trainer
+sand brood
+sand vortex
+scarlett etzel
+scar tribe shaman
+scar tribe warrior
+schiach
+seacrest serpent
+security golem
+shadow fiend
+shadowpelt
+shadow tentacle
+shaper matriarch
+shard of magnor
+sharpclaw
+shell drake
+shrieking cry-stal
+shulgrax
+sin devourer
+sineater inferniarch
+sir baeloc
+sir leonard
+sir leopold
+sir nictros
+sister hetai
+skeleton elite warrior
+snail slime
+solid frozen horror
+somewhat beatable
+sopping carcass
+sopping corpus
+sorcerer familiar
+sorcerer's apparition
+soul-broken harbinger
+soul cage
+soulcatcher
+soulless minion
+soul of dragonking zyrtarch
+soul reaper
+soul scourge
+soulsnatcher
+soul sphere
+sparkion
+spark of burning hatred
+spark of destruction
+spawn of havoc
+spawn of the welter
+spellreaper inferniarch
+sphere of wrath
+sphinx
+spidris elite summon
+spiky carnivor
+spirit of fertility
+spiteful spitter
+spyrat east
+spyrat north
+spyrat south
+spyrat west
+squidgy slime
+squid warden
+squire of nictros
+srezz yellow eyes
+stabilizing dread intruder
+stabilizing reality reaver
+stalking stalk
+stolen knowledge of armor
+stolen knowledge of healing
+stolen knowledge of lifesteal
+stolen knowledge of spells
+stolen knowledge of summoning
+stolen soul
+stolen tome of portals
+stonerefiner
+stone rhino
+streaked devourer
+strong glooth horror
+strong soul
+sugar cube
+sugar cube worker
+sugar daddy
+sugar mommy
+sulphider
+sulphur spouter
+sun-marked goanna
+supercharged mazzinor
+swan maiden
+sword of vengeance
+symbol of hatred
+tainted soul
+tarbaz
+target dummy
+tazhadur
+tentacle of the deep terror
+tentugly's head
+thanatursus
+thawing dragon lord
+the armored voidborn
+the astral source
+the baron from below
+the big bad one
+the blazing rose
+the blazing time guardian
+the book of death
+the book of secrets
+the brainstealer
+the cold of winter
+the corruptor of souls
+the count of the core
+the destruction
+the devourer of secrets
+the diamond blossom
+the distorted astral source
+the dread maiden
+the duke of the depths
+the end of days
+the enraged thorn knight
+the false god
+the fear feaster
+the fire empowered duke
+the first dragon
+the flaming orchid
+the forgemaster
+the freezing time guardian
+the heat of summer
+the hunger
+the hungry baron from below
+the last lore keeper
+the lily of night
+the lord of the lice
+the monster
+the mutated pumpkin
+the nightmare beast
+the pale worm
+the percht queen
+the primal menace
+the rage
+the remorseless corruptor
+the rootkraken
+the sandking
+the sandking fake
+the scion of havoc
+the scourge of oblivion
+the shatterer
+the shielded thorn knight
+the sinister hermit
+the sinister hermit dirty
+the souldespoiler
+the source of corruption
+the spellstealer
+the time guardian
+the unarmored voidborn
+the unwelcome
+the voice of ruin
+the welter
+thorn minion
+thorn steed
+time keeper
+time waster
+timira the many-headed
+training dummy
+tremendous tyrant
+tremor worm
+troll marauder
+troll-trained salamander
+tropical desolator
+true dawnfire asura
+true frost flower asura
+true midnight asura
+truffle
+truffle cook
+tunnel tyrant
+turbulent elemental
+twisted pooka
+twisted shaper
+twisterror
+two-headed turtle
+tyrn
+ugly monster
+unaz the mean
+unbeatable dragon
+unbound blightwalker
+unbound defiler
+unbound demon
+unbound demon outcast
+unchained fire
+undead elite gladiator
+undertaker
+unpleasant dream
+unstable spark
+urmahlullu the immaculate
+urmahlullu the tamed
+urmahlullu the weakened
+usurper archer
+usurper commander
+usurper knight
+usurper warlock
+utua stone sting
+vampire bat
+vampiric blood
+vampiric essence
+vampiric flesh
+varg
+varnished diremaw
+vemiath
+venerable girtablilu
+vermin swarm
+vexclaw
+vibrant phantom
+vicious ink splash
+vicious squire
+vile grandmaster
+vladrukh
+void
+voidshard
+vok the freakish
+walking pillar
+wandering pillar
+wardragon
+warm fire
+war servant
+weakened arbaziloth
+weakened frazzlemaw
+weakened glooth horror
+weakened shlorg
+weak soul
+weeping soul
+werebadger
+werebear
+wereboar
+werecrocodile
+werefox
+werehyaena
+werehyaena shaman
+werelion
+werelioness
+werepanther
+weretiger
+whirling blades
+white lion
+white pale
+white tiger
+white weretiger
+wild knowledge
+wildness of urmahlullu
+willi wasp
+wine cask
+wisdom of urmahlullu
+woodling
+world devourer
+wormling
+wrathful archivist
+xogixath
+yalahari despoiler
+yellow butterfly
+yirkas blue scales
+young goanna
+zamulosh
+zamulosh2
+zamulosh3
+zarcorix of yalahar
+zorvorax

@@ -58,6 +58,15 @@ class Spells final : public BaseEvents
 		static Position getCasterPosition(Creature* creature, Direction dir);
 		std::string getScriptBaseName() const final;
 
+		// RevScriptSys
+		bool registerLuaEvent(InstantSpell* spell);
+		bool registerRuneLuaEvent(RuneSpell* spell);
+
+		// Counting
+		size_t getRuneSpellsCount() const { return runes.size(); }
+		size_t getInstantSpellsCount() const { return instants.size(); }
+		size_t getTotalSpellsCount() const { return runes.size() + instants.size(); }
+
 	protected:
 		void clear() final;
 		LuaScriptInterface& getScriptInterface() final;
@@ -153,6 +162,10 @@ class Spell : public BaseSpell
 		bool isLearnable() const {
 			return learnable;
 		}
+		
+		// RevScriptSys spell type tracking
+		SpellType_t getSpellType() const { return spellType; }
+		void setSpellType(SpellType_t type) { spellType = type; }
 
 		static ReturnValue CreateIllusion(Creature* creature, const Outfit_t& outfit, int32_t time);
 		static ReturnValue CreateIllusion(Creature* creature, const std::string& name, int32_t time);
@@ -161,6 +174,46 @@ class Spell : public BaseSpell
 		const VocSpellMap& getVocMap() const {
 			return vocSpellMap;
 		}
+
+		// Setters for revscriptsys
+		void setName(const std::string& n) { name = n; }
+		void setSpellId(uint8_t id) { spellId = id; }
+		uint8_t getSpellId() const { return spellId; }
+		void setGroup(SpellGroup_t g) { group = g; }
+		SpellGroup_t getGroup() const { return group; }
+		void setSecondaryGroup(SpellGroup_t g) { secondaryGroup = g; }
+		SpellGroup_t getSecondaryGroup() const { return secondaryGroup; }
+		void setCooldown(uint32_t cd) { cooldown = cd; }
+		uint32_t getCooldown() const { return cooldown; }
+		void setGroupCooldown(uint32_t cd) { groupCooldown = cd; }
+		uint32_t getGroupCooldown() const { return groupCooldown; }
+		void setSecondaryGroupCooldown(uint32_t cd) { secondaryGroupCooldown = cd; }
+		uint32_t getSecondaryGroupCooldown() const { return secondaryGroupCooldown; }
+		void setLevel(uint32_t l) { level = l; }
+		void setMagicLevel(uint32_t ml) { magLevel = ml; }
+		void setMana(uint32_t m) { mana = m; }
+		uint32_t getMana() const { return mana; }
+		void setManaPercent(uint32_t mp) { manaPercent = mp; }
+		void setSoul(uint32_t s) { soul = s; }
+		void setRange(int32_t r) { range = r; }
+		int32_t getRange() const { return range; }
+		void setPremium(bool p) { premium = p; }
+		void setEnabled(bool e) { enabled = e; }
+		bool isEnabled() const { return enabled; }
+		void setNeedTarget(bool nt) { needTarget = nt; }
+		bool getNeedTarget() const { return needTarget; }
+		void setNeedWeapon(bool nw) { needWeapon = nw; }
+		bool getNeedWeapon() const { return needWeapon; }
+		void setLearnable(bool l) { learnable = l; }
+		void setSelfTarget(bool st) { selfTarget = st; }
+		bool getSelfTarget() const { return selfTarget; }
+		void setBlockingSolid(bool bs) { blockingSolid = bs; }
+		bool getBlockingSolid() const { return blockingSolid; }
+		void setBlockingCreature(bool bc) { blockingCreature = bc; }
+		bool getBlockingCreature() const { return blockingCreature; }
+		void setAggressive(bool a) { aggressive = a; }
+		bool getAggressive() const { return aggressive; }
+		void addVocMap(int32_t vocId, bool lastVoc) { vocSpellMap[vocId] = lastVoc; }
 
 	protected:
 		bool playerSpellCheck(Player* player) const;
@@ -197,6 +250,8 @@ class Spell : public BaseSpell
 		bool learnable = false;
 		bool enabled = true;
 		bool premium = false;
+		
+		SpellType_t spellType = SPELL_UNDEFINED;
 
 		VocSpellMap vocSpellMap;
 
@@ -231,6 +286,18 @@ class InstantSpell : public TalkAction, public Spell
 		}
 		bool canCast(const Player* player) const;
 		bool canThrowSpell(const Creature* creature, const Creature* target) const;
+
+		// Setters and getters for revscriptsys
+		void setNeedDirection(bool nd) { needDirection = nd; }
+		bool getNeedDirection() const { return needDirection; }
+		void setHasParam(bool hp) { hasParam = hp; }
+		void setHasPlayerNameParam(bool hp) { hasPlayerNameParam = hp; }
+		void setBlockWalls(bool bw) { checkLineOfSight = bw; }
+		bool getBlockWalls() const { return checkLineOfSight; }
+		void setCasterTargetOrDirection(bool ctod) { casterTargetOrDirection = ctod; }
+		bool getCasterTargetOrDirection() const { return casterTargetOrDirection; }
+
+		bool fromLua = false;
 
 	protected:
 		std::string getScriptEventName() const override;
@@ -314,6 +381,17 @@ class RuneSpell final : public Action, public Spell
 		uint16_t getRuneItemId() const {
 			return runeId;
 		}
+		void setRuneItemId(uint16_t id) {
+			runeId = id;
+		}
+		bool getHasCharges() const {
+			return hasCharges;
+		}
+		void setHasCharges(bool value) {
+			hasCharges = value;
+		}
+
+		bool fromLua = false;
 
 	protected:
 		std::string getScriptEventName() const final;

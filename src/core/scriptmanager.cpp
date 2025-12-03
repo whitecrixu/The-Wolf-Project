@@ -77,10 +77,8 @@ bool ScriptingManager::loadScriptSystems()
 	g_weapons->loadDefaults();
 
 	g_spells = new Spells();
-	if (!g_spells->loadFromXml()) {
-		std::cout << "> ERROR: Unable to load spells!" << std::endl;
-		return false;
-	}
+	// XML loading disabled - using RevScriptSys only for player spells
+	// Monster spells are still loaded from monster definitions
 
 	g_actions = new Actions();
 	// XML loading disabled - using RevScriptSys only
@@ -163,21 +161,20 @@ void ScriptingManager::loadRevScriptSysScripts()
 		return;
 	}
 
-	uint32_t scriptsLoaded = 0;
-	loadRevScriptSysScriptsFromDir(scriptsPath, scriptsLoaded);
+	scriptsLoadedCount = 0;
+	loadRevScriptSysScriptsFromDir(scriptsPath, scriptsLoadedCount);
 
 	// Load Lua monster definitions
 	std::string monsterLuaPath = "data/monster/lua";
 	if (stat(monsterLuaPath.c_str(), &st) == 0 && S_ISDIR(st.st_mode)) {
-		uint32_t monstersLoaded = 0;
-		loadRevScriptSysScriptsFromDir(monsterLuaPath, monstersLoaded);
+		monstersLoadedCount = 0;
+		loadRevScriptSysScriptsFromDir(monsterLuaPath, monstersLoadedCount);
 	}
 
 	// Load Lua NPC definitions
 	std::string npcLuaPath = "data/npc/lua";
 	if (stat(npcLuaPath.c_str(), &st) == 0 && S_ISDIR(st.st_mode)) {
-		uint32_t npcsLoaded = 0;
-		loadRevScriptSysScriptsFromDir(npcLuaPath, npcsLoaded);
-		std::cout << "[Info] Loaded " << npcsLoaded << " NPC Lua scripts from " << npcLuaPath << std::endl;
+		npcsLoadedCount = 0;
+		loadRevScriptSysScriptsFromDir(npcLuaPath, npcsLoadedCount);
 	}
 }

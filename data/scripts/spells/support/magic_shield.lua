@@ -1,0 +1,27 @@
+-- Magic Shield
+local combat = Combat()
+combat:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_MAGIC_BLUE)
+combat:setParameter(COMBAT_PARAM_AGGRESSIVE, false)
+
+local condition = Condition(CONDITION_MANASHIELD)
+condition:setParameter(CONDITION_PARAM_TICKS, 200000)
+combat:setCondition(condition)
+
+local spell = Spell(SPELL_INSTANT)
+
+spell:name("Magic Shield")
+spell:words("utamo vita")
+spell:group(SPELLGROUP_SUPPORT)
+spell:id(44)
+spell:cooldown(2000)
+spell:groupCooldown(2000)
+spell:level(14)
+spell:mana(50)
+spell:isAggressive(false)
+spell:isSelfTarget(true)
+
+spell:onCastSpell(function(creature, variant)
+    return combat:execute(creature, variant)
+end)
+
+spell:register()

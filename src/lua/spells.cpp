@@ -157,6 +157,32 @@ bool Spells::registerEvent(Event* event, const pugi::xml_node&)
 	return false;
 }
 
+bool Spells::registerLuaEvent(InstantSpell* spell)
+{
+	if (!spell) {
+		return false;
+	}
+
+	auto result = instants.emplace(spell->getWords(), spell);
+	if (!result.second) {
+		std::cout << "[Warning - Spells::registerLuaEvent] Duplicate registered instant spell with words: " << spell->getWords() << std::endl;
+	}
+	return result.second;
+}
+
+bool Spells::registerRuneLuaEvent(RuneSpell* spell)
+{
+	if (!spell) {
+		return false;
+	}
+
+	auto result = runes.emplace(spell->getRuneItemId(), spell);
+	if (!result.second) {
+		std::cout << "[Warning - Spells::registerRuneLuaEvent] Duplicate registered rune spell with id: " << spell->getRuneItemId() << std::endl;
+	}
+	return result.second;
+}
+
 Spell* Spells::getSpellByName(const std::string& name)
 {
 	Spell* spell = getRuneSpellByName(name);

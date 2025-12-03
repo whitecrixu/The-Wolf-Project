@@ -27,6 +27,8 @@
 
 #include "configmanager.h"
 #include "scriptmanager.h"
+#include "spells.h"
+#include "npc.h"
 #include "rsa.h"
 #include "protocolspectator.h"
 #include "protocolold.h"
@@ -35,6 +37,8 @@
 #include "databasemanager.h"
 #include "scheduler.h"
 #include "databasetasks.h"
+
+extern Spells* g_spells;
 
 DatabaseTasks g_databaseTasks;
 Dispatcher g_dispatcher;
@@ -212,7 +216,7 @@ void mainLoader(int, char*[], ServiceManager* services)
 		startupErrorMessage("Unable to load items (XML)!");
 		return;
 	}
-	std::cout << GREEN << " ✓" << RESET << std::endl;
+	std::cout << GREEN << " ✓ " << RESET << "(" << DIM << Item::items.size() << " items" << RESET << ")" << std::endl;
 
 	std::cout << GREEN << "  ▸ " << RESET << "Loading script systems..." << std::flush;
 	if (!ScriptingManager::getInstance()->loadScriptSystems()) {
@@ -220,7 +224,11 @@ void mainLoader(int, char*[], ServiceManager* services)
 		startupErrorMessage("Failed to load script systems");
 		return;
 	}
-	std::cout << GREEN << " ✓" << RESET << std::endl;
+	ScriptingManager* sm = ScriptingManager::getInstance();
+	std::cout << GREEN << " ✓ " << RESET << "(" << DIM 
+		<< sm->getScriptsLoadedCount() << " scripts, "
+		<< (g_spells ? g_spells->getTotalSpellsCount() : 0) << " spells, "
+		<< g_npcTypes.getNpcTypeCount() << " npcs" << RESET << ")" << std::endl;
 
 	std::cout << GREEN << "  ▸ " << RESET << "Loading monsters..." << std::flush;
 	if (!g_monsters.loadFromXml()) {

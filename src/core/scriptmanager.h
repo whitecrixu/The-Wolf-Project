@@ -37,9 +37,18 @@ class ScriptingManager
 
 		bool loadScriptSystems();
 
+		// Counting
+		uint32_t getScriptsLoadedCount() const { return scriptsLoadedCount; }
+		uint32_t getMonstersLoadedCount() const { return monstersLoadedCount; }
+		uint32_t getNpcsLoadedCount() const { return npcsLoadedCount; }
+
 	private:
 		void loadRevScriptSysScripts();
 		void loadRevScriptSysScriptsFromDir(const std::string& path, uint32_t& scriptsLoaded);
+
+		uint32_t scriptsLoadedCount = 0;
+		uint32_t monstersLoadedCount = 0;
+		uint32_t npcsLoadedCount = 0;
 };
 
 #endif
