@@ -181,7 +181,7 @@ void Game::saveGameState()
 
 	Map::save();
 
-	std::cout << "\033[32m ✓\033[0m" << std::endl;
+	std::cout << "\033[32m [OK]\033[0m" << std::endl;
 
 	if (gameState == GAME_STATE_MAINTAIN) {
 		setGameState(GAME_STATE_NORMAL);
@@ -4471,9 +4471,9 @@ void Game::shutdown()
 
 	ConnectionManager::getInstance().closeAll();
 
-	std::cout << "\033[32m ✓\033[0m" << std::endl;
+	std::cout << "\033[32m [OK]\033[0m" << std::endl;
 	std::cout << std::endl;
-	std::cout << "\033[32m  🐺 Goodbye! Server has been shut down safely.\033[0m" << std::endl;
+	std::cout << "\033[32m   Goodbye! Server has been shut down safely.\033[0m" << std::endl;
 	std::cout << std::endl;
 }
 

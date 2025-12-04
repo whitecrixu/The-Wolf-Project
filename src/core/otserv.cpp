@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
 	if (serviceManager.is_running()) {
 		serviceManager.run();
 	} else {
-		std::cout << "\033[31m  ✗ No services running. The server is NOT online.\033[0m" << std::endl;
+		std::cout << "\033[31m  [FAIL] No services running. The server is NOT online.\033[0m" << std::endl;
 		g_scheduler.shutdown();
 		g_databaseTasks.shutdown();
 		g_dispatcher.shutdown();
@@ -116,41 +116,40 @@ void mainLoader(int, char*[], ServiceManager* services)
 	const char* GREEN = "\033[32m";
 	const char* CYAN = "\033[36m";
 	const char* YELLOW = "\033[33m";
-	const char* MAGENTA = "\033[35m";
 	const char* WHITE = "\033[97m";
 	const char* DIM = "\033[2m";
+	const char* BLUE = "\033[34m";
+	const char* BRIGHT_CYAN = "\033[96m";
+	const char* BRIGHT_WHITE = "\033[97m";
+	const char* BRIGHT_MAGENTA = "\033[95m";
+	const char* BRIGHT_YELLOW = "\033[93m";
 
+	// Suppress unused variable warnings
+	(void)RED; (void)BLUE; (void)WHITE; (void)YELLOW; (void)BRIGHT_YELLOW;
+
+	// Clear screen and move cursor to top
+	std::cout << "\033[2J\033[H";
+
+	// Wolf Project Banner
 	std::cout << std::endl;
-	std::cout << CYAN << "  ╔══════════════════════════════════════════════════════════════════╗" << RESET << std::endl;
-	std::cout << CYAN << "  ║" << RESET << BOLD << WHITE << "                    🐺 THE WOLF PROJECT 🐺                        " << RESET << CYAN << "║" << RESET << std::endl;
-	std::cout << CYAN << "  ╠══════════════════════════════════════════════════════════════════╣" << RESET << std::endl;
-	std::cout << CYAN << "  ║" << RESET << "  Version: " << YELLOW << STATUS_SERVER_VERSION << RESET << "  │  Codename: " << MAGENTA << SOFTWARE_CODENAME << RESET << "                        " << CYAN << "║" << RESET << std::endl;
-	std::cout << CYAN << "  ╚══════════════════════════════════════════════════════════════════╝" << RESET << std::endl;
+	std::cout << BRIGHT_MAGENTA << BOLD << "           The Wolf Project Server" << RESET << std::endl;
+	std::cout << std::endl;
+	std::cout << DIM << "        v1.0.0  |  Howling Moon  |  J.Polewka" << RESET << std::endl;
+	std::cout << DIM << "             github.com/whitecrixu" << RESET << std::endl;
 	std::cout << std::endl;
 
-	std::cout << DIM << "  Compiled with " << BOOST_COMPILER << " on " << __DATE__ << " " << __TIME__ << RESET << std::endl;
-	std::cout << DIM << "  Platform: ";
-#if defined(__amd64__) || defined(_M_X64)
-	std::cout << "x64";
-#elif defined(__i386__) || defined(_M_IX86) || defined(_X86_)
-	std::cout << "x86";
-#elif defined(__arm__)
-	std::cout << "ARM";
-#else
-	std::cout << "unknown";
-#endif
-	std::cout << RESET << std::endl;
-	std::cout << DIM << "  GitHub: " << GIT_REPO << RESET << std::endl;
+	// Loading Section
+	std::cout << BRIGHT_CYAN << BOLD << "    INITIALIZING" << RESET << std::endl;
 	std::cout << std::endl;
 
 	// read global config
-	std::cout << GREEN << "  ▸ " << RESET << "Loading configuration..." << std::flush;
+	std::cout << RESET << "    " << RESET << "[*] Config" << std::flush;
 	if (!g_config.load()) {
-		std::cout << " ✗" << std::endl;
+		std::cout << " [FAIL]" << std::endl;
 		startupErrorMessage("Unable to load config.lua!");
 		return;
 	}
-	std::cout << GREEN << " ✓" << RESET << std::endl;
+	std::cout << GREEN << " [OK]" << RESET << std::endl;
 
 #ifdef _WIN32
 	const std::string& defaultPriority = g_config.getString(ConfigManager::DEFAULT_PRIORITY);
@@ -166,88 +165,88 @@ void mainLoader(int, char*[], ServiceManager* services)
 	const char* q("7630979195970404721891201847792002125535401292779123937207447574596692788513647179235335529307251350570728407373705564708871762033017096809910315212884101");
 	g_RSA.setKey(p, q);
 
-	std::cout << GREEN << "  ▸ " << RESET << "Connecting to database..." << std::flush;
+	std::cout << RESET << "    " << RESET << "[*] Database" << std::flush;
 
 	Database* db = Database::getInstance();
 	if (!db->connect()) {
-		std::cout << " ✗" << std::endl;
+		std::cout << " [FAIL]" << std::endl;
 		startupErrorMessage("Failed to connect to database.");
 		return;
 	}
 
-	std::cout << GREEN << " ✓" << RESET << " (MySQL " << Database::getClientVersion() << ")" << std::endl;
+	std::cout << GREEN << " [OK]" << RESET << " (MySQL " << Database::getClientVersion() << ")" << std::endl;
 
 	// run database manager
-	std::cout << GREEN << "  ▸ " << RESET << "Running database manager..." << std::flush;
+	std::cout << RESET << "    " << RESET << "[*] DB Manager" << std::flush;
 
 	if (!DatabaseManager::isDatabaseSetup()) {
-		std::cout << " ✗" << std::endl;
+		std::cout << " [FAIL]" << std::endl;
 		startupErrorMessage("The database you have specified in config.lua is empty, please import the schema.sql to your database.");
 		return;
 	}
 	g_databaseTasks.start();
 
 	DatabaseManager::updateDatabase();
-	std::cout << GREEN << " ✓" << RESET << std::endl;
+	std::cout << GREEN << " [OK]" << RESET << std::endl;
 
 	if (g_config.getBoolean(ConfigManager::OPTIMIZE_DATABASE) && !DatabaseManager::optimizeTables()) {
 		std::cout << DIM << "    No tables needed optimization." << RESET << std::endl;
 	}
 
 	//load vocations
-	std::cout << GREEN << "  ▸ " << RESET << "Loading vocations..." << std::flush;
+	std::cout << RESET << "    " << RESET << "[*] Vocations" << std::flush;
 	if (!g_vocations.loadFromXml()) {
-		std::cout << " ✗" << std::endl;
+		std::cout << " [FAIL]" << std::endl;
 		startupErrorMessage("Unable to load vocations!");
 		return;
 	}
-	std::cout << GREEN << " ✓" << RESET << std::endl;
+	std::cout << GREEN << " [OK]" << RESET << std::endl;
 
 	// load item data
-	std::cout << GREEN << "  ▸ " << RESET << "Loading items..." << std::flush;
+	std::cout << RESET << "    " << RESET << "[*] Items" << std::flush;
 	if (Item::items.loadFromOtb("data/items/items.otb") != ERROR_NONE) {
-		std::cout << RED << " ✗" << RESET << std::endl;
+		std::cout << RED << " [FAIL]" << RESET << std::endl;
 		startupErrorMessage("Unable to load items (OTB)!");
 		return;
 	}
 
 	if (!Item::items.loadFromXml()) {
-		std::cout << RED << " ✗" << RESET << std::endl;
+		std::cout << RED << " [FAIL]" << RESET << std::endl;
 		startupErrorMessage("Unable to load items (XML)!");
 		return;
 	}
-	std::cout << GREEN << " ✓ " << RESET << "(" << DIM << Item::items.size() << " items" << RESET << ")" << std::endl;
+	std::cout << GREEN << " [OK] " << RESET << "(" << DIM << Item::items.size() << " items" << RESET << ")" << std::endl;
 
-	std::cout << GREEN << "  ▸ " << RESET << "Loading script systems..." << std::flush;
+	std::cout << RESET << "    " << RESET << "[*] Scripts" << std::flush;
 	if (!ScriptingManager::getInstance()->loadScriptSystems()) {
-		std::cout << RED << " ✗" << RESET << std::endl;
+		std::cout << RED << " [FAIL]" << RESET << std::endl;
 		startupErrorMessage("Failed to load script systems");
 		return;
 	}
 	ScriptingManager* sm = ScriptingManager::getInstance();
-	std::cout << GREEN << " ✓ " << RESET << "(" << DIM 
+	std::cout << GREEN << " [OK] " << RESET << "(" << DIM 
 		<< sm->getScriptsLoadedCount() << " scripts, "
 		<< (g_spells ? g_spells->getTotalSpellsCount() : 0) << " spells, "
 		<< g_npcTypes.getNpcTypeCount() << " npcs" << RESET << ")" << std::endl;
 
-	std::cout << GREEN << "  ▸ " << RESET << "Loading monsters..." << std::flush;
+	std::cout << RESET << "    " << RESET << "[*] Monsters" << std::flush;
 	if (!g_monsters.loadFromXml()) {
-		std::cout << RED << " ✗" << RESET << std::endl;
+		std::cout << RED << " [FAIL]" << RESET << std::endl;
 		startupErrorMessage("Unable to load monsters!");
 		return;
 	}
-	std::cout << GREEN << " ✓ " << RESET << "(" << DIM << g_monsters.getMonsterCount() << " types" << RESET << ")" << std::endl;
+	std::cout << GREEN << " [OK] " << RESET << "(" << DIM << g_monsters.getMonsterCount() << " types" << RESET << ")" << std::endl;
 
-	std::cout << GREEN << "  ▸ " << RESET << "Loading outfits..." << std::flush;
+	std::cout << RESET << "    " << RESET << "[*] Outfits" << std::flush;
 	Outfits* outfits = Outfits::getInstance();
 	if (!outfits->loadFromXml()) {
-		std::cout << RED << " ✗" << RESET << std::endl;
+		std::cout << RED << " [FAIL]" << RESET << std::endl;
 		startupErrorMessage("Unable to load outfits!");
 		return;
 	}
-	std::cout << GREEN << " ✓" << RESET << std::endl;
+	std::cout << GREEN << " [OK]" << RESET << std::endl;
 
-	std::cout << GREEN << "  ▸ " << RESET << "World type: " << std::flush;
+	std::cout << RESET << "    " << RESET << "[*] World: " << std::flush;
 	std::string worldType = asLowerCaseString(g_config.getString(ConfigManager::WORLD_TYPE));
 	if (worldType == "pvp") {
 		g_game.setWorldType(WORLD_TYPE_PVP);
@@ -265,38 +264,38 @@ void mainLoader(int, char*[], ServiceManager* services)
 	}
 	std::cout << CYAN << asUpperCaseString(worldType) << RESET << std::endl;
 
-	std::cout << GREEN << "  ▸ " << RESET << "Loading map..." << std::flush;
+	std::cout << RESET << "    " << RESET << "[*] Map" << std::flush;
 	if (!g_game.loadMainMap(g_config.getString(ConfigManager::MAP_NAME))) {
-		std::cout << RED << " ✗" << RESET << std::endl;
+		std::cout << RED << " [FAIL]" << RESET << std::endl;
 		startupErrorMessage("Failed to load map");
 		return;
 	}
-	std::cout << GREEN << " ✓" << RESET << std::endl;
+	std::cout << GREEN << " .............. OK" << RESET << std::endl;
 
-	std::cout << GREEN << "  ▸ " << RESET << "Initializing gamestate..." << std::flush;
+	std::cout << RESET << "    " << RESET << "[*] Gamestate" << std::flush;
 	g_game.setGameState(GAME_STATE_INIT);
-	std::cout << GREEN << " ✓" << RESET << std::endl;
+	std::cout << GREEN << " ........... OK" << RESET << std::endl;
+	std::cout << std::endl;
 
 	// Game client protocols
+	std::cout << BRIGHT_CYAN << BOLD << "    NETWORK" << RESET << std::endl;
 	std::cout << std::endl;
-	std::cout << CYAN << "  ═══════════════════════════════════════════════" << RESET << std::endl;
-	std::cout << CYAN << "  │         " << BOLD << "NETWORK SERVICES" << RESET << CYAN << "                   │" << RESET << std::endl;
-	std::cout << CYAN << "  ═══════════════════════════════════════════════" << RESET << std::endl;
 	
 	services->add<ProtocolGame>(g_config.getNumber(ConfigManager::GAME_PORT));
-	std::cout << YELLOW << "  ▸ " << RESET << "Game Port:       " << CYAN << g_config.getNumber(ConfigManager::GAME_PORT) << RESET << std::endl;
+	std::cout << RESET << "    " << RESET << DIM << "Game:      " << RESET << BRIGHT_CYAN << g_config.getNumber(ConfigManager::GAME_PORT) << RESET << std::endl;
 	
 	if (g_config.getBoolean(ConfigManager::ENABLE_LIVE_CASTING)) {
 		ProtocolGame::clearLiveCastInfo();
 		services->add<ProtocolSpectator>(g_config.getNumber(ConfigManager::LIVE_CAST_PORT));
-		std::cout << YELLOW << "  ▸ " << RESET << "Live Cast Port:  " << CYAN << g_config.getNumber(ConfigManager::LIVE_CAST_PORT) << RESET << std::endl;
+		std::cout << RESET << "    " << RESET << DIM << "Live Cast: " << RESET << BRIGHT_CYAN << g_config.getNumber(ConfigManager::LIVE_CAST_PORT) << RESET << std::endl;
 	}
 	services->add<ProtocolLogin>(g_config.getNumber(ConfigManager::LOGIN_PORT));
-	std::cout << YELLOW << "  ▸ " << RESET << "Login Port:      " << CYAN << g_config.getNumber(ConfigManager::LOGIN_PORT) << RESET << std::endl;
+	std::cout << RESET << "    " << RESET << DIM << "Login:     " << RESET << BRIGHT_CYAN << g_config.getNumber(ConfigManager::LOGIN_PORT) << RESET << std::endl;
 
 	// OT protocols
 	services->add<ProtocolStatus>(g_config.getNumber(ConfigManager::STATUS_PORT));
-	std::cout << YELLOW << "  ▸ " << RESET << "Status Port:     " << CYAN << g_config.getNumber(ConfigManager::STATUS_PORT) << RESET << std::endl;
+	std::cout << RESET << "    " << RESET << DIM << "Status:    " << RESET << BRIGHT_CYAN << g_config.getNumber(ConfigManager::STATUS_PORT) << RESET << std::endl;
+	std::cout << std::endl;
 
 	// Legacy login protocol
 	services->add<ProtocolOld>(g_config.getNumber(ConfigManager::LOGIN_PORT));
@@ -322,22 +321,19 @@ void mainLoader(int, char*[], ServiceManager* services)
 	IOMarket::getInstance()->updateStatistics();
 
 	std::cout << std::endl;
-	std::cout << CYAN << "  ═══════════════════════════════════════════════" << RESET << std::endl;
-	std::cout << GREEN << BOLD << "  ✓  All modules loaded successfully!" << RESET << std::endl;
-	std::cout << CYAN << "  ═══════════════════════════════════════════════" << RESET << std::endl;
+	std::cout << GREEN << BOLD << "    SERVER READY - ALL SYSTEMS GO" << RESET << std::endl;
 	std::cout << std::endl;
 
 #ifndef _WIN32
 	if (getuid() == 0 || geteuid() == 0) {
-		std::cout << YELLOW << "  ⚠ Warning: " << RESET << STATUS_SERVER_NAME << " has been executed as root user!" << std::endl;
-		std::cout << DIM << "    Consider running it as a normal user for security." << RESET << std::endl;
+		std::cout << YELLOW << "    [!] Warning: " << RESET << STATUS_SERVER_NAME << " running as root!" << std::endl;
 	}
 #endif
 
 	g_game.start(services);
 	g_game.setGameState(GAME_STATE_NORMAL);
 	
-	std::cout << GREEN << BOLD << "  🐺 " << STATUS_SERVER_NAME << " is now online!" << RESET << std::endl;
+	std::cout << BRIGHT_CYAN << "    >>> " << BRIGHT_WHITE << BOLD << STATUS_SERVER_NAME << RESET << " is now " << GREEN << BOLD << "ONLINE" << RESET << BRIGHT_CYAN << "! <<<" << RESET << std::endl;
 	std::cout << std::endl;
 	
 	g_loaderSignal.notify_all();

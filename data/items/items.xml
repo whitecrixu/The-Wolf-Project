@@ -38448,7 +38448,7 @@
 		<attribute key="shootType" value="spectralbolt" />
 		<attribute key="supply" value="true" />
 	</item>
-	<item id="28415" article="a" name="royal star">
+	<item id="28493" article="a" name="royal star">
 		<attribute key="weight" value="220" />
 		<attribute key="weaponType" value="distance" />
 		<attribute key="attack" value="64" />

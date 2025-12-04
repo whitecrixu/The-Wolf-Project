@@ -26,42 +26,53 @@ local action6 = Action()
 action6:id(8599)
 
 local function onUse(player, item, fromPosition, target, toPosition, isHotkey)
+	-- Get the position of the item (ladder/grate), not the player
+	local itemPos = item:getPosition()
+	local playerPos = player:getPosition()
 
 	if isInArray(upFloorIds, item.itemid) then
-		-- Going UP - teleport one level up and one tile south
-		local newPos = Position(fromPosition.x, fromPosition.y + 1, fromPosition.z - 1)
-		local tile = Tile(newPos)
-		
-		if not tile or not tile:getGround() then
-			player:sendCancelMessage("Sorry, not possible.")
-			return true
-		end
-		
-		if tile:hasFlag(TILESTATE_PROTECTIONZONE) and player:isPzLocked() then
-			player:sendTextMessage(MESSAGE_STATUS_SMALL, Game.getReturnMessage(RETURNVALUE_PLAYERISPZLOCKED))
-			return true
-		end
-		
-		player:teleportTo(newPos, true)
-		return true
-	else
-		-- Going DOWN
-		local newPos = Position(fromPosition.x, fromPosition.y, fromPosition.z + 1)
-		local tile = Tile(newPos)
-		
-		if not tile or not tile:getGround() then
-			player:sendCancelMessage("Sorry, not possible.")
-			return true
-		end
-		
-		if tile:hasFlag(TILESTATE_PROTECTIONZONE) and player:isPzLocked() then
-			player:sendTextMessage(MESSAGE_STATUS_SMALL, Game.getReturnMessage(RETURNVALUE_PLAYERISPZLOCKED))
-			return true
-		end
-		
-		player:teleportTo(newPos, true)
-		return true
-	end
+		-- Going UP - teleport one level up
+		-- Try multiple positions: south, then player's current position offset
+local positions = {
+Position(itemPos.x, itemPos.y + 1, itemPos.z - 1),  -- South of ladder
+Position(playerPos.x, playerPos.y, playerPos.z - 1), -- Above player
+Position(itemPos.x + 1, itemPos.y, itemPos.z - 1),  -- East of ladder
+Position(itemPos.x - 1, itemPos.y, itemPos.z - 1),  -- West of ladder
+Position(itemPos.x, itemPos.y - 1, itemPos.z - 1),  -- North of ladder
+}
+
+for _, newPos in ipairs(positions) do
+local tile = Tile(newPos)
+if tile and tile:getGround() and not tile:hasFlag(TILESTATE_FLOORCHANGE) then
+if tile:hasFlag(TILESTATE_PROTECTIONZONE) and player:isPzLocked() then
+player:sendTextMessage(MESSAGE_STATUS_SMALL, Game.getReturnMessage(RETURNVALUE_PLAYERISPZLOCKED))
+return true
+end
+player:teleportTo(newPos, true)
+return true
+end
+end
+
+player:sendCancelMessage("Sorry, not possible.")
+return true
+else
+-- Going DOWN - from the item position
+local newPos = Position(itemPos.x, itemPos.y, itemPos.z + 1)
+local tile = Tile(newPos)
+
+if not tile or not tile:getGround() then
+player:sendCancelMessage("Sorry, not possible.")
+return true
+end
+
+if tile:hasFlag(TILESTATE_PROTECTIONZONE) and player:isPzLocked() then
+player:sendTextMessage(MESSAGE_STATUS_SMALL, Game.getReturnMessage(RETURNVALUE_PLAYERISPZLOCKED))
+return true
+end
+
+player:teleportTo(newPos, true)
+return true
+end
 end
 
 action1:onUse(onUse)

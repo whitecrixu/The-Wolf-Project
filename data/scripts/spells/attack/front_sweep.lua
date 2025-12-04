@@ -6,6 +6,13 @@ combat:setParameter(COMBAT_PARAM_BLOCKARMOR, true)
 combat:setParameter(COMBAT_PARAM_USECHARGES, true)
 combat:setArea(createCombatArea(AREA_WAVE6, AREADIAGONAL_WAVE6))
 
+function onGetFormulaValues(player, skill, attack, factor)
+	local skillTotal = skill * attack
+	local levelTotal = player:getLevel() / 5
+	return -(((skillTotal * 0.04) + 31) + levelTotal) * 1.1, -(((skillTotal * 0.08) + 45) + levelTotal) * 1.1 -- TODO : Use New Real Formula instead of an %
+end
+
+combat:setCallback(CALLBACK_PARAM_SKILLVALUE, "onGetFormulaValues")
 local spell = Spell(SPELL_INSTANT)
 
 spell:name("Front Sweep")
