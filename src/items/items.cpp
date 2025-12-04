@@ -528,6 +528,8 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 				it.weaponType = WEAPON_WAND;
 			} else if (tmpStrValue == "ammunition") {
 				it.weaponType = WEAPON_AMMO;
+			} else if (tmpStrValue == "quiver") {
+				it.weaponType = WEAPON_QUIVER;
 			} else {
 				std::cout << "[Warning - Items::parseItemNode] Unknown weaponType: " << valueAttribute.as_string() << std::endl;
 			}
@@ -928,6 +930,14 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 			it.blockSolid = valueAttribute.as_bool();
 		} else if (tmpStrValue == "allowdistread") {
 			it.allowDistRead = booleanString(valueAttribute.as_string());
+		} else if (tmpStrValue == "forceserialize" || tmpStrValue == "forcesave") {
+			it.forceSerialize = valueAttribute.as_bool();
+		} else if (tmpStrValue == "supply") {
+			it.supply = valueAttribute.as_bool();
+		} else if (tmpStrValue == "worth") {
+			it.worth = pugi::cast<uint64_t>(valueAttribute.value());
+		} else if (tmpStrValue == "criticalhitchance" || tmpStrValue == "criticalhitamount") {
+			// Ignored - SPECIALSKILL not implemented in this version
 		} else {
 			std::cout << "[Warning - Items::parseItemNode] Unknown key value: " << keyAttribute.as_string() << std::endl;
 		}

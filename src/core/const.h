@@ -172,7 +172,13 @@ enum ShootType_t : uint8_t {
 	CONST_ANI_GLOOTHSPEAR = 53,
 	CONST_ANI_SIMPLEARROW = 54,
 
-	CONST_ANI_LAST = CONST_ANI_SIMPLEARROW,
+	// New projectiles (TFS 1.6+)
+	CONST_ANI_LEAFSTAR = 56,
+	CONST_ANI_DIAMONDARROW = 57,
+	CONST_ANI_SPECTRALBOLT = 58,
+	CONST_ANI_ROYALSTAR = 59,
+
+	CONST_ANI_LAST = CONST_ANI_ROYALSTAR,
 
 	// for internal use, don't send to client
 	CONST_ANI_WEAPONTYPE = 0xFE, // 254
@@ -369,6 +375,7 @@ enum WeaponType_t : uint8_t {
 	WEAPON_DISTANCE,
 	WEAPON_WAND,
 	WEAPON_AMMO,
+	WEAPON_QUIVER,
 };
 
 enum Ammo_t : uint8_t {

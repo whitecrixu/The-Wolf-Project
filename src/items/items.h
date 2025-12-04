@@ -267,6 +267,10 @@ class ItemType
 		bool lookThrough = false;
 		bool stopTime = false;
 		bool showCount = true;
+		bool forceSerialize = false;
+		bool supply = false;
+
+		uint64_t worth = 0;
 };
 
 class Items

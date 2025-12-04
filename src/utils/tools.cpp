@@ -642,6 +642,10 @@ ShootTypeNames shootTypeNames = {
 	{"envenomedarrow",	CONST_ANI_ENVENOMEDARROW},
 	{"gloothspear",		CONST_ANI_GLOOTHSPEAR},
 	{"simplearrow",		CONST_ANI_SIMPLEARROW},
+	{"leafstar",		CONST_ANI_LEAFSTAR},
+	{"diamondarrow",	CONST_ANI_DIAMONDARROW},
+	{"spectralbolt",	CONST_ANI_SPECTRALBOLT},
+	{"royalstar",		CONST_ANI_ROYALSTAR},
 };
 
 CombatTypeNames combatTypeNames = {
