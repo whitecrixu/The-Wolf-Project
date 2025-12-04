@@ -2,4 +2,10 @@ config.lua
 build/
 wolfserver
 wolfserver.exe
-tools/
+tools/*
+tools/add_monster_attacks.py
+tools/convert_xml_monsters_to_lua.py
+tools/convert_xml_npc_to_lua.py
+tools/convert_npcs_to_lua.py
+tools/convert_npc_to_inline.py
+tools/add_monster_attacks.py
