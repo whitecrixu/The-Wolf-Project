@@ -24,7 +24,14 @@ local function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 
 	if player:isPzLocked() then
 		player:sendTextMessage(MESSAGE_STATUS_SMALL, "You can't train while being in a fight.")
-		return false
+		return true
+	end
+
+	-- Check if player has offline training time available
+	local offlineTime = player:getOfflineTrainingTime() / 1000
+	if offlineTime < 60 then
+		player:sendTextMessage(MESSAGE_STATUS_SMALL, "You need more offline training time.")
+		return true
 	end
 
 	player:setOfflineTrainingSkill(skill)

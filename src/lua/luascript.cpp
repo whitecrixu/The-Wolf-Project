@@ -1577,6 +1577,9 @@ void LuaScriptInterface::registerFunctions()
 
 	registerEnum(VOCATION_NONE)
 
+	// SKILL_NONE for offline training (not a real skill, just -1)
+	registerGlobalVariable("SKILL_NONE", -1);
+
 	registerEnum(SKILL_FIST)
 	registerEnum(SKILL_CLUB)
 	registerEnum(SKILL_SWORD)
