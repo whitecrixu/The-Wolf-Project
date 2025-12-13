@@ -38452,12 +38452,13 @@
 		<attribute key="weight" value="220" />
 		<attribute key="weaponType" value="distance" />
 		<attribute key="attack" value="64" />
-		<attribute key="range" value="4" />
-		<attribute key="elementFire" value="2" />
+		<attribute key="range" value="5" />
+		<attribute key="elementfire" value="2" />
 		<attribute key="shootType" value="royalstar" />
+		<attribute key="maxHitChance" value="100" />
 		<attribute key="supply" value="true" />
 	</item>
-	<item id="28416" article="a" name="wand of darkness">
+	<item id="28494" article="a" name="wand of darkness">
 		<attribute key="weight" value="3200" />
 		<attribute key="weapontype" value="wand" />
 		<attribute key="shoottype" value="death" />

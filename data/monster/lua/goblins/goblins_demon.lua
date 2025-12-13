@@ -1,11 +1,11 @@
--- demon
+-- Goblin Demon (renamed to avoid conflict with main Demon)
 -- Converted from XML
 
-local monster = Game.createMonsterType("demon")
+local monster = Game.createMonsterType("Goblin Demon")
 if not monster then return end
 
-monster:name("demon")
-monster:nameDescription("a demon")
+monster:name("Goblin Demon")
+monster:nameDescription("a goblin demon")
 monster:health(50)
 monster:maxHealth(50)
 monster:experience(25)

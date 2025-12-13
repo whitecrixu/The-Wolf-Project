@@ -2,8 +2,12 @@
 -- Converted from XML
 
 local monster = Game.createMonsterType("Demon")
-if not monster then return end
+if not monster then 
+    print("[ERROR] Failed to create Demon monster type!")
+    return 
+end
 
+print("[DEBUG] Loading Demon with 8200 HP")
 monster:name("Demon")
 monster:nameDescription("a demon")
 monster:health(8200)

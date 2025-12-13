@@ -701,4 +701,6 @@
 	<distance id="18437" action="removecount" unproperly="1" level="70" /> <!-- Envenomed Arrow -->
 	<distance id="23529" breakchance="31" unproperly="1" level="60" /> <!-- Glooth Spear -->
 	<distance id="23839" action="removecount" unproperly="0" level="1" /> <!-- Simple Arrow -->
+	<distance id="28390" breakchance="25" unproperly="1" level="60" /> <!-- Leaf Star -->
+	<distance id="28493" breakchance="30" unproperly="1" level="120" /> <!-- Royal Star -->
 </weapons>
