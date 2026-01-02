@@ -60,22 +60,28 @@ jobs:
       - name: Setup vcpkg
         uses: lukka/run-vcpkg@v11
         with:
-          vcpkgGitCommitId: '4c06b6dc7ea5d56984a6fb90c4a7b2d23ed5aecc'
+          vcpkgGitCommitId: '01f602195983451bc83e72f4214af2cbc495aa94'
 
       - name: Install dependencies via vcpkg
         run: |
-          vcpkg install boost-asio boost-iostreams boost-system gmp libmysql lua pugixml
+          vcpkg install boost-asio boost-iostreams boost-system gmp libmysql luajit pugixml
 
       - name: Configure CMake
-        run: cmake -B build -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" -DCMAKE_BUILD_TYPE=Release -DUSE_LUAJIT=OFF
+        run: cmake -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" -DUSE_LUAJIT=ON
 
       - name: Build
-        run: cmake --build build --config Release
+        run: cmake --build build --config Release --parallel
+
+      - name: Copy DLLs
+        run: |
+          Copy-Item "$env:VCPKG_ROOT/installed/x64-windows/bin/*.dll" build/Release/ -Force
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: wolfserver-windows
-          path: build/Release/wolfserver.exe
+          path: |
+            build/Release/wolfserver.exe
+            build/Release/*.dll
           retention-days: 30
           if-no-files-found: warn

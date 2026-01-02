@@ -31,8 +31,8 @@
 #include "events.h"
 #include "modules.h"
 
-#include <dirent.h>
-#include <sys/stat.h>
+#include <filesystem>
+namespace fs = std::filesystem;
 
 Actions* g_actions = nullptr;
 CreatureEvents* g_creatureEvents = nullptr;
@@ -115,49 +115,30 @@ bool ScriptingManager::loadScriptSystems()
 
 void ScriptingManager::loadRevScriptSysScriptsFromDir(const std::string& path, uint32_t& scriptsLoaded)
 {
-	DIR* dir = opendir(path.c_str());
-	if (!dir) {
+	if (!fs::exists(path) || !fs::is_directory(path)) {
 		return;
 	}
 
-	struct dirent* entry;
-	while ((entry = readdir(dir)) != nullptr) {
-		std::string name = entry->d_name;
-		if (name == "." || name == "..") {
-			continue;
-		}
-
-		std::string fullPath = path + "/" + name;
-		
-		struct stat st;
-		if (stat(fullPath.c_str(), &st) == 0) {
-			if (S_ISDIR(st.st_mode)) {
-				// Recurse into subdirectory
-				loadRevScriptSysScriptsFromDir(fullPath, scriptsLoaded);
-			} else if (S_ISREG(st.st_mode)) {
-				// Check if it's a .lua file
-				size_t len = name.length();
-				if (len > 4 && name.substr(len - 4) == ".lua") {
-					if (g_luaEnvironment.loadFile(fullPath) == -1) {
-						std::cout << "[Warning - RevScriptSys] Can not load script: " << fullPath << std::endl;
-						std::cout << g_luaEnvironment.getLastLuaError() << std::endl;
-					} else {
-						scriptsLoaded++;
-					}
-				}
+	for (const auto& entry : fs::recursive_directory_iterator(path)) {
+		if (entry.is_regular_file() && entry.path().extension() == ".lua") {
+			std::string fullPath = entry.path().string();
+			// Normalize path separators
+			std::replace(fullPath.begin(), fullPath.end(), '\\', '/');
+			if (g_luaEnvironment.loadFile(fullPath) == -1) {
+				std::cout << "[Warning - RevScriptSys] Can not load script: " << fullPath << std::endl;
+				std::cout << g_luaEnvironment.getLastLuaError() << std::endl;
+			} else {
+				scriptsLoaded++;
 			}
 		}
 	}
-
-	closedir(dir);
 }
 
 void ScriptingManager::loadRevScriptSysScripts()
 {
 	std::string scriptsPath = "data/scripts";
 	
-	struct stat st;
-	if (stat(scriptsPath.c_str(), &st) != 0 || !S_ISDIR(st.st_mode)) {
+	if (!fs::exists(scriptsPath) || !fs::is_directory(scriptsPath)) {
 		return;
 	}
 
@@ -166,14 +147,14 @@ void ScriptingManager::loadRevScriptSysScripts()
 
 	// Load Lua monster definitions
 	std::string monsterLuaPath = "data/monster/lua";
-	if (stat(monsterLuaPath.c_str(), &st) == 0 && S_ISDIR(st.st_mode)) {
+	if (fs::exists(monsterLuaPath) && fs::is_directory(monsterLuaPath)) {
 		monstersLoadedCount = 0;
 		loadRevScriptSysScriptsFromDir(monsterLuaPath, monstersLoadedCount);
 	}
 
 	// Load Lua NPC definitions
 	std::string npcLuaPath = "data/npc/lua";
-	if (stat(npcLuaPath.c_str(), &st) == 0 && S_ISDIR(st.st_mode)) {
+	if (fs::exists(npcLuaPath) && fs::is_directory(npcLuaPath)) {
 		npcsLoadedCount = 0;
 		loadRevScriptSysScriptsFromDir(npcLuaPath, npcsLoadedCount);
 	}

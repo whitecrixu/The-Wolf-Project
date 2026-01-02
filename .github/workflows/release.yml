@@ -61,27 +61,28 @@ jobs:
       - name: Setup vcpkg
         uses: lukka/run-vcpkg@v11
         with:
-          vcpkgGitCommitId: '4c06b6dc7ea5d56984a6fb90c4a7b2d23ed5aecc'
+          vcpkgGitCommitId: '01f602195983451bc83e72f4214af2cbc495aa94'
 
       - name: Install dependencies via vcpkg
         run: |
-          vcpkg install boost-iostreams boost-system gmp libmysql luajit pugixml
+          vcpkg install boost-asio boost-iostreams boost-system gmp libmysql luajit pugixml
 
       - name: Configure CMake
-        run: cmake -B build -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" -DCMAKE_BUILD_TYPE=Release
+        run: cmake -B build -G "Visual Studio 17 2022" -A x64 -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_ROOT/scripts/buildsystems/vcpkg.cmake" -DUSE_LUAJIT=ON
 
       - name: Build
-        run: cmake --build build --config Release
+        run: cmake --build build --config Release --parallel
 
       - name: Package
         run: |
           mkdir release
-          copy build\Release\wolfserver.exe release\
+          Copy-Item build\Release\wolfserver.exe release\
+          Copy-Item "$env:VCPKG_ROOT\installed\x64-windows\bin\*.dll" release\ -Force
           xcopy /E /I data release\data
-          copy config.lua.dist release\
-          copy schema.sql release\
-          copy LICENSE release\
-          copy README.md release\
+          Copy-Item config.lua.dist release\
+          Copy-Item schema.sql release\
+          Copy-Item LICENSE release\
+          Copy-Item README.md release\
           Compress-Archive -Path release\* -DestinationPath wolfserver-windows-x64.zip
 
       - name: Upload artifact

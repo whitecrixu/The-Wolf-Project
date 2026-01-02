@@ -10,7 +10,9 @@
 find_path(LUA_INCLUDE_DIR luajit.h
   HINTS
     ENV LUA_DIR
-  PATH_SUFFIXES include/luajit-2.1 include/luajit-2.0 include
+    ${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}
+    ${_VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}
+  PATH_SUFFIXES include/luajit-2.1 include/luajit-2.0 include include/luajit
   PATHS
   ~/Library/Frameworks
   /Library/Frameworks
@@ -18,12 +20,15 @@ find_path(LUA_INCLUDE_DIR luajit.h
   /opt/local # DarwinPorts
   /opt/csw # Blastwave
   /opt
+  C:/vcpkg/installed/x64-windows
 )
 
 find_library(LUA_LIBRARY
-  NAMES luajit-5.1
+  NAMES luajit-5.1 lua51
   HINTS
     ENV LUA_DIR
+    ${VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}
+    ${_VCPKG_INSTALLED_DIR}/${VCPKG_TARGET_TRIPLET}
   PATH_SUFFIXES lib
   PATHS
   ~/Library/Frameworks
@@ -32,6 +37,7 @@ find_library(LUA_LIBRARY
   /opt/local
   /opt/csw
   /opt
+  C:/vcpkg/installed/x64-windows
 )
 
 if(LUA_LIBRARY)

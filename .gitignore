@@ -1,5 +1,6 @@
 config.lua
 build/
+cotire/
 wolfserver
 wolfserver.exe
 tools/*
@@ -9,3 +10,17 @@ tools/convert_xml_npc_to_lua.py
 tools/convert_npcs_to_lua.py
 tools/convert_npc_to_inline.py
 tools/add_monster_attacks.py
+vc14/theforgo.A10F9657/x64/Release/theforgo.A10F9657.tlog/unsuccessfulbuild
+boost_iostreams-vc143-mt-x64-1_90.dll
+bz2.dll
+gmp-10.dll
+libcrypto-3-x64.dll
+liblzma.dll
+libmysql.dll
+libssl-3-x64.dll
+lua51.dll
+pugixml.dll
+zlib1.dll
+zstd.dll
+vc14/theforgo.A10F9657/x64/Release/theforgo.A10F9657.tlog/theforgottenserver.lastbuildstate
+vc14/theforgo.A10F9657/x64/Release/theforgo.A10F9657.tlog/CL.command.1.tlog

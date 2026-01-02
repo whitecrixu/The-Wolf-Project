@@ -11,8 +11,10 @@ include(cotire)
 
 # Compiler-specific options
 if(MSVC)
-    add_compile_options(/W4)
+    add_compile_options(/W4 /bigobj)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS -DNOMINMAX)
+    # Disable specific warnings
+    add_compile_options(/wd4100)  # unreferenced formal parameter
 else()
     add_compile_options(-Wall -Werror -pipe -fvisibility=hidden)
     if (CMAKE_COMPILER_IS_GNUCXX)
