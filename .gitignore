@@ -4,6 +4,22 @@ cotire/
 wolfserver
 wolfserver.exe
 tools/*
+
+# Rust
+src-rs/target/
+Cargo.lock
+*.bak
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+data/logs/*
+data/reports/*
 tools/add_monster_attacks.py
 tools/convert_xml_monsters_to_lua.py
 tools/convert_xml_npc_to_lua.py

@@ -1,6 +1,9 @@
 /**
- * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2016  Mark Samman <mark.samman@gmail.com>
+ * The Wolf Project - a free and open-source MMORPG server emulator
+ * Copyright (C) 2026 J.Polewka <jakub.polewka92@gmail.com>
+ * github.com/whitecrixu
+ *
+ * Based on The Forgotten Server by Mark Samman
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,9 +24,9 @@
 #define FS_DEFINITIONS_H_877452FEC245450C9F96B8FD268D8963
 
 static constexpr auto STATUS_SERVER_NAME = "The Wolf Project";
-static constexpr auto STATUS_SERVER_VERSION = "1.0.0";
+static constexpr auto STATUS_SERVER_VERSION = "1.1.0";
 static constexpr auto SOFTWARE_CODENAME = "Howling Moon";
-static constexpr auto STATUS_SERVER_DEVELOPERS = "The Wolf Project Server Team";
+static constexpr auto STATUS_SERVER_DEVELOPERS = "J.Polewka";
 static constexpr auto GIT_REPO = "https://github.com/whitecrixu/The-Wolf-Project";
 
 static constexpr auto CLIENT_VERSION_MIN = 1100;

@@ -1,0 +1,15 @@
+[package]
+name = "wolf-ffi"
+version = "0.1.0"
+edition = "2021"
+description = "FFI bridge between Rust Lua engine and C++ server"
+
+[lib]
+name = "wolf_ffi"
+crate-type = ["cdylib", "staticlib"]  # Dla C++
+
+[dependencies]
+wolf-core = { path = "../wolf-core" }
+wolf-lua = { path = "../wolf-lua" }
+tracing = "0.1"
+lazy_static = "1.4"

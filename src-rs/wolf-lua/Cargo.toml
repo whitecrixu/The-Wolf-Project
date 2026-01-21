@@ -1,0 +1,19 @@
+[package]
+name = "wolf-lua"
+description = "Lua scripting integration via mlua for The Wolf Project"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+wolf-core = { path = "../wolf-core" }
+mlua.workspace = true
+thiserror.workspace = true
+parking_lot.workspace = true
+tracing.workspace = true
+walkdir = "2.5"
+lazy_static = "1.4"
+
+[dev-dependencies]
+pretty_assertions.workspace = true
+tempfile = "3.14"

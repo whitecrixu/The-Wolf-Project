@@ -72,6 +72,7 @@ set(tfs_SRC
 
 	# Lua/Scripts
 	${CMAKE_CURRENT_LIST_DIR}/lua/luascript.cpp
+	${CMAKE_CURRENT_LIST_DIR}/lua/rustlua.cpp
 	${CMAKE_CURRENT_LIST_DIR}/lua/actions.cpp
 	${CMAKE_CURRENT_LIST_DIR}/lua/baseevents.cpp
 	${CMAKE_CURRENT_LIST_DIR}/lua/events.cpp

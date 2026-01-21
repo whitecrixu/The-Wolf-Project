@@ -43,6 +43,10 @@
 #include "creatureevent.h"
 #include "globalevent.h"
 
+#ifdef USE_RUST_LUA
+#include "rustlua.h"
+#endif
+
 extern Chat* g_chat;
 extern Game g_game;
 extern Monsters g_monsters;
@@ -14666,10 +14670,20 @@ LuaEnvironment::~LuaEnvironment()
 {
 	delete testInterface;
 	closeState();
+#ifdef USE_RUST_LUA
+	RustLua::Engine::getInstance().destroy();
+#endif
 }
 
 bool LuaEnvironment::initState()
 {
+#ifdef USE_RUST_LUA
+	// Initialize Rust Lua engine alongside C++ Lua
+	if (!RustLua::Engine::getInstance().init()) {
+		std::cerr << "[Warning] Rust Lua engine failed to initialize, using C++ Lua only" << std::endl;
+	}
+#endif
+
 	luaState = luaL_newstate();
 	if (!luaState) {
 		return false;

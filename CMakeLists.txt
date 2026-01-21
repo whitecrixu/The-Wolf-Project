@@ -47,8 +47,25 @@ find_package(Boost 1.53.0 COMPONENTS system iostreams REQUIRED)
 include(src/CMakeLists.txt)
 add_executable(wolfserver ${tfs_SRC})
 
-include_directories(${MYSQL_INCLUDE_DIR} ${LUA_INCLUDE_DIR} ${Boost_INCLUDE_DIRS} ${PUGIXML_INCLUDE_DIR} ${GMP_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/src/core ${CMAKE_CURRENT_SOURCE_DIR}/src/network ${CMAKE_CURRENT_SOURCE_DIR}/src/io ${CMAKE_CURRENT_SOURCE_DIR}/src/creatures ${CMAKE_CURRENT_SOURCE_DIR}/src/items ${CMAKE_CURRENT_SOURCE_DIR}/src/map ${CMAKE_CURRENT_SOURCE_DIR}/src/lua ${CMAKE_CURRENT_SOURCE_DIR}/src/combat ${CMAKE_CURRENT_SOURCE_DIR}/src/utils)
-target_link_libraries(wolfserver ${MYSQL_CLIENT_LIBS} ${LUA_LIBRARIES} ${Boost_LIBRARIES} ${PUGIXML_LIBRARIES} ${GMP_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+# Rust Lua FFI library
+set(WOLF_FFI_LIB "${CMAKE_CURRENT_SOURCE_DIR}/src-rs/target/release/libwolf_ffi.so")
+if(EXISTS ${WOLF_FFI_LIB})
+    message(STATUS "Found Rust Lua FFI library: ${WOLF_FFI_LIB}")
+    set(USE_RUST_LUA ON)
+else()
+    message(WARNING "Rust Lua FFI library not found at ${WOLF_FFI_LIB}")
+    set(USE_RUST_LUA OFF)
+endif()
+
+include_directories(${MYSQL_INCLUDE_DIR} ${LUA_INCLUDE_DIR} ${Boost_INCLUDE_DIRS} ${PUGIXML_INCLUDE_DIR} ${GMP_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/src/core ${CMAKE_CURRENT_SOURCE_DIR}/src/network ${CMAKE_CURRENT_SOURCE_DIR}/src/io ${CMAKE_CURRENT_SOURCE_DIR}/src/creatures ${CMAKE_CURRENT_SOURCE_DIR}/src/items ${CMAKE_CURRENT_SOURCE_DIR}/src/map ${CMAKE_CURRENT_SOURCE_DIR}/src/lua ${CMAKE_CURRENT_SOURCE_DIR}/src/combat ${CMAKE_CURRENT_SOURCE_DIR}/src/utils ${CMAKE_CURRENT_SOURCE_DIR}/src-rs/wolf-ffi/include)
+
+# Link libraries including Rust FFI if available
+if(USE_RUST_LUA)
+    target_link_libraries(wolfserver ${MYSQL_CLIENT_LIBS} ${LUA_LIBRARIES} ${Boost_LIBRARIES} ${PUGIXML_LIBRARIES} ${GMP_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT} ${WOLF_FFI_LIB})
+    target_compile_definitions(wolfserver PRIVATE USE_RUST_LUA=1)
+else()
+    target_link_libraries(wolfserver ${MYSQL_CLIENT_LIBS} ${LUA_LIBRARIES} ${Boost_LIBRARIES} ${PUGIXML_LIBRARIES} ${GMP_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
+endif()
 
 set_target_properties(wolfserver PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/otpch.h")
 set_target_properties(wolfserver PROPERTIES COTIRE_ADD_UNITY_BUILD FALSE)

@@ -1,0 +1,14 @@
+[package]
+name = "wolf-core"
+description = "Core types and enums for The Wolf Project"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+thiserror.workspace = true
+serde.workspace = true
+bitflags = { version = "2.6", features = ["serde"] }
+
+[dev-dependencies]
+pretty_assertions.workspace = true

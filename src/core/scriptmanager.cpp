@@ -31,6 +31,10 @@
 #include "events.h"
 #include "modules.h"
 
+#ifdef USE_RUST_LUA
+#include "rustlua.h"
+#endif
+
 #include <filesystem>
 namespace fs = std::filesystem;
 
@@ -62,9 +66,25 @@ ScriptingManager::~ScriptingManager()
 
 bool ScriptingManager::loadScriptSystems()
 {
+#ifdef USE_RUST_LUA
+	// Use Rust Lua to load scripts - Rust calls back to C++ to register monsters/spells
+	if (RustLua::Engine::getInstance().isInitialized()) {
+		std::cout << "    [*] Loading scripts via Rust Lua..." << std::endl;
+		if (!RustLua::Engine::getInstance().loadScripts("data")) {
+			std::cout << "> ERROR: Rust Lua failed to load scripts!" << std::endl;
+			return false;
+		}
+		std::cout << "    [*] Rust Lua scripts loaded [OK]" << std::endl;
+	} else {
+		std::cout << "> ERROR: Rust Lua not initialized!" << std::endl;
+		return false;
+	}
+#else
+	// Fallback to C++ Lua
 	if (g_luaEnvironment.loadFile("data/global.lua") == -1) {
 		std::cout << "[Warning - ScriptingManager::loadScriptSystems] Can not load data/global.lua" << std::endl;
 	}
+#endif
 
 	g_chat = new Chat();
 
@@ -77,23 +97,11 @@ bool ScriptingManager::loadScriptSystems()
 	g_weapons->loadDefaults();
 
 	g_spells = new Spells();
-	// XML loading disabled - using RevScriptSys only for player spells
-	// Monster spells are still loaded from monster definitions
-
 	g_actions = new Actions();
-	// XML loading disabled - using RevScriptSys only
-
 	g_talkActions = new TalkActions();
-	// XML loading disabled - using RevScriptSys only
-
 	g_moveEvents = new MoveEvents();
-	// XML loading disabled - using RevScriptSys only
-
 	g_creatureEvents = new CreatureEvents();
-	// XML loading disabled - using RevScriptSys only
-
 	g_globalEvents = new GlobalEvents();
-	// XML loading disabled - using RevScriptSys only
 
 	g_events = new Events();
 	if (!g_events->load()) {
@@ -107,8 +115,10 @@ bool ScriptingManager::loadScriptSystems()
 		return false;
 	}
 
-	// Load RevScriptSys scripts from data/scripts/
+#ifndef USE_RUST_LUA
+	// Only load C++ RevScriptSys if Rust not available
 	loadRevScriptSysScripts();
+#endif
 
 	return true;
 }

@@ -1,0 +1,22 @@
+[package]
+name = "wolf-server"
+description = "Main server binary for The Wolf Project"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "wolf-server"
+path = "src/main.rs"
+
+[dependencies]
+wolf-core = { path = "../wolf-core" }
+wolf-lua = { path = "../wolf-lua" }
+tokio.workspace = true
+tracing.workspace = true
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+thiserror.workspace = true
+anyhow = "1.0"
+
+[dev-dependencies]
+pretty_assertions.workspace = true
