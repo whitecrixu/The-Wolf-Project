@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <items>
+<!-- items from 6.0 - 11.00 -->
 	<item id="1" name="water" />
 	<item id="2" name="blood" />
 	<item id="3" name="beer" />
@@ -42941,4 +42942,249 @@
 	<item id="44715" name="depot box XX">
 		<attribute key="containerSize" value="32" />
 	</item>
-</items>
+<!-- items update 11.02 -->
+	<item id="27118" article="an" name="ancient belt buckle" plural="ancient belt buckles">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="weight" value="250" />
+	</item>
+		<item id="27703" article="an" name="ancient watch">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="weight" value="650" />
+	</item>
+		<item id="27710" article="an" name="astral glyph">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="weight" value="650" />
+	</item>
+		<item id="27709" article="an" name="astral source">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="weight" value="650" />
+	</item>
+		<item id="27115" article="a" name="beetle carapace" plural="beetle carapaces">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="weight" value="3500" />
+	</item>
+		<item id="27114" article="a" name="bone toothpick">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="weight" value="2000" />
+	</item>
+		<item id="27676" name="bones of Zorvorax">
+		<attribute key="weight" value="800" />
+	</item>
+		<item id="27712" name="coal eyes">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="weight" value="650" />
+	</item>
+		<item id="27823" name="colourful feathers" plural="colourful feathers">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="showCount" value="0" />
+		<attribute key="weight" value="450" />
+	</item>
+		<item id="27119" article="a" name="cracked alabaster vase">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="weight" value="450" />
+	</item>
+		<item id="27701" article="a" name="dragon crown">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="weight" value="650" />
+	</item>
+		<item id="27672" article="a" name="dragon tongue">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="weight" value="550" />
+	</item>
+		<item id="27700" article="a" name="forbidden fruit">
+		<attribute key="primarytype" value="food" />
+		<attribute key="weight" value="650" />
+	</item>
+		<item id="27705" article="a" name="forbidden tome">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="weight" value="650" />
+	</item>
+		<item id="27704" article="a" name="frozen time">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="weight" value="650" />
+	</item>
+		<item id="27711" article="a" name="glowing carrot">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="weight" value="650" />
+	</item>
+		<item id="27702" article="a" name="golden talon">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="weight" value="650" />
+	</item>
+		<item id="27675" article="a" name="horn of kalyassa">
+		<attribute key="weight" value="650" />
+	</item>
+		<item id="27706" article="a" name="key to knowledge">
+		<attribute key="weight" value="650" />
+	</item>
+		<item fromid="24966" toid="24973" article="a" name="rhino hide">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="weight" value="800" />
+	</item>
+		<item id="27120" article="a" name="rhino horn carving">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="weight" value="600" />
+	</item>
+		<item id="27123" article="a" name="rhino horn">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="weight" value="650" />
+	</item>
+		<item id="27673" article="a" name="scale of Gelidrazah">
+		<attribute key="weight" value="500" />
+	</item>
+		<item id="27707" article="a" name="shadow mask">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="weight" value="650" />
+	</item>
+		<item id="27708" article="a" name="shadow paint">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="weight" value="650" />
+	</item>
+		<item id="27121" article="a" name="tarnished rhino figurine" plural="tarnished rhino figurines">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="weight" value="750" />
+	</item>
+		<item id="27699" article="a" name="thorn seed">
+		<attribute key="primarytype" value="creature products" />
+		<attribute key="weight" value="650" />
+	</item>
+		<item id="27674" article="a" name="tooth of Tazhadur">
+		<attribute key="weight" value="350" />
+	</item>
+		<item id="27124" article="an" name="ancient coin" plural="ancient coins">
+		<attribute key="primarytype" value="valuables" />
+		<attribute key="description" value="The face design portrays the sun god Suon" />
+		<attribute key="weight" value="30" />
+	</item>
+		<item id="27125" article="a" name="coral brooch">
+		<attribute key="primarytype" value="valuables" />
+		<attribute key="weight" value="80" />
+	</item>
+		<item id="27126" article="a" name="gemmed figurine">
+		<attribute key="primarytype" value="valuables" />
+		<attribute key="weight" value="650" />
+	</item>
+		<item id="27696" article="a" name="prismatic quartz">
+		<attribute key="primarytype" value="valuables" />
+		<attribute key="weight" value="120" />
+	</item>
+		<item id="27695" article="a" name="tiger eye" plural="tiger eyes">
+		<attribute key="primarytype" value="valuables" />
+		<attribute key="weight" value="120" />
+	</item>
+<item id="27694" article="an" name="astral shaper rune">
+    <attribute key="primarytype" value="taming items" />
+    <attribute key="weight" value="850" />
+</item>
+<item id="27129" article="a" name="birthday backpack">
+    <attribute key="primarytype" value="containers" />
+    <attribute key="description" value="It was awarded during the festivities of Tibia's 20th anniversary" />
+    <attribute key="containersize" value="20" />
+    <attribute key="weight" value="1500" />
+</item>
+<item id="27130" article="a" name="birthday cake">
+    <attribute key="primarytype" value="food" />
+    <attribute key="description" value="It was created by Tibia's finest bakers for the celebration of 20 years of Tibia" />
+    <attribute key="weight" value="500" />
+</item>
+<item id="27682" article="a" name="bottle of Tibian Wine">
+    <attribute key="description" value="It was created by Tibia's finest vintagers for the celebration of 20 years of Tibia" />
+    <attribute key="weight" value="100" />
+</item>
+<item id="27116" name="bug meat" plural="bug meat">
+    <attribute key="primarytype" value="food" />
+    <attribute key="showCount" value="0" />
+    <attribute key="weight" value="1100" />
+</item>
+<item id="27117" article="a" name="cave turnip" plural="cave turnips">
+    <attribute key="primarytype" value="food" />
+    <attribute key="weight" value="250" />
+</item>
+<item id="27136" article="a" name="chocolatey dragon scale legs">
+    <attribute key="primarytype" value="legs" />
+    <attribute key="description" value="This is a chocolate replica of the famous dragon scale legs" />
+    <attribute key="armor" value="2" />
+    <attribute key="weight" value="1800" />
+    <attribute key="slotType" value="legs" />
+</item>
+<item id="27131" article="a" name="Ferumbras' Candy Hat">
+    <attribute key="primarytype" value="helmets" />
+    <attribute key="description" value="It is a sweet candy replica of the famous Ferumbras' hat" />
+    <attribute key="armor" value="1" />
+    <attribute key="weight" value="850" />
+    <attribute key="slotType" value="head" />
+</item>
+<item id="27143" name="filthy bunnyslippers">
+    <attribute key="primarytype" value="boots" />
+    <attribute key="description" value="They clearly have seen better days" />
+    <attribute key="weight" value="600" />
+    <attribute key="slotType" value="feet" />
+</item>
+<item id="27684" article="a" name="framed birthday card">
+    <attribute key="primarytype" value="decoration" />
+    <attribute key="description" value="It displays a large letter T and was awarded during the festivities of Tibia's 20th anniversary" />
+    <attribute key="weight" value="3800" />
+</item>
+<item id="26468" article="a" name="ghostsilver lantern">
+    <attribute key="primarytype" value="light sources" />
+    <attribute key="description" value="It is made of filigree silver braces and delicate indigo glass. But it is dark at the moment" />
+    <attribute key="weight" value="600" />
+</item>
+<item id="27685" article="a" name="gilded birthday cup">
+    <attribute key="primarytype" value="decoration" />
+    <attribute key="description" value="It displays the number 20 and was awarded during the festivities of Tibia's 20th anniversary" />
+    <attribute key="weight" value="3800" />
+</item>
+<item id="27793" article="an" name="inert astral shaper rune">
+    <attribute key="primarytype" value="taming items" />
+    <attribute key="description" value="The rune has become inert and will need some hours to regain full strength" />
+    <attribute key="weight" value="850" />
+</item>
+<item id="27149" article="an" name="old rag">
+    <attribute key="primarytype" value="clothing accessories" />
+    <attribute key="weight" value="300" />
+</item>
+<item id="26179" article="an" name="old tome">
+    <attribute key="primarytype" value="books" />
+    <attribute key="weight" value="2000" />
+</item>
+<item id="27128" article="an" name="orclops santa">
+    <attribute key="primarytype" value="dolls and bears" />
+    <attribute key="weight" value="650" />
+</item>
+<item id="27127" article="a" name="pillow backpack">
+    <attribute key="primarytype" value="containers" />
+    <attribute key="containersize" value="24" />
+    <attribute key="weight" value="1450" />
+</item>
+<item id="27796" article="a" name="Pinata Dragon">
+    <attribute key="primarytype" value="party items" />
+    <attribute key="weight" value="3800" />
+</item>
+<item id="27139" article="a" name="rusty winged helmet">
+    <attribute key="primarytype" value="helmets" />
+    <attribute key="description" value="It's the Helmet of Hermes but it clearly has seen better days" />
+    <attribute key="armor" value="2" />
+    <attribute key="weight" value="1200" />
+    <attribute key="slotType" value="head" />
+</item>
+<item id="24439" article="a" name="shell" plural="shells">
+    <attribute key="primarytype" value="natural products" />
+    <attribute key="weight" value="100" />
+</item>
+<item id="27172" article="a" name="starfish">
+    <attribute key="primarytype" value="animals" />
+    <attribute key="weight" value="150" />
+</item>
+<item id="27138" article="a" name="tatty dragon scale legs">
+    <attribute key="primarytype" value="legs" />
+    <attribute key="description" value="They clearly have seen better days" />
+    <attribute key="armor" value="2" />
+    <attribute key="weight" value="3800" />
+    <attribute key="slotType" value="legs" />
+</item>
+<item id="27697" article="a" name="wasted time">
+    <attribute key="primarytype" value="decoration" />
+    <attribute key="weight" value="10" />
+</item>
+	</items>

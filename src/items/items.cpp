@@ -300,26 +300,56 @@ FILELOADER_ERRORS Items::loadFromOtb(const std::string& file)
 bool Items::loadFromXml()
 {
 	pugi::xml_document doc;
-	pugi::xml_parse_result result = doc.load_file("data/items/items.xml");
+	pugi::xml_parse_result result = doc.load_file("data/items/items.xml", pugi::parse_default | pugi::parse_comments);
 	if (!result) {
 		printXMLError("Error - Items::loadFromXml", "data/items/items.xml", result);
 		return false;
 	}
 
-	for (auto itemNode : doc.child("items").children()) {
-		pugi::xml_attribute idAttribute = itemNode.attribute("id");
+	int lineNumber = 0;
+	int totalItems = 0;
+	std::string currentVersion = "base";
+	std::map<std::string, int> versionItemCounts;
+
+	for (auto node : doc.child("items").children()) {
+		lineNumber++;
+
+		// Check if this is a comment node
+		if (node.type() == pugi::node_comment) {
+			std::string comment = node.value();
+			// Trim whitespace
+			size_t start = comment.find_first_not_of(" \t");
+			size_t end = comment.find_last_not_of(" \t");
+			if (start != std::string::npos && end != std::string::npos) {
+				comment = comment.substr(start, end - start + 1);
+			}
+			// Check if it's a version comment (starts with "items")
+			if (comment.find("items") == 0 || comment.find("Items") == 0) {
+				currentVersion = comment;
+			}
+			continue;
+		}
+
+		pugi::xml_attribute idAttribute = node.attribute("id");
 		if (idAttribute) {
-			parseItemNode(itemNode, pugi::cast<uint16_t>(idAttribute.value()));
+			parseItemNode(node, pugi::cast<uint16_t>(idAttribute.value()));
+			versionItemCounts[currentVersion]++;
+			totalItems++;
 			continue;
 		}
 
-		pugi::xml_attribute fromIdAttribute = itemNode.attribute("fromid");
+		pugi::xml_attribute fromIdAttribute = node.attribute("fromid");
 		if (!fromIdAttribute) {
-			std::cout << "[Warning - Items::loadFromXml] No item id found" << std::endl;
+			pugi::xml_attribute nameAttribute = node.attribute("name");
+			std::cout << "[Warning - Items::loadFromXml] No item id found at item #" << lineNumber;
+			if (nameAttribute) {
+				std::cout << " (name: " << nameAttribute.as_string() << ")";
+			}
+			std::cout << std::endl;
 			continue;
 		}
 
-		pugi::xml_attribute toIdAttribute = itemNode.attribute("toid");
+		pugi::xml_attribute toIdAttribute = node.attribute("toid");
 		if (!toIdAttribute) {
 			std::cout << "[Warning - Items::loadFromXml] fromid (" << fromIdAttribute.value() << ") without toid" << std::endl;
 			continue;
@@ -327,10 +357,20 @@ bool Items::loadFromXml()
 
 		uint16_t id = pugi::cast<uint16_t>(fromIdAttribute.value());
 		uint16_t toId = pugi::cast<uint16_t>(toIdAttribute.value());
+		int rangeCount = toId - id + 1;
+		versionItemCounts[currentVersion] += rangeCount;
+		totalItems += rangeCount;
 		while (id <= toId) {
-			parseItemNode(itemNode, id++);
+			parseItemNode(node, id++);
 		}
 	}
+
+	// Display version statistics
+	std::cout << "[Items] Loaded " << totalItems << " items total:" << std::endl;
+	for (const auto& pair : versionItemCounts) {
+		std::cout << "  - " << pair.first << ": " << pair.second << " items" << std::endl;
+	}
+
 	return true;
 }
 
@@ -728,6 +768,8 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 			parseItemType(it, valueAttribute.as_string());
 		} else if (tmpStrValue == "description") {
 			it.description = valueAttribute.as_string();
+		} else if (tmpStrValue == "primarytype") {
+			it.primaryType = valueAttribute.as_string();
 		} else if (tmpStrValue == "runespellname") {
 			it.runeSpellName = valueAttribute.as_string();
 		} else if (tmpStrValue == "weight") {

@@ -7,7 +7,6 @@ if not monster then
     return 
 end
 
-print("[DEBUG] Loading Demon with 8200 HP")
 monster:name("Demon")
 monster:nameDescription("a demon")
 monster:health(8200)
