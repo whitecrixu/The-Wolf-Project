@@ -1,0 +1,78 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Source code
+*.cpp text diff=cpp
+*.hpp text diff=cpp
+*.h text diff=cpp
+*.c text diff=cpp
+*.cc text diff=cpp
+*.cxx text diff=cpp
+
+# Lua scripts
+*.lua text
+
+# Shell scripts
+*.sh text eol=lf
+*.bash text eol=lf
+
+# SQL
+*.sql text
+
+# Markdown
+*.md text diff=markdown
+
+# JSON
+*.json text
+
+# XML
+*.xml text
+
+# YAML
+*.yml text
+*.yaml text
+
+# CMake
+CMakeLists.txt text
+*.cmake text
+
+# Documentation
+LICENSE text
+*.txt text
+
+# Config files
+*.conf text
+*.config text
+*.ini text
+*.dist text
+
+# Protobuf
+*.proto text
+
+# Binary files
+*.otb binary
+*.otbm binary
+*.exe binary
+*.dll binary
+*.so binary
+*.dylib binary
+*.a binary
+*.lib binary
+*.obj binary
+*.o binary
+*.ico binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.bmp binary
+*.tiff binary
+*.zip binary
+*.rar binary
+*.7z binary
+*.tar binary
+*.gz binary
+*.bz2 binary
+*.xz binary
+*.db binary
+*.sqlite binary

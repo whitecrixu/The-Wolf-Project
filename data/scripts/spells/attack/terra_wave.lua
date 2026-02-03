@@ -1,4 +1,3 @@
--- Terra Wave
 local combat = Combat()
 combat:setParameter(COMBAT_PARAM_TYPE, COMBAT_EARTHDAMAGE)
 combat:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_SMALLPLANTS)
@@ -11,19 +10,24 @@ function onGetFormulaValues(player, level, maglevel)
 end
 
 combat:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
-local spell = Spell(SPELL_INSTANT)
 
+local spell = Spell("instant")
+
+function spell.onCastSpell(creature, var)
+	return combat:execute(creature, var)
+end
+
+spell:group("attack")
+spell:id(120)
 spell:name("Terra Wave")
 spell:words("exevo tera hur")
-spell:group(SPELLGROUP_ATTACK)
-spell:id(120)
-spell:cooldown(4000)
-spell:groupCooldown(2000)
+spell:castSound(SOUND_EFFECT_TYPE_SPELL_TERRA_WAVE)
 spell:level(38)
-spell:mana(210)
-
-spell:onCastSpell(function(creature, variant)
-    return combat:execute(creature, variant)
-end)
-
+spell:mana(170)
+spell:isPremium(true)
+spell:needDirection(true)
+spell:cooldown(4 * 1000)
+spell:groupCooldown(2 * 1000)
+spell:needLearn(false)
+spell:vocation("druid;true", "elder druid;true")
 spell:register()

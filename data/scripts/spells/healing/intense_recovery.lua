@@ -1,31 +1,34 @@
--- Intense Recovery
 local combat = Combat()
+local cooldown = 60000 -- milis
+
 combat:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_MAGIC_GREEN)
 combat:setParameter(COMBAT_PARAM_AGGRESSIVE, false)
 
 local condition = Condition(CONDITION_REGENERATION)
-condition:setParameter(CONDITION_PARAM_SUBID, 1)
-condition:setParameter(CONDITION_PARAM_TICKS, 1 * 60 * 1000)
+condition:setParameter(CONDITION_PARAM_TICKS, cooldown)
 condition:setParameter(CONDITION_PARAM_HEALTHGAIN, 40)
-condition:setParameter(CONDITION_PARAM_HEALTHTICKS, 3000)
+condition:setParameter(CONDITION_PARAM_HEALTHTICKS, 3000) -- 3sec
 condition:setParameter(CONDITION_PARAM_BUFF_SPELL, true)
-combat:setCondition(condition)
+combat:addCondition(condition)
 
-local spell = Spell(SPELL_INSTANT)
+local spell = Spell("instant")
+
+function spell.onCastSpell(creature, variant)
+	return combat:execute(creature, variant)
+end
 
 spell:name("Intense Recovery")
 spell:words("utura gran")
-spell:group(SPELLGROUP_HEALING)
+spell:group("healing")
+spell:vocation("knight;true", "elite knight;true", "paladin;true", "royal paladin;true")
+spell:castSound(SOUND_EFFECT_TYPE_SPELL_INTENSE_RECOVERY)
 spell:id(160)
-spell:cooldown(60000)
+spell:cooldown(cooldown)
 spell:groupCooldown(1000)
 spell:level(100)
 spell:mana(165)
-spell:isAggressive(false)
 spell:isSelfTarget(true)
-
-spell:onCastSpell(function(creature, variant)
-    return combat:execute(creature, variant)
-end)
-
+spell:isAggressive(false)
+spell:isPremium(true)
+spell:needLearn(false)
 spell:register()

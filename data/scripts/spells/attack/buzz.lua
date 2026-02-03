@@ -1,4 +1,3 @@
--- Buzz
 local combat = Combat()
 combat:setParameter(COMBAT_PARAM_TYPE, COMBAT_ENERGYDAMAGE)
 combat:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_ENERGYAREA)
@@ -12,20 +11,27 @@ end
 
 combat:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
 
-local spell = Spell(SPELL_INSTANT)
+local spell = Spell("instant")
 
+function spell.onCastSpell(creature, var)
+	return combat:execute(creature, var)
+end
+
+spell:group("attack")
+spell:id(177)
 spell:name("Buzz")
 spell:words("exori infir vis")
-spell:group(SPELLGROUP_ATTACK)
-spell:id(177)
-spell:cooldown(2000)
-spell:groupCooldown(2000)
+spell:castSound(SOUND_EFFECT_TYPE_SPELL_OR_RUNE)
+spell:impactSound(SOUND_EFFECT_TYPE_SPELL_BUZZ)
 spell:level(1)
 spell:mana(6)
+spell:isAggressive(true)
+spell:isPremium(false)
+spell:range(3)
+spell:needCasterTargetOrDirection(true)
 spell:blockWalls(true)
-
-spell:onCastSpell(function(creature, variant)
-    return combat:execute(creature, variant)
-end)
-
+spell:cooldown(2 * 1000)
+spell:groupCooldown(2 * 1000)
+spell:needLearn(false)
+spell:vocation("sorcerer;true", "master sorcerer;true")
 spell:register()

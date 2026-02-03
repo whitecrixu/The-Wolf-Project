@@ -1,4 +1,3 @@
--- Rage of the Skies
 local combat = Combat()
 combat:setParameter(COMBAT_PARAM_TYPE, COMBAT_ENERGYDAMAGE)
 combat:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_BIGCLOUDS)
@@ -12,21 +11,23 @@ end
 
 combat:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
 
-local spell = Spell(SPELL_INSTANT)
+local spell = Spell("instant")
 
+function spell.onCastSpell(creature, var)
+	return combat:execute(creature, var)
+end
+
+spell:group("attack", "focus")
+spell:id(119)
 spell:name("Rage of the Skies")
 spell:words("exevo gran mas vis")
-spell:group(SPELLGROUP_ATTACK)
-spell:id(119)
-spell:cooldown(40000)
-spell:groupCooldown(4000)
+spell:castSound(SOUND_EFFECT_TYPE_SPELL_RAGE_OF_THE_SKIES)
 spell:level(55)
 spell:mana(600)
-spell:isPremium(true)
 spell:isSelfTarget(true)
-
-spell:onCastSpell(function(creature, variant)
-    return combat:execute(creature, variant)
-end)
-
+spell:isPremium(true)
+spell:cooldown(40 * 1000)
+spell:groupCooldown(4 * 1000, 40 * 1000)
+spell:needLearn(false)
+spell:vocation("sorcerer;true", "master sorcerer;true")
 spell:register()

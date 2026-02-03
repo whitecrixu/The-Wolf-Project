@@ -1,0 +1,1 @@
+setup_test(project_wolf_it integration)

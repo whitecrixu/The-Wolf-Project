@@ -1,30 +1,51 @@
--- Energy Beam
-local combat = Combat()
-combat:setParameter(COMBAT_PARAM_TYPE, COMBAT_ENERGYDAMAGE)
-combat:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_ENERGYHIT)
-combat:setArea(createCombatArea(AREA_BEAM5, AREADIAGONAL_BEAM5))
-
-function onGetFormulaValues(player, level, maglevel)
+local function formulaFunction(player, level, maglevel)
 	local min = (level / 5) + (maglevel * 1.8) + 11
 	local max = (level / 5) + (maglevel * 3) + 19
 	return -min, -max
 end
 
-combat:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
+function onGetFormulaValues(player, level, maglevel)
+	return formulaFunction(player, level, maglevel)
+end
 
-local spell = Spell(SPELL_INSTANT)
+function onGetFormulaValuesWOD(player, level, maglevel)
+	return formulaFunction(player, level, maglevel)
+end
 
+local function createCombat(area, areaDiagonal, combatFunc)
+	local initCombat = Combat()
+	initCombat:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, combatFunc)
+	initCombat:setParameter(COMBAT_PARAM_TYPE, COMBAT_ENERGYDAMAGE)
+	initCombat:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_ENERGYHIT)
+	initCombat:setArea(createCombatArea(area, areaDiagonal))
+	return initCombat
+end
+
+local combat = createCombat(AREA_BEAM5, AREADIAGONAL_BEAM5, "onGetFormulaValues")
+local combatWOD = createCombat(AREA_BEAM7, AREADIAGONAL_BEAM7, "onGetFormulaValuesWOD")
+
+local spell = Spell("instant")
+
+function spell.onCastSpell(creature, var)
+	local player = creature:getPlayer()
+	if not creature or not player then
+		return false
+	end
+	return player:instantSkillWOD("Beam Mastery") and combatWOD:execute(creature, var) or combat:execute(creature, var)
+end
+
+spell:group("attack")
+spell:id(22)
 spell:name("Energy Beam")
 spell:words("exevo vis lux")
-spell:group(SPELLGROUP_ATTACK)
-spell:id(22)
-spell:cooldown(4000)
-spell:groupCooldown(2000)
+spell:castSound(SOUND_EFFECT_TYPE_SPELL_ENERGY_BEAM)
 spell:level(23)
 spell:mana(40)
-
-spell:onCastSpell(function(creature, variant)
-    return combat:execute(creature, variant)
-end)
-
+spell:isPremium(false)
+spell:needDirection(true)
+spell:blockWalls(true)
+spell:cooldown(4 * 1000)
+spell:groupCooldown(2 * 1000)
+spell:needLearn(false)
+spell:vocation("sorcerer;true", "master sorcerer;true")
 spell:register()

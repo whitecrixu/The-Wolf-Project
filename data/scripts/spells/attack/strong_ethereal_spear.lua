@@ -1,9 +1,8 @@
--- Strong Ethereal Spear
 local combat = Combat()
 combat:setParameter(COMBAT_PARAM_TYPE, COMBAT_PHYSICALDAMAGE)
 combat:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_HITAREA)
 combat:setParameter(COMBAT_PARAM_DISTANCEEFFECT, CONST_ANI_ETHEREALSPEAR)
-combat:setParameter(COMBAT_PARAM_BLOCKARMOR, true)
+combat:setParameter(COMBAT_PARAM_BLOCKARMOR, 1)
 
 function onGetFormulaValues(player, skill, attack, factor)
 	local levelTotal = player:getLevel() / 5
@@ -12,21 +11,26 @@ end
 
 combat:setCallback(CALLBACK_PARAM_SKILLVALUE, "onGetFormulaValues")
 
-local spell = Spell(SPELL_INSTANT)
+local spell = Spell("instant")
 
+function spell.onCastSpell(creature, var)
+	return combat:execute(creature, var)
+end
+
+spell:group("attack")
+spell:id(57)
 spell:name("Strong Ethereal Spear")
 spell:words("exori gran con")
-spell:group(SPELLGROUP_ATTACK)
-spell:id(57)
-spell:cooldown(8000)
-spell:groupCooldown(2000)
+spell:castSound(SOUND_EFFECT_TYPE_SPELL_OR_RUNE)
+spell:impactSound(SOUND_EFFECT_TYPE_SPELL_STRONG_ETHEREAL_SPEAR)
 spell:level(90)
 spell:mana(55)
 spell:isPremium(true)
+spell:range(7)
+spell:needTarget(true)
 spell:blockWalls(true)
-
-spell:onCastSpell(function(creature, variant)
-    return combat:execute(creature, variant)
-end)
-
+spell:cooldown(8 * 1000)
+spell:groupCooldown(2 * 1000)
+spell:needLearn(false)
+spell:vocation("paladin;true", "royal paladin;true")
 spell:register()

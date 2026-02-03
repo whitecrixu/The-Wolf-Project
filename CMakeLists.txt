@@ -1,55 +1,98 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.22 FATAL_ERROR)
 
-set(CMAKE_DISABLE_SOURCE_CHANGES ON)
-set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
+# VCPKG
+# cmake -DCMAKE_TOOLCHAIN_FILE=/opt/workspace/vcpkg/scripts/buildsystems/vcpkg.cmake ..
+# Needed libs are in file vcpkg.json
+# Windows required libs: .\vcpkg install --triplet x64-windows asio pugixml spdlog curl protobuf parallel-hashmap magic-enum mio luajit libmariadb mpir abseil bshoshany-thread-pool
 
-project(wolfserver)
+if(DEFINED ENV{VCPKG_ROOT} AND NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+    set(CMAKE_TOOLCHAIN_FILE "$ENV{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
+            CACHE STRING "")
+endif()
 
-list(INSERT CMAKE_MODULE_PATH 0 "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+if(DEFINED ENV{VCPKG_DEFAULT_TRIPLET} AND NOT DEFINED VCPKG_TARGET_TRIPLET)
+    set(VCPKG_TARGET_TRIPLET "$ENV{VCPKG_DEFAULT_TRIPLET}" CACHE STRING "")
+endif()
 
-include(cotire)
+set(VCPKG_FEATURE_FLAGS "versions")
+set(VCPKG_BUILD_TYPE "release")
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# Compiler-specific options
-if(MSVC)
-    add_compile_options(/W4 /bigobj)
-    add_definitions(-D_CRT_SECURE_NO_WARNINGS -DNOMINMAX)
-    # Disable specific warnings
-    add_compile_options(/wd4100)  # unreferenced formal parameter
+# *****************************************************************************
+# Project The Wolf Project
+# *****************************************************************************
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    project(wolf-debug LANGUAGES CXX)
 else()
-    add_compile_options(-Wall -Werror -pipe -fvisibility=hidden)
-    if (CMAKE_COMPILER_IS_GNUCXX)
-        add_compile_options(-fno-strict-aliasing)
+    project(wolf LANGUAGES CXX)
+endif()
+
+# *****************************************************************************
+# Append cmake search path
+# *****************************************************************************
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
+
+# Configure build options for compatibility with commodity CPUs
+if(NOT MSVC)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=x86-64 -mtune=generic -mno-avx -mno-sse4")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -march=x86-64 -mtune=generic -mno-avx -mno-sse4")
+endif()
+
+# *****************************************************************************
+# Include cmake tools
+# *****************************************************************************
+include(MessageColors)
+include(LoggingHelper)
+
+# *****************************************************************************
+# Options
+# *****************************************************************************
+option(OPTIONS_ENABLE_CCACHE "Enable ccache" OFF)
+option(OPTIONS_ENABLE_SCCACHE "Use sccache to speed up compilation process" OFF)
+option(OPTIONS_ENABLE_IPO "Check and Enable interprocedural optimization (IPO/LTO)" ON)
+option(FEATURE_METRICS "Enable metrics feature" OFF)
+
+# *****************************************************************************
+# Options Code
+# *****************************************************************************
+
+if(FEATURE_METRICS)
+    log_option_enabled("metrics")
+else ()
+    log_option_disabled("metrics")
+endif ()
+
+# === CCACHE ===
+if(OPTIONS_ENABLE_CCACHE)
+    find_program(CCACHE ccache)
+    if(CCACHE)
+        log_option_enabled("ccache")
+        set(CMAKE_CXX_COMPILER_LAUNCHER ${CCACHE})
+    else()
+        log_option_disabled("ccache")
     endif()
 endif()
 
-include(FindCXX11)
-
-# Find packages.
-find_package(GMP REQUIRED)
-find_package(PugiXML REQUIRED)
-find_package(LuaJIT)
-find_package(MySQL REQUIRED)
-find_package(Threads)
-
-option(USE_LUAJIT "Use LuaJIT" ${LUAJIT_FOUND})
-
-if(USE_LUAJIT)
-    find_package(LuaJIT REQUIRED)
-    if(APPLE)
-      set(CMAKE_EXE_LINKER_FLAGS "-pagezero_size 10000 -image_base 100000000")
+# === SCCACHE ===
+if(OPTIONS_ENABLE_SCCACHE)
+    find_program(SCCACHE_PATH sccache)
+    if(SCCACHE_PATH)
+        log_option_enabled("sccache")
+        set(CMAKE_C_COMPILER_LAUNCHER ${SCCACHE_PATH})
+        set(CMAKE_CXX_COMPILER_LAUNCHER ${SCCACHE_PATH})
+    else()
+        log_option_disabled("sccache")
     endif()
-else()
-    find_package(Lua)
 endif()
 
-find_package(Boost 1.53.0 COMPONENTS system iostreams REQUIRED)
+option(BUILD_TESTS "Build tests" OFF) # By default, tests will not be built
+option(RUN_TESTS_AFTER_BUILD "Run tests when building" OFF) # By default, tests will only run if requested
 
-include(src/CMakeLists.txt)
-add_executable(wolfserver ${tfs_SRC})
+# *****************************************************************************
+# Add project
+# *****************************************************************************
+add_subdirectory(src)
 
-include_directories(${MYSQL_INCLUDE_DIR} ${LUA_INCLUDE_DIR} ${Boost_INCLUDE_DIRS} ${PUGIXML_INCLUDE_DIR} ${GMP_INCLUDE_DIR} ${CMAKE_CURRENT_SOURCE_DIR}/src/core ${CMAKE_CURRENT_SOURCE_DIR}/src/network ${CMAKE_CURRENT_SOURCE_DIR}/src/io ${CMAKE_CURRENT_SOURCE_DIR}/src/creatures ${CMAKE_CURRENT_SOURCE_DIR}/src/items ${CMAKE_CURRENT_SOURCE_DIR}/src/map ${CMAKE_CURRENT_SOURCE_DIR}/src/lua ${CMAKE_CURRENT_SOURCE_DIR}/src/combat ${CMAKE_CURRENT_SOURCE_DIR}/src/utils)
-target_link_libraries(wolfserver ${MYSQL_CLIENT_LIBS} ${LUA_LIBRARIES} ${Boost_LIBRARIES} ${PUGIXML_LIBRARIES} ${GMP_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
-
-set_target_properties(wolfserver PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/otpch.h")
-set_target_properties(wolfserver PROPERTIES COTIRE_ADD_UNITY_BUILD FALSE)
-cotire(wolfserver)
+if(BUILD_TESTS OR PACKAGE_TESTS)
+    add_subdirectory(tests)
+endif()

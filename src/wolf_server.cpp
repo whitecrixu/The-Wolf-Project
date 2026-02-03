@@ -1,0 +1,453 @@
+/**
+ * The Wolf Project - A free and open-source MMORPG server emulator
+ * Copyright (©) 2025-2026 The Wolf Project <jakub.polewka92@gmail.com>
+ * Repository: https://wolf-project.org
+ * License: https://wolf-project.org/license
+ * Contributors: https://wolf-project.org/contributors
+ * Website: https://wolf-project.org
+ */
+
+#include "wolf_server.hpp"
+
+#include <iostream>
+#include "core.hpp"
+#include "config/configmanager.hpp"
+#include "creatures/monsters/monsters.hpp"
+#include "creatures/npcs/npcs.hpp"
+#include "creatures/players/grouping/familiars.hpp"
+#include "creatures/players/imbuements/imbuements.hpp"
+#include "creatures/players/storages/storages.hpp"
+#include "database/databasemanager.hpp"
+#include "declarations.hpp"
+#include "game/game.hpp"
+#include "game/scheduling/dispatcher.hpp"
+#include "game/scheduling/events_scheduler.hpp"
+#include "game/zones/zone.hpp"
+#include "io/io_bosstiary.hpp"
+#include "io/iomarket.hpp"
+#include "io/ioprey.hpp"
+#include "lib/thread/thread_pool.hpp"
+#include "lua/creature/events.hpp"
+#include "lua/modules/modules.hpp"
+#include "lua/scripts/lua_environment.hpp"
+#include "lua/scripts/scripts.hpp"
+#include "server/network/protocol/protocollogin.hpp"
+#include "server/network/protocol/protocolstatus.hpp"
+#include "server/network/webhook/webhook.hpp"
+#include "creatures/players/vocations/vocation.hpp"
+
+WolfServer::WolfServer(
+	Logger &logger,
+	RSA &rsa,
+	ServiceManager &serviceManager
+) :
+	logger(logger),
+	rsa(rsa),
+	serviceManager(serviceManager) {
+	logInfos();
+	toggleForceCloseButton();
+	g_game().setGameState(GAME_STATE_STARTUP);
+	std::set_new_handler(badAllocationHandler);
+	srand(static_cast<unsigned int>(OTSYS_TIME()));
+
+	g_dispatcher().init();
+
+#ifdef _WIN32
+	SetConsoleTitleA(ProtocolStatus::SERVER_NAME.c_str());
+#endif
+}
+
+int WolfServer::run() {
+	g_dispatcher().addEvent(
+		[this] {
+			try {
+				loadConfigLua();
+				validateDatapack();
+
+#ifdef FEATURE_METRICS
+				metrics::Options metricsOptions;
+				metricsOptions.enablePrometheusExporter = g_configManager().getBoolean(METRICS_ENABLE_PROMETHEUS);
+				if (metricsOptions.enablePrometheusExporter) {
+					metricsOptions.prometheusOptions.url = g_configManager().getString(METRICS_PROMETHEUS_ADDRESS);
+				}
+				metricsOptions.enableOStreamExporter = g_configManager().getBoolean(METRICS_ENABLE_OSTREAM);
+				if (metricsOptions.enableOStreamExporter) {
+					metricsOptions.ostreamOptions.export_interval_millis = std::chrono::milliseconds(g_configManager().getNumber(METRICS_OSTREAM_INTERVAL));
+				}
+				g_metrics().init(metricsOptions);
+#endif
+				rsa.start();
+				initializeDatabase();
+				loadModules();
+				setWorldType();
+				loadMaps();
+
+				std::cout << "  - \033[1;33m[95%]\033[0m Initializing gamestate..." << std::endl;
+				g_game().setGameState(GAME_STATE_INIT);
+
+				setupHousesRent();
+				g_game().transferHouseItemsToDepot();
+
+				IOMarket::checkExpiredOffers();
+				IOMarket::getInstance().updateStatistics();
+
+				// Server ready message
+				std::cout << std::endl;
+				std::cout << "  - \033[1;33m[100%]\033[0m \033[1;32mAll modules loaded successfully!\033[0m" << std::endl;
+				std::cout << std::endl;
+
+#ifndef _WIN32
+				if (getuid() == 0 || geteuid() == 0) {
+					std::cout << "  - \033[1;33m[WARNING]\033[0m Running as root user!" << std::endl;
+				}
+#endif
+
+				g_game().start(&serviceManager);
+				if (g_configManager().getBoolean(TOGGLE_MAINTAIN_MODE)) {
+					g_game().setGameState(GAME_STATE_CLOSED);
+					std::cout << "  - \033[1;33m[WARNING]\033[0m Initialized in maintain mode!" << std::endl;
+					g_webhook().sendMessage(":yellow_square: Server is now **online** _(access restricted to staff)_");
+				} else {
+					g_game().setGameState(GAME_STATE_NORMAL);
+					g_webhook().sendMessage(":green_circle: Server is now **online**");
+				}
+
+				{
+					std::scoped_lock lock(loaderMutex);
+					loaderStatus = LoaderStatus::LOADED;
+					loaderCV.notify_all();
+				}
+			} catch (FailedToInitializeWolf &err) {
+				{
+					std::scoped_lock lock(loaderMutex);
+					loaderStatus = LoaderStatus::FAILED;
+				}
+				logger.error(err.what());
+			}
+		},
+		__FUNCTION__
+	);
+
+	constexpr auto timeout = std::chrono::minutes(10);
+	constexpr auto warnEvery = std::chrono::seconds(120);
+	auto start = std::chrono::steady_clock::now();
+	auto lastLog = start;
+
+	while (true) {
+		{
+			std::scoped_lock lock(loaderMutex);
+			if (loaderStatus != LoaderStatus::LOADING) {
+				break;
+			}
+		}
+
+		auto now = std::chrono::steady_clock::now();
+
+		if (now - lastLog >= warnEvery) {
+			logger.warn("Startup still running ({} s)…", std::chrono::duration_cast<std::chrono::seconds>(now - start).count());
+			lastLog = now;
+		}
+
+		if (now - start > timeout) {
+			logger.error("Startup exceeded {} minutes – aborting.", std::chrono::duration_cast<std::chrono::minutes>(timeout).count());
+			shutdown();
+			return EXIT_FAILURE;
+		}
+
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
+	}
+
+	if (loaderStatus == LoaderStatus::FAILED || !serviceManager.is_running()) {
+		std::cout << "  - \033[1;31m[ERROR]\033[0m No services running. The server is NOT online!" << std::endl;
+		std::cout << "  - Press enter to close..." << std::endl;
+		if (isatty(STDIN_FILENO)) {
+			std::cin.get();
+		}
+
+		shutdown();
+		return EXIT_FAILURE;
+	}
+
+	std::cout << "  - \033[1;32m✓ " << g_configManager().getString(SERVER_NAME) << " is now online and ready!\033[0m" << std::endl;
+	g_logger().setLevel(g_configManager().getString(LOGLEVEL));
+
+	serviceManager.run();
+
+	shutdown();
+	return EXIT_SUCCESS;
+}
+
+void WolfServer::setWorldType() {
+	const std::string worldType = asLowerCaseString(g_configManager().getString(WORLD_TYPE));
+	if (worldType == "pvp") {
+		g_game().setWorldType(WORLD_TYPE_PVP);
+	} else if (worldType == "no-pvp") {
+		g_game().setWorldType(WORLD_TYPE_NO_PVP);
+	} else if (worldType == "pvp-enforced") {
+		g_game().setWorldType(WORLD_TYPE_PVP_ENFORCED);
+	} else {
+		throw FailedToInitializeWolf(
+			fmt::format(
+				"Unknown world type: {}, valid world types are: pvp, no-pvp and pvp-enforced",
+				g_configManager().getString(WORLD_TYPE)
+			)
+		);
+	}
+
+	logger.debug("World type set as {}", asUpperCaseString(worldType));
+}
+
+void WolfServer::loadMaps() const {
+	try {
+		g_game().loadMainMap(g_configManager().getString(MAP_NAME));
+
+		// If "mapCustomEnabled" is true on config.lua, then load the custom map
+		if (g_configManager().getBoolean(TOGGLE_MAP_CUSTOM)) {
+			g_game().loadCustomMaps(g_configManager().getString(DATA_DIRECTORY) + "/world/custom/");
+		}
+		Zone::refreshAll();
+	} catch (const std::exception &err) {
+		throw FailedToInitializeWolf(err.what());
+	}
+}
+
+void WolfServer::setupHousesRent() {
+	RentPeriod_t rentPeriod;
+	std::string strRentPeriod = asLowerCaseString(g_configManager().getString(HOUSE_RENT_PERIOD));
+
+	if (strRentPeriod == "yearly") {
+		rentPeriod = RENTPERIOD_YEARLY;
+	} else if (strRentPeriod == "weekly") {
+		rentPeriod = RENTPERIOD_WEEKLY;
+	} else if (strRentPeriod == "monthly") {
+		rentPeriod = RENTPERIOD_MONTHLY;
+	} else if (strRentPeriod == "daily") {
+		rentPeriod = RENTPERIOD_DAILY;
+	} else {
+		rentPeriod = RENTPERIOD_NEVER;
+	}
+
+	g_game().map.houses.payHouses(rentPeriod);
+}
+
+void WolfServer::logInfos() {
+	// Get current time
+	auto now = std::chrono::system_clock::now();
+	auto time = std::chrono::system_clock::to_time_t(now);
+	std::tm* tm = std::localtime(&time);
+	char timeStr[9];
+	std::strftime(timeStr, sizeof(timeStr), "%H:%M:%S", tm);
+
+	// Modern terminal header
+	std::cout << std::endl;
+	std::cout << "\033[1;35m╔═══════════════════════════════════════════════════════╗\033[0m" << std::endl;
+	std::cout << "\033[1;35m║       THE WOLF PROJECT - CODE: HOWLING MOON           ║\033[0m" << std::endl;
+	std::cout << "\033[1;35m╚═══════════════════════════════════════════════════════╝\033[0m" << std::endl;
+	std::cout << std::endl;
+	std::cout << "  - \033[1;37mVersion:\033[0m " << SERVER_RELEASE_VERSION << "  \033[1;90m|\033[0m  \033[1;37mTime:\033[0m " << timeStr << "  \033[1;90m|\033[0m  \033[1;37mDev:\033[0m " << ProtocolStatus::SERVER_DEVELOPERS << std::endl;
+	std::cout << "  - \033[1;36mhttps://project-wolf.org\033[0m  \033[1;90m|\033[0m  \033[1;90mgithub.com/whitecrixu\033[0m" << std::endl;
+	std::cout << std::endl;
+}
+
+/**
+ *It is preferable to keep the close button off as it closes the server without saving (this can cause the player to lose items from houses and others informations, since windows automatically closes the process in five seconds, when forcing the close)
+ * Choose to use "CTROL + C" or "CTROL + BREAK" for security close
+ * To activate/deactivate window;
+ * \param MF_GRAYED Disable the "x" (force close) button
+ * \param MF_ENABLED Enable the "x" (force close) button
+ */
+void WolfServer::toggleForceCloseButton() {
+#ifdef OS_WINDOWS
+	const HWND hwnd = GetConsoleWindow();
+	const HMENU hmenu = GetSystemMenu(hwnd, FALSE);
+	EnableMenuItem(hmenu, SC_CLOSE, MF_GRAYED);
+#endif
+}
+
+void WolfServer::badAllocationHandler() {
+	// Use functions that only use stack allocation
+	g_logger().error("Allocation failed, server out of memory, "
+	                 "decrease the size of your map or compile in 64 bits mode");
+
+	if (isatty(STDIN_FILENO)) {
+		getchar();
+	}
+
+	shutdown();
+	exit(-1);
+}
+
+std::string WolfServer::getPlatform() {
+#if defined(__amd64__) || defined(_M_X64)
+	return "x64";
+#elif defined(__i386__) || defined(_M_IX86) || defined(_X86_)
+	return "x86";
+#elif defined(__arm__)
+	return "ARM";
+#else
+	return "unknown";
+#endif
+}
+
+std::string WolfServer::getCompiler() {
+	std::string compiler;
+#if defined(__clang__)
+	return compiler = fmt::format("Clang++ {}.{}.{}", __clang_major__, __clang_minor__, __clang_patchlevel__);
+#elif defined(_MSC_VER)
+	return compiler = fmt::format("Microsoft Visual Studio {}", _MSC_VER);
+#elif defined(__GNUC__)
+	return compiler = fmt::format("G++ {}.{}.{}", __GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__);
+#else
+	return compiler = "unknown";
+#endif
+}
+
+void WolfServer::loadConfigLua() {
+	std::cout << "  - Config \033[1;32m[OK]\033[0m" << std::endl;
+	std::string configName = "config.lua";
+	// Check if config or config.dist exist
+	std::ifstream c_test("./" + configName);
+	if (!c_test.is_open()) {
+		std::ifstream config_lua_dist(configName + ".dist");
+		if (config_lua_dist.is_open()) {
+			logger.info("Copying {}.dist to {}", configName, configName);
+			std::ofstream config_lua(configName);
+			config_lua << config_lua_dist.rdbuf();
+			config_lua.close();
+			config_lua_dist.close();
+		}
+	} else {
+		c_test.close();
+	}
+
+	g_configManager().setConfigFileLua(configName);
+
+	modulesLoadHelper(g_configManager().load(), g_configManager().getConfigFileLua());
+
+#ifdef _WIN32
+	const std::string &defaultPriority = g_configManager().getString(DEFAULT_PRIORITY);
+	if (strcasecmp(defaultPriority.c_str(), "high") == 0) {
+		SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS);
+	} else if (strcasecmp(defaultPriority.c_str(), "above-normal") == 0) {
+		SetPriorityClass(GetCurrentProcess(), ABOVE_NORMAL_PRIORITY_CLASS);
+	}
+#endif
+}
+
+void WolfServer::validateDatapack() {
+	// If "USE_ANY_DATAPACK_FOLDER" is set to true then you can choose any datapack folder for your server
+	const auto useAnyDatapack = g_configManager().getBoolean(USE_ANY_DATAPACK_FOLDER);
+	const auto datapackName = g_configManager().getString(DATA_DIRECTORY);
+
+	if (!useAnyDatapack && datapackName != "data-wolf" && datapackName != "data-wolf-global") {
+		throw FailedToInitializeWolf(fmt::format(
+			"The datapack folder name '{}' is wrong. Valid names: 'data-wolf', "
+			"'data-wolf-global', or set USE_ANY_DATAPACK_FOLDER = true in config.lua.",
+			datapackName
+		));
+	}
+}
+
+void WolfServer::initializeDatabase() {
+	if (!Database::getInstance().connect()) {
+		throw FailedToInitializeWolf("Failed to connect to database!");
+	}
+
+	logger.debug("Running database manager...");
+	if (!DatabaseManager::isDatabaseSetup()) {
+		throw FailedToInitializeWolf(fmt::format(
+			"The database you have specified in {} is empty, please import the schema.sql to your database.",
+			g_configManager().getConfigFileLua()
+		));
+	}
+
+	DatabaseManager::updateDatabase();
+
+	if (g_configManager().getBoolean(OPTIMIZE_DATABASE)
+	    && !DatabaseManager::optimizeTables()) {
+		logger.debug("    No tables needed optimization");
+	}
+	std::cout << "  - Database \033[1;32m[OK]\033[0m (MySQL " << Database::getClientVersion() << ")" << std::endl;
+}
+
+void WolfServer::loadModules() {
+	std::cout << std::endl;
+	std::cout << "\033[1;32m[ INITIALIZING ]\033[0m" << std::endl;
+	std::cout << std::endl;
+
+	if (!g_luaEnvironment().getLuaState()) {
+		g_luaEnvironment().initState();
+	}
+
+	auto coreFolder = g_configManager().getString(CORE_DIRECTORY);
+	// Load appearances.dat first [10%]
+	modulesLoadHelper((g_game().loadAppearanceProtobuf(coreFolder + "/items/appearances.dat") == ERROR_NONE), "appearances.dat", 10);
+
+	// Load XML folder dependencies (order matters) [20%]
+	g_vocations().loadFromXml();
+	std::cout << "  - \033[1;33m[20%]\033[0m Vocations \033[1;32m[OK]\033[0m" << std::endl;
+	
+	g_eventsScheduler().loadScheduleEventFromXml();
+	
+	// Items [30%]
+	Item::items.loadFromXml();
+	std::cout << "  - \033[1;33m[30%]\033[0m Items \033[1;32m[OK]\033[0m (" << Item::items.size() << " items loaded)" << std::endl;
+
+	// Outfits [40%]
+	Outfits::getInstance().loadFromXml();
+	std::cout << "  - \033[1;33m[40%]\033[0m Outfits \033[1;32m[OK]\033[0m" << std::endl;
+	
+	Familiars::getInstance().loadFromXml();
+	g_imbuements().loadFromXml();
+	g_storages().loadFromXML();
+
+	const auto datapackFolder = g_configManager().getString(DATA_DIRECTORY);
+	// Load first core Lua libs [50%]
+	g_luaEnvironment().loadFile(coreFolder + "/core.lua", "core.lua");
+	std::cout << "  - \033[1;33m[50%]\033[0m Core Lua \033[1;32m[OK]\033[0m" << std::endl;
+	
+	g_scripts().loadScripts(coreFolder + "/scripts/lib", true, false);
+	g_scripts().loadScripts(coreFolder + "/scripts", false, false);
+	g_npcs().load(true, false);
+
+	g_events().loadFromXml();
+	g_modules().loadFromXml();
+
+	// Datapack scripts [70%]
+	g_scripts().loadScripts(datapackFolder + "/scripts/lib", true, false);
+	g_scripts().loadScripts(datapackFolder + "/scripts", false, false);
+	std::cout << "  - \033[1;33m[70%]\033[0m Scripts \033[1;32m[OK]\033[0m" << std::endl;
+	
+	// Monsters [80%]
+	g_scripts().loadScripts(datapackFolder + "/monster", false, false);
+	std::cout << "  - \033[1;33m[80%]\033[0m Monsters \033[1;32m[OK]\033[0m (" << g_monsters().monsters.size() << " types)" << std::endl;
+	
+	// NPCs [90%]
+	g_npcs().load(false, true);
+	std::cout << "  - \033[1;33m[90%]\033[0m NPCs \033[1;32m[OK]\033[0m" << std::endl;
+
+	// World type
+	const std::string worldType = g_configManager().getString(WORLD_TYPE);
+	std::cout << std::endl;
+	std::cout << "  - \033[1;36mWorld Type:\033[0m \033[1;35m" << worldType << "\033[0m" << std::endl;
+	std::cout << std::endl;
+
+	g_game().loadBoostedCreature();
+	g_ioBosstiary().loadBoostedBoss();
+	g_ioprey().initializeTaskHuntOptions();
+}
+
+void WolfServer::modulesLoadHelper(bool loaded, std::string moduleName, int percent) {
+	if (!loaded) {
+		std::cout << "  - \033[1;33m[" << percent << "%]\033[0m " << moduleName << " \033[1;31m[ERROR]\033[0m" << std::endl;
+		throw FailedToInitializeWolf(fmt::format("Cannot load: {}", moduleName));
+	}
+	std::cout << "  - \033[1;33m[" << percent << "%]\033[0m " << moduleName << " \033[1;32m[OK]\033[0m" << std::endl;
+}
+
+void WolfServer::shutdown() {
+	g_database().createDatabaseBackup(true);
+	g_dispatcher().shutdown();
+	g_metrics().shutdown();
+	g_threadPool().shutdown();
+}

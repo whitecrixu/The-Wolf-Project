@@ -1,10 +1,10 @@
--- Berserk
 local combat = Combat()
 combat:setParameter(COMBAT_PARAM_TYPE, COMBAT_PHYSICALDAMAGE)
 combat:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_HITAREA)
-combat:setParameter(COMBAT_PARAM_BLOCKARMOR, true)
-combat:setParameter(COMBAT_PARAM_USECHARGES, true)
+combat:setParameter(COMBAT_PARAM_BLOCKARMOR, 1)
+combat:setParameter(COMBAT_PARAM_USECHARGES, 1)
 combat:setArea(createCombatArea(AREA_SQUARE1X1))
+
 function onGetFormulaValues(player, skill, attack, factor)
 	local level = player:getLevel()
 
@@ -15,21 +15,24 @@ function onGetFormulaValues(player, skill, attack, factor)
 end
 
 combat:setCallback(CALLBACK_PARAM_SKILLVALUE, "onGetFormulaValues")
-local spell = Spell(SPELL_INSTANT)
 
+local spell = Spell("instant")
+
+function spell.onCastSpell(creature, var)
+	return combat:execute(creature, var)
+end
+
+spell:group("attack")
+spell:id(80)
 spell:name("Berserk")
 spell:words("exori")
-spell:group(SPELLGROUP_ATTACK)
-spell:id(80)
-spell:cooldown(4000)
-spell:groupCooldown(2000)
+spell:castSound(SOUND_EFFECT_TYPE_SPELL_BERSERK)
 spell:level(35)
 spell:mana(115)
 spell:isPremium(true)
 spell:needWeapon(true)
-
-spell:onCastSpell(function(creature, variant)
-    return combat:execute(creature, variant)
-end)
-
+spell:cooldown(4 * 1000)
+spell:groupCooldown(2 * 1000)
+spell:needLearn(false)
+spell:vocation("knight;true", "elite knight;true")
 spell:register()
